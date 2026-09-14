@@ -1,0 +1,16 @@
+name: Validate delivery setup
+description: Check a project's pinned delivery descriptor without executing its commands
+inputs:
+  project-root:
+    description: Path to the checked-out consumer project
+    default: .
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Validate descriptor and standard pin
+      shell: bash
+      env:
+        PROJECT_ROOT: ${{ inputs.project-root }}
+        ACTION_REVISION: ${{ github.action_ref }}
+      run: python3 "$GITHUB_ACTION_PATH/scripts/standard.py" validate --root "$PROJECT_ROOT" --expected-revision "$ACTION_REVISION"

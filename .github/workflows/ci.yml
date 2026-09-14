@@ -1,0 +1,32 @@
+name: Standard checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s tests -v
+      - uses: ./
+      - run: python3 scripts/check_links.py
+  tracker-link:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Verify real tracker issues
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/check_pr.py --event "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY"
