@@ -1,0 +1,6 @@
+interface:
+  display_name: "Project Workflow"
+  short_description: "Apply the shared project and release standard"
+  default_prompt: "Use $project-workflow to apply the pinned delivery standard to this project."
+policy:
+  allow_implicit_invocation: true

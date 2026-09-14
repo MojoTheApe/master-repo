@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "project": {"name": "__PROJECT_NAME__", "repository": "__CONFIGURE__"},
+  "standard": {"repository": "https://github.com/MojoTheApe/master-repo", "revision": "__STANDARD_REVISION__", "version": "__STANDARD_VERSION__"},
+  "profile": "__PROFILE__",
+  "adoption": "draft",
+  "tracker": {
+    "system": "__CONFIGURE__",
+    "url": "__CONFIGURE__",
+    "pr_reference": "__CONFIGURE__",
+    "validation": "__CONFIGURE__"
+  },
+  "checks": ["__CONFIGURE__"],
+  "environments": {
+    "stage": {"target": "__CONFIGURE__", "verify": "__CONFIGURE__"},
+    "production": {"target": "__CONFIGURE__", "verify": "__CONFIGURE__"}
+  },
+  "delivery": {
+    "candidate": "__CONFIGURE__",
+    "approval": "explicit",
+    "approver": "__CONFIGURE__",
+    "stage": "__CONFIGURE__",
+    "promote": "__CONFIGURE__",
+    "rollback": "__CONFIGURE__",
+    "backup": "__CONFIGURE__"
+  },
+  "completion": "__COMPLETION__",
+  "exceptions": []
+}
