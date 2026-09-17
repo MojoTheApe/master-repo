@@ -1,60 +1,115 @@
 ---
 name: project-workflow
-description: Apply MojoTheApe's shared delivery standard when creating or onboarding a repository, upgrading its adopted standard, or performing engineering/release work in a project that already has delivery.json. Preserve the project's tracker and deployment controls. Do not turn ordinary feature work into a standard migration.
+description: Follow MojoTheApe's shared project workflow when creating or onboarding a repository, explicitly upgrading its standard, or doing engineering/release work in a project with delivery.json. Locate the project's pinned rules, use its Tracker, preserve local controls, and arrange independent review. Ordinary feature work is not a standard migration.
 ---
 
 # Project workflow
 
-## Locate the right instructions
+## Find the adopted instructions
 
-Read the project's AGENTS.md, `delivery.json` and `docs/DELIVERY.md`, plus the
-existing tracker guide. The standard source is
-`https://github.com/MojoTheApe/master-repo`; the descriptor pins its exact commit.
-Use an existing clean checkout at that revision or fetch the authorized source
-into a task-local directory. Read `standard.md` and only the relevant profile.
+Read project `AGENTS.md`, `delivery.json`, `docs/PROJECT.md`, `docs/DELIVERY.md` and
+its Tracker guide/config. Master source: `https://github.com/MojoTheApe/master-repo`.
+Use a clean checkout at the descriptor's exact commit and read `standard.md` plus
+the relevant profile. For schema 1, follow that pinned version's semantics. Never
+silently apply newer schema 2 rules to an old project.
 
-For a new/unconfigured project, inspect its current structure and the user's
-intended delivery. Use a reviewed published standard revision; if none exists,
-report that status and use a specifically selected candidate only as a draft.
-Do not invent a released tag, project environment, tracker or deployment command.
+This skill is installed once per agent environment. Its canonical copy lives at
+`.agents/skills/project-workflow/SKILL.md` in Master Repo. Project AGENTS files are
+short pointers with local instructions; they are not copies of this global skill.
+Do not assume files outside the installed skill directory exist. Locate or obtain
+authorized pinned source checkouts explicitly. An updated skill is a navigator,
+not permission to upgrade project pins or replace unique project behavior.
 
-This skill is installed independently of the standards checkout. Do not assume
-files outside the skill directory exist. If the pinned source cannot be obtained,
-continue independent project work from checked-in guidance and identify the
-missing dependency before dependent setup/deployment. Never silently use latest.
+If the source is unavailable, continue independent work from checked-in project
+guidance and identify the missing dependency before dependent operations. For new
+projects use a reviewed released revision; if only a specifically selected
+candidate exists, disclose it and keep adoption draft. Do not invent releases,
+environments, check commands or live registration proof.
 
-## Choose the task
+## Select the operation
 
-- **Ordinary work:** follow the adopted project workflow and current tracker.
-  Link the real ticket/branch/PR and run applicable checks. No standard upgrade.
-- **New project:** preview `scripts/standard.py init --root PROJECT --profile
-  vps|n8n|local` from the pinned source, then apply within the authorized project.
-  Configure the generated draft using verified facts; validate before readiness.
-- **Existing project adoption:** audit first. Preview scaffolding and integrate
-  conflicts in a project PR. Never overwrite working AGENTS.md, CI, tracker or
-  deployment configuration from a template. Preserve local exceptions explicitly.
-- **Standard upgrade:** compare adopted and selected revisions. Update descriptor,
-  action pin and affected guidance in a focused PR; verify migration requirements.
-- **Release:** use the project's maintained procedure, exact verified candidate,
-  existing approval and operational safeguards. A descriptor is not runtime proof.
+- **Ordinary work:** follow current project pins, Tracker and local deployment
+  controls. No standard migration or unrelated refactor.
+- **New project:** read the pinned `docs/adoption.md`. Choose profile, public ID
+  prefix, workspace ID and actual targets. Stage defaults on; local means manual
+  pull, package is separate. Preview/apply the initializer with a clean compatible
+  Tracker checkout. Preserve supplied specs, configure the draft, publish initial
+  main, run onboarding for branches/labels/registry, complete the maintained
+  registry publication and verify the fresh live project board. Record actual
+  onboarding proof and validate before marking ready. A local scaffold is not a
+  connected project. Keep the application in Task Tracker, only its client locally.
+- **Existing adoption:** audit IDs/history, modules, open PRs, release state,
+  deployment, installers and exceptions. Preserve them. Finish pre-adoption open
+  PRs under original rules before activating new checks; reconcile historical
+  completion. Integrate a preview in a project PR; never delete local files to make
+  a template fit. Without a trusted old template base, do not invent one.
+- **Upgrade:** use the selected new standard's `upgrade` preview and its compatible
+  engine. Compare old template, new template and local project; preserve local
+  fixes, resolve conflicts explicitly, keep pins/config/CI consistent, test and
+  independently review. Bulk requests use an inventory and one project PR each.
+- **Release:** follow the local maintained mechanism, exact verified content and
+  current authorization. Descriptor/merge are not installation or behavior proof.
 
-Keep each project's existing tracker. Map the shared lifecycle to it; never create
-a second task just to satisfy a different template. Keep partial/deployment-pending
-work out of Done. For local apps, follow their explicit stable-package completion
-policy instead of assuming a server deployment or waiting for every user's update.
+## Execute the ticket lifecycle
 
-## Delivery differences
+Idea request -> Idea; task request -> Backlog. Planning and To Do do not start code.
+On explicit development, read the full Issue, claim the Tracker slot with its
+`work` command and create `codex/<public-id-lowercase>-<short-name>`. Preserve
+classification, dependencies and existing queue semantics. PR title lists IDs:
+`[RF-67, RF-68] Summary`; exactly one `Tracker issues:` line and links back from
+Issues. PR numbers are different from Issue IDs. Avoid automatic closing keywords
+in both PR text and commits. Keep partial tasks and abandoned PRs unfinished.
 
-VPS: separate stage/prod configuration and data; bounded artifacts and compatible
-rollback; preserve independent native admission. n8n: distinguish workflow release
-from server upgrade, inspect the existing integration and authoritative live state,
-protect production IDs/credentials and verify publication. Local: test/pilot package
-then an approved stable distribution; preserve user data.
+Implement and self-check, update affected system docs/history or explain no impact,
+create a ready PR and set Review. Automatically invoke a different subagent for
+independent review of the actual head/base, full task scope and changed files.
+The reviewer reports findings/checks/verdict; the implementer fixes on the same
+branch. If the reviewer edited code, use another final reviewer. A missing
+independent reviewer is a limitation to report, not self-approval. Changed code,
+base, task scope or policy needs fresh approval. Preserve the durable report and
+record it using the pinned Tracker evidence command when supported.
 
-Git storage does not authorize deployment. Complete all independent preparation
-before any missing approval. Do not remove required gates or redesign ReactForge
-hotfix/update behavior as part of adoption. Do not install global skills or change
-unrelated projects unless that operation is within the user's request.
+Run `check-pr N` for links and `check-merge N` for admission immediately before
+merge in the new contract. The latter verifies current review, required checks and
+stage; a link check alone does not authorize merge. Verify actual GitHub branch
+protections separately. Merge after valid review/checks within the existing task
+authorization; no additional routine owner-confirmation step is needed.
 
-Report briefly: changed files/PR, adopted revision, checks, verified environment
-facts and specific remaining setup. Never present scaffolding as a live migration.
+## Stage, merge and completion
+
+If enabled: working branch -> permanent stage -> permanent main. Same task set,
+one active stage candidate, exact approved content. Keep the working branch for
+fixes after its first PR; new fix PRs use that branch. Do not delete permanent
+branches. Record Stage after the source merge, verify the real stage target, and
+promote only matching content. Use merge/squash with the approved baseline, not
+rebase merge. If main changes, reconcile in the working branch and repeat review,
+stage and verification. If disabled: working branch -> main, no Stage column.
+
+Record Merged only for fully implemented ticket scope actually included in main.
+Local manual-pull/tooling completes after admitted merge. VPS/n8n need verified
+production delivery; package needs its stable release and installation check.
+Pending/failed delivery is unfinished in dependencies and release readiness.
+Record actual receipts against the configured target; never relabel stage evidence
+as production success or change completion merely to bypass a failure.
+
+Preserve local approvals, credentials, backups, compatible rollback and data.
+n8n workflow publication is distinct from upgrading the n8n server. ReactForge's
+installer/hotfix redesign is separate scope. Do not deploy, install global skills
+or migrate other consumers merely as a test.
+
+## Keep shared and local knowledge current
+
+`docs/PROJECT.md` describes the implemented system; `docs/CHANGELOG.md` explains
+meaningful changes and reasons with ticket/PR links. Preserve original specs and
+distinguish plans from implemented features. Documentation changes belong in the
+implementation PR and independent review.
+
+For process changes in Master Repo, assess Task Tracker impact; for Tracker
+changes, assess Master Repo impact. Record no impact with a reason, or propose a
+concrete linked fix and compatible release/migration order. Implement a matching
+change when already within the user's authorized scope; otherwise present the
+prepared proposal. Do not impose an automatic consumer upgrade.
+
+Report briefly: result, issue/PR, pins and checks, actual stage/delivery/connection
+proof, preserved exceptions and any concrete remaining setup. Keep explanations
+readable for a nontechnical owner.

@@ -1,22 +1,18 @@
-# Locally installed applications
+# Local projects
 
-The staging equivalent is a test package on supported operating systems and
-agreed pilot machines. Production is the stable distribution channel. Do not add
-a VPS or permanent server environments when the application does not need them.
+The default local profile is a repository the owner pulls manually. It completes
+after independent review, required tests, optional stage verification and the
+admitted merge into main. Do not wait for the owner's pull, create an installer or
+require stable distribution unless the package profile was explicitly selected.
 
-Build and identify the release package once. Verify installation, upgrade and
-required behavior on the supported OS/architecture matrix. After approval,
-publish that candidate to the stable channel with its version, hash and applicable
-signing/notarization evidence. Publish per-platform artifacts as one release set.
+With staging enabled, keep a permanent stage branch and use a real isolated local
+checkout/test environment or the project's maintained preview. Describe its
+verification target; a branch alone is not a tested environment. The user can
+explicitly disable staging. Preserve local data and configuration on every upgrade.
 
-Users install it, or an already-authorized updater offers/installs it according
-to project policy. A Git push does not authorize modifying everybody's computer.
+For an application with an installer, use `package`: test the candidate, publish a
+verified stable package and perform the agreed installation/update check. Record
+that delivery before completion. Keep package signing, data compatibility and
+rollback rules local. Do not rewrite an existing updater through standard adoption.
 
-Record distribution location, pilot target, install/update checks, approval role,
-OS support, prior compatible package and local data/schema migration policy.
-Keep user data and credentials separate from application binaries. An old
-installer is not a backup of the user's data.
-
-Done normally means a verified stable package is available and the agreed pilot
-install/upgrade check passed. Do not wait for every user's laptop to update unless
-that rollout coverage is explicitly part of the ticket's acceptance criteria.
+Schema 1 consumers retain their earlier stable-package policy until migrated.
