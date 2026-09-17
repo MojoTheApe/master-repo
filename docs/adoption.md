@@ -99,3 +99,14 @@ Grant intended consumers access to the private Master Repo Action through the
 actual GitHub account's supported controls and verify it on a real consumer PR.
 Do not make the repository public or expose credentials as a workaround. The
 shared Action only validates data and pins; it does not execute descriptor commands.
+
+## Knowledge ownership
+
+Use the [layout contract](../templates/workflow/LAYOUT.md). New repositories get
+separate `docs/repository/`, `docs/system/` and `docs/runtime/` areas. System/runtime
+outlines become project-owned at creation; upgrades never overwrite or merge them.
+An earlier mixed baseline stops without writes: audit and split local documents,
+keep safeguards and forwarding paths, record the move map and validate the final
+candidate. Retain the pristine newly rendered template as the new baseline.
+Shared helper implementations live in `.workflow/tools/`; old `scripts/` paths
+remain compatible. No layout change implies new deployment or task semantics.

@@ -56,3 +56,14 @@ installation or ordinary feature task triggers an automatic fleet migration.
 Every Master change assesses Task Tracker impact and vice versa. Link coupled
 issues/PRs, state release order and compatible revisions, and report a concrete fix
 when synchronization is needed. Deploy engine support before opting consumers in.
+
+## Knowledge ownership
+
+Use the [layout contract](../templates/workflow/LAYOUT.md). New repositories get
+separate `docs/repository/`, `docs/system/` and `docs/runtime/` areas. System/runtime
+outlines become project-owned at creation; upgrades never overwrite or merge them.
+An earlier mixed baseline stops without writes: audit and split local documents,
+keep safeguards and forwarding paths, record the move map and validate the final
+candidate. Retain the pristine newly rendered template as the new baseline.
+Shared helper implementations live in `.workflow/tools/`; old `scripts/` paths
+remain compatible. No layout change implies new deployment or task semantics.

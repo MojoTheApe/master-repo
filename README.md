@@ -4,7 +4,7 @@ Shared project workflow, templates and agent skill for MojoTheApe repositories.
 Start with [the full workflow](standard.md): ticket intake, naming, self-check,
 independent review, optional stage, main integration and verified delivery.
 
-- [System overview](docs/PROJECT.md) and [meaningful changes](docs/CHANGELOG.md)
+- [System overview](docs/system/PROJECT.md) and [meaningful changes](docs/system/CHANGELOG.md)
 - [Create/connect/adopt a project](docs/adoption.md)
 - [Safe upgrades and versioning](docs/versioning.md)
 - [Descriptor and compatibility](docs/descriptor.md)
@@ -36,3 +36,7 @@ python3 scripts/check_links.py
 
 Validation supports Python 3.9+. Tracker export/client requires Python 3.11+ and
 GitHub CLI access. See adoption for actual commands and private Action setup.
+
+Repository maintenance rules: [workflow](docs/repository/WORKFLOW.md). Consumer
+[file ownership](templates/workflow/LAYOUT.md) separates Git rules, product
+knowledge and runtime procedures; upgrades preserve project-owned content.

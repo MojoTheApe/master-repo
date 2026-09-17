@@ -31,15 +31,15 @@ recorded with `record-delivery`. Failed or pending delivery remains unfinished.
 The explicitly selected n8n-source profile completes the Git source task after
 the admitted main merge. n8n transfer/publication is a separate process and must
 never be claimed from Git evidence. Existing runtime acceptance criteria survive
-adoption. For repository-only work, label stage evidence as Git checks; use the
-existing n8n DEV as the runtime counterpart when runtime verification is required.
+adoption. For repository-only work, label stage evidence as Git checks; consult the project runtime guide when runtime verification is required;
+branch-to-environment connections require their own explicit setup.
 A partially implemented ticket stays active. Never substitute a closed Issue or
 non-code completion for missing code/delivery evidence.
 
-## Project-specific procedures
+## Procedure references
 
-Complete the descriptor with actual check commands, environment identities,
-release procedure, existing authorization, rollback and backup rules. A disabled
+Use `docs/runtime/DELIVERY.md` for actual environment identities, access,
+release authorization, rollback and backup. The descriptor links those procedures. A disabled
 stage is an explicit project choice. Production delivery is a separate operation
 using the project's maintained mechanism; Git storage gives no new deploy access.
 For n8n distinguish workflow publication from server upgrade. For local manual
