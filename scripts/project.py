@@ -12,10 +12,52 @@ PROFILES = {'vps': 'verified-production', 'n8n': 'verified-production', 'n8n-sou
             'package': 'verified-stable-package', 'tooling': 'reviewed-merge'}
 PHASES = ['idea', 'backlog', 'todo', 'in_progress', 'review', 'stage', 'merged']
 BASELINE = '.workflow/template-base.json'
-FILES = {'AGENTS.md': 'AGENTS.md', 'DELIVERY.md': 'docs/DELIVERY.md', 'PROJECT.md': 'docs/PROJECT.md',
-         'CHANGELOG.md': 'docs/CHANGELOG.md', 'SPECS.md': 'docs/specs/README.md',
+LAYOUT = '.workflow/layout.json'
+PROJECT_AREAS = ('docs/system/', 'docs/runtime/')
+HELPERS = ('task_tracker.py', 'tracker_pr_check.py', 'tracker_delivery_policy.py')
+FILES = {'AGENTS.md': 'AGENTS.md', 'WORKFLOW.md': 'docs/repository/WORKFLOW.md',
+         'LAYOUT.md': 'docs/repository/LAYOUT.md', 'DELIVERY.md': 'docs/repository/DELIVERY.md',
+         'REPOSITORY_CHANGELOG.md': 'docs/repository/CHANGELOG.md',
+         'PROJECT.md': 'docs/system/PROJECT.md', 'CONTEXT.md': 'docs/system/AGENT_CONTEXT.md',
+         'RUNTIME.md': 'docs/runtime/DELIVERY.md', 'CHANGELOG.md': 'docs/system/CHANGELOG.md',
+         'SPECS.md': 'docs/system/specs/README.md',
          'PULL_REQUEST_TEMPLATE.md': '.github/pull_request_template.md',
          'delivery-check.yml': '.github/workflows/delivery-check.yml'}
+FORWARDS = {'docs/PROJECT.md': 'system/PROJECT.md', 'AGENT_CONTEXT.md': 'docs/system/AGENT_CONTEXT.md',
+            'docs/DELIVERY.md': 'repository/DELIVERY.md', 'docs/CHANGELOG.md': 'system/CHANGELOG.md',
+            'docs/TRACKER_AGENT_WORKFLOW.md': 'repository/TRACKER.md',
+            'docs/specs/README.md': '../system/specs/README.md'}
+LAYOUT_DATA = {'schema_version': 1, 'repository': 'docs/repository/',
+               'system': 'docs/system/', 'runtime': 'docs/runtime/', 'tools': '.workflow/tools/'}
+
+
+def separate_export(files):
+    """Adapt only helper location; preserve the pinned engine and its contract."""
+    files['docs/repository/TRACKER.md'] = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
+    for name in HELPERS:
+        source = files.pop('scripts/' + name)
+        if name != 'tracker_delivery_policy.py':
+            old = 'Path(__file__).resolve().parents[1]'
+            if source.count(old) != 1:
+                raise ValueError('Pinned Tracker helper layout changed: ' + name)
+            source = source.replace(old, 'Path(__file__).resolve().parents[2]')
+        files['.workflow/tools/' + name] = source
+        # Preserve both command-line execution and imports from the old path.
+        files['scripts/' + name] = ("#!/usr/bin/env python3\n"
+            '"""Compatibility entry point; shared implementation is in .workflow/tools."""\n'
+            "from pathlib import Path\nimport runpy\nimport sys\n"
+            "_tools = Path(__file__).resolve().parents[1] / '.workflow/tools'\n"
+            "sys.path.insert(0, str(_tools))\n"
+            "globals().update(runpy.run_path(str(_tools / '" + name + "'), run_name=__name__))\n")
+    return files
+
+
+def layout_files():
+    files = {name: '# Moved\n\nSee [' + target + '](' + target + ').\n'
+             for name, target in FORWARDS.items()}
+    files[LAYOUT] = dumps(LAYOUT_DATA)
+    return files
+
 
 
 def dumps(value): return json.dumps(value, indent=2, ensure_ascii=False) + '\n'
@@ -87,6 +129,8 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
         files = {p.relative_to(target).as_posix(): p.read_text() for p in target.rglob('*') if p.is_file()}
+    files = separate_export(files)
+    files.update(layout_files())
     files['delivery.json'] = dumps(data)
     for name, dest in FILES.items():
         files[dest] = (SOURCE/'templates/workflow'/name).read_text().replace('__STANDARD_REVISION__', revision).replace('EX-12', inputs['prefix']+'-12')
@@ -165,11 +209,19 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False):
     if not path.is_file(): raise ValueError('No recorded template base; audit and adopt manually without inventing a baseline')
     raw = path.read_text(); base = json.loads(raw)
     if base.get('schema_version') != 1 or not isinstance(base.get('files'), dict): raise ValueError('Invalid template baseline')
-    old = base['files']; new = render(base['inputs'], revision, tracker_root, python)
+    old = base['files']
+    if LAYOUT not in old:
+        return {'applied': False, 'conflicts': ['legacy mixed layout'], 'changed': [],
+                'next': 'Audit and separate repository/system/runtime documents in a project PR; nothing was overwritten.'}
+    new = render(base['inputs'], revision, tracker_root, python)
     planned, before, conflicts = {}, {}, []
     for name in sorted(old.keys() | new.keys()):
         path = standard.safe_path(root, name)
         before[name] = path.read_text() if path.is_file() else None
+        if name.startswith(PROJECT_AREAS):
+            # Project ownership begins at creation, not at the first local edit.
+            planned[name] = before[name]
+            continue
         try: planned[name] = merge_file(name, old.get(name), new.get(name), before[name])
         except ValueError: conflicts.append(name)
     if conflicts: return {'applied': False, 'conflicts': conflicts, 'changed': [], 'next': 'Resolve explicitly in a project PR; nothing was overwritten.'}
@@ -225,7 +277,12 @@ def inspect(root, expected_revision=None):
         checks = wf['required_checks']
         if not isinstance(checks,list) or not checks or any(not isinstance(x,str) or not x.strip() for x in checks) or len(set(checks))!=len(checks): raise ValueError('List unique required GitHub check names')
         if not {'descriptor','tracker-link'} <= set(checks): raise ValueError('Descriptor and tracker-link checks are required')
-        for name in ('AGENTS.md','docs/DELIVERY.md','docs/PROJECT.md','docs/CHANGELOG.md','docs/TRACKER_AGENT_WORKFLOW.md','scripts/task_tracker.py','scripts/tracker_pr_check.py','scripts/tracker_delivery_policy.py'):
+        layout = json.loads(standard.safe_path(root, LAYOUT).read_text())
+        if layout != LAYOUT_DATA: raise ValueError('Use the separated repository/system/runtime layout')
+        required = set(FILES.values()) | set(FORWARDS) | {'docs/repository/TRACKER.md'}
+        required.update('.workflow/tools/' + name for name in HELPERS)
+        required.update('scripts/' + name for name in HELPERS)
+        for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)
         ci=standard.safe_path(root,'.github/workflows/delivery-check.yml').read_text()

@@ -24,8 +24,10 @@ def files(inputs=INPUTS, revision=OLD, *_args):
             'modules':[{'id':'product','name':'Product','description':'Product functionality'}]}
     out={'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
          'tracker/engine.json':project.dumps({'repository':data['tracker']['repository'],'revision':data['tracker']['revision']}),
-         'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'# pinned client\n',
-         'scripts/tracker_pr_check.py':'# link check\n','scripts/tracker_delivery_policy.py':'# policy check\n'}
+         'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'root = Path(__file__).resolve().parents[1]\n',
+         'scripts/tracker_pr_check.py':'root = Path(__file__).resolve().parents[1]\n','scripts/tracker_delivery_policy.py':'# policy check\n'}
+    project.separate_export(out)
+    out.update(project.layout_files())
     for source,destination in project.FILES.items():
         out[destination]=(project.SOURCE/'templates/workflow'/source).read_text().replace('__STANDARD_REVISION__',revision)
     return out
@@ -140,12 +142,63 @@ class Projects(unittest.TestCase):
             source=Path(command[command.index('--config')+1]) if '--config' in command else self.root/'tracker/config.json'
             target=Path(command[command.index('--output')+1]);(target/'tracker').mkdir(parents=True)
             (target/'tracker/config.json').write_text(source.read_text())
+            (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            (target/'scripts').mkdir()
+            for name in project.HELPERS:
+                (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
             return mock.Mock(returncode=0,stderr='',stdout='')
         self.create();config=self.json('tracker/config.json');config['refresh_seconds']=120;self.put('tracker/config.json',config)
         with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=exporter):
             result=REAL_RENDER(INPUTS,NEW,engine)
         self.assertEqual(json.loads(result['tracker/config.json'])['refresh_seconds'],60)
         self.assertEqual(self.json('tracker/config.json')['refresh_seconds'],120)
+    def test_project_knowledge_is_never_refreshed_even_if_untouched(self):
+        self.create()
+        incoming=files(INPUTS,NEW)
+        owned=[name for name in incoming if name.startswith(project.PROJECT_AREAS)]
+        before={name:(self.root/name).read_text() for name in owned}
+        for name in owned:incoming[name]='Upstream replacement would lose project knowledge.\n'
+        with mock.patch.object(project,'render',return_value=incoming):
+            result=project.upgrade(self.root,NEW,'unused',apply=True)
+        self.assertTrue(result['applied'])
+        self.assertEqual(before,{name:(self.root/name).read_text() for name in owned})
+        self.assertEqual(self.json(project.BASELINE)['files'],incoming)
+    def test_missing_project_knowledge_needs_manual_repair(self):
+        self.create();(self.root/'docs/runtime/DELIVERY.md').unlink()
+        result=project.upgrade(self.root,NEW,'unused',apply=True)
+        self.assertFalse(result['applied'])
+        self.assertTrue(any('docs/runtime/DELIVERY.md' in e for e in result['errors']))
+        self.assertFalse((self.root/'docs/runtime/DELIVERY.md').exists())
+        self.assertEqual(self.json('delivery.json')['standard']['revision'],OLD)
+    def test_legacy_layout_stops_without_writes(self):
+        self.create();base=self.json(project.BASELINE);base['files'].pop(project.LAYOUT);self.put(project.BASELINE,base)
+        before={p:p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result=project.upgrade(self.root,NEW,'unused',apply=True)
+        self.assertEqual(result['conflicts'],['legacy mixed layout'])
+        self.assertEqual(before,{p:p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
+    def test_layout_and_canonical_files_are_required(self):
+        self.create();self.put(project.LAYOUT,dict(project.LAYOUT_DATA,system='docs/'))
+        self.assertTrue(any('separated' in e for e in self.errors()))
+        self.put(project.LAYOUT,project.LAYOUT_DATA)
+        (self.root/'docs/repository/WORKFLOW.md').unlink()
+        self.assertTrue(any('WORKFLOW.md' in e for e in self.errors()))
+    def test_wrappers_preserve_cli_imports_and_project_root(self):
+        import subprocess
+        import runpy
+        source={'docs/TRACKER_AGENT_WORKFLOW.md':'Guide'}
+        for name in project.HELPERS:
+            source['scripts/'+name]=("from pathlib import Path\nROOT = Path(__file__).resolve().parents[1]\n"
+                "VALUE = 42\nif __name__ == '__main__': print(ROOT)\n") if name != 'tracker_delivery_policy.py' else 'VALUE = 42\n'
+        project.separate_export(source)
+        for name,content in source.items():
+            p=self.root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(content)
+        for name in project.HELPERS:
+            self.assertEqual(runpy.run_path(str(self.root/'scripts'/name))['VALUE'],42)
+            if name != 'tracker_delivery_policy.py':
+                result=subprocess.check_output([sys.executable,str(self.root/'scripts'/name)],cwd=self.tmp.name,text=True)
+                self.assertEqual(result.strip(),str(self.root.resolve()))
+        source={'docs/TRACKER_AGENT_WORKFLOW.md':'Guide','scripts/task_tracker.py':'unexpected export'}
+        with self.assertRaisesRegex(ValueError,'layout changed'):project.separate_export(source)
     def test_onboarding_preview_and_apply_do_not_claim_publication(self):
         self.create();calls=[]
         def request(path,payload=None,optional=False):

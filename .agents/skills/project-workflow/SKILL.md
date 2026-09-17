@@ -7,15 +7,17 @@ description: Follow MojoTheApe's shared project workflow when creating or onboar
 
 ## Find the adopted instructions
 
-Read project `AGENTS.md`, `delivery.json`, `docs/PROJECT.md`, `docs/DELIVERY.md` and
-its Tracker guide/config. Master source: `https://github.com/MojoTheApe/master-repo`.
+Read project `AGENTS.md` and `delivery.json`, then follow their reading map.
+Separated projects keep Git/Tracker rules in `docs/repository/`, product knowledge
+in `docs/system/` and operational safeguards in `docs/runtime/`. Earlier pins may
+use forwarding or legacy paths; follow their own checked-in contract. Master source: `https://github.com/MojoTheApe/master-repo`.
 Use a clean checkout at the descriptor's exact commit and read `standard.md` plus
 the relevant profile. For schema 1, follow that pinned version's semantics. Never
 silently apply newer schema 2 rules to an old project.
 
 This skill is installed once per agent environment. Its canonical copy lives at
 `.agents/skills/project-workflow/SKILL.md` in Master Repo. Project AGENTS files are
-short pointers with local instructions; they are not copies of this global skill.
+short reading maps; they are not copies of this global skill.
 Do not assume files outside the installed skill directory exist. Locate or obtain
 authorized pinned source checkouts explicitly. An updated skill is a navigator,
 not permission to upgrade project pins or replace unique project behavior.
@@ -99,7 +101,7 @@ or migrate other consumers merely as a test.
 
 ## Keep shared and local knowledge current
 
-`docs/PROJECT.md` describes the implemented system; `docs/CHANGELOG.md` explains
+`docs/system/PROJECT.md` describes the implemented system; `docs/system/CHANGELOG.md` explains
 meaningful changes and reasons with ticket/PR links. Preserve original specs and
 distinguish plans from implemented features. Documentation changes belong in the
 implementation PR and independent review.
@@ -113,3 +115,7 @@ prepared proposal. Do not impose an automatic consumer upgrade.
 Report briefly: result, issue/PR, pins and checks, actual stage/delivery/connection
 proof, preserved exceptions and any concrete remaining setup. Keep explanations
 readable for a nontechnical owner.
+
+Keep process history in `docs/repository/CHANGELOG.md`. System/runtime files are
+project-owned; never refresh their contents from an upstream template. Shared
+upgrades of a legacy mixed layout require an audited split, not a bulk overwrite.

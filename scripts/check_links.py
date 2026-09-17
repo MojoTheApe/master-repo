@@ -2,6 +2,8 @@
 """Check local Markdown file links; external links/anchors are not network-tested."""
 
 from pathlib import Path
+import posixpath
+import project
 import re
 import sys
 from urllib.parse import unquote, urlparse
@@ -18,8 +20,15 @@ def main():
             parsed = urlparse(link)
             if parsed.scheme or not parsed.path:
                 continue
-            target = page.parent / unquote(parsed.path)
-            if not target.exists():
+            if page.parent == root/'templates/workflow':
+                # Template links are relative to their generated destination.
+                destination = project.FILES[page.name]
+                target_name = posixpath.normpath(posixpath.join(posixpath.dirname(destination), unquote(parsed.path)))
+                generated = set(project.FILES.values()) | set(project.FORWARDS) | {'docs/repository/TRACKER.md'}
+                exists = target_name in generated
+            else:
+                exists = (page.parent / unquote(parsed.path)).exists()
+            if not exists:
                 broken.append(str(page.relative_to(root)) + ": " + link)
     if broken:
         print("Broken local links:\n" + "\n".join(broken))
