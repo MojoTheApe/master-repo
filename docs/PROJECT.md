@@ -27,3 +27,9 @@ source. ReactForge installer/deployment redesign remains separate.
 Read [adoption](adoption.md), [descriptor](descriptor.md), [versioning](versioning.md)
 and [change history](CHANGELOG.md). Original agreed requirements are preserved in
 `docs/specs/shared-workflow.md`; implemented current behavior is described here.
+
+The explicit schema-2 n8n-source profile ends source work at an admitted main
+merge, with runtime transfer owned by a separate process. It reuses Tracker's
+existing reviewed-merge policy; no Tracker engine change is needed. The ordinary
+n8n profile still requires verified production. The Action's opt-in draft mode
+supports audited adoption feedback without claiming completed setup.

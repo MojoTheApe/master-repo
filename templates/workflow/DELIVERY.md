@@ -28,6 +28,11 @@ Configure branch protection separately and verify that the required checks exist
 Merged records inclusion in main. A local manual-pull project completes at that
 verified merge. VPS/n8n/package profiles require their actual delivery and checks,
 recorded with `record-delivery`. Failed or pending delivery remains unfinished.
+The explicitly selected n8n-source profile completes the Git source task after
+the admitted main merge. n8n transfer/publication is a separate process and must
+never be claimed from Git evidence. Existing runtime acceptance criteria survive
+adoption. For repository-only work, label stage evidence as Git checks; use the
+existing n8n DEV as the runtime counterpart when runtime verification is required.
 A partially implemented ticket stays active. Never substitute a closed Issue or
 non-code completion for missing code/delivery evidence.
 

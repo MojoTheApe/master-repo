@@ -9,7 +9,7 @@ commands in it are never executed by the validator.
 | --- | --- |
 | `project` | Name and actual GitHub repository URL |
 | `standard` | Official source, exact 40-character commit, proposed/released version |
-| `profile` | vps, n8n, local, package or tooling |
+| `profile` | vps, n8n, n8n-source, local, package or tooling |
 | `adoption` | draft until real setup and verification are complete; then ready |
 | `workflow` | Staging boolean, permanent main/stage names, exact required check names |
 | `tracker` | Compatible engine pin, workspace ID, registration state and proof |
@@ -24,10 +24,20 @@ explicitly different profile. VPS/n8n require verified production. Staging is on
 default for every consumer profile; use a deliberate project choice to disable it.
 Stage and production identities/procedures remain separate.
 
+The owner may explicitly select `n8n-source` for Git-only delivery. It uses
+reviewed-merge, has no production environment requirement, and describes the
+separate runtime handoff. Its stage target must say whether the recorded evidence
+is repository CI or an actual n8n DEV verification. This does not downgrade the
+ordinary n8n profile or finish historical tasks with outstanding runtime scope.
+
 The validator checks required fields, pins, CI Action revision, expected stage
 columns, matching Tracker policy, documents and remaining setup markers. Strict
 validation rejects draft/pending setup. `--allow-draft` permits setup findings but
 never structural errors. A syntactically valid description is not runtime proof.
+
+The shared Action accepts `allow-draft: 'true'` only as an explicit adoption-CI
+choice. The default remains strict. Structural errors still fail; a green draft
+check does not prove readiness, registration, publication or runtime setup.
 
 The Tracker `delivery_policy` is derived from stage target/choice, completion,
 production identity and required checks. Keep both files synchronized in each

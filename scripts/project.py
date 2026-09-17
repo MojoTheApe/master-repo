@@ -8,7 +8,7 @@ import tempfile
 import standard
 
 SOURCE = Path(__file__).resolve().parents[1]
-PROFILES = {'vps': 'verified-production', 'n8n': 'verified-production', 'local': 'reviewed-merge',
+PROFILES = {'vps': 'verified-production', 'n8n': 'verified-production', 'n8n-source': 'reviewed-merge', 'local': 'reviewed-merge',
             'package': 'verified-stable-package', 'tooling': 'reviewed-merge'}
 PHASES = ['idea', 'backlog', 'todo', 'in_progress', 'review', 'stage', 'merged']
 BASELINE = '.workflow/template-base.json'

@@ -1,5 +1,21 @@
 # System changes
 
+## Git-only n8n source delivery (MR-5)
+
+Added explicit n8n-source selection for projects whose owner separates reviewed
+Git delivery from n8n installation. Permanent stage/main, independent review,
+exact-content promotion and task acceptance remain mandatory. Runtime DEV is the
+counterpart of stage; Git-only checks never claim runtime verification.
+
+Added an explicit draft-validation Action input, strict by default, so incomplete
+audited adoption can receive CI feedback without masquerading as ready. Existing
+n8n production completion and schema-1 behavior are unchanged. Tracker impact:
+no engine/schema change; its existing reviewed-merge policy supports this scope.
+Consumers still require explicit migration and historical evidence reconciliation.
+
+Issue: https://github.com/MojoTheApe/master-repo/issues/5
+Consumer pilot: https://github.com/MojoTheApe/n8n-namari-automation/issues/9
+
 ## Proposed 1.0.0 — complete shared workflow (MR-3)
 
 Expanded delivery-only guidance into the complete project and ticket lifecycle:
