@@ -5,6 +5,10 @@ inputs:
     description: Path to the checked-out consumer project
     default: .
     required: false
+  allow-draft:
+    description: Explicitly validate structural correctness during an incomplete audited adoption; never proves readiness
+    default: 'false'
+    required: false
 runs:
   using: composite
   steps:
@@ -13,4 +17,12 @@ runs:
       env:
         PROJECT_ROOT: ${{ inputs.project-root }}
         ACTION_REVISION: ${{ github.action_ref }}
-      run: python3 "$GITHUB_ACTION_PATH/scripts/standard.py" validate --root "$PROJECT_ROOT" --expected-revision "$ACTION_REVISION"
+        ALLOW_DRAFT: ${{ inputs.allow-draft }}
+      run: |
+        args=()
+        case "$ALLOW_DRAFT" in
+          true) args+=(--allow-draft) ;;
+          false) ;;
+          *) echo 'allow-draft must be true or false' >&2; exit 2 ;;
+        esac
+        python3 "$GITHUB_ACTION_PATH/scripts/standard.py" validate --root "$PROJECT_ROOT" --expected-revision "$ACTION_REVISION" "${args[@]}"

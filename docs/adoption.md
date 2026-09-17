@@ -21,7 +21,8 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
 
    Add `--apply` to create files; add `--no-staging` for an explicitly disabled stage.
    `--python /path/to/python3.12` selects the export runtime if necessary. Profiles:
-   `vps`, `n8n`, `local` (manual pull), `package`, `tooling`.
+   `vps`, `n8n`, `n8n-source` (explicit Git-only scope), `local` (manual pull),
+   `package`, `tooling`.
 4. Preserve the supplied specs, describe the actual system, adapt modules, check
    commands, required CI jobs and environment procedures. Synchronize the
    descriptor's policy and Tracker config; validation rejects disagreement. Draft
@@ -65,6 +66,19 @@ upgrader stops for this audited adoption; it does not guess or overwrite files.
 After reviewing the imported base and the merged result, retain the original
 rendered template as baseline, with actual deviations in the project files and
 `delivery.json` exceptions. Test both local behavior and shared checks.
+
+An owner-authorized Git-only n8n adoption may use `n8n-source`; see the
+[profile](../profiles/n8n.md). Keep an unreleased selected revision visibly draft.
+To obtain hosted feedback during audited adoption, the pinned shared Action may
+explicitly use `allow-draft: 'true'`. This permits incomplete setup findings only;
+it does not authorize runtime work or pretend a standard release exists. Remove
+that option when strict readiness is verified. Record any one-time bootstrap
+merge exception in the project issue/runbook before applying the new contract.
+
+Audit already-completed issues and their original merged PR evidence before
+activating the new policy; retain their accepted history through an explicit,
+reviewed reconciliation record, without inventing old stage or runtime tests.
+Unfinished tasks keep their original acceptance criteria and remain unfinished.
 
 ## Skill distribution
 

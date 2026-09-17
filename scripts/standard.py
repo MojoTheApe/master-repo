@@ -231,7 +231,7 @@ def main(argv=None):
         command.add_argument("--allow-draft", action="store_true")
     init = commands.add_parser("init")
     init.add_argument("--root", type=Path, required=True)
-    init.add_argument("--profile", choices=("vps", "n8n", "local", "package", "tooling"), required=True)
+    init.add_argument("--profile", choices=("vps", "n8n", "n8n-source", "local", "package", "tooling"), required=True)
     init.add_argument("--repository", required=True)
     init.add_argument("--name", required=True)
     init.add_argument("--id-prefix", required=True)

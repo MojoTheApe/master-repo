@@ -62,6 +62,28 @@ class Projects(unittest.TestCase):
         self.create(dict(INPUTS,staging=False));self.assertEqual(self.errors(),[])
         self.assertNotIn('stage',self.json('tracker/config.json')['workflow'])
         self.assertEqual(self.json('delivery.json')['environments'],{})
+    def test_n8n_source_is_explicit_and_does_not_claim_runtime_delivery(self):
+        self.create(dict(INPUTS,profile='n8n-source'))
+        data=self.json('delivery.json')
+        self.assertEqual(self.errors(),[])
+        self.assertEqual(data['completion'],'reviewed-merge')
+        self.assertEqual(set(data['environments']),{'stage'})
+        self.assertTrue(data['workflow']['staging'])
+        self.assertEqual(self.json('tracker/config.json')['delivery_policy']['delivery_target'],
+                         'https://github.com/owner/example:main')
+        self.assertEqual(project.descriptor(dict(INPUTS,profile='n8n'),OLD)['completion'],
+                         'verified-production')
+        data['profile']='n8n';self.put('delivery.json',data)
+        self.assertTrue(any('Profile/completion mismatch' in error for error in self.errors()))
+    def test_n8n_source_upgrade_preserves_staging_and_local_handoff(self):
+        self.create(dict(INPUTS,profile='n8n-source'))
+        data=self.json('delivery.json')
+        data['delivery']['procedure']='Agent transfers an exact accepted revision in a separate runtime task.'
+        self.put('delivery.json',data)
+        result=project.upgrade(self.root,NEW,'unused',apply=True)
+        self.assertTrue(result['applied'])
+        self.assertEqual(self.json('delivery.json')['delivery']['procedure'],data['delivery']['procedure'])
+        self.assertEqual(self.errors(),[])
     def test_drift_and_wrong_pins_fail(self):
         self.create();cfg=self.json('tracker/config.json');cfg['delivery_policy']['staging']['enabled']=False;self.put('tracker/config.json',cfg)
         self.assertTrue(any('policy differs' in x for x in self.errors()))

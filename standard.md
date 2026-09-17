@@ -108,6 +108,7 @@ release another task's stage ownership. With staging disabled, use working branc
 | --- | --- |
 | VPS | Installed version and required production behavior verified |
 | n8n | Intended workflow updated/published and its result verified |
+| n8n-source, explicitly selected | Reviewed and checked source merged into main; n8n delivery is a separate process |
 | Local manual pull | Admitted main merge; owner may pull later |
 | Package, explicitly selected | Stable package published and agreed installation check passed |
 | Tooling/docs | Admitted main merge; no service deployment |

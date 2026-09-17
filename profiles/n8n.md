@@ -1,5 +1,35 @@
 # n8n workflows
 
+## Explicit Git-only scope
+
+Select schema-2 `n8n-source` only when the owner explicitly ends this project's
+source-delivery task at the admitted main merge. It uses `reviewed-merge`; the
+ordinary `n8n` profile continues to require `verified-production`. The Git task
+does not claim any n8n import, publication, execution or business result.
+
+Keep permanent `stage` and `main` branches. The existing n8n DEV environment is
+the runtime counterpart of stage, not a third release lane. A repository-only
+adoption can verify repository checks on the exact stage tree without accessing
+n8n; name that Git target explicitly and label its evidence as repository checks.
+Never describe those checks as a successful DEV runtime test. If a later workflow
+task requires runtime testing, record the actual external DEV evidence before
+promotion; missing evidence stays pending. Source-only scope does not waive the
+task's acceptance criteria, independent review or required checks.
+
+Agent-operated transfer is a valid separate runtime process while direct Git
+integration is unavailable. Its handoff identifies the exact accepted main commit,
+changed workflow definitions, required runtime bindings, checks and rollback
+reference. The runtime operator reconciles live state, preserves credentials and
+IDs, and records its own result. Switching the transfer mechanism later does not
+reverse the stage-before-main order or authorize production by Git merge alone.
+
+For shared automation kept in multiple repositories, designate one maintained
+source per workflow. Keep historical exports explicitly read-only; use distinct
+linked tasks only for genuinely separate outcomes. A source-only adoption must
+not silently finish existing tasks that still promise runtime delivery.
+
+## Runtime delivery scope
+
 Inspect the installed n8n version, license and current development integration.
 Reuse existing working delivery. A workflow change and an upgrade of the n8n
 server/node packages are different releases; use the VPS profile for the latter.
