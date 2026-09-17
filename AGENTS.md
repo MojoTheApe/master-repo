@@ -24,3 +24,10 @@ consumer's existing tracker and operational safeguards.
 The project-workflow skill lives in `.agents/skills/project-workflow/SKILL.md`.
 It supports adoption and ordinary work under a pinned standard. It must not turn
 a small feature request into a repository-wide migration.
+
+For MR-3 and subsequent process work, read `docs/PROJECT.md` and keep it plus
+`docs/CHANGELOG.md` current. Assess Task Tracker impact on every process/contract
+change; record no impact with reason or link/propose a concrete companion fix.
+The owner has authorized MR-3 together with Task Tracker TT-59. Arrange final
+review through a separate non-implementing subagent. This self repository keeps its
+existing local Issue reference and tooling completion exception during the change.

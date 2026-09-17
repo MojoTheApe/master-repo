@@ -1,93 +1,152 @@
-# Shared delivery standard
+# Shared project workflow
 
-## What is shared
+This is the canonical process for new projects. Task Tracker owns its application
+and command guide; every project's Issues stay in that project's repository.
+Project settings choose staging and delivery. Existing projects adopt changes in
+separate reviewed migrations, preserving their local controls and history.
 
-Each project retains its existing tracker, test suite, authorization rules and
-deployment implementation. This standard supplies common release guarantees and
-a description of how the project meets them. It is not a universal installer.
+## Ticket lifecycle
 
-Ordinary software defaults to one `main` integration branch and short-lived
-ticket branches. A platform-specific branch mapping, including native n8n source
-control, can differ when documented. Preserve the same review and approval gates.
+| Event | Responsible actor | Status and required result |
+| --- | --- | --- |
+| Owner asks for an idea | Agent | Idea; record context under Tracker's intake rules |
+| Owner asks for a task | Agent | Backlog; description, scope and acceptance criteria |
+| Owner selects work | Owner directs agent | To Do; prioritization is not permission to implement |
+| Owner requests development | Implementer | In Progress; claim Tracker slot, linked working branch |
+| Implementation and self-check ready | Implementer | Review; ready PR, two-way ticket links, applicable checks |
+| Review requests fixes | Implementer | In Progress while editing the same branch; then Review again |
+| Reviewed source PR enters stage | Agent/explicit automation | Stage; exact candidate recorded, when enabled |
+| Stage passes and promotion merges | Agent/explicit automation | Merged; verified main integration |
+| Staging disabled, reviewed PR merges | Agent/explicit automation | Merged; verified main integration |
+| Required delivery is verified | Authorized delivery actor | Complete according to the project rule; no extra Done column |
 
-## Ticket and PR lifecycle
+An agent may move planning statuses on the owner's request. Preserve Tracker
+classification, dependency, duplication and execution-slot rules. A ready PR may
+enter Review while CI runs; Review does not itself authorize merge. A failed check
+or delivery records the reason and next action without declaring completion.
+An abandoned unmerged PR returns its ticket to planning or explicit cancellation.
+Partial implementation stays unfinished, including a partly delivered parent task.
+For a PR covering several tasks, evaluate each task's full scope separately.
 
-| Event | Logical status and evidence |
+Task bodies use Tracker's Description and Specifications structure. Read the whole
+task, including prior decisions; retain scope/history when requirements change.
+Include relevant specs, branch, PR and current handoff links. Do not create a second
+ticket system alongside project Issues.
+
+## Names and links
+
+| Object | Format | Example |
+| --- | --- | --- |
+| Public task ID | Project prefix + GitHub Issue number | RF-67 for Issue #67 |
+| Issue title | Clear result, without manually adding the ID | Fix project search |
+| Working branch | `codex/<public-id-lowercase>-<short-name>` | `codex/rf-67-fix-project-search` |
+| PR title | All related IDs + summary | `[RF-67, RF-68] Improve search` |
+| PR body | Exactly one explicit link line | `Tracker issues: RF-67, RF-68` |
+
+For multiple related tasks, the branch names the primary one. PR numbers are
+assigned separately: PR #79 may implement RF-67. Do not put a speculative PR number
+in the branch. Validate the repository, task existence, IDs, classification and
+status. Link each PR back from all its Issues. Use no automatic closing keywords
+in PR text or commit messages: stage/main integration must not prematurely close
+work awaiting delivery. Preserve historical aliases, links and open branches during
+adoption; finish existing open PRs before activating new validation.
+
+## Independent review and merge
+
+The author implements, self-checks, updates affected docs and prepares the PR.
+The active agent automatically starts a **different subagent** for independent
+review; the owner need not ask again. It reads the ticket, project instructions,
+affected system description and full change. It reports exact head/base, findings,
+checks and verdict. It does not implement its own fixes. If it edits code, another
+reviewer must provide the final independent approval.
+
+Fixes use the original branch, followed by self-check and re-review of current
+content. Changed head/base, task scope or policy invalidates earlier approval.
+Record the durable review through Tracker's `record-review`; run `check-merge N`
+immediately before merging. A missing reviewer is a reported limitation, not a
+reason to substitute self-review. Distinct identity strings record the real review;
+they do not prove that a subagent actually ran.
+
+A skill file or PR creation does not launch a model on GitHub. Automatic review
+here means the running agent invokes its available subagent mechanism. The
+Tracker's evidence commands do not merge or deploy. Configure and verify actual
+branch rules separately; `tracker-link` CI only checks links. Never claim an agent
+admission check is a GitHub-enforced protection. Merge after independent approval
+and required checks within the authorized task; do not add an unnecessary manual
+approval round. Existing production authorization still applies.
+
+## Optional stage before main
+
+Staging defaults to enabled. Permanent branches are `stage` and `main`:
+
+1. Working branch -> stage PR: implementation and independent review.
+2. Record Stage only after its actual merge; deploy/test the configured stage target.
+3. Stage -> main PR: same tickets and exactly the passed content.
+
+Use one active task or deliberately related task set on stage. Keep the original
+working branch until promotion finishes. If the first PR already merged, fixes
+get another linked PR from that same branch. Disable automatic deletion of it;
+never delete permanent branches as task cleanup. Stage starts from current main
+plus only the intended task set. Reconcile stage with main before the next task.
+
+Record exact source/tree identities and results. A different service merge commit
+is acceptable if the resulting tree matches approved content and its first parent
+matches the reviewed baseline. Use merge or squash, not rebase merge. Promotion
+reuses the valid review of unchanged stage content; a second full review solely
+because a promotion PR exists is unnecessary. Check links, task set, required CI,
+main baseline and passing stage evidence again.
+
+If main changes, integrate it in the working branch, resolve conflicts there,
+repeat review and create a fresh same-task stage candidate and verification.
+Changes cannot be smuggled into a promotion PR or main. A later failure/retry cannot
+release another task's stage ownership. With staging disabled, use working branch
+-> main and omit Stage from the board; independent review and CI remain required.
+
+## Delivery is separate from merge
+
+| Profile | Completion condition after review and main merge |
 | --- | --- |
-| Accepted task | TODO; real ticket with behavior and acceptance criteria |
-| Work starts | IN PROGRESS; ticket-linked branch, subject to the existing tracker |
-| PR ready for review | REVIEW; PR links to the ticket, ticket links to the PR |
-| Changes requested | IN PROGRESS while editing; return to REVIEW when ready |
-| CI or deployment fails | Unfinished; record the failed step, never claim success |
-| PR closed without merge | TODO or cancelled per tracker; never automatically DONE |
-| Merge | Record included commit/PR; deployment-dependent work remains REVIEW |
-| Required delivery verified | DONE for the included, completed tickets |
+| VPS | Installed version and required production behavior verified |
+| n8n | Intended workflow updated/published and its result verified |
+| Local manual pull | Admitted main merge; owner may pull later |
+| Package, explicitly selected | Stable package published and agreed installation check passed |
+| Tooling/docs | Admitted main merge; no service deployment |
 
-Map these logical statuses onto the project's current tracker; do not rename its
-states or add another tracker unnecessarily. Its existing automation remains the
-authority. Repeated or out-of-order events must not regress completed work or
-close tickets for a different release. Parent tickets stay open for partial work.
+Merged is an integration fact. Required delivery pending/failed does not count as
+complete in task views, dependencies or release readiness. Record delivery against
+actual merged revisions and configured target. Closing an Issue, repeating sync or
+calling a non-code completion command must not bypass that requirement. Decide
+completion and task scope before implementation, not after a failed release.
 
-For deployment-dependent work, avoid GitHub auto-close keywords at merge. Use an
-explicit ticket reference. This repository uses `Tracker issues: #1`; consumers
-retain their own validated convention (for example ReactForge's `RF-N` IDs).
-CI should validate real ticket linkage through the existing tracker integration.
-Where a transition is manual, document the responsible role and command instead
-of claiming it is automated.
+Project runbooks own actual installers, n8n synchronization, credentials, approvals,
+backup and compatible rollback. Git storage does not authorize deployment. Use
+existing authorization where it covers the action. Stage evidence is not production
+proof; avoid unreviewed changes and arbitrary PR execution on production runners.
+Keep deployments serialized and prevent stale jobs replacing newer versions.
+Preserve operational data, native admission and update/hotfix behavior, including
+ReactForge's installer, which is outside this standard migration's scope.
 
-Completion depends on delivery type: a server release is verified on production;
-a local app has a published stable package and the agreed installation check;
-docs/tooling without deployment may complete after review, checks and merge.
+## Living documentation
 
-## Candidate, approval and release
+`docs/PROJECT.md` describes the current implemented system, components, important
+choices, dependencies and limitations. `docs/CHANGELOG.md` records meaningful
+changes and why they were chosen, linked to tickets/PRs. Original specifications
+remain under `docs/specs/` or existing locations; plans are distinguished from
+implemented behavior. Update affected documentation in the same implementation PR,
+or explain no impact. Independent review checks this obligation.
 
-1. Verify the actual merged source revision, then build/assemble one candidate.
-2. Identify source commit and immutable artifact hashes/image digests. Include
-   independently versioned components, dependencies and schema compatibility.
-3. Deploy the candidate to staging or the applicable test/pilot environment.
-4. Record test results against that candidate and environment.
-5. Obtain authorized approval of that exact candidate before production delivery.
-6. Deliver the same approved content with destination-specific configuration.
-   Main advancing must not silently change the approved candidate.
-7. Verify installed/published identity and the required functional behavior.
-8. Record the release and its included PRs/tickets; complete only verified work.
+## Ownership and synchronized evolution
 
-Serialize deliveries to each target. An old job must not replace a newer version;
-do not cancel a live deployment transaction merely because another commit arrived.
-Approval identifies a candidate and target, not an arbitrary future branch head.
-Use existing authorization when it covers the action; finish independent
-preparation before requesting any missing production approval.
+Master Repo owns this process, templates, descriptor, adoption/upgrade tooling and
+the canonical shared skill. Task Tracker owns command semantics, configuration,
+Issue transitions, board and release completion. Each process change checks the
+other repository: record no impact with a reason, or propose a concrete linked fix
+and compatible migration. Do not silently change another repo without task scope.
 
-Use GitHub environment approvals where supported by the actual plan. Otherwise
-use the project's explicit authorized promotion mechanism and retain its receipt.
-A manual button alone is not proof of restricted approval. Document enforcement
-gaps; never claim branch protection or reviewer approval that is not configured.
-
-## State, rollback and retention
-
-Code/artifact history, operational data, secrets and deployment receipts have
-different homes and retention needs. Git is not a database or credential backup.
-Backups need a verified recovery process and appropriate off-device protection.
-
-Keep current stage/prod, in-flight candidates and compatible selected rollback
-releases. Also protect anything referenced by services, previews, mounts or
-required evidence. A fixed folder count is not a safe deletion criterion.
-Default cleanup is an exact dry-run inventory. Destructive cleanup follows the
-project's authorized policy and rechecks references before removal.
-
-Code rollback must respect current data/schema compatibility. It must not silently
-overwrite new business data or pretend to reverse external side effects.
-
-## Boundaries and measurements
-
-PR checks must not run arbitrary PR code on production-connected runners or expose
-production credentials. A deployment runner executes trusted, approved delivery
-jobs with scoped access. Hosting-specific safeguards belong to the profile.
-
-Keep necessary native admission and independent verification. Staging evidence
-cannot simply be relabelled as production proof. In ReactForge, preserve existing
-hotfix/update semantics and qualifications; redesign is a deferred task.
-
-Measure build, transfer, preparation, backup, tests, activation, verification and
-recovery separately. Report total elapsed time and gaps without calling every gap
-human wait. A descriptor and a successful merge are not runtime evidence.
+Compatible standard and Tracker revisions are pinned. Project instructions and
+exceptions remain local; updating the globally installed skill cannot replace them.
+A standard upgrade compares the previous template, new template and current
+project, preserves unique code/installers, and reports conflicts for explicit
+resolution. Bulk upgrades use an inventory and a separate reviewed PR per project.
+See [adoption](docs/adoption.md), [versioning](docs/versioning.md) and the
+[descriptor contract](docs/descriptor.md) for executable procedures.

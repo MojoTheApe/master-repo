@@ -1,65 +1,87 @@
-# Adopt the standard
+# Creating, connecting and adopting projects
 
-## New projects
+## New project procedure
 
-Use a reviewed immutable master-repo revision. Run `standard.py init` in preview
-mode, choose `vps`, `n8n` or `local`, and apply to the intended project. A preview
-does not create the destination. The resulting setup is explicitly draft.
+The running agent performs the whole onboarding within the new-project request.
+Use a reviewed published standard revision. If only a selected candidate exists,
+state that fact and keep the result draft. Never invent a tag or deployment target.
 
-Fill `delivery.json` with actual project details and edit `docs/DELIVERY.md`.
-Retain the existing tracker, or configure the selected tracker for a new project.
-Add the existing application checks and real tracker validation to CI. Verify
-environment separation, backup/rollback and the applicable delivery process before
-setting `adoption` to `ready`. Do not invent target URLs or executable commands.
+1. Create/inspect the authorized project repository; choose its profile, prefix,
+   shared workspace ID and real environment/check procedures. Staging defaults on.
+2. Obtain clean official checkouts at the selected standard commit and the exact
+   Tracker commit in `compatibility.json`. The scaffold refuses a dirty or different
+   engine. Python 3.11+ runs the Tracker exporter; Master validation supports 3.9+.
+3. Preview, then apply the scaffold from the standard checkout:
 
-## Existing projects
+   ```sh
+   python3 scripts/standard.py init --root /path/to/new-project --profile local \
+     --repository owner/new-project --name "New Project" --id-prefix NP \
+     --workspace-id new-project --tracker-root /path/to/pinned-tracker
+   ```
 
-Audit first. Read their AGENTS.md, tracker guide, CI and actual deployment
-configuration. Inspect current branches, work and live references read-only when
-authorized. Preserve useful integrations and any stronger local safeguards.
+   Add `--apply` to create files; add `--no-staging` for an explicitly disabled stage.
+   `--python /path/to/python3.12` selects the export runtime if necessary. Profiles:
+   `vps`, `n8n`, `local` (manual pull), `package`, `tooling`.
+4. Preserve the supplied specs, describe the actual system, adapt modules, check
+   commands, required CI jobs and environment procedures. Synchronize the
+   descriptor's policy and Tracker config; validation rejects disagreement. Draft
+   validation: `python3 scripts/standard.py validate --root PROJECT --allow-draft`.
+   Fill every setup marker; never claim draft placeholders represent real setup.
+5. Publish the initial repository/main using its authorized bootstrap procedure.
+   Use `scripts/onboard.py --root PROJECT --tracker-root PINNED_ENGINE --workspace
+   TRACKER_REGISTRY/workspace.json` to preview branch/label/registration setup.
+   Add `--apply` to create a missing stage from main, initialize project labels and
+   prepare an idempotent registry entry with a fallback config. It preserves
+   differing existing branches and registrations for audit. The engine checkout
+   and the registry editing checkout may be separate.
+6. Create/link the necessary Tracker registry issue/PR and complete its maintained
+   review/publication process. Verify the project's fresh live board: right repo,
+   IDs, modules, exactly the selected columns, successful empty/project sync and
+   effective permissions. Verify private Action access, required check names and
+   branch controls. Local registration alone does not make the project visible.
+7. Record the durable onboarding proof in `tracker.verification`, set registration
+   to `verified`, finish environment verification, then set adoption to `ready`.
+   Run strict validation and actual project tests before claiming full readiness.
 
-The initializer refuses to overwrite **any** destination file and rejects symlink
-targets/parents. If it reports a conflict, manually integrate the proposed changes
-in a normal project PR. Do not remove existing files to make scaffolding succeed.
-AGENTS.md and PR templates often need small additions rather than replacement.
+The generated `.workflow/template-base.json` stores the unmodified generated base
+for future three-way comparisons. Commit it; do not rewrite it to disguise local
+changes. The small Tracker client/config live in the project; the entire Tracker
+app does not. A failure in registration/publication leaves the project visibly
+pending and resumable, with no fabricated completion.
 
-Run the descriptor audit and the project's real checks. Record what is verified,
-what remains draft, and any documented exception. Migrating the description alone
-does not mean staging, deployment or automatic ticket transitions exist.
+## Existing project adoption
 
-## How agents find it
+Audit AGENTS, Tracker config/history, open PRs/branches, CI, release state, actual
+deployment and unique fixes first. Existing Issue IDs, custom labels/modules,
+installers, environment settings, backup/rollback and authorization survive.
+Finish existing open PRs under their original rules before activating the new
+contract; report these blockers rather than renaming history. Reconcile evidence
+for already completed tasks before switching completion rules.
 
-Every adopted repository has a small AGENTS.md pointer to its own descriptor and
-runbook. These files travel with the repository and work without chat history.
-The project-workflow skill is available automatically while working in master-repo.
+Preview in an isolated new directory. The initializer refuses all file collisions
+and symlinks; integrate intentionally in a project issue/PR. Never delete local
+files to satisfy the template. Without a trusted earlier template baseline, the
+upgrader stops for this audited adoption; it does not guess or overwrite files.
+After reviewing the imported base and the merged result, retain the original
+rendered template as baseline, with actual deviations in the project files and
+`delivery.json` exceptions. Test both local behavior and shared checks.
 
-For discovery across other repositories, install that skill once in each Codex
-environment using the supported skill installer, from
-`MojoTheApe/master-repo/.agents/skills/project-workflow` at a reviewed commit.
-Alternatively invoke it explicitly while providing the source repository.
-Installation and access must also be set up on other machines/cloud environments;
-merely storing a skill in GitHub does not install it everywhere.
+## Skill distribution
 
-The skill is deliberately self-contained: it locates the pinned standard from
-the consumer descriptor. It does not rely on relative links outside the installed
-skill directory. If the skill is unavailable, the checked-in AGENTS.md/runbook
-still explains the process and the exact standard reference.
+Canonical source: `.agents/skills/project-workflow/SKILL.md` in Master Repo. Install
+that directory once per agent environment from a reviewed immutable revision using
+its supported skill installation mechanism. Another machine/cloud environment
+needs its own installation. This task changes the source; it does not globally
+install it as a test. Projects keep their short AGENTS and local descriptor/docs,
+not another full copy of the global skill. Their instructions also work without it.
 
-Do not add broad instructions that activate repository migration for unrelated
-tasks. Normal feature work follows the consumer's adopted version; standard
-upgrades are separate tasks. A plugin can package distribution later if needed.
+The skill finds the project's pinned standard/Tracker and follows that version.
+Installing a newer skill does not migrate a project. No instruction relies on
+files next to a globally installed skill; it fetches/locates explicit pinned repos.
 
-## GitHub access
+## Private Action access
 
-This master-repo is private. To use its action from another repository, an owner
-must grant the intended repositories access in the master's Actions settings,
-within the options supported by the current GitHub account/plan. The consumer
-must also allow the pinned action. Test cross-repository access before claiming
-adoption is ready. Do not make the repository public as a workaround.
-
-The scaffolded CI uses a GitHub-hosted runner with `contents: read`. It does not
-receive deployment secrets. The shared action only validates the descriptor; it
-does not execute commands found in that descriptor.
-
-References: [Codex customization](https://learn.chatgpt.com/docs/customization/overview),
-[sharing private Actions](https://docs.github.com/en/actions/how-tos/reuse-automations/share-with-your-private-repository).
+Grant intended consumers access to the private Master Repo Action through the
+actual GitHub account's supported controls and verify it on a real consumer PR.
+Do not make the repository public or expose credentials as a workaround. The
+shared Action only validates data and pins; it does not execute descriptor commands.

@@ -80,6 +80,11 @@ def read_descriptor(root):
 def inspect(root, expected_revision=None):
     root = Path(root).expanduser().absolute()
     config = read_descriptor(root)
+    if not isinstance(config, dict):
+        return [("error", "delivery must be an object")]
+    if config.get("schema_version") == 2:
+        import project
+        return project.inspect(root, expected_revision)
     findings = []
     if not object_keys(config, TOP, "delivery", findings):
         return findings
@@ -226,18 +231,30 @@ def main(argv=None):
         command.add_argument("--allow-draft", action="store_true")
     init = commands.add_parser("init")
     init.add_argument("--root", type=Path, required=True)
-    init.add_argument("--profile", choices=("vps", "n8n", "local"), required=True)
-    init.add_argument("--apply", action="store_true")
+    init.add_argument("--profile", choices=("vps", "n8n", "local", "package", "tooling"), required=True)
+    init.add_argument("--repository", required=True)
+    init.add_argument("--name", required=True)
+    init.add_argument("--id-prefix", required=True)
+    init.add_argument("--workspace-id", required=True)
+    init.add_argument("--no-staging", action="store_true")
+    for cmd in (init, commands.add_parser("upgrade")):
+        if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
+        cmd.add_argument("--tracker-root", type=Path, required=True)
+        cmd.add_argument("--python", default=sys.executable, help="Python 3.11+ for the pinned Tracker exporter")
+        cmd.add_argument("--apply", action="store_true")
     args = parser.parse_args(argv)
     try:
-        if args.command == "init":
+        if args.command in ("init", "upgrade"):
+            import project
             revision = source_revision()
-            names = scaffold(args.root, args.profile, revision, args.apply)
-            print(("Created draft" if args.apply else "Preview only") + " at " + str(args.root.absolute()))
-            for name in names:
-                print("  " + name)
-            print("Standard source: " + revision + "; no project is deployed or marked ready")
-            return 0
+            if args.command == "init":
+                inputs = {"profile": args.profile, "repository": args.repository, "name": args.name,
+                          "prefix": args.id_prefix, "workspace_id": args.workspace_id, "staging": not args.no_staging}
+                result = project.init(args.root, inputs, revision, args.tracker_root, args.python, args.apply)
+            else:
+                result = project.upgrade(args.root, revision, args.tracker_root, args.python, args.apply)
+            print(json.dumps(result, indent=2))
+            return 1 if result.get("conflicts") else 0
         findings = inspect(args.root, args.expected_revision)
         for kind, message in findings:
             print(kind.upper() + ": " + message)

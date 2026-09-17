@@ -1,7 +1,14 @@
 {
   "schema_version": 1,
-  "project": {"name": "Master Repo", "repository": "https://github.com/MojoTheApe/master-repo"},
-  "standard": {"repository": "https://github.com/MojoTheApe/master-repo", "revision": "self", "version": "0.1.0"},
+  "project": {
+    "name": "Master Repo",
+    "repository": "https://github.com/MojoTheApe/master-repo"
+  },
+  "standard": {
+    "repository": "https://github.com/MojoTheApe/master-repo",
+    "revision": "self",
+    "version": "1.0.0"
+  },
   "profile": "standard",
   "adoption": "ready",
   "tracker": {
@@ -10,7 +17,11 @@
     "pr_reference": "Tracker issues: #NUMBER (comma-separated for multiple issues)",
     "validation": "python3 scripts/check_pr.py --event EVENT_JSON --repository MojoTheApe/master-repo"
   },
-  "checks": ["python3 -m unittest discover -s tests -v", "python3 scripts/standard.py validate --root .", "python3 scripts/check_links.py"],
+  "checks": [
+    "python3 -m unittest discover -s tests -v",
+    "python3 scripts/standard.py validate --root .",
+    "python3 scripts/check_links.py"
+  ],
   "environments": {},
   "delivery": {},
   "completion": "reviewed-merge",

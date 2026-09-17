@@ -14,6 +14,10 @@ one instance**. The latter is weaker isolation, not two independent servers.
 It needs stable workflow-ID mapping, separate test destinations/webhooks/schedules,
 scoped credentials and controls against test side effects reaching production.
 
+When staging is enabled (the default), verify stage before main promotion. If the
+project explicitly disables it, omit the stage import/test steps while preserving
+independent review, required CI, production authorization and verification.
+
 ## Promotion contract
 
 1. Reconcile the repository with the authoritative current workflow before edits.

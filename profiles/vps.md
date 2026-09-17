@@ -1,7 +1,9 @@
 # VPS applications
 
-Use one logical staging environment and one production environment. Each may
-contain multiple services. Keep configuration, credentials and writable data
+When project staging is enabled (the default), use one logical stage environment
+and one production environment. If explicitly disabled, retain independent review,
+CI and verified production delivery without inventing a stage receipt. Each
+environment may contain multiple services. Keep configuration, credentials and writable data
 separate. Same-host staging needs demonstrated isolation and resource limits;
 otherwise report the capacity/isolation blocker before provisioning anything paid.
 
