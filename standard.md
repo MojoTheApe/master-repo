@@ -129,12 +129,20 @@ ReactForge's installer, which is outside this standard migration's scope.
 
 ## Living documentation
 
-`docs/PROJECT.md` describes the current implemented system, components, important
-choices, dependencies and limitations. `docs/CHANGELOG.md` records meaningful
+`docs/system/PROJECT.md` describes the current implemented system, components, important
+choices, dependencies and limitations. `docs/system/CHANGELOG.md` records meaningful
 changes and why they were chosen, linked to tickets/PRs. Original specifications
-remain under `docs/specs/` or existing locations; plans are distinguished from
+remain under `docs/system/specs/` or existing locations; plans are distinguished from
 implemented behavior. Update affected documentation in the same implementation PR,
 or explain no impact. Independent review checks this obligation.
+
+Repository rules and process history live in `docs/repository/`; environment
+access, deployment and recovery live in `docs/runtime/`. `AGENTS.md` is a short
+reading map. Shared helper implementations live in `.workflow/tools/`, apart from
+product scripts. System/runtime documents become project-owned at creation and
+are never overwritten or merged by template upgrades. See the
+[layout contract](templates/workflow/LAYOUT.md). Legacy paths may be forwarding
+files; maintain one authoritative copy of each rule.
 
 ## Ownership and synchronized evolution
 
