@@ -80,6 +80,28 @@ activating the new policy; retain their accepted history through an explicit,
 reviewed reconciliation record, without inventing old stage or runtime tests.
 Unfinished tasks keep their original acceptance criteria and remain unfinished.
 
+If the owner explicitly chooses to preserve historical completion, the compatible
+Tracker provides read-only `audit-history`. Use the original pre-delivery config,
+its exact source revision, the candidate config and a durable owner decision/report
+reference. Review the returned `historical_completion` block and its explicit task
+list in the adoption PR; preserve it in the matching registry fallback config.
+Read `docs/DELIVERY_POLICY.md` at the exact engine commit in `compatibility.json`
+for arguments and format.
+
+This optional manifest retains accepted task completion and dependency counts,
+with **Completed before adoption** displayed separately from verified delivery.
+It never supplies review, stage, merge or installation receipts and never relaxes
+new work's admission checks. New or previously unfinished tasks cannot inherit it.
+Changed scope/state or restarted work loses historical acceptance; normal release
+rollover and planning metadata preserve it. The reader cannot detect a direct
+GitHub edit that was completely reverted between snapshots; use the normal `work`
+command for reopened work, or create a follow-up task. Any delivery record
+supersedes the exception. Changed policy requires explicit reconciliation.
+Do not automatically regenerate, extend, copy to a new project or silently discard
+the manifest during an upgrade. The owner decision preserves history, not proof of
+old installations. Without this decision and review, keep the stricter unverified
+state visible. Finish existing PRs before activating either policy.
+
 ## Skill distribution
 
 Canonical source: `.agents/skills/project-workflow/SKILL.md` in Master Repo. Install
