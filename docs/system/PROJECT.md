@@ -41,3 +41,10 @@ if an upstream seed changes, and stop for audited migration of earlier layouts.
 The validator checks the layout contract and required canonical files.
 Task Tracker impact: no engine or policy change. Exported helpers change only their
 filesystem-root calculation; CLI/import compatibility is retained and tested.
+
+MR-9 selects the compatible Tracker historical-completion extension (TT-61).
+Existing-project adoption may retain a reviewed, owner-approved list of completed
+tasks without inventing old delivery evidence. This is an opt-in project-local
+configuration; new projects and existing pinned consumers receive no exemption.
+The adoption guide explains exact scope matching, restarted work and cutover
+review. Release/installation verification and new task admission stay unchanged.
