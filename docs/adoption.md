@@ -20,6 +20,9 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    ```
 
    Add `--apply` to create files; add `--no-staging` for an explicitly disabled stage.
+   Add `--implementation-limit 2` only to opt in to two implementation slots and one
+   sequential review/integration lane. Omission preserves legacy execution; accepted
+   limits are 1..16 and do not change the single review limit.
    `--python /path/to/python3.12` selects the export runtime if necessary. Profiles:
    `vps`, `n8n`, `n8n-source` (explicit Git-only scope), `local` (manual pull),
    `package`, `tooling`.
@@ -49,6 +52,38 @@ for future three-way comparisons. Commit it; do not rewrite it to disguise local
 changes. The small Tracker client/config live in the project; the entire Tracker
 app does not. A failure in registration/publication leaves the project visibly
 pending and resumable, with no fabricated completion.
+
+## Enabling parallel implementation
+
+Support is coordinated by [MR-11](https://github.com/MojoTheApe/master-repo/issues/11)
+and [TT-67](https://github.com/MojoTheApe/task-tracker/issues/67). Integrate and verify
+the Tracker implementation first, then pin that reviewed merged commit in Master
+Repo, review/integrate Master, and install its reviewed canonical skill when
+authorized. Consumers activate separately; ACL adoption is a later project task.
+Neither source merge nor skill installation opts existing consumers in.
+
+For an existing schema-2 project, use a reviewed upgrade PR with the compatible
+engine, matching descriptor/config execution objects and preserved local controls.
+Inspect active legacy work, review evidence and stage ownership before switching;
+perform the pinned Tracker's explicit execution migration. It must not drop a
+legacy claim or automatically grant a new owner. Verify two independent claims,
+same-task duplicate denial, handoff freeing implementation capacity and the single
+review/integration lane in an isolated exercise before real rollout. Preserve
+runtime safeguards, original task/PR identity and the pristine template baseline.
+
+Activation and capacity changes require an idle repository. Execution capacity is
+separate from the delivery-policy fingerprint, so opting in or increasing the limit
+preserves existing completion receipts and approved historical-completion records.
+Review admission still requires the current lane/session and exact source/base.
+Actual delivery-policy changes retain their existing evidence-reconciliation
+requirements. Execution migration neither rewrites receipts nor grants historical
+exemptions.
+
+Capacity changes, interruption recovery and rollback must account for live claims
+and a possibly occupied stage. Use the pinned Tracker guide; drain or explicitly
+reconcile work before reducing capacity or returning to legacy mode. Do not delete
+state, relabel tasks or remove policy fields to escape ownership checks. Restoring
+a previous pin/config is a reviewed recovery change, never a rewritten shared tag.
 
 ## Existing project adoption
 

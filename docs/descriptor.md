@@ -11,7 +11,7 @@ commands in it are never executed by the validator.
 | `standard` | Official source, exact 40-character commit, proposed/released version |
 | `profile` | vps, n8n, n8n-source, local, package or tooling |
 | `adoption` | draft until real setup and verification are complete; then ready |
-| `workflow` | Staging boolean, permanent main/stage names, exact required check names |
+| `workflow` | Staging boolean, permanent main/stage names, exact required check names; optional `execution` policy |
 | `tracker` | Compatible engine pin, workspace ID, registration state and proof |
 | `checks` | Actual project test/verification procedures |
 | `environments` | Stage when enabled; production when delivery is required; actual target and checks |
@@ -46,6 +46,28 @@ standard. The Action must be called once at the descriptor's exact commit.
 Independent source/client validation runs in project CI as `tracker-link`;
 `descriptor` validates the project contract. Add real project tests as required
 checks. Agent `check-merge` separately checks review/stage/check evidence.
+
+## Optional execution policy
+
+Opt in with exactly the same object at `workflow.execution` in `delivery.json`
+and `execution_policy` in `tracker/config.json`:
+
+```json
+{"schema_version": 1, "implementation_limit": 2, "review_limit": 1}
+```
+
+All three keys are required; extra keys, null and boolean/numeric substitutes for
+integers are invalid. Schema version is 1, implementation limit is 1..16 and review
+limit must be 1. The Tracker also requires its compatible `delivery_policy`, which
+schema-2 projects already generate. Validation rejects missing/mismatched policy
+on either side, including disagreement about whether it is enabled.
+
+Omit both fields to preserve legacy behavior. The initializer adds them only for
+`--implementation-limit N`; selecting 1 still explicitly activates the new claim
+and review-lane lifecycle. A count of 2 is the initial recommended opt-in, not a
+template default. Changing it later is a reviewed project config change and must
+respect active claims through the Tracker's safe migration procedure. The existing
+delivery policy, exact-version review, CI, stage and completion rules still apply.
 
 ## Version 1 compatibility
 

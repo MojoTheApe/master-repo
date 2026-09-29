@@ -22,6 +22,7 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     config={'schema_version':3,'project':{'name':inputs['name'],'repository':inputs['repository'],'id_prefix':inputs['prefix'],'base_branch':'main'},
             'workflow':[x for x in project.PHASES if x!='stage' or inputs['staging']], 'delivery_policy':project.delivery_policy(data),
             'modules':[{'id':'product','name':'Product','description':'Product functionality'}]}
+    if 'execution' in data['workflow']: config['execution_policy']=data['workflow']['execution']
     out={'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
          'tracker/engine.json':project.dumps({'repository':data['tracker']['repository'],'revision':data['tracker']['revision']}),
          'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'root = Path(__file__).resolve().parents[1]\n',
@@ -64,6 +65,81 @@ class Projects(unittest.TestCase):
         self.create(dict(INPUTS,staging=False));self.assertEqual(self.errors(),[])
         self.assertNotIn('stage',self.json('tracker/config.json')['workflow'])
         self.assertEqual(self.json('delivery.json')['environments'],{})
+    def test_execution_is_explicit_and_capacity_is_configurable(self):
+        self.create()
+        self.assertNotIn('execution',self.json('delivery.json')['workflow'])
+        self.assertNotIn('execution_policy',self.json('tracker/config.json'))
+        for limit in (1,2,4,16):
+            with self.subTest(limit=limit):
+                data=project.descriptor(dict(INPUTS,implementation_limit=limit),OLD)
+                self.assertEqual(data['workflow']['execution'],
+                                 {'schema_version':1,'implementation_limit':limit,'review_limit':1})
+        for limit in (0,17,True,2.0,'2',None):
+            with self.subTest(limit=limit),self.assertRaises(ValueError):
+                project.descriptor(dict(INPUTS,implementation_limit=limit),OLD)
+    def test_execution_policy_validation_rejects_malformed_or_drifted_values(self):
+        self.create(dict(INPUTS,implementation_limit=2))
+        self.assertEqual(self.errors(),[])
+        original=self.json('delivery.json');config=self.json('tracker/config.json')
+        policy=original['workflow']['execution']
+        invalid=[None,[],{},dict(policy,schema_version=True),dict(policy,schema_version=2),
+                 dict(policy,implementation_limit=False),dict(policy,implementation_limit=17),
+                 dict(policy,review_limit=2),dict(policy,review_limit=True),dict(policy,unknown=1)]
+        for value in invalid:
+            with self.subTest(value=value):
+                data=copy.deepcopy(original);data['workflow']['execution']=value
+                self.put('delivery.json',data)
+                self.assertTrue(self.errors())
+        self.put('delivery.json',original)
+        config['execution_policy']['implementation_limit']=3;self.put('tracker/config.json',config)
+        self.assertTrue(any('execution policy differs' in e for e in self.errors()))
+        config.pop('execution_policy');self.put('tracker/config.json',config)
+        self.assertTrue(any('execution policy differs' in e for e in self.errors()))
+        original['workflow'].pop('execution');self.put('delivery.json',original)
+        config['execution_policy']=None;self.put('tracker/config.json',config)
+        self.assertTrue(self.errors())
+        config['execution_policy']=policy;self.put('tracker/config.json',config)
+        self.assertTrue(any('execution policy differs' in e for e in self.errors()))
+    def test_upgrade_preserves_opt_in_and_local_capacity_with_pristine_baseline(self):
+        self.create(dict(INPUTS,implementation_limit=2))
+        data=self.json('delivery.json');data['workflow']['execution']['implementation_limit']=4
+        config=self.json('tracker/config.json');config['execution_policy']['implementation_limit']=4
+        config['refresh_seconds']=120
+        self.put('delivery.json',data);self.put('tracker/config.json',config)
+        result=project.upgrade(self.root,NEW,'unused',apply=True)
+        self.assertTrue(result['applied']);self.assertEqual(self.errors(),[])
+        self.assertEqual(self.json('delivery.json')['workflow']['execution']['implementation_limit'],4)
+        self.assertEqual(self.json('tracker/config.json')['execution_policy']['implementation_limit'],4)
+        self.assertEqual(self.json('tracker/config.json')['refresh_seconds'],120)
+        base=self.json(project.BASELINE)
+        self.assertEqual(base['inputs']['implementation_limit'],2)
+        self.assertEqual(json.loads(base['files']['tracker/config.json'])['execution_policy']['implementation_limit'],2)
+        self.assertEqual(project.upgrade(self.root,NEW,'unused',apply=True)['changed'],[])
+    def test_upgrade_does_not_enable_execution_for_legacy_consumer(self):
+        self.create();result=project.upgrade(self.root,NEW,'unused',apply=True)
+        self.assertTrue(result['applied']);self.assertEqual(self.errors(),[])
+        self.assertNotIn('execution',self.json('delivery.json')['workflow'])
+        self.assertNotIn('execution_policy',self.json('tracker/config.json'))
+        self.assertNotIn('implementation_limit',self.json(project.BASELINE)['inputs'])
+    def test_upgrade_preserves_project_opt_in_added_after_initialization(self):
+        self.create()
+        policy={'schema_version':1,'implementation_limit':2,'review_limit':1}
+        data=self.json('delivery.json');data['workflow']['execution']=policy
+        config=self.json('tracker/config.json');config['execution_policy']=policy
+        self.put('delivery.json',data);self.put('tracker/config.json',config)
+        self.assertTrue(project.upgrade(self.root,NEW,'unused',apply=True)['applied'])
+        self.assertEqual(self.errors(),[])
+        self.assertEqual(self.json('tracker/config.json')['execution_policy'],policy)
+        self.assertNotIn('execution_policy',json.loads(self.json(project.BASELINE)['files']['tracker/config.json']))
+    def test_inconsistent_execution_upgrade_writes_nothing(self):
+        self.create(dict(INPUTS,implementation_limit=2))
+        data=self.json('delivery.json');data['workflow']['execution']['implementation_limit']=3
+        self.put('delivery.json',data)
+        before={p:p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result=project.upgrade(self.root,NEW,'unused',apply=True)
+        self.assertFalse(result['applied'])
+        self.assertTrue(any('execution policy differs' in e for e in result['errors']))
+        self.assertEqual(before,{p:p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
     def test_n8n_source_is_explicit_and_does_not_claim_runtime_delivery(self):
         self.create(dict(INPUTS,profile='n8n-source'))
         data=self.json('delivery.json')
@@ -152,6 +228,43 @@ class Projects(unittest.TestCase):
             result=REAL_RENDER(INPUTS,NEW,engine)
         self.assertEqual(json.loads(result['tracker/config.json'])['refresh_seconds'],60)
         self.assertEqual(self.json('tracker/config.json')['refresh_seconds'],120)
+    def test_renderer_sends_only_explicit_execution_policy_and_rejects_inheritance(self):
+        engine=Path(self.tmp.name)/'engine';(engine/'tracker').mkdir(parents=True)
+        observed=[]
+        inherited={'schema_version':1,'implementation_limit':8,'review_limit':1}
+        def exporter(command,**kwargs):
+            target=Path(command[command.index('--output')+1]);(target/'tracker').mkdir(parents=True)
+            config={}
+            if '--execution-policy' in command:
+                config['execution_policy']=json.loads(Path(command[command.index('--execution-policy')+1]).read_text())
+            observed.append(config.copy())
+            (target/'tracker/config.json').write_text(project.dumps(config))
+            (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            (target/'scripts').mkdir()
+            for name in project.HELPERS:
+                (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
+            return mock.Mock(returncode=0,stderr='',stdout='')
+        with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=exporter):
+            result=REAL_RENDER(dict(INPUTS,implementation_limit=2),NEW,engine)
+            self.assertEqual(json.loads(result['tracker/config.json'])['execution_policy'],
+                             {'schema_version':1,'implementation_limit':2,'review_limit':1})
+            REAL_RENDER(INPUTS,NEW,engine)
+        self.assertNotIn('execution_policy',observed[-1])
+        def leaking_exporter(command,**kwargs):
+            result=exporter(command,**kwargs)
+            target=Path(command[command.index('--output')+1])
+            (target/'tracker/config.json').write_text(project.dumps({'execution_policy':inherited}))
+            return result
+        with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=leaking_exporter):
+            with self.assertRaisesRegex(ValueError,'explicit project choice'):REAL_RENDER(INPUTS,NEW,engine)
+    def test_init_cli_omits_policy_unless_requested(self):
+        args=['init','--root',str(self.root),'--profile','local','--repository','owner/example',
+              '--name','Example','--id-prefix','EX','--workspace-id','example','--tracker-root','unused']
+        with mock.patch.object(standard,'source_revision',return_value=OLD),mock.patch.object(project,'init',return_value={}) as initialize:
+            self.assertEqual(standard.main(args),0)
+            self.assertNotIn('implementation_limit',initialize.call_args.args[1])
+            self.assertEqual(standard.main(args+['--implementation-limit','2']),0)
+            self.assertEqual(initialize.call_args.args[1]['implementation_limit'],2)
     def test_project_knowledge_is_never_refreshed_even_if_untouched(self):
         self.create()
         incoming=files(INPUTS,NEW)

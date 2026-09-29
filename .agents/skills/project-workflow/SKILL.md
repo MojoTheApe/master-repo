@@ -54,19 +54,36 @@ environments, check commands or live registration proof.
 
 ## Execute the ticket lifecycle
 
+Check whether the pinned project explicitly has matching `workflow.execution`
+and Tracker `execution_policy`. If present, read
+[parallel execution](references/parallel-execution.md) for claims, delegation and
+the single review/integration lane. If absent, preserve the pinned legacy slot
+behavior; installing this skill does not opt the project in.
+
 Idea request -> Idea; task request -> Backlog. Planning and To Do do not start code.
 On explicit development, read the full Issue, claim the Tracker slot with its
-`work` command and create `codex/<public-id-lowercase>-<short-name>`. Preserve
-classification, dependencies and existing queue semantics. PR title lists IDs:
-`[RF-67, RF-68] Summary`; exactly one `Tracker issues:` line and links back from
-Issues. PR numbers are different from Issue IDs. Avoid automatic closing keywords
+`work` command and create a task branch under the pinned naming rules and any
+host/user prefix policy. Legacy projects use `codex/<public-id-lowercase>-<short-name>`;
+opted-in execution also accepts neutral `work/<public-id-lowercase>-<short-name>`. Preserve
+classification, dependencies and existing queue semantics. Opted-in execution v1
+uses exactly one task per source PR: `[RF-67] Summary`, one `Tracker issues: RF-67`
+line and a link back from that Issue. Multiple related IDs in one PR are supported
+only under legacy execution. PR numbers are different from Issue IDs. Avoid automatic closing keywords
 in both PR text and commits. Keep partial tasks and abandoned PRs unfinished.
 
 Implement and self-check, update affected system docs/history or explain no impact,
 create a ready PR and set Review. Automatically invoke a different subagent for
 independent review of the actual head/base, full task scope and changed files.
+For an opted-in project, hand off the implementation claim and acquire its sole
+review/integration lane before invoking the Reviewer; other ready PRs wait.
+Delegated Workers hand off to their Coordinator, who starts the review.
 The reviewer reports findings/checks/verdict; the implementer fixes on the same
-branch. If the reviewer edited code, use another final reviewer. A missing
+branch. In opted-in execution, any post-handoff edit, including updating the base
+or resolving conflicts, first requires `execution review-return`, a fresh author
+implementation claim and another handoff. Retain the lane with `--keep-lane` when
+needed; it is mandatory after entering stage. Then reacquire/resume the lane and
+independently review current content. Never let a Coordinator or Reviewer edit an
+unclaimed branch. If the reviewer edited code, use another final reviewer. A missing
 independent reviewer is a limitation to report, not self-approval. Changed code,
 base, task scope or policy needs fresh approval. Preserve the durable report and
 record it using the pinned Tracker evidence command when supported.
@@ -79,12 +96,14 @@ authorization; no additional routine owner-confirmation step is needed.
 
 ## Stage, merge and completion
 
-If enabled: working branch -> permanent stage -> permanent main. Same task set,
-one active stage candidate, exact approved content. Keep the working branch for
+If enabled: working branch -> permanent stage -> permanent main. Preserve the same
+single task in execution v1 (a related task set is legacy-only), one active stage
+candidate and exact approved content. Keep the working branch for
 fixes after its first PR; new fix PRs use that branch. Do not delete permanent
 branches. Record Stage after the source merge, verify the real stage target, and
 promote only matching content. Use merge/squash with the approved baseline, not
-rebase merge. If main changes, reconcile in the working branch and repeat review,
+rebase merge. If main changes, follow the claimed-author fix procedure above to
+reconcile the working branch and repeat review,
 stage and verification. If disabled: working branch -> main, no Stage column.
 
 Record Merged only for fully implemented ticket scope actually included in main.

@@ -7,15 +7,45 @@ Use `python scripts/task_tracker.py guide` for the pinned Tracker commands.
 
 Create an Issue before implementation. Idea requests stay Idea; task requests
 start Backlog. Start development only when requested; claim the Tracker slot and
-use `codex/<public-id>-<short-name>`. PR title: `[EX-12] Summary`; one
-`Tracker issues: EX-12` line, with links back from the Issues. Multiple IDs are
-allowed for a related task set. No automatic closing keywords.
+use the pinned task-branch rules (`codex/<public-id>-<short-name>` remains
+compatible; opted-in execution also accepts `work/<public-id>-<short-name>`).
+Honor a host/user prefix requirement. PR title: `[EX-12] Summary`; one
+`Tracker issues: EX-12` line, with a link back from the Issue. Opted-in execution v1
+requires exactly one task per source PR. Multiple related IDs in one PR are allowed
+only under legacy execution. No automatic closing keywords.
+
+If `workflow.execution` and Tracker `execution_policy` are explicitly enabled and
+equal, use their implementation capacity and one review/integration lane. Otherwise
+keep the pinned legacy slot behavior. A Coordinator stays in the current
+conversation, screens task dependencies/overlap and delegates independent tasks to
+Workers in separate branches/worktrees using available subagents. Two independent
+tasks with two free slots use two Workers. Use platform-neutral opaque actor and
+session IDs; record Worker ownership separately from coordinator/reviewer metadata
+and real GitHub Assignees. No new user-owned conversations without an explicit
+request. If delegation is unavailable, disclose serial implementation; never
+substitute self-review for an independent Reviewer.
+
+Use the pinned Tracker guide to claim, resume, hand off and recover work. Handoff
+to the review queue releases implementation capacity. Multiple tasks may wait in
+Review; acquire the sole review/integration lane before launching a Reviewer. Hold
+it through current review, checks, optional stage and main merge. The next task
+waits until explicit release. Review fixes take priority and reacquire implementation
+capacity. Preserve current source/base/policy evidence and stage ownership when
+returning work or recovering; no timeout or label change permits duplicate claims.
+Any post-handoff branch edit, including base updates and conflict resolution,
+requires the Reviewer to call `execution review-return`, followed by a fresh author
+implementation claim, checks and another handoff. Use `--keep-lane` to retain review
+ownership; it is mandatory after entering stage. Reacquire or resume the lane and
+review current content. Coordinators and Reviewers never edit an unclaimed branch.
 
 After implementation and self-check, prepare the PR and set Review. Automatically
-start a separate non-implementing subagent for independent review of the actual
+arrange a separate non-implementing subagent for independent review when the lane
+is available. Delegated Workers hand off to the Coordinator, who starts the review
+of the actual
 head/base, requirements and docs. Fix on the same branch and obtain fresh approval.
 Run `check-merge PR_NUMBER` immediately before merging. If staging is enabled,
-working branch -> stage -> main, using the same task set and unchanged verified
+working branch -> stage -> main, using the same single task in execution v1
+(related task sets are legacy-only) and unchanged verified
 content. Preserve the working branch for fixes. Use evidence commands from the
 Tracker guide; labels and merge alone do not prove a required delivery.
 

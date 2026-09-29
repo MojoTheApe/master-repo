@@ -2,13 +2,15 @@ Tracker issues: EX-12
 
 ## Result
 
-Describe the problem and resulting behavior. Title: `[EX-12] Summary` (list all
-related IDs for a shared task set). Link this PR back from each Issue.
+Describe the problem and resulting behavior. Title: `[EX-12] Summary`. Opted-in
+execution v1 requires exactly one task per source PR; multiple related IDs are
+legacy-only. Link this PR back from its Issue(s).
 
 ## Verification
 
 Self-checks and results. Independent reviewer/report and exact reviewed version.
-For stage promotion: source PR, same task set, verified tree and environment proof.
+For stage promotion: source PR, same single task (related sets are legacy-only),
+verified tree and environment proof.
 
 ## Documentation and related processes
 
