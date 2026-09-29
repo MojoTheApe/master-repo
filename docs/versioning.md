@@ -40,6 +40,13 @@ copying the new template wholesale. If no trusted base exists (including schema 
 adoption), use the audited adoption procedure. Template updates cannot silently
 change the selected stage option or project-specific deployment target.
 
+Execution parallelism is an explicit project setting. Omitted policy remains
+omitted during upgrade; an opted-in project's local capacity is retained in both
+descriptor and Tracker config. The baseline remains the pristine upstream render,
+not the merged local capacity. Enable/change it in a reviewed consumer PR only
+after compatible Tracker support and safe claim-state migration. The sole
+review/integration lane and existing stage/delivery controls remain in force.
+
 Review config/engine/Action pins together, check docs, modules, historical IDs,
 completion evidence and open PRs. Activate changed semantics only after their
 migration prerequisites are satisfied. Run strict descriptor and actual project

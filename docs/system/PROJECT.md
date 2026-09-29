@@ -48,3 +48,18 @@ tasks without inventing old delivery evidence. This is an opt-in project-local
 configuration; new projects and existing pinned consumers receive no exemption.
 The adoption guide explains exact scope matching, restarted work and cutover
 review. Release/installation verification and new task admission stay unchanged.
+
+MR-11 adds opt-in execution settings to schema 2: configurable implementation
+capacity (1..16, initial rollout 2) and one review/integration lane. The initializer
+accepts `--implementation-limit`, validates mirrored descriptor/Tracker policy and
+passes it explicitly to the compatible exporter. Omitted policy preserves legacy
+behavior; three-way upgrades retain local capacity and original template ancestry.
+The standard and canonical skill coordinate platform-neutral Workers in isolated
+worktrees and one independent Reviewer, with honest serial fallback if delegation
+is unavailable. The lane covers review, checks, stage and main integration.
+Task Tracker companion [TT-67](https://github.com/MojoTheApe/task-tracker/issues/67)
+owns persisted claims, queue/admission, recovery and display; it does not launch
+models. Master [MR-11](https://github.com/MojoTheApe/master-repo/issues/11) activates
+no consumer. Compatibility selects the reviewed TT-67 merge
+`a4ea3cfb0c1be1760ae0923c8232779532c25a7b`; separately install the authorized canonical skill after Master integration. ACL
+adoption follows in its own task. Standard release publication is separate.

@@ -237,6 +237,8 @@ def main(argv=None):
     init.add_argument("--id-prefix", required=True)
     init.add_argument("--workspace-id", required=True)
     init.add_argument("--no-staging", action="store_true")
+    init.add_argument("--implementation-limit", type=int, choices=range(1, 17), metavar="N",
+                      help="Opt in to N implementation slots (1..16) and one review/integration lane; omitted keeps legacy execution")
     for cmd in (init, commands.add_parser("upgrade")):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
         cmd.add_argument("--tracker-root", type=Path, required=True)
@@ -250,6 +252,7 @@ def main(argv=None):
             if args.command == "init":
                 inputs = {"profile": args.profile, "repository": args.repository, "name": args.name,
                           "prefix": args.id_prefix, "workspace_id": args.workspace_id, "staging": not args.no_staging}
+                if args.implementation_limit is not None: inputs["implementation_limit"] = args.implementation_limit
                 result = project.init(args.root, inputs, revision, args.tracker_root, args.python, args.apply)
             else:
                 result = project.upgrade(args.root, revision, args.tracker_root, args.python, args.apply)

@@ -20,6 +20,10 @@ The skill installs once per agent environment; each project keeps short local
 instructions, settings and system docs. Existing projects retain their adopted
 version and unique behavior until an explicit reviewed upgrade.
 
+Projects may explicitly opt in to configurable parallel implementation with one
+sequential review/integration lane. Start with `--implementation-limit 2`; omitted
+settings keep legacy execution. See [activation and recovery](docs/adoption.md#enabling-parallel-implementation).
+
 Source version 1.0.0 is proposed until a reviewed release is published. A VERSION
 file is not a release. No app deployment, consumer migration or global skill
 installation is performed automatically by this repository.

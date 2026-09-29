@@ -92,6 +92,18 @@ def delivery_policy(data):
             'required_checks': stages['required_checks']}
 
 
+def validate_execution_policy(value):
+    """An explicit opt-in; absence must retain the pinned legacy workflow."""
+    if not isinstance(value, dict) or set(value) != {'schema_version', 'implementation_limit', 'review_limit'}:
+        raise ValueError('Execution policy requires schema_version, implementation_limit and review_limit')
+    if type(value['schema_version']) is not int or value['schema_version'] != 1:
+        raise ValueError('Execution policy schema_version must be 1')
+    if type(value['implementation_limit']) is not int or not 1 <= value['implementation_limit'] <= 16:
+        raise ValueError('Execution policy implementation_limit must be an integer from 1 to 16')
+    if type(value['review_limit']) is not int or value['review_limit'] != 1:
+        raise ValueError('Execution policy review_limit must be 1')
+
+
 def descriptor(inputs, revision):
     c = compatibility(); profile = inputs['profile']; repo = inputs['repository']
     if (profile not in PROFILES or not re.fullmatch(r'[\w.-]+/[\w.-]+', repo)
@@ -102,10 +114,16 @@ def descriptor(inputs, revision):
     env = {}
     if inputs['staging']: env['stage'] = {'target': '__STAGE_TARGET__', 'verify': '__STAGE_CHECKS__'}
     if PROFILES[profile] != 'reviewed-merge': env['production'] = {'target': '__PRODUCTION_TARGET__', 'verify': '__PRODUCTION_CHECKS__'}
+    workflow = {'staging': inputs['staging'], 'main_branch': 'main', 'stage_branch': 'stage',
+                'required_checks': ['descriptor', 'tracker-link']}
+    if 'implementation_limit' in inputs:
+        execution = {'schema_version': 1, 'implementation_limit': inputs['implementation_limit'], 'review_limit': 1}
+        validate_execution_policy(execution)
+        workflow['execution'] = execution
     return {'schema_version': 2, 'project': {'name': inputs['name'], 'repository': 'https://github.com/' + repo},
             'standard': {'repository': standard.REPOSITORY, 'revision': revision, 'version': (SOURCE/'VERSION').read_text().strip()},
             'profile': profile, 'adoption': 'draft',
-            'workflow': {'staging': inputs['staging'], 'main_branch': 'main', 'stage_branch': 'stage', 'required_checks': ['descriptor', 'tracker-link']},
+            'workflow': workflow,
             'tracker': {'repository': c['tracker_repository'], 'revision': c['tracker_revision'], 'workspace_id': inputs['workspace_id'],
                         'registration': 'pending', 'verification': '__ONBOARDING_PROOF__'},
             'checks': ['__PROJECT_CHECK_COMMANDS__'], 'environments': env,
@@ -126,9 +144,16 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         command = [python, '-c', code, str(engine), '--config', str(engine/'tracker/config.json'), 'export-template', '--output', str(target), '--repository', inputs['repository'],
                    '--name', inputs['name'], '--base', 'main', '--id-prefix', inputs['prefix'], '--engine-revision', data['tracker']['revision'],
                    '--delivery-policy', str(policy)]
+        if 'execution' in data['workflow']:
+            execution = scratch/'execution.json'; execution.write_text(dumps(data['workflow']['execution']))
+            command.extend(['--execution-policy', str(execution)])
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
         files = {p.relative_to(target).as_posix(): p.read_text() for p in target.rglob('*') if p.is_file()}
+        exported_config = json.loads(files['tracker/config.json'])
+        if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
+        if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
+            raise ValueError('Tracker export execution policy differs from the explicit project choice')
     files = separate_export(files)
     files.update(layout_files())
     files['delivery.json'] = dumps(data)
@@ -253,7 +278,10 @@ def inspect(root, expected_revision=None):
                              ('delivery', {'procedure','authorization','rollback','backup'})):
             if not standard.text_fields(data[name], fields, name, findings): return findings
         wf = data['workflow']
-        if not standard.object_keys(wf, {'staging','main_branch','stage_branch','required_checks'}, 'workflow', findings): return findings
+        workflow_keys = {'staging','main_branch','stage_branch','required_checks'}
+        if isinstance(wf, dict) and 'execution' in wf: workflow_keys.add('execution')
+        if not standard.object_keys(wf, workflow_keys, 'workflow', findings): return findings
+        if 'execution' in wf: validate_execution_policy(wf['execution'])
         if type(wf['staging']) is not bool or wf['main_branch'] != 'main' or wf['stage_branch'] != 'stage': raise ValueError('Version 2 uses main and stage with an explicit boolean stage option')
         expected_env = ({'stage'} if wf['staging'] else set()) | ({'production'} if data['completion'] != 'reviewed-merge' else set())
         if not standard.object_keys(data['environments'], expected_env, 'environments', findings): return findings
@@ -272,6 +300,9 @@ def inspect(root, expected_revision=None):
         if not re.fullmatch(r'[a-z][a-z0-9-]*', data['tracker']['workspace_id']): raise ValueError('Workspace ID is invalid')
         if config['project']['repository'] != data['project']['repository'].split('github.com/')[1] or config['project']['base_branch'] != wf['main_branch']: raise ValueError('Tracker project identity differs')
         if config.get('delivery_policy') != delivery_policy(data): raise ValueError('Tracker policy differs from delivery.json; synchronize both in this PR')
+        if 'execution_policy' in config: validate_execution_policy(config['execution_policy'])
+        if ('execution_policy' in config) != ('execution' in wf) or config.get('execution_policy') != wf.get('execution'):
+            raise ValueError('Tracker execution policy differs from delivery.json; synchronize both in this PR')
         phases = [v if isinstance(v,str) else v['phase'] for v in config['workflow']]
         if phases != [p for p in PHASES if p != 'stage' or wf['staging']]: raise ValueError('Tracker stages differ from the adopted workflow')
         checks = wf['required_checks']
