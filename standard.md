@@ -76,7 +76,10 @@ The task retains its author claim, real independent review and current scope/bas
 It goes Review -> main -> Merged without Approved, a batch, stage or runtime
 receipt, even in a package project. When execution is adopted, hold its genuine review lane through main
 completion. Wait for any reserved batch/unpromoted stage to finish before changing
-main; reconcile later staged work with the new baseline. Configuration, executable
+main. Later staged work starts from current main; a lagging stage baseline is
+accepted only through complete eligible-diff and retained verified process merge
+receipt/first-parent proof in the pinned Tracker. Other divergence needs ordinary
+claimed reconciliation. Configuration, executable
 helpers, CI, system/runtime knowledge and application/build changes keep the normal
 project route. Absence of this opt-in preserves the existing contract and history.
 

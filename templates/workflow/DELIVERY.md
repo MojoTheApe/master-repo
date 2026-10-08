@@ -12,6 +12,9 @@ configured checks. When execution is adopted, keep its real review lane through 
 batch, installer or delivery receipt is created. The full immutable diff, not a
 title/label, selects it; mixed/unknown/unsafe or incomplete evidence never does.
 Wait for reserved integration/unpromoted stage ownership before changing main.
+Later staged work uses current main; the pinned Tracker permits a lagging stage
+only through complete eligible-diff and retained verified process merge proof.
+Other divergence requires the existing claimed reconciliation procedure.
 Application, build, configuration, CI, automation and system/runtime changes keep
 their ordinary route and actual delivery requirements.
 

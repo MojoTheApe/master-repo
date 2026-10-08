@@ -23,8 +23,12 @@ approval/intake or manufacture Stage or package evidence for this source.
 
 Admission waits until any reserved integration or unpromoted stage candidate is
 finished/reconciled. Main cannot move beneath a held batch. Before later staged
-work, reconcile stage with current main and obtain fresh applicable approvals.
-Never reset stage, drop work or change another owner's branch.
+work, obtain fresh applicable approvals against current main. Use the pinned
+Tracker's read-only baseline proof when stage lags solely by a complete eligible
+delta and retained verified process merge receipts/first-parent chain. The new
+source/batch starts from current main. Missing receipts or any other divergence
+needs the existing claimed reconciliation procedure; never reset/force-update
+stage, drop work or change another owner's branch.
 
 Only the fully reviewed instruction outcome completes at admitted main inclusion.
 Do not finish a broader parent with missing application/runtime criteria. A mixed

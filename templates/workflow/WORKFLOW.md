@@ -13,6 +13,9 @@ mixed, unknown, unsafe or incomplete proof keeps the normal route. Keep the genu
 author claim/handoff and, when execution is adopted, its review lane through admitted main completion. Do not move
 this source to Approved, stage or a batch or invent installation proof. Wait for
 any reserved integration/unpromoted stage ownership to finish before changing main.
+Later staged work starts from current main. Use the pinned Tracker's baseline proof
+for a complete instruction-only gap covered by retained verified process merges;
+missing receipts or other divergence needs ordinary claimed reconciliation.
 Configuration, helpers, CI, system/runtime knowledge and application/build changes
 remain on the ordinary route. Installing a skill alone never selects the exception.
 

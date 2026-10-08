@@ -44,9 +44,13 @@ finish a parent whose application or runtime outcome remains outstanding.
 
 Main may not change underneath a reserved integration batch or an unpromoted stage
 candidate. Finish/reconcile that ownership before admitting the direct source.
-Before later staged work, reconcile stage with current main and freshly validate
-source approvals. Never reset stage or rewrite another owner's branch to make the
-routes coexist.
+Before later staged work, freshly validate source approvals against current main.
+The compatible Tracker can admit a stage baseline behind main only when its
+complete instruction-only delta and first-parent chain are covered by retained
+verified process merge receipts with current scope/policy/tree proof. The new
+source/batch starts from current main and preserves that baseline in its reviewed
+composition. Missing receipts or any other main/stage difference require the
+existing claimed reconciliation procedure. No stage reset or force update is used.
 
 The adoption PR changes configuration/helpers/checks, so it follows the project's
 existing route. Finish pending work under its old policy before activation; verify
