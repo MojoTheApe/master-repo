@@ -79,3 +79,13 @@ the new portable batch helper follows the existing relocated-helper layout.
 The authorized rollout includes
 local skill installation and separate [ACL-1566](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/566)
 adoption, with max five per batch. Source work here does not itself activate ACL.
+
+MR-16 adds an explicit instruction-only route distinct from file ownership.
+Schema-2 generation and validation mirror workflow.process_instructions with
+Tracker's top-level object and require its exported portable helper. Eligible
+regular process instructions retain genuine task ownership/current independent
+review and explicit checks, then complete at admitted main integration. Automation,
+configuration, application and mixed work retain the ordinary staged/delivery
+route. Existing delivery fingerprints, execution defaults, consumer pins and
+project-owned knowledge are preserved. The canonical skill routes only after
+actual project opt-in; Task Tracker owns immutable diff admission and completion.

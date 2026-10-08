@@ -9,6 +9,8 @@ legacy-only. Link this PR back from its Issue(s).
 ## Verification
 
 Self-checks and results. Independent reviewer/report and exact reviewed version.
+For an adopted instruction-only source: complete eligible-diff proof, current
+main/scope, explicit process checks and idle integration/stage ownership.
 For stage promotion: source PR, same single task (related sets are legacy-only),
 verified tree and environment proof.
 

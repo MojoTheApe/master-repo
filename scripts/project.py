@@ -34,7 +34,8 @@ LAYOUT_DATA = {'schema_version': 1, 'repository': 'docs/repository/',
 def separate_export(files):
     """Adapt only helper location; preserve the pinned engine and its contract."""
     files['docs/repository/TRACKER.md'] = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
-    helpers = (*HELPERS, *(['tracker_batch_policy.py'] if 'scripts/tracker_batch_policy.py' in files else []))
+    helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py')
+                          if 'scripts/' + name in files))
     for name in helpers:
         source = files.pop('scripts/' + name)
         if name in ('task_tracker.py', 'tracker_pr_check.py'):
@@ -109,6 +110,17 @@ def validate_execution_policy(value):
         raise ValueError('Execution policy batch_limit must be an integer from 1 to 16')
 
 
+def validate_process_instructions(value):
+    """A separate explicit route; never weaken the application's delivery policy."""
+    if (not isinstance(value, dict) or set(value) != {'schema_version', 'required_checks'}
+            or type(value.get('schema_version')) is not int or value['schema_version'] != 1):
+        raise ValueError('Process instructions need schema_version 1 and required_checks')
+    checks = value['required_checks']
+    if (not isinstance(checks, list) or not checks or any(not isinstance(x, str) or not x.strip() for x in checks)
+            or len(set(checks)) != len(checks) or not {'descriptor', 'tracker-link'} <= set(checks)):
+        raise ValueError('Process instructions require unique check names including descriptor and tracker-link')
+
+
 def phases(staging, execution=None):
     result = [p for p in PHASES if p != 'stage' or staging]
     if execution and execution['schema_version'] == 2:
@@ -129,6 +141,9 @@ def descriptor(inputs, revision):
     if PROFILES[profile] != 'reviewed-merge': env['production'] = {'target': '__PRODUCTION_TARGET__', 'verify': '__PRODUCTION_CHECKS__'}
     workflow = {'staging': inputs['staging'], 'main_branch': 'main', 'stage_branch': 'stage',
                 'required_checks': ['descriptor', 'tracker-link']}
+    if 'process_instructions' in inputs:
+        validate_process_instructions(inputs['process_instructions'])
+        workflow['process_instructions'] = inputs['process_instructions']
     if 'implementation_limit' in inputs:
         execution = {'schema_version': 1, 'implementation_limit': inputs['implementation_limit'], 'review_limit': 1}
         if 'batch_limit' in inputs:
@@ -165,6 +180,10 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         if 'execution' in data['workflow']:
             execution = scratch/'execution.json'; execution.write_text(dumps(data['workflow']['execution']))
             command.extend(['--execution-policy', str(execution)])
+        if 'process_instructions' in data['workflow']:
+            instructions = scratch/'process-instructions.json'
+            instructions.write_text(dumps(data['workflow']['process_instructions']))
+            command.extend(['--process-instructions', str(instructions)])
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
         files = {p.relative_to(target).as_posix(): p.read_text() for p in target.rglob('*') if p.is_file()}
@@ -172,6 +191,12 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
             raise ValueError('Tracker export execution policy differs from the explicit project choice')
+        if (('process_instructions' in exported_config) != ('process_instructions' in data['workflow'])
+                or exported_config.get('process_instructions') != data['workflow'].get('process_instructions')):
+            raise ValueError('Tracker export process instructions differ from the explicit project choice')
+        if ('process_instructions' in data['workflow']
+                and 'scripts/tracker_process_instructions.py' not in files):
+            raise ValueError('Pinned Tracker export lacks the process instructions helper')
     files = separate_export(files)
     files.update(layout_files())
     files['delivery.json'] = dumps(data)
@@ -298,8 +323,10 @@ def inspect(root, expected_revision=None):
         wf = data['workflow']
         workflow_keys = {'staging','main_branch','stage_branch','required_checks'}
         if isinstance(wf, dict) and 'execution' in wf: workflow_keys.add('execution')
+        if isinstance(wf, dict) and 'process_instructions' in wf: workflow_keys.add('process_instructions')
         if not standard.object_keys(wf, workflow_keys, 'workflow', findings): return findings
         if 'execution' in wf: validate_execution_policy(wf['execution'])
+        if 'process_instructions' in wf: validate_process_instructions(wf['process_instructions'])
         if type(wf['staging']) is not bool or wf['main_branch'] != 'main' or wf['stage_branch'] != 'stage': raise ValueError('Version 2 uses main and stage with an explicit boolean stage option')
         expected_env = ({'stage'} if wf['staging'] else set()) | ({'production'} if data['completion'] != 'reviewed-merge' else set())
         if not standard.object_keys(data['environments'], expected_env, 'environments', findings): return findings
@@ -321,6 +348,9 @@ def inspect(root, expected_revision=None):
         if 'execution_policy' in config: validate_execution_policy(config['execution_policy'])
         if ('execution_policy' in config) != ('execution' in wf) or config.get('execution_policy') != wf.get('execution'):
             raise ValueError('Tracker execution policy differs from delivery.json; synchronize both in this PR')
+        if (('process_instructions' in config) != ('process_instructions' in wf)
+                or config.get('process_instructions') != wf.get('process_instructions')):
+            raise ValueError('Tracker process instructions differ from delivery.json; synchronize both in this PR')
         actual_phases = [v if isinstance(v,str) else v['phase'] for v in config['workflow']]
         if actual_phases != phases(wf['staging'], wf.get('execution')): raise ValueError('Tracker stages differ from the adopted workflow')
         checks = wf['required_checks']
@@ -333,6 +363,8 @@ def inspect(root, expected_revision=None):
         required.update('scripts/' + name for name in HELPERS)
         if wf.get('execution', {}).get('schema_version') == 2:
             required.update({'.workflow/tools/tracker_batch_policy.py', 'scripts/tracker_batch_policy.py'})
+        if 'process_instructions' in wf:
+            required.update({'.workflow/tools/tracker_process_instructions.py', 'scripts/tracker_process_instructions.py'})
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)

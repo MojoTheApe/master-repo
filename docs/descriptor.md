@@ -11,7 +11,7 @@ commands in it are never executed by the validator.
 | `standard` | Official source, exact 40-character commit, proposed/released version |
 | `profile` | vps, n8n, n8n-source, local, package or tooling |
 | `adoption` | draft until real setup and verification are complete; then ready |
-| `workflow` | Staging boolean, permanent main/stage names, exact required check names; optional `execution` policy |
+| `workflow` | Staging boolean, permanent main/stage names, exact required check names; optional `execution` and `process_instructions` policies |
 | `tracker` | Compatible engine pin, workspace ID, registration state and proof |
 | `checks` | Actual project test/verification procedures |
 | `environments` | Stage when enabled; production when delivery is required; actual target and checks |
@@ -93,3 +93,12 @@ and `templates/project/` retains its original template for compatibility tests.
 Old local-profile semantics (stable package) are unchanged for schema 1 consumers.
 The new initializer uses `templates/workflow/`, schema 2 and a recorded template
 baseline. Migrate old consumers through an explicit audit and reviewed PR.
+
+## Optional process instructions
+
+`workflow.process_instructions` mirrors Tracker's top-level `process_instructions`
+exactly: schema_version 1 plus unique required_checks including descriptor and
+tracker-link. Read the [instruction-only contract](process-instructions.md) for
+the fixed eligible paths, direct-main review/completion and stage ownership gates.
+The validator requires both portable helper paths. Absence preserves the old route;
+this option does not alter delivery-policy fingerprints or application completion.

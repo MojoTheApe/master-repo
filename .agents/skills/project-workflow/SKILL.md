@@ -54,6 +54,15 @@ environments, check commands or live registration proof.
 
 ## Execute the ticket lifecycle
 
+Check whether matching descriptor `workflow.process_instructions` and Tracker
+`process_instructions` explicitly adopt the [instruction-only route](references/process-instructions.md).
+Use the pinned complete-diff classifier: eligible regular process instructions
+keep genuine task/author/independent review and their checks, then go directly to
+main and normal Merged handoff. In execution v2 they retain the source review lane
+through main instead of Approved/batch/stage. Wait for held integration/stage work
+before changing main. Mixed, automation, CI, configuration, system/runtime or
+application/build changes retain their normal route. A newer skill never opts in.
+
 Check whether the pinned project explicitly has matching `workflow.execution`
 and Tracker `execution_policy`. For schema 1, read
 [parallel execution](references/parallel-execution.md) for claims, delegation and

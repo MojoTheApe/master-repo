@@ -5,7 +5,17 @@ is the matching Tracker configuration. The standard and engine use exact commit
 pins; neither automatically follows main. Populate actual procedures and verify
 registration before changing adoption from draft to ready.
 
-Execution schema 2 explicitly selects Review -> Approved -> Stage -> Merged.
+An explicitly matching `process_instructions` option permits one source PR limited
+to proven regular process instructions (AGENTS.md, CLAUDE.md and Markdown under
+docs/repository) to go Review -> main -> Merged after independent review and its
+configured checks. Keep the real review lane through main completion. No stage,
+batch, installer or delivery receipt is created. The full immutable diff, not a
+title/label, selects it; mixed/unknown/unsafe or incomplete evidence never does.
+Wait for reserved integration/unpromoted stage ownership before changing main.
+Application, build, configuration, CI, automation and system/runtime changes keep
+their ordinary route and actual delivery requirements.
+
+For other work, execution schema 2 selects Review -> Approved -> Stage -> Merged.
 Independent source approval releases the review lane; one separate Coordinator
 integration claim covers a frozen batch of 1..batch_limit tasks. The recommended
 limit is five, independent of Worker capacity. Preserve each member's author,

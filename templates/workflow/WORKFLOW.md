@@ -5,8 +5,19 @@ Read `delivery.json`, `docs/system/PROJECT.md`, `docs/repository/DELIVERY.md` an
 standard, system, tracker, stage option, completion rule and local exceptions.
 Use `python scripts/task_tracker.py guide` for the pinned Tracker commands.
 
+If matching descriptor/Tracker `process_instructions` is explicitly adopted,
+one source PR changing only regular AGENTS.md, CLAUDE.md or Markdown under
+docs/repository goes through independent review and its instruction checks directly
+to main. The complete actual diff must qualify, including both rename paths;
+mixed, unknown, unsafe or incomplete proof keeps the normal route. Keep the genuine
+author claim/handoff and review lane through admitted main completion. Do not move
+this source to Approved, stage or a batch or invent installation proof. Wait for
+any reserved integration/unpromoted stage ownership to finish before changing main.
+Configuration, helpers, CI, system/runtime knowledge and application/build changes
+remain on the ordinary route. Installing a skill alone never selects the exception.
+
 If matching execution policies use schema 2, follow the pinned guide's Approved
-and batch-integration lifecycle. Each source PR still represents one task; current
+and batch-integration lifecycle for all other work. Each source PR still represents one task; current
 independent review and required source checks move it to Approved and release the
 review lane. A separate Coordinator claim owns one frozen integration batch of
 1..batch_limit members (recommended limit five), retaining every real Worker and

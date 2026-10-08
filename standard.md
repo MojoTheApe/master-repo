@@ -62,6 +62,24 @@ and promotion PRs list every frozen batch member in the same explicit Tracker li
 their composition is bound to recorded source revisions and current main. They
 cannot substitute one implementer identity for multiple real Workers.
 
+## Optional instruction-only route
+
+The [instruction-only contract](docs/process-instructions.md) explicitly permits
+one independently reviewed source PR containing only eligible process instructions
+to enter main after its own required checks. Mirror `workflow.process_instructions`
+with Tracker's optional `process_instructions` object. Fixed regular instruction
+paths are AGENTS.md, CLAUDE.md and Markdown under docs/repository; classify the
+complete actual immutable diff, including both rename paths. Labels, titles,
+missing/truncated proof or mixed/unknown paths cannot select this exception.
+
+The task retains its author claim, real independent review and current scope/base.
+It goes Review -> main -> Merged without Approved, a batch, stage or runtime
+receipt, even in a package project. Hold the genuine review lane through main
+completion. Wait for any reserved batch/unpromoted stage to finish before changing
+main; reconcile later staged work with the new baseline. Configuration, executable
+helpers, CI, system/runtime knowledge and application/build changes keep the normal
+project route. Absence of this opt-in preserves the existing contract and history.
+
 ## Optional Approved queue and batch integration
 
 Explicit execution policy schema 2 selects the following mirrored settings:
@@ -75,7 +93,8 @@ The initial recommended batch limit is five. This mode requires staging and a
 compatible Tracker; absence or schema 1 retains the existing lifecycle. Upgrading
 the source, engine or installed skill never activates it implicitly.
 
-The workflow becomes In Progress -> Review -> Approved -> Stage -> Merged. A
+For work outside the instruction-only exception, the workflow becomes
+In Progress -> Review -> Approved -> Stage -> Merged. A
 separate independent Reviewer reserves one source review at a time, records exact
 head/base/scope evidence and verifies all required source checks. The supported
 approval transition releases the review lane and retains genuine authorship and
