@@ -5,6 +5,10 @@ schema 2, the descriptor/config policies match, and the supported shared-state
 migration has actually completed. Installing this skill never enables the mode.
 Keep execution-v1 and legacy consumers on their own pinned lifecycle.
 
+An explicitly adopted [instruction-only route](process-instructions.md) is checked
+before batch approval. Eligible sources retain independent review through direct
+main completion and never enter Approved/intake; other work follows this guide.
+
 For an existing execution-v1 project, finish the adoption task through its old
 pinned stage/main handoff before changing durable state. Use the supported
 `execution migrate --preserve-review-queue` only after all active claims and

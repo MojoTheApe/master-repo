@@ -189,3 +189,15 @@ keep safeguards and forwarding paths, record the move map and validate the final
 candidate. Retain the pristine newly rendered template as the new baseline.
 Shared helper implementations live in `.workflow/tools/`; old `scripts/` paths
 remain compatible. No layout change implies new deployment or task semantics.
+
+## Enabling the instruction-only route
+
+The [instruction-only contract](process-instructions.md) is an explicit per-project
+option. New schema-2 scaffolds may use `--process-instructions`, with repeatable
+`--process-check NAME` for real extra instruction checks. Omitting it retains the
+existing route. Existing projects adopt matching descriptor/config settings and
+the compatible engine/helper in a reviewed upgrade; the adoption itself includes
+configuration/code/CI, so follows the existing delivery route. Finish old-policy
+claims and stage work, preserve history/local controls, and verify the actual
+checks before admitting instruction-only main PRs. Master MR-16 coordinates the
+matching Task Tracker change; source/skill integration alone activates no consumer.

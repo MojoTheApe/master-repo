@@ -77,3 +77,9 @@ keep safeguards and forwarding paths, record the move map and validate the final
 candidate. Retain the pristine newly rendered template as the new baseline.
 Shared helper implementations live in `.workflow/tools/`; old `scripts/` paths
 remain compatible. No layout change implies new deployment or task semantics.
+
+MR-16's optional process_instructions route is another reviewed compatible
+contract extension, not an automatic consumer migration or standard publication.
+Integrate the matching Tracker first, pin its immutable reviewed revision, review
+and integrate Master, install the canonical skill when authorized, then adopt in
+each consumer under its existing route. Omitted options preserve older consumers.

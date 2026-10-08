@@ -60,3 +60,12 @@ AGENTS is a reading map. This repository's maintenance rules live under
 `docs/repository/`; product implementation/context live under `docs/system/`;
 `docs/runtime/` states the non-deployed boundary. Compatibility paths are pointers.
 Historical standard product changes remain in system history.
+
+## MR-16 — Instruction-only main integration
+
+Added a separate explicitly adopted route for eligible repository instructions:
+independent review and process checks, then direct main integration. Generator,
+validator, templates and canonical skill distinguish it from application/build or
+mixed changes, preserve existing delivery history and require actual diff proof.
+Companion Task Tracker admission/completion support is required before consumers
+activate it. Source adoption itself remains on each project's existing route.

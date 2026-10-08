@@ -5,8 +5,22 @@ Read `delivery.json`, `docs/system/PROJECT.md`, `docs/repository/DELIVERY.md` an
 standard, system, tracker, stage option, completion rule and local exceptions.
 Use `python scripts/task_tracker.py guide` for the pinned Tracker commands.
 
+If matching descriptor/Tracker `process_instructions` is explicitly adopted,
+one source PR changing only regular AGENTS.md, CLAUDE.md or Markdown under
+docs/repository goes through independent review and its instruction checks directly
+to main. The complete actual diff must qualify, including both rename paths;
+mixed, unknown, unsafe or incomplete proof keeps the normal route. Keep the genuine
+author claim/handoff and, when execution is adopted, its review lane through admitted main completion. Do not move
+this source to Approved, stage or a batch or invent installation proof. Wait for
+any reserved integration/unpromoted stage ownership to finish before changing main.
+Later staged work starts from current main. Use the pinned Tracker's baseline proof
+for a complete instruction-only gap covered by retained verified process merges;
+missing receipts or other divergence needs ordinary claimed reconciliation.
+Configuration, helpers, CI, system/runtime knowledge and application/build changes
+remain on the ordinary route. Installing a skill alone never selects the exception.
+
 If matching execution policies use schema 2, follow the pinned guide's Approved
-and batch-integration lifecycle. Each source PR still represents one task; current
+and batch-integration lifecycle for all other work. Each source PR still represents one task; current
 independent review and required source checks move it to Approved and release the
 review lane. A separate Coordinator claim owns one frozen integration batch of
 1..batch_limit members (recommended limit five), retaining every real Worker and
@@ -57,7 +71,11 @@ arrange a separate non-implementing subagent for independent review when the lan
 is available. Delegated Workers hand off to the Coordinator, who starts the review
 of the actual
 head/base, requirements and docs. Fix on the same branch and obtain fresh approval.
-Run `check-merge PR_NUMBER` immediately before merging. In schema 1 or legacy mode, if staging is enabled,
+Run `check-merge PR_NUMBER` immediately before merging. For a proven adopted
+instruction-only source, main integration completes the fully reviewed task scope,
+including in a package project; supply no Stage or installation receipt. Legacy
+projects keep their slot and independent attestation without unsupported execution
+lane commands. For other work, in schema 1 or legacy mode, if staging is enabled,
 working branch -> stage -> main, using the same single task in execution v1
 (related task sets are legacy-only) and unchanged verified
 content. Preserve the working branch for fixes. Use evidence commands from the

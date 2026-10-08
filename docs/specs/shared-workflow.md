@@ -33,3 +33,14 @@ standard; this specification is not rewritten as a running changelog.
     exceptions and report conflicts. Bulk migration uses separate project PRs.
 13. ReactForge installer/deployment redesign, unrelated consumer migration and
     global skill installation are not implicit parts of this implementation.
+
+## Owner refinement — 2026-10-08, instruction-only routing
+
+Eligible repository process instructions may explicitly use independent review and
+their own checks followed by main, without application stage/package delivery.
+Application/build, automated delivery/checks, configuration, mixed and unknown
+changes keep the ordinary route, including the five-task batch limit when adopted.
+The shared standard/skill, Tracker and consumer checks must agree; splitting
+document folders alone is not an admission exception. Original scope and history
+above remain preserved. See [MR-16](https://github.com/MojoTheApe/master-repo/issues/16)
+and the [instruction contract](../process-instructions.md).

@@ -23,10 +23,13 @@ def files(inputs=INPUTS, revision=OLD, *_args):
             'workflow':project.phases(inputs['staging'], data['workflow'].get('execution')), 'delivery_policy':project.delivery_policy(data),
             'modules':[{'id':'product','name':'Product','description':'Product functionality'}]}
     if 'execution' in data['workflow']: config['execution_policy']=data['workflow']['execution']
+    if 'process_instructions' in data['workflow']:
+        config['process_instructions']=data['workflow']['process_instructions']
     out={'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
          'tracker/engine.json':project.dumps({'repository':data['tracker']['repository'],'revision':data['tracker']['revision']}),
          'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'root = Path(__file__).resolve().parents[1]\n',
          'scripts/tracker_pr_check.py':'root = Path(__file__).resolve().parents[1]\n','scripts/tracker_delivery_policy.py':'# policy check\n'}
+    out['scripts/tracker_process_instructions.py'] = '# instruction route check\n'
     if data['workflow'].get('execution', {}).get('schema_version') == 2:
         out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
     project.separate_export(out)
@@ -292,6 +295,105 @@ class Projects(unittest.TestCase):
             self.assertEqual(initialize.call_args.args[1]['batch_limit'],5)
             self.assertEqual(standard.main(args+['--implementation-limit','2','--batch-limit','3']),0)
             self.assertEqual(initialize.call_args.args[1]['batch_limit'],3)
+    def test_process_route_is_explicit_and_preserves_delivery_and_execution(self):
+        process={'schema_version':1,'required_checks':['descriptor','tracker-link','Process verification']}
+        for extra in ({}, {'implementation_limit':2}, {'implementation_limit':5,'batch_limit':5}):
+            with self.subTest(extra=extra):
+                plain=project.descriptor(dict(INPUTS,profile='package',**extra),OLD)
+                opted=project.descriptor(dict(INPUTS,profile='package',process_instructions=process,**extra),OLD)
+                self.assertNotIn('process_instructions',plain['workflow'])
+                self.assertEqual(opted['workflow']['process_instructions'],process)
+                self.assertEqual(project.delivery_policy(plain),project.delivery_policy(opted))
+                self.assertEqual(plain['workflow'].get('execution'),opted['workflow'].get('execution'))
+    def test_process_policy_validation_and_mirrored_presence(self):
+        process={'schema_version':1,'required_checks':['descriptor','tracker-link']}
+        self.create(dict(INPUTS,process_instructions=process));self.assertEqual(self.errors(),[])
+        original=self.json('delivery.json');config=self.json('tracker/config.json')
+        invalid=[None,[],{},dict(process,schema_version=True),dict(process,schema_version=2),
+                 dict(process,paths=['src/']),dict(process,required_checks=[]),
+                 dict(process,required_checks=['descriptor']),dict(process,required_checks=['descriptor','tracker-link','']),
+                 dict(process,required_checks=['descriptor','tracker-link','tracker-link']),
+                 dict(process,required_checks=['descriptor','tracker-link',' Check']),
+                 dict(process,required_checks=['descriptor','tracker-link',False])]
+        for value in invalid:
+            with self.subTest(value=value):
+                data=copy.deepcopy(original);data['workflow']['process_instructions']=value
+                self.put('delivery.json',data);self.assertTrue(self.errors())
+        self.put('delivery.json',original)
+        config.pop('process_instructions');self.put('tracker/config.json',config)
+        self.assertTrue(any('process instructions differ' in e for e in self.errors()))
+        config['process_instructions']=process;self.put('tracker/config.json',config)
+        original['workflow'].pop('process_instructions');self.put('delivery.json',original)
+        self.assertTrue(any('process instructions differ' in e for e in self.errors()))
+    def test_missing_process_helper_aborts_upgrade_without_writes(self):
+        process={'schema_version':1,'required_checks':['descriptor','tracker-link']}
+        for name in ('.workflow/tools/tracker_process_instructions.py','scripts/tracker_process_instructions.py'):
+            with self.subTest(name=name),tempfile.TemporaryDirectory() as scratch:
+                self.root=Path(scratch)/'project';self.create(dict(INPUTS,process_instructions=process))
+                (self.root/name).unlink()
+                before={p.relative_to(self.root):p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+                result=project.upgrade(self.root,NEW,'unused',apply=True)
+                self.assertFalse(result['applied']);self.assertTrue(any(name in e for e in result['errors']))
+                self.assertEqual(before,{p.relative_to(self.root):p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
+    def test_upgrade_retains_project_process_checks_and_knowledge(self):
+        process={'schema_version':1,'required_checks':['descriptor','tracker-link','Local instruction checks']}
+        self.create();data=self.json('delivery.json');config=self.json('tracker/config.json')
+        data['workflow']['process_instructions']=process;config['process_instructions']=process
+        self.put('delivery.json',data);self.put('tracker/config.json',config)
+        owned=self.root/'docs/system/PROJECT.md';owned.write_text('Project-specific knowledge.\n')
+        self.assertTrue(project.upgrade(self.root,NEW,'unused',apply=True)['applied'])
+        self.assertEqual(self.json('delivery.json')['workflow']['process_instructions'],process)
+        self.assertEqual(self.json('tracker/config.json')['process_instructions'],process)
+        self.assertEqual(owned.read_text(),'Project-specific knowledge.\n');self.assertEqual(self.errors(),[])
+    def test_process_cli_requires_explicit_opt_in_and_passes_actual_checks(self):
+        args=['init','--root',str(self.root),'--profile','local','--repository','owner/example',
+              '--name','Example','--id-prefix','EX','--workspace-id','example','--tracker-root','unused']
+        with mock.patch.object(standard,'source_revision',return_value=OLD),mock.patch.object(project,'init',return_value={}) as initialize:
+            self.assertEqual(standard.main(args),0);self.assertNotIn('process_instructions',initialize.call_args.args[1])
+            self.assertEqual(standard.main(args+['--process-check','Actual check']),2)
+            self.assertEqual(standard.main(args+['--process-instructions','--process-check','Actual check']),0)
+            self.assertEqual(initialize.call_args.args[1]['process_instructions'],
+                             {'schema_version':1,'required_checks':['descriptor','tracker-link','Actual check']})
+    def test_renderer_process_policy_is_explicit_and_helper_is_required(self):
+        process={'schema_version':1,'required_checks':['descriptor','tracker-link']}
+        engine=Path(self.tmp.name)/'engine';(engine/'tracker').mkdir(parents=True)
+        observed=[]
+        def exporter(command,**kwargs):
+            target=Path(command[command.index('--output')+1]);(target/'tracker').mkdir(parents=True)
+            config={}
+            if '--process-instructions' in command:
+                config['process_instructions']=json.loads(Path(command[command.index('--process-instructions')+1]).read_text())
+            observed.append(config.copy());(target/'tracker/config.json').write_text(project.dumps(config))
+            (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            if 'process_instructions' in config:
+                (target/'docs/PROCESS_INSTRUCTIONS.md').write_text('Actual instruction route guide.\n')
+                (target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text(
+                    '[Process instructions](../docs/PROCESS_INSTRUCTIONS.md). Read `docs/PROCESS_INSTRUCTIONS.md`.\n')
+            (target/'scripts').mkdir()
+            for name in project.HELPERS:
+                (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
+            (target/'scripts/tracker_process_instructions.py').write_text('VALUE = 42\n')
+            return mock.Mock(returncode=0,stderr='',stdout='')
+        with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=exporter):
+            result=REAL_RENDER(dict(INPUTS,process_instructions=process),NEW,engine)
+            self.assertEqual(json.loads(result['tracker/config.json'])['process_instructions'],process)
+            self.assertIn('.workflow/tools/tracker_process_instructions.py',result)
+            self.assertEqual(result['docs/repository/PROCESS_INSTRUCTIONS.md'],'Actual instruction route guide.\n')
+            self.assertIn('(repository/PROCESS_INSTRUCTIONS.md)',result['docs/PROCESS_INSTRUCTIONS.md'])
+            self.assertIn('(PROCESS_INSTRUCTIONS.md)',result['docs/repository/TRACKER.md'])
+            self.assertIn('`docs/repository/PROCESS_INSTRUCTIONS.md`',result['docs/repository/TRACKER.md'])
+            REAL_RENDER(INPUTS,NEW,engine);self.assertNotIn('process_instructions',observed[-1])
+            self.assertNotIn('docs/repository/PROCESS_INSTRUCTIONS.md',REAL_RENDER(INPUTS,NEW,engine))
+        def leaking(command,**kwargs):
+            result=exporter(command,**kwargs);target=Path(command[command.index('--output')+1])
+            (target/'tracker/config.json').write_text(project.dumps({'process_instructions':process}));return result
+        with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=leaking):
+            with self.assertRaisesRegex(ValueError,'explicit project choice'):REAL_RENDER(INPUTS,NEW,engine)
+        def incomplete(command,**kwargs):
+            result=exporter(command,**kwargs);target=Path(command[command.index('--output')+1])
+            (target/'scripts/tracker_process_instructions.py').unlink();return result
+        with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=incomplete):
+            with self.assertRaisesRegex(ValueError,'lacks the process'):REAL_RENDER(dict(INPUTS,process_instructions=process),NEW,engine)
     def test_project_knowledge_is_never_refreshed_even_if_untouched(self):
         self.create()
         incoming=files(INPUTS,NEW)
