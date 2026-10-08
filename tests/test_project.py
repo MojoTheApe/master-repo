@@ -20,7 +20,7 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     """Minimal exported contract; real pinned exporter is exercised separately."""
     data=project.descriptor(inputs,revision)
     config={'schema_version':3,'project':{'name':inputs['name'],'repository':inputs['repository'],'id_prefix':inputs['prefix'],'base_branch':'main'},
-            'workflow':[x for x in project.PHASES if x!='stage' or inputs['staging']], 'delivery_policy':project.delivery_policy(data),
+            'workflow':project.phases(inputs['staging'], data['workflow'].get('execution')), 'delivery_policy':project.delivery_policy(data),
             'modules':[{'id':'product','name':'Product','description':'Product functionality'}]}
     if 'execution' in data['workflow']: config['execution_policy']=data['workflow']['execution']
     out={'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
@@ -100,6 +100,26 @@ class Projects(unittest.TestCase):
         self.assertTrue(self.errors())
         config['execution_policy']=policy;self.put('tracker/config.json',config)
         self.assertTrue(any('execution policy differs' in e for e in self.errors()))
+    def test_batch_opt_in_adds_approved_and_preserves_local_limit_on_upgrade(self):
+        self.create(dict(INPUTS, implementation_limit=5, batch_limit=5))
+        self.assertEqual(self.errors(), [])
+        config = self.json('tracker/config.json')
+        self.assertEqual(config['workflow'], project.phases(True, config['execution_policy']))
+        self.assertEqual(config['execution_policy'], {'schema_version':2, 'implementation_limit':5, 'review_limit':1, 'batch_limit':5})
+        data = self.json('delivery.json')
+        data['workflow']['execution']['batch_limit'] = 3
+        config['execution_policy']['batch_limit'] = 3
+        self.put('delivery.json', data); self.put('tracker/config.json', config)
+        self.assertTrue(project.upgrade(self.root, NEW, 'unused', apply=True)['applied'])
+        self.assertEqual(self.json('delivery.json')['workflow']['execution']['batch_limit'], 3)
+        self.assertEqual(self.json('tracker/config.json')['execution_policy']['batch_limit'], 3)
+        self.assertEqual(json.loads(self.json(project.BASELINE)['files']['tracker/config.json'])['execution_policy']['batch_limit'], 5)
+    def test_batch_opt_in_requires_staging_capacity_and_valid_limit(self):
+        for inputs in (dict(INPUTS,batch_limit=5), dict(INPUTS,implementation_limit=5,batch_limit=5,staging=False)):
+            with self.subTest(inputs=inputs), self.assertRaises(ValueError): project.descriptor(inputs, OLD)
+        for limit in (0,17,True,None,5.0,'5'):
+            with self.subTest(limit=limit), self.assertRaises(ValueError):
+                project.descriptor(dict(INPUTS,implementation_limit=5,batch_limit=limit), OLD)
     def test_upgrade_preserves_opt_in_and_local_capacity_with_pristine_baseline(self):
         self.create(dict(INPUTS,implementation_limit=2))
         data=self.json('delivery.json');data['workflow']['execution']['implementation_limit']=4
@@ -265,6 +285,11 @@ class Projects(unittest.TestCase):
             self.assertNotIn('implementation_limit',initialize.call_args.args[1])
             self.assertEqual(standard.main(args+['--implementation-limit','2']),0)
             self.assertEqual(initialize.call_args.args[1]['implementation_limit'],2)
+            self.assertNotIn('batch_limit', initialize.call_args.args[1])
+            self.assertEqual(standard.main(args+['--implementation-limit','5','--batch-limit']),0)
+            self.assertEqual(initialize.call_args.args[1]['batch_limit'],5)
+            self.assertEqual(standard.main(args+['--implementation-limit','2','--batch-limit','3']),0)
+            self.assertEqual(initialize.call_args.args[1]['batch_limit'],3)
     def test_project_knowledge_is_never_refreshed_even_if_untouched(self):
         self.create()
         incoming=files(INPUTS,NEW)

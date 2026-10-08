@@ -5,6 +5,16 @@ is the matching Tracker configuration. The standard and engine use exact commit
 pins; neither automatically follows main. Populate actual procedures and verify
 registration before changing adoption from draft to ready.
 
+Execution schema 2 explicitly selects Review -> Approved -> Stage -> Merged.
+Independent source approval releases the review lane; one separate Coordinator
+integration claim covers a frozen batch of 1..batch_limit tasks. The recommended
+limit is five, independent of Worker capacity. Preserve each member's author,
+source PR/current approval and scope; verify the combined stage candidate before
+unchanged promotion. Ship-all snapshots intake and processes sequential batches,
+rechecking remaining approvals after each main change. A single task may ship
+without filling the batch. The v1 single-task lane instructions below apply only
+to schema 1. Completion and runtime authorization remain project-specific.
+
 ## Path from request to completion
 
 Idea -> Backlog -> To Do are planning steps under the owner's direction. An

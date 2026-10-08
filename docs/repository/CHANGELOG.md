@@ -1,5 +1,24 @@
 # Repository process history
 
+## MR-14 — Approved tasks and integration batches
+
+Add explicit execution schema 2 with a configurable batch limit (recommended five),
+preserving legacy/v1 behavior and mirrored descriptor/Tracker settings. The canonical
+skill and workflow templates release source review ownership at Approved, retain
+per-task authorship and require a separately owned, frozen, independently reviewed
+integration candidate. Ship-all snapshots intake and uses sequential bounded batches;
+source checks, current composition, exact stage/main proof and package delivery stay
+mandatory. Initializer validation and three-way upgrades preserve local limits.
+
+Master: https://github.com/MojoTheApe/master-repo/issues/14
+Tracker: https://github.com/MojoTheApe/task-tracker/issues/77
+ACL rollout: https://github.com/MojoTheApe/adopy-campaing-launcher/issues/566
+
+Integration is pending compatible Tracker source/rollout, exact compatibility pin,
+independent review and required checks. Install the reviewed canonical skill only
+after Master integration. Consumer migration preserves live ownership/history and
+requires fresh activation proof; no other consumer is automatically changed.
+
 ## MR-11 — Parallel implementation with sequential review and integration
 
 Add explicit execution policy to schema-2 creation, validation and upgrades without

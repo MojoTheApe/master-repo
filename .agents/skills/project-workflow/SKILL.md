@@ -55,10 +55,18 @@ environments, check commands or live registration proof.
 ## Execute the ticket lifecycle
 
 Check whether the pinned project explicitly has matching `workflow.execution`
-and Tracker `execution_policy`. If present, read
+and Tracker `execution_policy`. For schema 1, read
 [parallel execution](references/parallel-execution.md) for claims, delegation and
 the single review/integration lane. If absent, preserve the pinned legacy slot
 behavior; installing this skill does not opt the project in.
+
+For matching execution schema 2, read
+[batch integration](references/batch-integration.md) for approval and
+integration ownership: Review -> Approved releases the review lane; one Coordinator
+owns a frozen batch up to the configured `batch_limit` (initial setting five).
+The one-task source PR rule remains. The execution-v1 lane lifetime and same-single-
+task staging instructions below apply only to v1. Use only commands supported by
+the exact pinned engine; preserve older consumers and their actual delivery rules.
 
 Idea request -> Idea; task request -> Backlog. Planning and To Do do not start code.
 On explicit development, read the full Issue, claim the Tracker slot with its
@@ -74,11 +82,11 @@ in both PR text and commits. Keep partial tasks and abandoned PRs unfinished.
 Implement and self-check, update affected system docs/history or explain no impact,
 create a ready PR and set Review. Automatically invoke a different subagent for
 independent review of the actual head/base, full task scope and changed files.
-For an opted-in project, hand off the implementation claim and acquire its sole
+For execution v1, hand off the implementation claim and acquire its sole
 review/integration lane before invoking the Reviewer; other ready PRs wait.
 Delegated Workers hand off to their Coordinator, who starts the review.
 The reviewer reports findings/checks/verdict; the implementer fixes on the same
-branch. In opted-in execution, any post-handoff edit, including updating the base
+branch. In execution v1, any post-handoff edit, including updating the base
 or resolving conflicts, first requires `execution review-return`, a fresh author
 implementation claim and another handoff. Retain the lane with `--keep-lane` when
 needed; it is mandatory after entering stage. Then reacquire/resume the lane and
@@ -105,6 +113,11 @@ promote only matching content. Use merge/squash with the approved baseline, not
 rebase merge. If main changes, follow the claimed-author fix procedure above to
 reconcile the working branch and repeat review,
 stage and verification. If disabled: working branch -> main, no Stage column.
+
+Execution v2 uses the [batch integration](references/batch-integration.md) ownership,
+assembly and recovery procedure instead of that v1 single-source stage sequence.
+After source approval, use its separate Coordinator batch claim; do not acquire a
+v1 review/integration lane for multiple tasks or infer v2 return-command syntax.
 
 Record Merged only for fully implemented ticket scope actually included in main.
 Local manual-pull/tooling completes after admitted merge. VPS/n8n need verified
