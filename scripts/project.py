@@ -32,8 +32,14 @@ LAYOUT_DATA = {'schema_version': 1, 'repository': 'docs/repository/',
 
 
 def separate_export(files):
-    """Adapt only helper location; preserve the pinned engine and its contract."""
-    files['docs/repository/TRACKER.md'] = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
+    """Separate shared guidance and tools; preserve the pinned engine contract."""
+    guide = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
+    if 'docs/PROCESS_INSTRUCTIONS.md' in files:
+        files['docs/repository/PROCESS_INSTRUCTIONS.md'] = files.pop('docs/PROCESS_INSTRUCTIONS.md')
+        files['docs/PROCESS_INSTRUCTIONS.md'] = '# Moved\n\nSee [process instructions](repository/PROCESS_INSTRUCTIONS.md).\n'
+        guide = guide.replace('../docs/PROCESS_INSTRUCTIONS.md', 'PROCESS_INSTRUCTIONS.md')
+        guide = guide.replace('`docs/PROCESS_INSTRUCTIONS.md`', '`docs/repository/PROCESS_INSTRUCTIONS.md`')
+    files['docs/repository/TRACKER.md'] = guide
     helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py')
                           if 'scripts/' + name in files))
     for name in helpers:

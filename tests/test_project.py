@@ -365,6 +365,10 @@ class Projects(unittest.TestCase):
                 config['process_instructions']=json.loads(Path(command[command.index('--process-instructions')+1]).read_text())
             observed.append(config.copy());(target/'tracker/config.json').write_text(project.dumps(config))
             (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            if 'process_instructions' in config:
+                (target/'docs/PROCESS_INSTRUCTIONS.md').write_text('Actual instruction route guide.\n')
+                (target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text(
+                    '[Process instructions](../docs/PROCESS_INSTRUCTIONS.md). Read `docs/PROCESS_INSTRUCTIONS.md`.\n')
             (target/'scripts').mkdir()
             for name in project.HELPERS:
                 (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
@@ -374,7 +378,12 @@ class Projects(unittest.TestCase):
             result=REAL_RENDER(dict(INPUTS,process_instructions=process),NEW,engine)
             self.assertEqual(json.loads(result['tracker/config.json'])['process_instructions'],process)
             self.assertIn('.workflow/tools/tracker_process_instructions.py',result)
+            self.assertEqual(result['docs/repository/PROCESS_INSTRUCTIONS.md'],'Actual instruction route guide.\n')
+            self.assertIn('(repository/PROCESS_INSTRUCTIONS.md)',result['docs/PROCESS_INSTRUCTIONS.md'])
+            self.assertIn('(PROCESS_INSTRUCTIONS.md)',result['docs/repository/TRACKER.md'])
+            self.assertIn('`docs/repository/PROCESS_INSTRUCTIONS.md`',result['docs/repository/TRACKER.md'])
             REAL_RENDER(INPUTS,NEW,engine);self.assertNotIn('process_instructions',observed[-1])
+            self.assertNotIn('docs/repository/PROCESS_INSTRUCTIONS.md',REAL_RENDER(INPUTS,NEW,engine))
         def leaking(command,**kwargs):
             result=exporter(command,**kwargs);target=Path(command[command.index('--output')+1])
             (target/'tracker/config.json').write_text(project.dumps({'process_instructions':process}));return result
