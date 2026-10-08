@@ -313,6 +313,7 @@ class Projects(unittest.TestCase):
                  dict(process,paths=['src/']),dict(process,required_checks=[]),
                  dict(process,required_checks=['descriptor']),dict(process,required_checks=['descriptor','tracker-link','']),
                  dict(process,required_checks=['descriptor','tracker-link','tracker-link']),
+                 dict(process,required_checks=['descriptor','tracker-link',' Check']),
                  dict(process,required_checks=['descriptor','tracker-link',False])]
         for value in invalid:
             with self.subTest(value=value):

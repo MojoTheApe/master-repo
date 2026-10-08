@@ -116,7 +116,7 @@ def validate_process_instructions(value):
             or type(value.get('schema_version')) is not int or value['schema_version'] != 1):
         raise ValueError('Process instructions need schema_version 1 and required_checks')
     checks = value['required_checks']
-    if (not isinstance(checks, list) or not checks or any(not isinstance(x, str) or not x.strip() for x in checks)
+    if (not isinstance(checks, list) or not checks or any(not isinstance(x, str) or not x.strip() or x != x.strip() for x in checks)
             or len(set(checks)) != len(checks) or not {'descriptor', 'tracker-link'} <= set(checks)):
         raise ValueError('Process instructions require unique check names including descriptor and tracker-link')
 
