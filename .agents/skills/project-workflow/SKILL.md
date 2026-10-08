@@ -73,7 +73,9 @@ For matching execution schema 2, read
 [batch integration](references/batch-integration.md) for approval and
 integration ownership: Review -> Approved releases the review lane; one Coordinator
 owns a frozen batch up to the configured `batch_limit` (initial setting five).
-The one-task source PR rule remains. The execution-v1 lane lifetime and same-single-
+For a preserved queue with closed historical handoffs, use only the explicit
+compatible migration option in that reference; it preserves unfinished history
+and grants no approval or admission. The one-task source PR rule remains. The execution-v1 lane lifetime and same-single-
 task staging instructions below apply only to v1. Use only commands supported by
 the exact pinned engine; preserve older consumers and their actual delivery rules.
 

@@ -17,6 +17,19 @@ tasks and handoffs; it does not approve them. Read the new pinned guide before
 the next independent review. Existing stage-targeted source PRs become
 approval-only and may not merge directly into stage.
 
+When original queued handoffs reference genuinely closed, unmerged nondraft PRs,
+first verify that the exact pinned engine supports the flag in its guide. Older
+engines retain their supported commands; a newer skill does not upgrade them. Use
+the compatible engine's explicit
+`execution migrate --preserve-review-queue --preserve-closed-review-handoffs`
+preview/apply option. Both flags are mandatory; preserve idle ownership, unchanged
+capacity, the original queue order/tasks/authors/branches/handoffs and actual
+reported Issue/PR pairs. Closed records remain unfinished history for separate
+owner resolution. They acquire no ready, Approved, admission or completion proof;
+normal source review and batch admission still require a current ready open PR.
+Verify the preserved state and fresh board without creating demonstration features.
+
+
 ## Individual implementation and approval
 
 The Coordinator screens dependencies and overlap, delegates only authorized

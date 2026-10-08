@@ -103,9 +103,25 @@ Preview supported shared-state migration only after claims, reviews, outstanding
 Approved intake and stage work are reconciled. Keep private before/after state
 snapshots and preserve every non-execution field. A config commit, new label or
 source merge is not activation proof. Verify fresh board columns and durable
-claim/approval/batch state, then exercise a genuinely reviewed two-task batch
-through stage/main. Record source integration separately from package delivery.
+claim/approval/batch state. Verify the first real independently approved batch
+through stage/main when available. Record source integration separately from package delivery.
 Other consumers retain their exact policy and are not automatically migrated.
+
+A genuine historical queued handoff can reference a nondraft source PR that was
+closed without merging. The compatible Tracker can retain it explicitly with
+`execution migrate --preserve-review-queue --preserve-closed-review-handoffs`.
+Preview first, inspect the reported original Issue/PR pairs and apply only from
+the exact reviewed pin with unchanged capacity and idle ownership. Both flags
+are required; default migration still rejects a closed source. Preserve every
+original queue entry, author, branch and handoff. The retained closed sources
+remain unfinished history awaiting separate owner resolution. This option does
+not reopen, approve, archive or complete them. Normal review, Approved, intake
+and admission still require genuine current ready open source PRs.
+
+Verify the fresh board and preserved state at activation. Complete the first
+ordinary batch when real independently approved tasks are available; do not
+create extra features solely to manufacture a demonstration batch.
+
 
 ## Existing project adoption
 
