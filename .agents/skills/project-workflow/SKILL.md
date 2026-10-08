@@ -113,7 +113,13 @@ authorization; no additional routine owner-confirmation step is needed.
 
 ## Stage, merge and completion
 
-If enabled: working branch -> permanent stage -> permanent main. Preserve the same
+For a proven adopted instruction-only source, use the direct-main procedure above
+and complete its fully reviewed scope at the admitted main merge. Do not require
+a package release/install or a Stage receipt for it. Legacy consumers retain their
+own execution slot and independent review attestation; execution lane commands
+apply only when the pinned project has adopted that execution policy.
+
+For other work, if enabled: working branch -> permanent stage -> permanent main. Preserve the same
 single task in execution v1 (a related task set is legacy-only), one active stage
 candidate and exact approved content. Keep the working branch for
 fixes after its first PR; new fix PRs use that branch. Do not delete permanent
@@ -123,13 +129,14 @@ rebase merge. If main changes, follow the claimed-author fix procedure above to
 reconcile the working branch and repeat review,
 stage and verification. If disabled: working branch -> main, no Stage column.
 
-Execution v2 uses the [batch integration](references/batch-integration.md) ownership,
+For work outside the instruction-only exception, execution v2 uses the [batch integration](references/batch-integration.md) ownership,
 assembly and recovery procedure instead of that v1 single-source stage sequence.
 After source approval, use its separate Coordinator batch claim; do not acquire a
 v1 review/integration lane for multiple tasks or infer v2 return-command syntax.
 
 Record Merged only for fully implemented ticket scope actually included in main.
-Local manual-pull/tooling completes after admitted merge. VPS/n8n need verified
+Instruction-only and local manual-pull/tooling work completes after admitted merge.
+For other work, VPS/n8n need verified
 production delivery; package needs its stable release and installation check.
 Pending/failed delivery is unfinished in dependencies and release readiness.
 Record actual receipts against the configured target; never relabel stage evidence

@@ -12,6 +12,11 @@ non-code work uses a report PR rather than a legacy completion bypass. Use neutr
 `work/<task-id>-<short-name>` branch names unless a host/user requires another
 accepted prefix; preserve the compatibility of existing `codex/` branches.
 
+An explicitly adopted [instruction-only route](process-instructions.md) keeps
+the real review lane through direct main completion, including in package
+projects, without stage or package delivery. Stage/delivery requirements in this
+guide apply to other work.
+
 ## Coordinate several requested tasks
 
 1. Remain the Coordinator in the current conversation. Read each complete task,
@@ -44,10 +49,12 @@ accepted prefix; preserve the compatibility of existing `codex/` branches.
    reacquire it; with one, handoff resumes its Reviewer. Independently re-review
    current source/base/scope/policy. Coordinators and Reviewers never edit an
    unclaimed branch; a Reviewer who implements cannot give final independent approval.
-7. Hold the lane through review, admission checks, optional stage and main merge.
+7. Hold the lane through review, admission checks and main merge. Proven adopted
+   instruction-only work uses direct main completion; other work retains optional stage.
    Preserve exact evidence and one active stage task. Release through the
    pinned completion/recovery command, then select the next eligible task. A task
-   needing production/package delivery remains unfinished after its main merge.
+   needing production/package delivery remains unfinished after its main merge;
+   a proven instruction-only outcome completes at the admitted merge.
 
 ## Identify agents and recover
 

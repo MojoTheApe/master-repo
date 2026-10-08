@@ -28,7 +28,9 @@ helpers, CI, configuration and templates are outside the exception. Task type,
 title, labels or an author's declaration never replace the actual diff.
 
 Keep one real task per instruction source PR, its author claim/handoff, the genuine
-independent review lane and current head/base/tree/scope evidence. The source PR
+independent review and current head/base/tree/scope evidence. Adopted execution
+policies use their genuine review lane; legacy projects keep their existing slot
+and independent attestation without unsupported execution commands. The source PR
 targets main. Use the pinned Tracker's review evidence, `check-pr`, `check-merge`
 immediately before integration and normal reviewed-complete `merged` transition.
 Execution v2 does not move this source to Approved or put it in a batch; its

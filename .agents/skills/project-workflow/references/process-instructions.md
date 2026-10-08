@@ -11,8 +11,10 @@ missing, truncated, symlink, mixed, system/runtime, configuration, automation or
 application changes cannot authorize the exception. Rely on the pinned portable
 classifier and admission checks; an Issue label or author's description is not proof.
 
-Create/claim one real task, preserve its actual author and handoff, acquire the
-genuine independent review lane and review current head/base/tree/full scope.
+Create/claim one real task and preserve its actual author and handoff. Adopted
+execution policies require the genuine independent review lane; legacy projects
+keep their existing slot and independent attestation without unsupported execution
+commands. Review current head/base/tree/full scope.
 The source PR targets main and needs its explicit instruction checks. Use
 `record-review`, `check-pr`, `check-merge` immediately before merge and the normal
 reviewed-complete `merged` handoff, with only syntax supported by the pinned guide.

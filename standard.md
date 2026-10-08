@@ -74,7 +74,7 @@ missing/truncated proof or mixed/unknown paths cannot select this exception.
 
 The task retains its author claim, real independent review and current scope/base.
 It goes Review -> main -> Merged without Approved, a batch, stage or runtime
-receipt, even in a package project. Hold the genuine review lane through main
+receipt, even in a package project. When execution is adopted, hold its genuine review lane through main
 completion. Wait for any reserved batch/unpromoted stage to finish before changing
 main; reconcile later staged work with the new baseline. Configuration, executable
 helpers, CI, system/runtime knowledge and application/build changes keep the normal
@@ -248,7 +248,12 @@ approval round. Existing production authorization still applies.
 
 ## Optional stage before main
 
-Execution v2 uses the frozen batch procedure above. The single-source sequence
+Proven adopted instruction-only sources use direct main admission instead. Their
+fully reviewed instruction scope completes there without a Stage or runtime receipt.
+Legacy projects retain their existing slot and independent review attestation;
+execution lane commands apply only to explicitly adopted execution policies.
+
+For other work, execution v2 uses the frozen batch procedure above. The single-source sequence
 below describes legacy and execution-v1 staging.
 
 Staging defaults to enabled. Permanent branches are `stage` and `main`:
@@ -280,6 +285,11 @@ release another task's stage ownership. With staging disabled, use working branc
 -> main and omit Stage from the board; independent review and CI remain required.
 
 ## Delivery is separate from merge
+
+Proven adopted instruction-only tasks complete at their admitted main merge,
+including in package projects. This exception supplies no application delivery
+proof and cannot finish outstanding application/runtime scope. The table and
+delivery obligations below apply to other work.
 
 | Profile | Completion condition after review and main merge |
 | --- | --- |

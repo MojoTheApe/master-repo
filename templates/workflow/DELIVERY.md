@@ -8,7 +8,7 @@ registration before changing adoption from draft to ready.
 An explicitly matching `process_instructions` option permits one source PR limited
 to proven regular process instructions (AGENTS.md, CLAUDE.md and Markdown under
 docs/repository) to go Review -> main -> Merged after independent review and its
-configured checks. Keep the real review lane through main completion. No stage,
+configured checks. When execution is adopted, keep its real review lane through main completion. No stage,
 batch, installer or delivery receipt is created. The full immutable diff, not a
 title/label, selects it; mixed/unknown/unsafe or incomplete evidence never does.
 Wait for reserved integration/unpromoted stage ownership before changing main.
@@ -35,7 +35,8 @@ Opted-in execution v1 uses exactly one task per source PR and the single
 review/integration lane. Use explicit handoff and review claims from the pinned
 guide; follow the [workflow](WORKFLOW.md) for author claims before post-handoff edits.
 
-With staging enabled: working branch -> permanent stage, record Stage, test the
+Outside the adopted instruction-only exception, with staging enabled:
+working branch -> permanent stage, record Stage, test the
 configured target, then stage -> main with the same task and content. Use
 merge or squash with an unchanged tree and reviewed first parent. Keep one active
 task on stage; a related task set is permitted only under legacy execution.
@@ -51,8 +52,11 @@ Run the pinned client's `check-pr N`, `record-review`, `check-merge N`, `stage`,
 `guide`. Commands record verified actions; they do not deploy or run a reviewer.
 Configure branch protection separately and verify that the required checks exist.
 
-Merged records inclusion in main. A local manual-pull project completes at that
-verified merge. VPS/n8n/package profiles require their actual delivery and checks,
+Merged records inclusion in main. A proven instruction-only task completes its
+fully reviewed instruction scope at that admitted merge, including in a package
+project. Legacy projects use their slot and independent attestation; execution
+lane commands require an adopted execution policy. A local manual-pull project
+also completes at verified merge. For other work, VPS/n8n/package profiles require their actual delivery and checks,
 recorded with `record-delivery`. Failed or pending delivery remains unfinished.
 The explicitly selected n8n-source profile completes the Git source task after
 the admitted main merge. n8n transfer/publication is a separate process and must
