@@ -27,6 +27,8 @@ def files(inputs=INPUTS, revision=OLD, *_args):
          'tracker/engine.json':project.dumps({'repository':data['tracker']['repository'],'revision':data['tracker']['revision']}),
          'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'root = Path(__file__).resolve().parents[1]\n',
          'scripts/tracker_pr_check.py':'root = Path(__file__).resolve().parents[1]\n','scripts/tracker_delivery_policy.py':'# policy check\n'}
+    if data['workflow'].get('execution', {}).get('schema_version') == 2:
+        out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
     project.separate_export(out)
     out.update(project.layout_files())
     for source,destination in project.FILES.items():
@@ -308,6 +310,18 @@ class Projects(unittest.TestCase):
         self.assertTrue(any('docs/runtime/DELIVERY.md' in e for e in result['errors']))
         self.assertFalse((self.root/'docs/runtime/DELIVERY.md').exists())
         self.assertEqual(self.json('delivery.json')['standard']['revision'],OLD)
+    def test_missing_v2_batch_helper_aborts_upgrade_without_writes(self):
+        for name in ('.workflow/tools/tracker_batch_policy.py', 'scripts/tracker_batch_policy.py'):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as scratch:
+                self.root = Path(scratch)/'project'
+                self.create(dict(INPUTS, implementation_limit=5, batch_limit=5))
+                (self.root/name).unlink()
+                self.assertTrue(any(name in e for e in self.errors()))
+                before = {p.relative_to(self.root):p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+                result = project.upgrade(self.root,NEW,'unused',apply=True)
+                self.assertFalse(result['applied'])
+                self.assertTrue(any(name in e for e in result['errors']))
+                self.assertEqual(before, {p.relative_to(self.root):p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
     def test_legacy_layout_stops_without_writes(self):
         self.create();base=self.json(project.BASELINE);base['files'].pop(project.LAYOUT);self.put(project.BASELINE,base)
         before={p:p.read_bytes() for p in self.root.rglob('*') if p.is_file()}

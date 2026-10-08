@@ -331,6 +331,8 @@ def inspect(root, expected_revision=None):
         required = set(FILES.values()) | set(FORWARDS) | {'docs/repository/TRACKER.md'}
         required.update('.workflow/tools/' + name for name in HELPERS)
         required.update('scripts/' + name for name in HELPERS)
+        if wf.get('execution', {}).get('schema_version') == 2:
+            required.update({'.workflow/tools/tracker_batch_policy.py', 'scripts/tracker_batch_policy.py'})
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)
