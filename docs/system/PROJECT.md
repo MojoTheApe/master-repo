@@ -89,3 +89,17 @@ configuration, application and mixed work retain the ordinary staged/delivery
 route. Existing delivery fingerprints, execution defaults, consumer pins and
 project-owned knowledge are preserved. The canonical skill routes only after
 actual project opt-in; Task Tracker owns immutable diff admission and completion.
+
+## MR-18 — Preserve closed historical review handoffs
+
+Pin the independently reviewed compatible Tracker at `086aaa98f2e807d640105be2929714d0b7331f21`
+(Tracker task #85). Explain the explicit paired migration flags for
+genuine closed, unmerged historical sources. Queue order, authors and handoffs
+are retained without reopening or approving those unfinished tasks; normal
+review, Approved and batch admission retain current-open checks. Activation
+requires preserved-state and fresh-board proof; first-batch proof follows real
+approved work instead of manufactured demonstration features. Consumer pins and
+state activation remain separately reviewed operations.
+
+Master task: https://github.com/MojoTheApe/master-repo/issues/18
+Tracker task: https://github.com/MojoTheApe/task-tracker/issues/85
