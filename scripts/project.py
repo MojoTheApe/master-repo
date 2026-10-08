@@ -34,9 +34,10 @@ LAYOUT_DATA = {'schema_version': 1, 'repository': 'docs/repository/',
 def separate_export(files):
     """Adapt only helper location; preserve the pinned engine and its contract."""
     files['docs/repository/TRACKER.md'] = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
-    for name in HELPERS:
+    helpers = (*HELPERS, *(['tracker_batch_policy.py'] if 'scripts/tracker_batch_policy.py' in files else []))
+    for name in helpers:
         source = files.pop('scripts/' + name)
-        if name != 'tracker_delivery_policy.py':
+        if name in ('task_tracker.py', 'tracker_pr_check.py'):
             old = 'Path(__file__).resolve().parents[1]'
             if source.count(old) != 1:
                 raise ValueError('Pinned Tracker helper layout changed: ' + name)

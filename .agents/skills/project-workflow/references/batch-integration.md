@@ -5,6 +5,14 @@ schema 2, the descriptor/config policies match, and the supported shared-state
 migration has actually completed. Installing this skill never enables the mode.
 Keep execution-v1 and legacy consumers on their own pinned lifecycle.
 
+For an existing execution-v1 project, finish the adoption task through its old
+pinned stage/main handoff before changing durable state. Use the supported
+`execution migrate --preserve-review-queue` only after all active claims and
+stage candidates are finished. It preserves ready queued source PRs, authors,
+tasks and handoffs; it does not approve them. Read the new pinned guide before
+the next independent review. Existing stage-targeted source PRs become
+approval-only and may not merge directly into stage.
+
 ## Individual implementation and approval
 
 The Coordinator screens dependencies and overlap, delegates only authorized
@@ -59,9 +67,12 @@ Before stage entry, cancellation may return unchanged members to Approved with
 history. After stage entry, retain exclusive integration ownership through any
 author fix, fresh approval, rebuilt candidate, integration review and verification.
 Do not reset stage, drop already integrated work, smuggle fixes into promotion or
-reuse old proof after main/candidate/membership changes. A failed member may be
-excluded only through a supported, explicit rebuild whose final content and scope
-are reviewed; the remaining members keep their actual authors and history.
+reuse old proof after main/candidate/membership changes. Before stage entry,
+cancel the batch and select a smaller subset of the same fixed intake to leave
+a failed member for later. After stage entry, retain the same members for the
+supported author-fix/rebuild path. Selective recovery after stage requires a
+separately supported and reviewed recovery procedure. Preserve all actual authors
+and history.
 
 Before the next batch, reconcile stage/main and recheck each source approval against
 the new baseline. Do not automatically repeat a passing unchanged CI run. Use the

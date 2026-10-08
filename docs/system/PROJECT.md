@@ -72,7 +72,10 @@ Worker capacity and local settings survive three-way upgrades. The canonical ski
 routes by the adopted version and preserves per-task author/reviewer evidence,
 fixed ship-all intake, one integration candidate and separate delivery obligations.
 Companion [TT-77](https://github.com/MojoTheApe/task-tracker/issues/77) owns command,
-state, admission and UI support; Master must pin its reviewed compatible commit
-before this candidate is ready for consumer use. The authorized rollout includes
+state, admission and UI support. Compatibility pins its reviewed integrated revision
+`e6013f8ad641bd99061f7db82bceeb705f8c150a` (Tracker PR 78), including TT-73's
+large-state read fix. The real exporter was checked for legacy, v1 and v2 consumers;
+the new portable batch helper follows the existing relocated-helper layout.
+The authorized rollout includes
 local skill installation and separate [ACL-1566](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/566)
 adoption, with max five per batch. Source work here does not itself activate ACL.

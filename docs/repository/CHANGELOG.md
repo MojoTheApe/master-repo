@@ -14,8 +14,11 @@ Master: https://github.com/MojoTheApe/master-repo/issues/14
 Tracker: https://github.com/MojoTheApe/task-tracker/issues/77
 ACL rollout: https://github.com/MojoTheApe/adopy-campaing-launcher/issues/566
 
-Integration is pending compatible Tracker source/rollout, exact compatibility pin,
-independent review and required checks. Install the reviewed canonical skill only
+Compatibility selects reviewed Tracker PR 78 at
+`e6013f8ad641bd99061f7db82bceeb705f8c150a`, which also contains TT-73's large-state
+read fix. Actual pinned exports retain legacy/v1 settings and opt v2 into Approved;
+the portable batch helper is relocated with the existing compatibility entry points.
+Master integration requires final independent review and required checks. Install the reviewed canonical skill only
 after Master integration. Consumer migration preserves live ownership/history and
 requires fresh activation proof; no other consumer is automatically changed.
 
