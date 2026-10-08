@@ -34,9 +34,10 @@ LAYOUT_DATA = {'schema_version': 1, 'repository': 'docs/repository/',
 def separate_export(files):
     """Adapt only helper location; preserve the pinned engine and its contract."""
     files['docs/repository/TRACKER.md'] = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
-    for name in HELPERS:
+    helpers = (*HELPERS, *(['tracker_batch_policy.py'] if 'scripts/tracker_batch_policy.py' in files else []))
+    for name in helpers:
         source = files.pop('scripts/' + name)
-        if name != 'tracker_delivery_policy.py':
+        if name in ('task_tracker.py', 'tracker_pr_check.py'):
             old = 'Path(__file__).resolve().parents[1]'
             if source.count(old) != 1:
                 raise ValueError('Pinned Tracker helper layout changed: ' + name)
@@ -94,14 +95,26 @@ def delivery_policy(data):
 
 def validate_execution_policy(value):
     """An explicit opt-in; absence must retain the pinned legacy workflow."""
-    if not isinstance(value, dict) or set(value) != {'schema_version', 'implementation_limit', 'review_limit'}:
-        raise ValueError('Execution policy requires schema_version, implementation_limit and review_limit')
-    if type(value['schema_version']) is not int or value['schema_version'] != 1:
-        raise ValueError('Execution policy schema_version must be 1')
+    if not isinstance(value, dict) or type(value.get('schema_version')) is not int or value['schema_version'] not in (1, 2):
+        raise ValueError('Execution policy schema_version must be 1 or 2')
+    keys = {'schema_version', 'implementation_limit', 'review_limit'}
+    if value['schema_version'] == 2: keys.add('batch_limit')
+    if set(value) != keys:
+        raise ValueError('Execution policy has missing or unsupported fields')
     if type(value['implementation_limit']) is not int or not 1 <= value['implementation_limit'] <= 16:
         raise ValueError('Execution policy implementation_limit must be an integer from 1 to 16')
     if type(value['review_limit']) is not int or value['review_limit'] != 1:
         raise ValueError('Execution policy review_limit must be 1')
+    if value['schema_version'] == 2 and (type(value['batch_limit']) is not int or not 1 <= value['batch_limit'] <= 16):
+        raise ValueError('Execution policy batch_limit must be an integer from 1 to 16')
+
+
+def phases(staging, execution=None):
+    result = [p for p in PHASES if p != 'stage' or staging]
+    if execution and execution['schema_version'] == 2:
+        if not staging: raise ValueError('Batch integration requires staging')
+        result.insert(result.index('stage'), 'approved')
+    return result
 
 
 def descriptor(inputs, revision):
@@ -118,8 +131,13 @@ def descriptor(inputs, revision):
                 'required_checks': ['descriptor', 'tracker-link']}
     if 'implementation_limit' in inputs:
         execution = {'schema_version': 1, 'implementation_limit': inputs['implementation_limit'], 'review_limit': 1}
+        if 'batch_limit' in inputs:
+            execution.update(schema_version=2, batch_limit=inputs['batch_limit'])
         validate_execution_policy(execution)
+        phases(inputs['staging'], execution)
         workflow['execution'] = execution
+    elif 'batch_limit' in inputs:
+        raise ValueError('Batch integration requires an explicit implementation limit')
     return {'schema_version': 2, 'project': {'name': inputs['name'], 'repository': 'https://github.com/' + repo},
             'standard': {'repository': standard.REPOSITORY, 'revision': revision, 'version': (SOURCE/'VERSION').read_text().strip()},
             'profile': profile, 'adoption': 'draft',
@@ -303,8 +321,8 @@ def inspect(root, expected_revision=None):
         if 'execution_policy' in config: validate_execution_policy(config['execution_policy'])
         if ('execution_policy' in config) != ('execution' in wf) or config.get('execution_policy') != wf.get('execution'):
             raise ValueError('Tracker execution policy differs from delivery.json; synchronize both in this PR')
-        phases = [v if isinstance(v,str) else v['phase'] for v in config['workflow']]
-        if phases != [p for p in PHASES if p != 'stage' or wf['staging']]: raise ValueError('Tracker stages differ from the adopted workflow')
+        actual_phases = [v if isinstance(v,str) else v['phase'] for v in config['workflow']]
+        if actual_phases != phases(wf['staging'], wf.get('execution')): raise ValueError('Tracker stages differ from the adopted workflow')
         checks = wf['required_checks']
         if not isinstance(checks,list) or not checks or any(not isinstance(x,str) or not x.strip() for x in checks) or len(set(checks))!=len(checks): raise ValueError('List unique required GitHub check names')
         if not {'descriptor','tracker-link'} <= set(checks): raise ValueError('Descriptor and tracker-link checks are required')
@@ -313,6 +331,8 @@ def inspect(root, expected_revision=None):
         required = set(FILES.values()) | set(FORWARDS) | {'docs/repository/TRACKER.md'}
         required.update('.workflow/tools/' + name for name in HELPERS)
         required.update('scripts/' + name for name in HELPERS)
+        if wf.get('execution', {}).get('schema_version') == 2:
+            required.update({'.workflow/tools/tracker_batch_policy.py', 'scripts/tracker_batch_policy.py'})
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)

@@ -44,8 +44,11 @@ Execution parallelism is an explicit project setting. Omitted policy remains
 omitted during upgrade; an opted-in project's local capacity is retained in both
 descriptor and Tracker config. The baseline remains the pristine upstream render,
 not the merged local capacity. Enable/change it in a reviewed consumer PR only
-after compatible Tracker support and safe claim-state migration. The sole
-review/integration lane and existing stage/delivery controls remain in force.
+after compatible Tracker support and safe claim-state migration. Execution v1
+retains its sole review/integration lane. Explicit execution v2 adds a configurable
+batch limit (recommended five), Approved and separate review/integration ownership.
+Both sides must agree on the policy and workflow phases; upgrades preserve local
+limits and do not silently change versions. Existing stage/delivery controls remain.
 
 Review config/engine/Action pins together, check docs, modules, historical IDs,
 completion evidence and open PRs. Activate changed semantics only after their

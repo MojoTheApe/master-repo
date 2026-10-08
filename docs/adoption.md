@@ -23,6 +23,10 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    Add `--implementation-limit 2` only to opt in to two implementation slots and one
    sequential review/integration lane. Omission preserves legacy execution; accepted
    limits are 1..16 and do not change the single review limit.
+   Add `--batch-limit 5` together with `--implementation-limit N` to explicitly
+   choose execution v2, Approved and one frozen integration batch at a time.
+   This requires staging. Worker capacity and batch size are independent; batches
+   need not be full and an urgent task may ship alone.
    `--python /path/to/python3.12` selects the export runtime if necessary. Profiles:
    `vps`, `n8n`, `n8n-source` (explicit Git-only scope), `local` (manual pull),
    `package`, `tooling`.
@@ -84,6 +88,24 @@ and a possibly occupied stage. Use the pinned Tracker guide; drain or explicitly
 reconcile work before reducing capacity or returning to legacy mode. Do not delete
 state, relabel tasks or remove policy fields to escape ownership checks. Restoring
 a previous pin/config is a reviewed recovery change, never a rewritten shared tag.
+
+## Enabling Approved and batch integration
+
+[MR-14](https://github.com/MojoTheApe/master-repo/issues/14) and
+[TT-77](https://github.com/MojoTheApe/task-tracker/issues/77) own the coupled change;
+[ACL-1566](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/566) owns
+ACL activation and real batch proof. Deploy the reviewed compatible Tracker before
+consumer activation, then integrate Master with its exact engine pin and install
+the reviewed canonical skill when authorized. Upgrade ACL in its own PR, retaining
+IDs/history, five Worker slots, delivery fingerprint and package safeguards.
+
+Preview supported shared-state migration only after claims, reviews, outstanding
+Approved intake and stage work are reconciled. Keep private before/after state
+snapshots and preserve every non-execution field. A config commit, new label or
+source merge is not activation proof. Verify fresh board columns and durable
+claim/approval/batch state, then exercise a genuinely reviewed two-task batch
+through stage/main. Record source integration separately from package delivery.
+Other consumers retain their exact policy and are not automatically migrated.
 
 ## Existing project adoption
 

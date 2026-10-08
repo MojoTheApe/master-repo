@@ -57,7 +57,7 @@ and `execution_policy` in `tracker/config.json`:
 ```
 
 All three keys are required; extra keys, null and boolean/numeric substitutes for
-integers are invalid. Schema version is 1, implementation limit is 1..16 and review
+integers are invalid. For schema version 1, implementation limit is 1..16 and review
 limit must be 1. The Tracker also requires its compatible `delivery_policy`, which
 schema-2 projects already generate. Validation rejects missing/mismatched policy
 on either side, including disagreement about whether it is enabled.
@@ -68,6 +68,23 @@ and review-lane lifecycle. A count of 2 is the initial recommended opt-in, not a
 template default. Changing it later is a reviewed project config change and must
 respect active claims through the Tracker's safe migration procedure. The existing
 delivery policy, exact-version review, CI, stage and completion rules still apply.
+
+Execution policy schema 2 explicitly selects Approved and frozen batch integration:
+
+```json
+{"schema_version": 2, "implementation_limit": 5, "review_limit": 1, "batch_limit": 5}
+```
+
+Exactly these four keys are required. `batch_limit` is an integer from 1 to 16,
+independent of implementation capacity; the initial recommended setting is five.
+Staging must be enabled and the Tracker workflow must include exactly one Approved
+phase between Review and Stage. The initializer opts in only with both explicit
+`--implementation-limit N` and `--batch-limit [N]` (N defaults to five when the
+flag has no value); omitted batch policy retains v1.
+An upgrade preserves the project's local batch limit and genuine pristine baseline,
+and does not introduce Approved into an older workflow. The compatible pinned
+Tracker owns live state migration, current source approval and one integration
+batch. Installing a newer skill does not change descriptor settings.
 
 ## Version 1 compatibility
 

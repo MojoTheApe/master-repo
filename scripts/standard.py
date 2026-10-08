@@ -239,6 +239,8 @@ def main(argv=None):
     init.add_argument("--no-staging", action="store_true")
     init.add_argument("--implementation-limit", type=int, choices=range(1, 17), metavar="N",
                       help="Opt in to N implementation slots (1..16) and one review/integration lane; omitted keeps legacy execution")
+    init.add_argument("--batch-limit", type=int, nargs="?", const=5, choices=range(1, 17), metavar="N",
+                      help="Explicitly enable Approved and frozen integration batches (recommended N=5); requires staging and --implementation-limit")
     for cmd in (init, commands.add_parser("upgrade")):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
         cmd.add_argument("--tracker-root", type=Path, required=True)
@@ -253,6 +255,7 @@ def main(argv=None):
                 inputs = {"profile": args.profile, "repository": args.repository, "name": args.name,
                           "prefix": args.id_prefix, "workspace_id": args.workspace_id, "staging": not args.no_staging}
                 if args.implementation_limit is not None: inputs["implementation_limit"] = args.implementation_limit
+                if args.batch_limit is not None: inputs["batch_limit"] = args.batch_limit
                 result = project.init(args.root, inputs, revision, args.tracker_root, args.python, args.apply)
             else:
                 result = project.upgrade(args.root, revision, args.tracker_root, args.python, args.apply)

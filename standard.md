@@ -14,6 +14,7 @@ separate reviewed migrations, preserving their local controls and history.
 | Owner selects work | Owner directs agent | To Do; prioritization is not permission to implement |
 | Owner requests development | Implementer | In Progress; claim Tracker implementation slot, linked working branch |
 | Implementation and self-check ready | Implementer | Review; ready PR, two-way ticket links, applicable checks |
+| Execution-v2 source independently approved | Reviewer | Approved; current review/source checks recorded, review lane released |
 | Review requests fixes | Implementer | In Progress while editing the same branch; then Review again |
 | Reviewed source PR enters stage | Agent/explicit automation | Stage; exact candidate recorded, when enabled |
 | Stage passes and promotion merges | Agent/explicit automation | Merged; verified main integration |
@@ -27,7 +28,9 @@ or delivery records the reason and next action without declaring completion.
 An abandoned unmerged PR returns its ticket to planning or explicit cancellation.
 Partial implementation stays unfinished, including a partly delivered parent task.
 Legacy projects may cover several tasks in one PR; evaluate each task's full scope
-separately. Opted-in execution v1 requires exactly one task per source PR.
+separately. Both opted-in execution versions require exactly one task per source PR.
+Execution v2 additionally supports a separately reviewed integration PR carrying
+the exact frozen batch members.
 
 Task bodies use Tracker's Description and Specifications structure. Read the whole
 task, including prior decisions; retain scope/history when requirements change.
@@ -54,7 +57,66 @@ in PR text or commit messages: stage/main integration must not prematurely close
 work awaiting delivery. Preserve historical aliases, links and open branches during
 adoption; finish existing open PRs before activating new validation.
 
+Execution v2 retains individual source PRs and their authors/reviews. Integration
+and promotion PRs list every frozen batch member in the same explicit Tracker line;
+their composition is bound to recorded source revisions and current main. They
+cannot substitute one implementer identity for multiple real Workers.
+
+## Optional Approved queue and batch integration
+
+Explicit execution policy schema 2 selects the following mirrored settings:
+
+```json
+{"schema_version": 2, "implementation_limit": 5, "review_limit": 1, "batch_limit": 5}
+```
+
+Implementation capacity and batch size are independent integers from 1 to 16.
+The initial recommended batch limit is five. This mode requires staging and a
+compatible Tracker; absence or schema 1 retains the existing lifecycle. Upgrading
+the source, engine or installed skill never activates it implicitly.
+
+The workflow becomes In Progress -> Review -> Approved -> Stage -> Merged. A
+separate independent Reviewer reserves one source review at a time, records exact
+head/base/scope evidence and verifies all required source checks. The supported
+approval transition releases the review lane and retains genuine authorship and
+reviewer history. Approved backlog is unbounded; labels alone are not approval.
+
+On an authorized ship-all request, the Coordinator snapshots current eligible
+Approved tasks and processes that intake in sequential batches of 1..batch_limit.
+New arrivals wait for another intake. A single urgent task need not wait for peers.
+Respect dependencies and screen compatibility; do not silently include stale,
+blocked or unfinished tasks. One Coordinator claim owns one integration batch
+at a time, separately from the source review lane. Freeze membership, source PR
+revisions, approvals, scope/policy and the current main baseline before assembly.
+
+Assemble exact reviewed source revisions in an isolated integration branch;
+conflict fixes require claimed author work and fresh independent approval. An
+independent integration Reviewer checks the complete candidate and composition,
+and must be independent of every implementing member. All complete applicable
+integration checks remain required. After actual admitted stage integration,
+record every member as Stage and verify the exact configured target/tree. No new
+member joins a testing batch.
+
+Promote unchanged verified content and the same member set to main; exact-content
+proof may be reused. Record per-task Merged only for fully included scope, retain
+working branches and delivery obligations, and release integration ownership after
+the durable completion handoff. Before a later batch, reconcile stage/main and
+revalidate approvals against the new baseline. Source PR closure requires actual
+inclusion evidence, not merely a shared task ID.
+
+Persist every transition with the Tracker's compare-and-swap/recovery protocol.
+Cancelled pre-stage batches retain member approvals/history; post-stage failures
+retain integration ownership through supported author fixes, fresh approvals,
+rebuilt composition and verification. Never reset stage or discard integrated
+members to free a claim. Changed content/main/scope/policy invalidates applicable
+evidence. Migration, recovery and command details belong to the compatible pinned
+Tracker guide; package delivery remains separate from source integration.
+
 ## Optional parallel implementation, sequential review
+
+This section describes execution v1. Execution v2 follows the separate review and
+batch ownership lifecycle above, preserving the same Worker isolation and honesty
+requirements.
 
 Projects explicitly opt in with matching `delivery.json` `workflow.execution`
 and `tracker/config.json` `execution_policy`:
@@ -151,9 +213,11 @@ immediately before merging. A missing reviewer is a reported limitation, not a
 reason to substitute self-review. Distinct identity strings record the real review;
 they do not prove that a subagent actually ran.
 
-Under the optional execution policy, reserve the review/integration lane first;
+Under execution v1, reserve the review/integration lane first;
 ready PRs wait for it. Delegated Workers hand off to the Coordinator instead of
 launching their own reviews. Without that policy, keep the project's adopted slot rules.
+Under execution v2, reserve a source review lane, release it through the verified
+Approved transition, and independently review a frozen Coordinator-owned batch.
 
 A skill file or PR creation does not launch a model on GitHub. Automatic review
 here means the running agent invokes its available subagent mechanism. The
@@ -164,6 +228,9 @@ and required checks within the authorized task; do not add an unnecessary manual
 approval round. Existing production authorization still applies.
 
 ## Optional stage before main
+
+Execution v2 uses the frozen batch procedure above. The single-source sequence
+below describes legacy and execution-v1 staging.
 
 Staging defaults to enabled. Permanent branches are `stage` and `main`:
 

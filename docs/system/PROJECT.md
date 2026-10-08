@@ -63,3 +63,19 @@ models. Master [MR-11](https://github.com/MojoTheApe/master-repo/issues/11) acti
 no consumer. Compatibility selects the reviewed TT-67 merge
 `a4ea3cfb0c1be1760ae0923c8232779532c25a7b`; separately install the authorized canonical skill after Master integration. ACL
 adoption follows in its own task. Standard release publication is separate.
+
+MR-14 adds explicit execution-v2 validation, initialization and upgrade support
+for independently approved tasks and integration batches. `--batch-limit 5` with
+an explicit implementation limit selects the mirrored policy and Approved phase;
+legacy and execution-v1 workflows remain unchanged. Batch size is independent of
+Worker capacity and local settings survive three-way upgrades. The canonical skill
+routes by the adopted version and preserves per-task author/reviewer evidence,
+fixed ship-all intake, one integration candidate and separate delivery obligations.
+Companion [TT-77](https://github.com/MojoTheApe/task-tracker/issues/77) owns command,
+state, admission and UI support. Compatibility pins its reviewed integrated revision
+`e6013f8ad641bd99061f7db82bceeb705f8c150a` (Tracker PR 78), including TT-73's
+large-state read fix. The real exporter was checked for legacy, v1 and v2 consumers;
+the new portable batch helper follows the existing relocated-helper layout.
+The authorized rollout includes
+local skill installation and separate [ACL-1566](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/566)
+adoption, with max five per batch. Source work here does not itself activate ACL.

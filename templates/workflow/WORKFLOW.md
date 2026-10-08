@@ -5,6 +5,18 @@ Read `delivery.json`, `docs/system/PROJECT.md`, `docs/repository/DELIVERY.md` an
 standard, system, tracker, stage option, completion rule and local exceptions.
 Use `python scripts/task_tracker.py guide` for the pinned Tracker commands.
 
+If matching execution policies use schema 2, follow the pinned guide's Approved
+and batch-integration lifecycle. Each source PR still represents one task; current
+independent review and required source checks move it to Approved and release the
+review lane. A separate Coordinator claim owns one frozen integration batch of
+1..batch_limit members (recommended limit five), retaining every real Worker and
+reviewer. Ship-all snapshots current Approved intake; new arrivals wait. An urgent
+single task may ship alone. Independently review/check the combined candidate,
+verify its exact stage target/tree, then promote the unchanged member set to main.
+Keep failed post-stage batches owned through claimed author fixes and fresh proof.
+The execution-v1 lane lifetime and single-task staging instructions below apply
+only to schema 1. Installing a skill or changing upstream pins does not enable v2.
+
 Create an Issue before implementation. Idea requests stay Idea; task requests
 start Backlog. Start development only when requested; claim the Tracker slot and
 use the pinned task-branch rules (`codex/<public-id>-<short-name>` remains
@@ -15,7 +27,9 @@ requires exactly one task per source PR. Multiple related IDs in one PR are allo
 only under legacy execution. No automatic closing keywords.
 
 If `workflow.execution` and Tracker `execution_policy` are explicitly enabled and
-equal, use their implementation capacity and one review/integration lane. Otherwise
+equal, use their implementation capacity and version-specific ownership. Schema 1
+has one review/integration lane; schema 2 separates source review from a Coordinator
+integration batch. Otherwise
 keep the pinned legacy slot behavior. A Coordinator stays in the current
 conversation, screens task dependencies/overlap and delegates independent tasks to
 Workers in separate branches/worktrees using available subagents. Two independent
@@ -25,7 +39,7 @@ and real GitHub Assignees. No new user-owned conversations without an explicit
 request. If delegation is unavailable, disclose serial implementation; never
 substitute self-review for an independent Reviewer.
 
-Use the pinned Tracker guide to claim, resume, hand off and recover work. Handoff
+Use the pinned Tracker guide to claim, resume, hand off and recover work. In schema 1, handoff
 to the review queue releases implementation capacity. Multiple tasks may wait in
 Review; acquire the sole review/integration lane before launching a Reviewer. Hold
 it through current review, checks, optional stage and main merge. The next task
@@ -43,7 +57,7 @@ arrange a separate non-implementing subagent for independent review when the lan
 is available. Delegated Workers hand off to the Coordinator, who starts the review
 of the actual
 head/base, requirements and docs. Fix on the same branch and obtain fresh approval.
-Run `check-merge PR_NUMBER` immediately before merging. If staging is enabled,
+Run `check-merge PR_NUMBER` immediately before merging. In schema 1 or legacy mode, if staging is enabled,
 working branch -> stage -> main, using the same single task in execution v1
 (related task sets are legacy-only) and unchanged verified
 content. Preserve the working branch for fixes. Use evidence commands from the
