@@ -18,7 +18,11 @@ Other divergence requires the existing claimed reconciliation procedure.
 Application, build, configuration, CI, automation and system/runtime changes keep
 their ordinary route and actual delivery requirements.
 
-For other work, execution schema 2 selects Review -> Approved -> Stage -> Merged.
+For other work, execution schema 2 or 3 selects Review -> Approved -> Stage -> Merged.
+Schema 3 permits 1..5 separately owned source reviews and one separate combined
+integration reviewer; schema 2 retains one source-review slot. Source approval,
+return and takeover select only the exact source claim. Actual consumer activation
+requires the pinned guide's idle preserved-state migration and compatible service.
 Independent source approval releases the review lane; one separate Coordinator
 integration claim covers a frozen batch of 1..batch_limit tasks. The recommended
 limit is five, independent of Worker capacity. Preserve each member's author,

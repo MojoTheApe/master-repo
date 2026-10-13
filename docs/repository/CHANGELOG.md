@@ -1,5 +1,15 @@
 # Repository process history
 
+## MR-22 — Explicit source review pool of up to five
+
+Add execution schema 3 validation and explicit initialization with `--review-limit`
+1..5, preserving legacy/v1/v2 choices and local upgrades. Source review ownership is
+separate from the single integration Coordinator/Reviewer and batches of up to
+five. Update standard, templates, adoption guidance and canonical Project Workflow
+skill together; Task Tracker TT-97 supplies the compatible reviewed engine.
+Consumer state migration and shared service publication remain separate verified
+rollout steps. [MR-22](https://github.com/MojoTheApe/master-repo/issues/22).
+
 ## MR-20 — Assess Project Workflow impact and publish its central mirror
 
 Added an explicit PR assessment for standards/process changes, checked against

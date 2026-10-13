@@ -49,6 +49,26 @@ checks. Agent `check-merge` separately checks review/stage/check evidence.
 
 ## Optional execution policy
 
+Execution schema 3 explicitly separates source review capacity from integration:
+
+```json
+{"schema_version": 3, "implementation_limit": 5, "review_limit": 5, "batch_limit": 5}
+```
+
+Mirror this object in both descriptor and Tracker configuration. Schema 3 accepts
+implementation_limit 1..16, source review_limit 1..5 and batch_limit 1..5. One
+Coordinator and one independent combined-batch Reviewer remain separate from the
+source pool. Every simultaneous source lane requires a distinct actual Reviewer
+run, its own claim and current PR/base/scope evidence. The compatible Tracker
+arbitrates capacity across platforms; a host's available agents are a separate limit.
+
+Initialization opts in only with explicit `--implementation-limit`, `--batch-limit`
+and `--review-limit N`. Even `--review-limit 1` explicitly selects schema 3; omission
+preserves v1/v2 selection and their fixed review_limit 1. Schema 3 requires staging.
+Upgrades preserve existing local choices and never activate the new state model.
+Consumer activation requires the pinned guide's supported idle queue-preserving
+migration and compatible published writers/service, not just edited configuration.
+
 Opt in with exactly the same object at `workflow.execution` in `delivery.json`
 and `execution_policy` in `tracker/config.json`:
 

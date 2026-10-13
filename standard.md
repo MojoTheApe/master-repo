@@ -136,6 +136,30 @@ Tracker guide; package delivery remains separate from source integration.
 
 ## Optional parallel implementation, sequential review
 
+### Explicit parallel source reviews (execution schema 3)
+
+Schema 3 extends the Approved/batch lifecycle with a separately bounded source
+review pool. Matching descriptor and Tracker policies may select implementation
+capacity 1..16, source review capacity 1..5 and batch size 1..5. Five Workers and
+five independent source Reviewers may work concurrently across actual agent runs;
+the shared Tracker reserves every slot. Exactly one integration Coordinator and
+one separate combined-batch Reviewer remain available for one frozen batch.
+Source reviews and approvals may continue during ordinary batch integration.
+
+Each source claim binds its actual Reviewer run, PR and current content/base/scope;
+approval, return, takeover and uncertain-write recovery select only that source.
+A single actual run cannot occupy concurrent source or integration review lanes.
+Release source capacity through verified Approved or the supported return path,
+not a label edit. Instruction-only sources count toward the source pool but retain
+their idle-integration/direct-main restrictions and claim through completion.
+
+Projects explicitly opt in with `--review-limit N` plus implementation and batch
+choices, or a reviewed matching consumer change. The compatible idle migration
+preserves unfinished queues, verified approvals, author/history and delivery.
+Follow the exact pinned Tracker guide and [adoption](docs/adoption.md); edited
+pins, source merge or an installed skill alone do not activate schema 3. Existing
+legacy/v1/v2 projects retain their adopted behavior and capacities.
+
 This section describes execution v1. Execution v2 follows the separate review and
 batch ownership lifecycle above, preserving the same Worker isolation and honesty
 requirements.

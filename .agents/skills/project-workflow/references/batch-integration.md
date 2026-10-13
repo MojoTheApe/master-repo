@@ -1,9 +1,25 @@
 # Independently approved tasks, frozen integration batches
 
 Use only when the project's pinned standard and Tracker support execution policy
-schema 2, the descriptor/config policies match, and the supported shared-state
+schema 2 or 3, the descriptor/config policies match, and the supported shared-state
 migration has actually completed. Installing this skill never enables the mode.
 Keep execution-v1 and legacy consumers on their own pinned lifecycle.
+
+Schema 3 explicitly supports 1..5 independent source Reviewers, each in a distinct
+actual run with its own PR-bound claim, alongside one integration Coordinator and
+one separate integration Reviewer. Schema 2 retains one source lane. Use matching
+descriptor/config and compatible pins; a host's available agents are separate from
+the configured capacity. Source approval/return/takeover affects only its claim;
+source approvals may continue during ordinary batch integration. Instruction-only
+sources count toward source capacity and retain their idle-integration restrictions.
+
+For a v2-to-v3 adoption, complete the consumer change through its existing route.
+Publish compatible writers/service, then preview/apply the exact engine's supported
+queue-preserving migration while all Workers, Reviewers, intake/batch and stage
+owners are idle. Keep implementation/batch capacities unchanged, preserve queue
+order and current verified Approved evidence, authors/history and delivery receipts,
+and compare private before/after snapshots plus a fresh public board. Reconcile
+stale approvals under the prior policy; never clear state or steal ownership.
 
 An explicitly adopted [instruction-only route](process-instructions.md) is checked
 before batch approval. Eligible sources retain independent review through direct
@@ -35,8 +51,8 @@ Verify the preserved state and fresh board without creating demonstration featur
 The Coordinator screens dependencies and overlap, delegates only authorized
 independent work, and preserves each Worker's isolated branch, worktree and claim.
 Keep one task per source PR and the task's genuine Worker history. A Worker hands
-off to Review; a separate non-implementing Reviewer acquires the single review
-lane, reviews actual source/base/scope and records the durable report. All required
+off to Review; a separate non-implementing Reviewer acquires a source lane within
+the adopted capacity, reviews actual source/base/scope and records the durable report. All required
 source checks stay enabled. Use the pinned Tracker's approval command to verify
 current evidence and move the task to Approved, releasing the review lane.
 Approved is waiting for integration, never completion or authorization to edit.
