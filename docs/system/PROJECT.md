@@ -2,7 +2,7 @@
 
 Current navigation: [verification](../verification.md),
 [coordinated upgrades](../workflow-upgrades.md) and
-[pending Tracker companion](../specs/maintenance-and-ci-evidence.md).
+[optional Tracker companion](../tracker-companion.md).
 Execution versions remain explicit choices; schema 3 permits up to five source
 reviews with single combined integration. VERSION1.0.0 remains unreleased, which
 is distinct from an existing consumer's recorded active workflow.
@@ -19,6 +19,15 @@ and writes the project docs/settings/CI plus a template baseline. `scripts/proje
 implements rendering and three-way upgrades. `scripts/onboard.py` prepares branches,
 labels and workspace registration; publishing the registry and proving live board
 readiness use the Tracker's maintained delivery process.
+
+MR-26 selects the reviewed TT-107 maintenance/native-CI companion. The separated
+export preserves its optional producer byte-for-byte in `.workflow/tools/`, with
+the existing compatibility entry point. Actual producer trust binds that
+implementation through the pinned engine's exact self-contained/isolated protocol.
+No CI-evidence policy is inherited or enabled by the initializer. Owned maintenance
+requires compatible published writers; CI coverage requires explicit reviewed
+consumer adoption and retains every unsupported/missing job as fresh. This source
+selection does not change consumer execution capacity, state or runtime delivery.
 
 New projects default to permanent main/stage branches. Staging can be disabled.
 The descriptor selects local manual pull, VPS, n8n, package or tooling completion.

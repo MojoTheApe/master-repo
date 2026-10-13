@@ -26,12 +26,37 @@ resume. Reuse unchanged facts; refresh changed ones. Native protection, source,
 standard release and activation remain distinct; structural CI is not readiness.
 
 Use a durable no-new-start gate only when all actual writers support it. Read the
-exact guide; never invent commands or flags old clients ignore. Until support
-exists, coordinate one explicit cutover interval with current owner stop/handoff
+exact pinned Tracker `docs/MAINTENANCE_AND_CI_EVIDENCE.md` when TT-107 support is
+adopted. Publish compatible admission/projection writers before reserving through
+`maintenance`; retain its real owner/private claim and use supported drain,
+migration and recovery. Reservation and actual idleness are separate. Migration
+under a held interval needs the real Maintainer credentials and retains the gate;
+resume opens admission without approving or completing tasks. Never invent
+commands or flags old clients ignore. Until compatible writers exist, coordinate
+one explicit cutover interval with current owner stop/handoff
 procedures and the actual idle/CAS migration guard. Do not repeatedly ask about
 the same unchanged pause. A genuine new launch, changed coordination or unresolved
 owner needs renewed coordination; elapsed time or human confirmation cannot
 reserve state. Continue independent preparation while draining; preserve history.
+
+TT-107 native CI coverage is optional and advisory. Its policy must be explicitly
+reviewed on consumer current main; exports do not inherit it. First support is
+static JSON-formatted Actions workflows, immutable container/userland,
+host-independent jobs, exact toolchains and Git-bound inputs, native successful
+attempt/step provenance and explicit evidence lifetime. V1 binds only the actual
+self-contained producer bytes from the pinned engine with its exact isolated
+`python3 -I PATH ...` command; wrappers/arbitrary imports need a separately
+reviewed protocol. In separated projects use the direct
+`.workflow/tools/tracker_ci_evidence.py` from the project root.
+
+The maintained collector validates actual tested content and current source/batch
+approval context. Commit metadata mode remains conservative; tree mode requires
+review excluding metadata-sensitive behavior. Coverage names genuine covered
+run/job IDs and every missing job; consumer CI runs missing coverage and retains
+its required names. Unsupported dynamic workflows/platforms/mutable inputs,
+missing or expired proof need fresh jobs. Manual/release/promotion/runtime contexts
+retain full/fresh gates. No package/artifact or runtime acceptance is inferred.
+This support neither opts in product CI nor changes old project collectors.
 
 New common guidance travels with a reviewed standard upgrade; product tests,
 installer internals and runtime safeguards stay local. Keep private claims/sessions

@@ -41,7 +41,8 @@ def separate_export(files):
         guide = guide.replace('../docs/PROCESS_INSTRUCTIONS.md', 'PROCESS_INSTRUCTIONS.md')
         guide = guide.replace('`docs/PROCESS_INSTRUCTIONS.md`', '`docs/repository/PROCESS_INSTRUCTIONS.md`')
     files['docs/repository/TRACKER.md'] = guide
-    helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py')
+    helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py',
+                                           'tracker_ci_evidence.py')
                           if 'scripts/' + name in files))
     for name in helpers:
         source = files.pop('scripts/' + name)

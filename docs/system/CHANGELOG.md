@@ -1,5 +1,21 @@
 # System changes
 
+## Optional owned maintenance and native CI evidence (MR-26)
+
+Compatibility selects the reviewed TT-107 companion. The exporter relocates its
+optional producer into the separated tools directory without changing its code,
+and retains a compatibility entry point and older exports without that helper.
+Guidance distinguishes implemented maintenance and fixed-context native evidence
+from the broader original requirements. The canonical skill directs agents to
+the exact pinned protocol, genuine owner/recovery, actual producer trust and
+missing-job coverage rather than assuming automatic reuse or activation.
+
+Tracker owns commands, persistence, provenance and admission. Consumer CI-policy
+adapters and product test restructuring remain local authorized work; no schema,
+capacity, consumer source or service state changes follow from this Master source
+task. VERSION1.0.0 is still unreleased.
+Issue: https://github.com/MojoTheApe/master-repo/issues/26
+
 ## Efficient verification and coordinated upgrades (MR-24)
 
 Added a shared risk/profile-based verification policy and generated pinned reading

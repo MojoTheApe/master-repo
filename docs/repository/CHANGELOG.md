@@ -1,5 +1,17 @@
 # Repository process history
 
+## MR-26 — Select the owned-maintenance and bounded CI companion
+
+Select the independently reviewed TT-107 engine, preserve its optional native CI
+producer in separated exports, and update the canonical skill with the actual
+publication/adoption prerequisites and narrow supported trust protocol. Keep
+legacy exports compatible; producer root-relative configuration and exact
+implementation bytes are retained. No consumer policy, task capacity or live
+state is activated by the source update. Required native checks, independent
+review and consumer delivery controls remain intact.
+[MR-26](https://github.com/MojoTheApe/master-repo/issues/26),
+[TT-107](https://github.com/MojoTheApe/task-tracker/issues/107).
+
 ## MR-24 — Efficient checks and honest cutover readiness
 
 Maintain common verification guidance and the canonical skill together. Check

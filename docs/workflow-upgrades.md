@@ -27,10 +27,12 @@ than repeating broad inventories after every unrelated action.
 
 Use a durable maintenance admission gate only when all actual clients/writers
 support the same reviewed protocol. Its CAS owner/recovery and allowed drain paths
-belong to Tracker; see the [companion requirements](specs/maintenance-and-ci-evidence.md).
+belong to Tracker; see the [supported companion](tracker-companion.md) and its
+exact pinned command guide.
 
-The currently pinned engine has idle-migration guards, **not this gate**. Until
-compatible support is implemented/published, coordinate one explicit no-new-start
+The compatible engine supplies this optional gate; a source upgrade does not
+publish its writers or reserve an interval. Until every actual writer supports
+the protocol, coordinate one explicit no-new-start
 interval and use existing owner stop/handoff procedures. Retain confirmed pause
 authorization while unchanged; ask again only for a genuine new launch, changed
 coordination or unresolved owner. Continue preparation while work drains. The
