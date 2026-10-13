@@ -1,5 +1,15 @@
 # Repository process history
 
+## MR-24 — Efficient checks and honest cutover readiness
+
+Maintain common verification guidance and the canonical skill together. Check
+unchanged evidence before rerunning, retain independent combined review and actual
+delivery proof, and coordinate one no-new-start cutover interval. Unsupported
+maintenance/evidence features remain a concrete Tracker companion. Preserve current
+pins and ordinary source/review/merge completion. Master CI cancels only superseded
+PR runs and retains required validate/tracker-link/skill-impact job names.
+[MR-24](https://github.com/MojoTheApe/master-repo/issues/24).
+
 ## MR-22 — Explicit source review pool of up to five
 
 Add execution schema 3 validation and explicit initialization with `--review-limit`

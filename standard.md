@@ -5,6 +5,12 @@ and command guide; every project's Issues stay in that project's repository.
 Project settings choose staging and delivery. Existing projects adopt changes in
 separate reviewed migrations, preserving their local controls and history.
 
+Use the [verification policy](docs/verification.md) for changed-risk source checks,
+complete applicable combined-candidate tests and actual delivery acceptance. Reuse
+supported matching evidence and run missing coverage. Authorized upgrades follow
+the [coordinated procedure](docs/workflow-upgrades.md); instructions cannot activate
+maintenance/evidence mechanisms the pinned engine does not implement.
+
 ## Ticket lifecycle
 
 | Event | Responsible actor | Status and required result |

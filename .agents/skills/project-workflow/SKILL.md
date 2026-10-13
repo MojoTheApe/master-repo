@@ -177,6 +177,16 @@ Report briefly: result, issue/PR, pins and checks, actual stage/delivery/connect
 proof, preserved exceptions and any concrete remaining setup. Keep explanations
 readable for a nontechnical owner.
 
+## Verification and coordinated upgrades
+
+When the adopted pin contains `docs/verification.md` and `docs/workflow-upgrades.md`,
+follow them; generated `docs/repository/VERIFICATION.md` is the project reading map.
+Read [efficient verification](references/verification.md) when selecting checks,
+reusing CI proof or coordinating a cutover. Older pins retain actual required
+checks and supported commands. A newer skill cannot activate a maintenance gate
+or collector the exact pinned engine lacks. Broader support is a concrete Tracker
+companion, not permission to deploy or migrate another project.
+
 Keep process history in `docs/repository/CHANGELOG.md`. System/runtime files are
 project-owned; never refresh their contents from an upstream template. Shared
 upgrades of a legacy mixed layout require an audited split, not a bulk overwrite.

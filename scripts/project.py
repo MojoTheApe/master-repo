@@ -16,6 +16,7 @@ LAYOUT = '.workflow/layout.json'
 PROJECT_AREAS = ('docs/system/', 'docs/runtime/')
 HELPERS = ('task_tracker.py', 'tracker_pr_check.py', 'tracker_delivery_policy.py')
 FILES = {'AGENTS.md': 'AGENTS.md', 'WORKFLOW.md': 'docs/repository/WORKFLOW.md',
+         'VERIFICATION.md': 'docs/repository/VERIFICATION.md',
          'LAYOUT.md': 'docs/repository/LAYOUT.md', 'DELIVERY.md': 'docs/repository/DELIVERY.md',
          'REPOSITORY_CHANGELOG.md': 'docs/repository/CHANGELOG.md',
          'PROJECT.md': 'docs/system/PROJECT.md', 'CONTEXT.md': 'docs/system/AGENT_CONTEXT.md',

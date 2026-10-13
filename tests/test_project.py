@@ -253,6 +253,35 @@ class Projects(unittest.TestCase):
         cfg['delivery_policy']['staging']['enabled']=True;self.put('tracker/config.json',cfg)
         (self.root/'.github/workflows/delivery-check.yml').write_text('uses: MojoTheApe/master-repo@main\n')
         self.assertTrue(any('CI action pin' in x for x in self.errors()))
+    def test_upgrade_adds_pinned_verification_guidance_and_preserves_product_checks(self):
+        self.create(dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=5))
+        name = 'docs/repository/VERIFICATION.md'
+        base = self.json(project.BASELINE)
+        base['files'].pop(name)
+        self.put(project.BASELINE, base)
+        (self.root/name).unlink()
+        data = self.json('delivery.json')
+        data['checks'] = ['python -m pytest product_tests/ -q']
+        self.put('delivery.json', data)
+        policy = copy.deepcopy(data['workflow']['execution'])
+        result = project.upgrade(self.root, NEW, 'unused', apply=True)
+        self.assertTrue(result['applied'])
+        self.assertIn('/blob/'+NEW+'/docs/verification.md', (self.root/name).read_text())
+        self.assertEqual(self.json('delivery.json')['checks'], data['checks'])
+        self.assertEqual(self.json('delivery.json')['workflow']['execution'], policy)
+        self.assertEqual(self.errors(), [])
+    def test_upgrade_preserves_conflicting_local_verification_file_without_any_write(self):
+        self.create()
+        name = 'docs/repository/VERIFICATION.md'
+        base = self.json(project.BASELINE)
+        base['files'].pop(name)
+        self.put(project.BASELINE, base)
+        (self.root/name).write_text('Local verification procedure, not an upstream copy.\n')
+        before = {p.relative_to(self.root).as_posix():p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = project.upgrade(self.root, NEW, 'unused', apply=True)
+        self.assertFalse(result['applied'])
+        self.assertEqual(result['conflicts'], [name])
+        self.assertEqual(before, {p.relative_to(self.root).as_posix():p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
     def test_upgrade_preserves_unique_installer_local_json_and_docs(self):
         self.create();(self.root/'installer.sh').write_text('unique installer\n')
         agents=self.root/'AGENTS.md';agents.write_text(agents.read_text()+'\nLocal safety rule.\n')

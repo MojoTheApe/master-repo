@@ -27,6 +27,8 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    choose execution v2, Approved and one frozen integration batch at a time.
    This requires staging. Worker capacity and batch size are independent; batches
    need not be full and an urgent task may ship alone.
+   Add `--review-limit 5` with explicit implementation/batch choices to select
+   schema 3 and five independent source reviews, retaining one combined reviewer.
    `--python /path/to/python3.12` selects the export runtime if necessary. Profiles:
    `vps`, `n8n`, `n8n-source` (explicit Git-only scope), `local` (manual pull),
    `package`, `tooling`.
@@ -35,6 +37,8 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    descriptor's policy and Tracker config; validation rejects disagreement. Draft
    validation: `python3 scripts/standard.py validate --root PROJECT --allow-draft`.
    Fill every setup marker; never claim draft placeholders represent real setup.
+   Select the [verification profile](verification.md) and actual commands; generated
+   docs/repository/VERIFICATION.md links common guidance at the exact standard pin.
 5. Publish the initial repository/main using its authorized bootstrap procedure.
    Use `scripts/onboard.py --root PROJECT --tracker-root PINNED_ENGINE --workspace
    TRACKER_REGISTRY/workspace.json` to preview branch/label/registration setup.
@@ -47,6 +51,9 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    IDs, modules, exactly the selected columns, successful empty/project sync and
    effective permissions. Verify private Action access, required check names and
    branch controls. Local registration alone does not make the project visible.
+   Use the selected standard's [read-only branch audit](workflow-upgrades.md#verify-platform-controls-separately).
+   Unsupported/ruleset-only results stay unverified; structural CI is not native
+   protection or runtime proof.
 7. Record the durable onboarding proof in `tracker.verification`, set registration
    to `verified`, finish environment verification, then set adoption to `ready`.
    Run strict validation and actual project tests before claiming full readiness.

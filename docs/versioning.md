@@ -58,6 +58,11 @@ runtime settings or delivery still work.
 
 ## Several projects
 
+Use [coordinated upgrades](workflow-upgrades.md) for dependencies, cutover admission
+and reuse of unchanged verified facts, and [verification](verification.md) for
+actual check selection. Maintenance/CI-evidence extensions need reviewed compatible
+Tracker support; new instructions cannot implement or silently activate them.
+
 On an explicit bulk update request, inventory repositories, current pins, local
 exceptions, open work and readiness. Create one issue/branch/PR per project, report
 conflicts separately, and verify its local behavior. No new Master release, skill
