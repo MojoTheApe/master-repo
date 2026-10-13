@@ -4,6 +4,8 @@ Read `delivery.json`, `docs/system/PROJECT.md`, `docs/repository/DELIVERY.md` an
 `docs/repository/TRACKER.md` before work. They define this project's adopted
 standard, system, tracker, stage option, completion rule and local exceptions.
 Use `python scripts/task_tracker.py guide` for the pinned Tracker commands.
+Use [verification](VERIFICATION.md) for selecting checks and retaining reusable
+results under this project's exact standard pin.
 
 If matching descriptor/Tracker `process_instructions` is explicitly adopted,
 one source PR changing only regular AGENTS.md, CLAUDE.md or Markdown under

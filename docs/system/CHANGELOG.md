@@ -1,5 +1,19 @@
 # System changes
 
+## Efficient verification and coordinated upgrades (MR-24)
+
+Added a shared risk/profile-based verification policy and generated pinned reading
+map, bounded contextual reuse, missing-job coverage and measured feedback. Both
+descriptor template generations filter integration pushes, cancel only obsolete
+PR runs and bound descriptor jobs. Master CI retains its required names.
+
+A read-only classic branch-controls audit reports actual requirements and honest
+unverified API states. The canonical skill and onboarding/upgrades distinguish
+source, platform controls, standard release and live activation. Concrete Tracker
+maintenance/evidence requirements remain proposed; compatibility pins, execution
+schemas, consumers and service state are unchanged.
+Issue: https://github.com/MojoTheApe/master-repo/issues/24
+
 ## Git-only n8n source delivery (MR-5)
 
 Added explicit n8n-source selection for projects whose owner separates reviewed

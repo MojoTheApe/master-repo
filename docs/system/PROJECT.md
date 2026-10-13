@@ -1,5 +1,12 @@
 # Master Repo system
 
+Current navigation: [verification](../verification.md),
+[coordinated upgrades](../workflow-upgrades.md) and
+[pending Tracker companion](../specs/maintenance-and-ci-evidence.md).
+Execution versions remain explicit choices; schema 3 permits up to five source
+reviews with single combined integration. VERSION1.0.0 remains unreleased, which
+is distinct from an existing consumer's recorded active workflow.
+
 Master Repo defines the shared path from project creation and ticket intake to
 review, optional staging, main integration and verified delivery. It owns the
 [standard](../../standard.md), templates, validator, onboarding/upgrade tools and the

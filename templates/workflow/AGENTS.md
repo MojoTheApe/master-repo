@@ -3,7 +3,8 @@
 Read these files before work; paths are relative to the repository root:
 
 - Repository rules: [workflow](docs/repository/WORKFLOW.md),
-  [Git delivery](docs/repository/DELIVERY.md), [Tracker](docs/repository/TRACKER.md).
+  [Git delivery](docs/repository/DELIVERY.md), [Tracker](docs/repository/TRACKER.md),
+  [verification](docs/repository/VERIFICATION.md).
 - System meaning and implementation: [project](docs/system/PROJECT.md) and
   [context](docs/system/AGENT_CONTEXT.md).
 - Environment access and operational safeguards: [runtime](docs/runtime/DELIVERY.md).
