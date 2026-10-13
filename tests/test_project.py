@@ -30,7 +30,7 @@ def files(inputs=INPUTS, revision=OLD, *_args):
          'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'root = Path(__file__).resolve().parents[1]\n',
          'scripts/tracker_pr_check.py':'root = Path(__file__).resolve().parents[1]\n','scripts/tracker_delivery_policy.py':'# policy check\n'}
     out['scripts/tracker_process_instructions.py'] = '# instruction route check\n'
-    if data['workflow'].get('execution', {}).get('schema_version') == 2:
+    if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
         out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
     project.separate_export(out)
     out.update(project.layout_files())
@@ -125,6 +125,66 @@ class Projects(unittest.TestCase):
         for limit in (0,17,True,None,5.0,'5'):
             with self.subTest(limit=limit), self.assertRaises(ValueError):
                 project.descriptor(dict(INPUTS,implementation_limit=5,batch_limit=limit), OLD)
+    def test_parallel_review_opt_in_and_mirrored_bounds(self):
+        for limit in range(1, 6):
+            with self.subTest(limit=limit):
+                data = project.descriptor(dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=limit), OLD)
+                self.assertEqual(data['workflow']['execution'],
+                    {'schema_version':3, 'implementation_limit':5, 'review_limit':limit, 'batch_limit':5})
+                self.assertIn('approved', project.phases(True, data['workflow']['execution']))
+        self.create(dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=5))
+        self.assertEqual(self.errors(), [])
+        original = self.json('delivery.json')
+        policy = original['workflow']['execution']
+        for value in (dict(policy, review_limit=0), dict(policy, review_limit=6),
+                      dict(policy, review_limit=True), dict(policy, review_limit=5.0),
+                      dict(policy, batch_limit=6), dict(policy, batch_limit=True)):
+            with self.subTest(value=value):
+                data = copy.deepcopy(original); data['workflow']['execution'] = value
+                self.put('delivery.json', data); self.assertTrue(self.errors())
+        self.put('delivery.json', original)
+        config = self.json('tracker/config.json'); config['execution_policy']['review_limit'] = 4
+        self.put('tracker/config.json', config)
+        self.assertTrue(any('execution policy differs' in e for e in self.errors()))
+    def test_parallel_review_selection_requires_explicit_batch_and_staging(self):
+        for inputs in (dict(INPUTS, review_limit=5),
+                       dict(INPUTS, implementation_limit=5, review_limit=5),
+                       dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=5, staging=False),
+                       dict(INPUTS, implementation_limit=5, batch_limit=6, review_limit=5)):
+            with self.subTest(inputs=inputs), self.assertRaises(ValueError):
+                project.descriptor(inputs, OLD)
+        # The earlier v2 contract deliberately retains its wider batch ceiling.
+        self.assertEqual(project.descriptor(dict(INPUTS, implementation_limit=5, batch_limit=16), OLD)
+                         ['workflow']['execution']['schema_version'], 2)
+    def test_parallel_review_upgrade_preserves_local_limits_and_rejects_drift_without_writes(self):
+        self.create(dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=5))
+        data = self.json('delivery.json'); config = self.json('tracker/config.json')
+        for policy in (data['workflow']['execution'], config['execution_policy']):
+            policy.update(review_limit=4, batch_limit=2)
+        self.put('delivery.json', data); self.put('tracker/config.json', config)
+        self.assertTrue(project.upgrade(self.root, NEW, 'unused', apply=True)['applied'])
+        self.assertEqual(self.errors(), [])
+        self.assertEqual(self.json('tracker/config.json')['execution_policy'], config['execution_policy'])
+        base = self.json(project.BASELINE)
+        self.assertEqual(base['inputs']['review_limit'], 5)
+        self.assertEqual(json.loads(base['files']['tracker/config.json'])['execution_policy']['review_limit'], 5)
+        data = self.json('delivery.json'); data['workflow']['execution']['review_limit'] = 3
+        self.put('delivery.json', data)
+        before = {p:p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        result = project.upgrade(self.root, OLD, 'unused', apply=True)
+        self.assertFalse(result['applied']); self.assertTrue(result['errors'])
+        self.assertEqual(before, {p:p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
+    def test_existing_project_v3_opt_in_survives_upgrade_without_changing_pristine_base(self):
+        self.create(dict(INPUTS, implementation_limit=5, batch_limit=5))
+        policy = {'schema_version':3, 'implementation_limit':5, 'review_limit':5, 'batch_limit':5}
+        data = self.json('delivery.json'); data['workflow']['execution'] = policy
+        config = self.json('tracker/config.json'); config['execution_policy'] = policy
+        self.put('delivery.json', data); self.put('tracker/config.json', config)
+        self.assertTrue(project.upgrade(self.root, NEW, 'unused', apply=True)['applied'])
+        self.assertEqual(self.errors(), [])
+        self.assertEqual(self.json('tracker/config.json')['execution_policy'], policy)
+        self.assertEqual(json.loads(self.json(project.BASELINE)['files']['tracker/config.json'])
+                         ['execution_policy']['schema_version'], 2)
     def test_upgrade_preserves_opt_in_and_local_capacity_with_pristine_baseline(self):
         self.create(dict(INPUTS,implementation_limit=2))
         data=self.json('delivery.json');data['workflow']['execution']['implementation_limit']=4
@@ -295,6 +355,9 @@ class Projects(unittest.TestCase):
             self.assertEqual(initialize.call_args.args[1]['batch_limit'],5)
             self.assertEqual(standard.main(args+['--implementation-limit','2','--batch-limit','3']),0)
             self.assertEqual(initialize.call_args.args[1]['batch_limit'],3)
+            self.assertNotIn('review_limit', initialize.call_args.args[1])
+            self.assertEqual(standard.main(args+['--implementation-limit','5','--batch-limit','--review-limit','5']),0)
+            self.assertEqual(initialize.call_args.args[1]['review_limit'],5)
     def test_process_route_is_explicit_and_preserves_delivery_and_execution(self):
         process={'schema_version':1,'required_checks':['descriptor','tracker-link','Process verification']}
         for extra in ({}, {'implementation_limit':2}, {'implementation_limit':5,'batch_limit':5}):

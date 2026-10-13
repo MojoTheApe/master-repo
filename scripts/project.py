@@ -102,18 +102,20 @@ def delivery_policy(data):
 
 def validate_execution_policy(value):
     """An explicit opt-in; absence must retain the pinned legacy workflow."""
-    if not isinstance(value, dict) or type(value.get('schema_version')) is not int or value['schema_version'] not in (1, 2):
-        raise ValueError('Execution policy schema_version must be 1 or 2')
+    if not isinstance(value, dict) or type(value.get('schema_version')) is not int or value['schema_version'] not in (1, 2, 3):
+        raise ValueError('Execution policy schema_version must be 1, 2 or 3')
     keys = {'schema_version', 'implementation_limit', 'review_limit'}
-    if value['schema_version'] == 2: keys.add('batch_limit')
+    if value['schema_version'] in (2, 3): keys.add('batch_limit')
     if set(value) != keys:
         raise ValueError('Execution policy has missing or unsupported fields')
     if type(value['implementation_limit']) is not int or not 1 <= value['implementation_limit'] <= 16:
         raise ValueError('Execution policy implementation_limit must be an integer from 1 to 16')
-    if type(value['review_limit']) is not int or value['review_limit'] != 1:
-        raise ValueError('Execution policy review_limit must be 1')
-    if value['schema_version'] == 2 and (type(value['batch_limit']) is not int or not 1 <= value['batch_limit'] <= 16):
-        raise ValueError('Execution policy batch_limit must be an integer from 1 to 16')
+    review_max = 5 if value['schema_version'] == 3 else 1
+    if type(value['review_limit']) is not int or not 1 <= value['review_limit'] <= review_max:
+        raise ValueError('Execution policy review_limit must be an integer from 1 to ' + str(review_max))
+    batch_max = 5 if value['schema_version'] == 3 else 16
+    if value['schema_version'] in (2, 3) and (type(value['batch_limit']) is not int or not 1 <= value['batch_limit'] <= batch_max):
+        raise ValueError('Execution policy batch_limit must be an integer from 1 to ' + str(batch_max))
 
 
 def validate_process_instructions(value):
@@ -129,7 +131,7 @@ def validate_process_instructions(value):
 
 def phases(staging, execution=None):
     result = [p for p in PHASES if p != 'stage' or staging]
-    if execution and execution['schema_version'] == 2:
+    if execution and execution['schema_version'] in (2, 3):
         if not staging: raise ValueError('Batch integration requires staging')
         result.insert(result.index('stage'), 'approved')
     return result
@@ -154,11 +156,15 @@ def descriptor(inputs, revision):
         execution = {'schema_version': 1, 'implementation_limit': inputs['implementation_limit'], 'review_limit': 1}
         if 'batch_limit' in inputs:
             execution.update(schema_version=2, batch_limit=inputs['batch_limit'])
+        if 'review_limit' in inputs:
+            if 'batch_limit' not in inputs:
+                raise ValueError('Parallel source reviews require an explicit batch limit')
+            execution.update(schema_version=3, review_limit=inputs['review_limit'])
         validate_execution_policy(execution)
         phases(inputs['staging'], execution)
         workflow['execution'] = execution
-    elif 'batch_limit' in inputs:
-        raise ValueError('Batch integration requires an explicit implementation limit')
+    elif 'batch_limit' in inputs or 'review_limit' in inputs:
+        raise ValueError('Batch integration and parallel reviews require an explicit implementation limit')
     return {'schema_version': 2, 'project': {'name': inputs['name'], 'repository': 'https://github.com/' + repo},
             'standard': {'repository': standard.REPOSITORY, 'revision': revision, 'version': (SOURCE/'VERSION').read_text().strip()},
             'profile': profile, 'adoption': 'draft',
@@ -367,7 +373,7 @@ def inspect(root, expected_revision=None):
         required = set(FILES.values()) | set(FORWARDS) | {'docs/repository/TRACKER.md'}
         required.update('.workflow/tools/' + name for name in HELPERS)
         required.update('scripts/' + name for name in HELPERS)
-        if wf.get('execution', {}).get('schema_version') == 2:
+        if wf.get('execution', {}).get('schema_version') in (2, 3):
             required.update({'.workflow/tools/tracker_batch_policy.py', 'scripts/tracker_batch_policy.py'})
         if 'process_instructions' in wf:
             required.update({'.workflow/tools/tracker_process_instructions.py', 'scripts/tracker_process_instructions.py'})

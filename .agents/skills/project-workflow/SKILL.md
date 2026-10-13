@@ -75,10 +75,15 @@ and Tracker `execution_policy`. For schema 1, read
 the single review/integration lane. If absent, preserve the pinned legacy slot
 behavior; installing this skill does not opt the project in.
 
-For matching execution schema 2, read
+For matching execution schema 2 or 3, read
 [batch integration](references/batch-integration.md) for approval and
 integration ownership: Review -> Approved releases the review lane; one Coordinator
 owns a frozen batch up to the configured `batch_limit` (initial setting five).
+Schema 3 permits 1..5 independent source-review lanes with distinct actual Reviewer
+runs and one separate integration Reviewer; schema 2 retains one source lane.
+Use each source's actual PR/claim for evidence, return, takeover and approval.
+State adoption requires idle owners and the exact compatible migration; no newer
+skill or descriptor edit grants capacity before that migration succeeds.
 For a preserved queue with closed historical handoffs, use only the explicit
 compatible migration option in that reference; it preserves unfinished history
 and grants no approval or admission. The one-task source PR rule remains. The execution-v1 lane lifetime and same-single-
@@ -137,7 +142,7 @@ rebase merge. If main changes, follow the claimed-author fix procedure above to
 reconcile the working branch and repeat review,
 stage and verification. If disabled: working branch -> main, no Stage column.
 
-For work outside the instruction-only exception, execution v2 uses the [batch integration](references/batch-integration.md) ownership,
+For work outside the instruction-only exception, execution v2/v3 uses the [batch integration](references/batch-integration.md) ownership,
 assembly and recovery procedure instead of that v1 single-source stage sequence.
 After source approval, use its separate Coordinator batch claim; do not acquire a
 v1 review/integration lane for multiple tasks or infer v2 return-command syntax.

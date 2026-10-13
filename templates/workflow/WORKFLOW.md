@@ -19,7 +19,7 @@ missing receipts or other divergence needs ordinary claimed reconciliation.
 Configuration, helpers, CI, system/runtime knowledge and application/build changes
 remain on the ordinary route. Installing a skill alone never selects the exception.
 
-If matching execution policies use schema 2, follow the pinned guide's Approved
+If matching execution policies use schema 2 or 3, follow the pinned guide's Approved
 and batch-integration lifecycle for all other work. Each source PR still represents one task; current
 independent review and required source checks move it to Approved and release the
 review lane. A separate Coordinator claim owns one frozen integration batch of
@@ -28,6 +28,13 @@ reviewer. Ship-all snapshots current Approved intake; new arrivals wait. An urge
 single task may ship alone. Independently review/check the combined candidate,
 verify its exact stage target/tree, then promote the unchanged member set to main.
 Keep failed post-stage batches owned through claimed author fixes and fresh proof.
+Explicit schema 3 adds 1..5 independent source-review slots, with distinct actual
+Reviewer runs/claims and one separate integration Reviewer. Schema 2 retains one
+source slot. Source approvals may continue during ordinary batch review; each
+source return/takeover/evidence operation selects its exact claim. Instruction-only
+sources retain their idle-integration restrictions. Opt-in requires compatible
+published writers/service and an idle preserved-state migration under the pinned
+guide; changing configuration alone cannot reserve more capacity.
 The execution-v1 lane lifetime and single-task staging instructions below apply
 only to schema 1. Installing a skill or changing upstream pins does not enable v2.
 
@@ -42,7 +49,7 @@ only under legacy execution. No automatic closing keywords.
 
 If `workflow.execution` and Tracker `execution_policy` are explicitly enabled and
 equal, use their implementation capacity and version-specific ownership. Schema 1
-has one review/integration lane; schema 2 separates source review from a Coordinator
+has one review/integration lane; schema 2/3 separates source review from a Coordinator
 integration batch. Otherwise
 keep the pinned legacy slot behavior. A Coordinator stays in the current
 conversation, screens task dependencies/overlap and delegates independent tasks to

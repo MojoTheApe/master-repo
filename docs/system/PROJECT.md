@@ -104,6 +104,20 @@ state activation remain separately reviewed operations.
 Master task: https://github.com/MojoTheApe/master-repo/issues/18
 Tracker task: https://github.com/MojoTheApe/task-tracker/issues/85
 
+## MR-22 — Parallel source reviews
+
+Explicit execution schema 3 supports 1..5 source-review slots and batches of 1..5,
+with one separate integration Coordinator/Reviewer. `--review-limit N` requires
+explicit implementation/batch choices and staging; omitted input retains v1/v2.
+Mirrored policies, exact compatible export and required batch helpers are validated.
+Conservative upgrades preserve local capacities and pristine template ancestry;
+inconsistent settings fail before any write. The canonical skill and templates
+describe source-specific ownership, current evidence and idle queue-preserving
+consumer activation. Task Tracker companion TT-97 expands its reviewed TT-93 pool.
+Compatibility pins independently reviewed Tracker TT-97 / PR98 merge
+`46283b8a6fe444065838e136c89ef4ed64bd1528`. Source integration here does not
+deploy the service or activate an existing project.
+
 ## MR-20 — Skill ownership and central distribution
 
 Project Workflow remains canonical in this source repository and is distributed

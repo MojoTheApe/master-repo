@@ -91,6 +91,34 @@ a previous pin/config is a reviewed recovery change, never a rewritten shared ta
 
 ## Enabling Approved and batch integration
 
+### Parallel source reviews (execution schema 3)
+
+Explicit schema 3 adds 1..5 independently owned source-review slots while retaining
+one integration Coordinator, one separate integration Reviewer and frozen batches
+of at most five. Select it during initialization with `--implementation-limit 5
+--batch-limit 5 --review-limit 5`; projects without this choice retain their prior
+policy. [MR-22](https://github.com/MojoTheApe/master-repo/issues/22) and
+[TT-97](https://github.com/MojoTheApe/task-tracker/issues/97) own the compatible
+five-review contract, building on Tracker's independently integrated TT-93 pool.
+
+For a v2 consumer, finish its policy-update source through its existing approved
+batch/stage/main route before migrating durable state. Publish compatible reviewed
+writers and snapshot service, and align descriptor/config/engine/registry pins.
+Use the exact engine's `execution migrate --preserve-review-queue` preview/apply
+procedure while every Worker, source/integration Reviewer, intake/batch and stage
+owner is idle. Implementation and batch capacity stay unchanged; source review
+capacity is the explicit new choice. Preserve queue order, actual source handoffs,
+author/task history, existing Approved evidence and all delivery/history records.
+Stale Approved evidence requires normal prior-policy reconciliation first.
+
+When the exact engine supports retained closed unmerged historical handoffs, use
+its additional explicit preservation flag; do not reopen or approve those sources.
+Keep private before/after snapshots and verify fresh digest-covered board limits,
+separate source/integration occupancy and excluded private claims/session/report
+fields. Never clear state, transfer a live owner or manufacture review runs to
+enable adoption. Source merge, service publication and state activation are
+separate facts; other consumers remain unchanged.
+
 [MR-14](https://github.com/MojoTheApe/master-repo/issues/14) and
 [TT-77](https://github.com/MojoTheApe/task-tracker/issues/77) own the coupled change;
 [ACL-1566](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/566) owns
