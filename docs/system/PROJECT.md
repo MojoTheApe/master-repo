@@ -103,3 +103,15 @@ state activation remain separately reviewed operations.
 
 Master task: https://github.com/MojoTheApe/master-repo/issues/18
 Tracker task: https://github.com/MojoTheApe/task-tracker/issues/85
+
+## MR-20 — Skill ownership and central distribution
+
+Project Workflow remains canonical in this source repository and is distributed
+through a verified read-only mirror in the AI Skills library. Standard/process PRs
+include an explicit updated/no-impact assessment, with any affected instructions
+changed in the same PR. CI validates the declaration; independent review evaluates
+its substance. The library owns synchronization and Codex plugin publication.
+Agency Builder and AIO remain library-owned. No consumer pins, Tracker contracts,
+source release tags or runtime settings change.
+Task Tracker impact: no application/engine change; this is source skill maintenance
+and distribution. Master task: https://github.com/MojoTheApe/master-repo/issues/20

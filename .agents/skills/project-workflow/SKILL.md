@@ -18,6 +18,12 @@ silently apply newer schema 2 rules to an old project.
 This skill is installed once per agent environment. Its canonical copy lives at
 `.agents/skills/project-workflow/SKILL.md` in Master Repo. Project AGENTS files are
 short reading maps; they are not copies of this global skill.
+The team's AI Skills repository publishes a verified mirror of this skill as a
+Codex plugin. Edit Project Workflow in Master Repo; the library copy is generated.
+When changing Master standards or process contracts, assess this skill in the same
+PR. Update affected instructions/references or record a concrete no-impact reason
+under the source repository's skill impact rule. Library-owned skills are authored
+directly in AI Skills. Distribution never upgrades a consumer's pinned standard.
 Do not assume files outside the installed skill directory exist. Locate or obtain
 authorized pinned source checkouts explicitly. An updated skill is a navigator,
 not permission to upgrade project pins or replace unique project behavior.
