@@ -2,6 +2,7 @@ import copy
 import json
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 import unittest
 from unittest import mock
@@ -14,6 +15,41 @@ REAL_RENDER = project.render
 OLD='a'*40
 NEW='b'*40
 INPUTS={'name':'Example','repository':'owner/example','prefix':'EX','workspace_id':'example','profile':'local','staging':True}
+
+
+class OptionalProducerExport(unittest.TestCase):
+    def exported(self):
+        return {'docs/TRACKER_AGENT_WORKFLOW.md': 'Read the pinned guide.\n',
+                'scripts/task_tracker.py': 'root = Path(__file__).resolve().parents[1]\n',
+                'scripts/tracker_pr_check.py': 'root = Path(__file__).resolve().parents[1]\n',
+                'scripts/tracker_delivery_policy.py': '# existing policy\n'}
+
+    def test_separated_producer_retains_exact_code_and_root_relative_configuration(self):
+        producer = ('from pathlib import Path\n'
+                    'import json\n'
+                    'if __name__ == "__main__":\n'
+                    '    print(json.loads(Path("tracker/config.json").read_text())["project"]["repository"])\n')
+        exported = self.exported()
+        exported['scripts/tracker_ci_evidence.py'] = producer
+        project.separate_export(exported)
+        self.assertEqual(exported['.workflow/tools/tracker_ci_evidence.py'], producer)
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for name, content in exported.items():
+                path = root/name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content)
+            (root/'tracker').mkdir()
+            (root/'tracker/config.json').write_text('{"project":{"repository":"owner/example"}}')
+            for name in ('scripts/tracker_ci_evidence.py', '.workflow/tools/tracker_ci_evidence.py'):
+                result = subprocess.run([sys.executable, name], cwd=root, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout.strip(), 'owner/example')
+
+    def test_older_export_does_not_invent_ci_producer_or_opt_in(self):
+        exported = self.exported()
+        project.separate_export(exported)
+        self.assertFalse(any('ci_evidence' in path for path in exported))
 
 
 def files(inputs=INPUTS, revision=OLD, *_args):

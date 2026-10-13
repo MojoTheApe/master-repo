@@ -1,10 +1,13 @@
 # Tracker companion for maintenance and CI evidence
 
-Status: proposed requirements from
-[MR-24](https://github.com/MojoTheApe/master-repo/issues/24), not commands/features
-in the current pin. This Master update changes no engine, client, service or live
-state. Implement and review the companion in Tracker before publishing compatible
-support and separately adopting it in consumers.
+Original requirements from
+[MR-24](https://github.com/MojoTheApe/master-repo/issues/24) are preserved below.
+[TT-107](https://github.com/MojoTheApe/task-tracker/issues/107) implements owned
+maintenance and a bounded native CI protocol; MR-26 selects the reviewed engine
+and preserves its optional producer in exports. See [actual support and limits](../tracker-companion.md).
+The broader environment/platform/artifact requirements are not a claim that the
+first protocol implements every adapter. Consumer policy adoption and compatible
+service publication remain separate operations.
 
 ## Maintenance admission
 

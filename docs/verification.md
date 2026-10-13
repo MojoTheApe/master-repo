@@ -34,8 +34,10 @@ outer CI timeout alone may not resolve an installer or runner hang.
 
 ## Reuse proven results, not green labels
 
-Keep existing bounded reuse supported by the adopted project. Expanding it requires
-a maintained collector proving all relevant inputs:
+Keep existing bounded reuse supported by the adopted project. The optional
+[Tracker companion](tracker-companion.md) supplies a narrowly supported native CI
+protocol; it is not enabled by this guidance or exported defaults. Expanding reuse
+requires a maintained collector proving all relevant inputs:
 
 - Repository and actual tested content from Git or trusted producer evidence.
 - Trusted immutable workflow/check producer and profile, required jobs/platforms,
