@@ -1,5 +1,15 @@
 # Repository process history
 
+## MR-20 — Assess Project Workflow impact and publish its central mirror
+
+Added an explicit PR assessment for standards/process changes, checked against
+the actual immutable source diff. Skill instructions stay canonical in Master Repo;
+AI Skills owns a one-way verified mirror and plugin distribution. Library-owned
+skills remain authored in AI Skills. Consumer pins, release/Tracker contracts and
+runtime behavior are unchanged. Task Tracker requires no companion change.
+
+Task: https://github.com/MojoTheApe/master-repo/issues/20
+
 ## MR-18 — Preserve closed historical review handoffs
 
 Pin the independently reviewed compatible Tracker at `086aaa98f2e807d640105be2929714d0b7331f21`

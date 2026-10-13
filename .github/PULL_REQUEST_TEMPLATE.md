@@ -18,3 +18,8 @@ not automatically upgrade or deploy consumer projects.
 Current system and change history updated, or no impact with reason.
 Task Tracker impact: no impact with reason, or linked issue/PR with matching change
 and compatible rollout order. Preserve project-specific behavior on upgrades.
+
+## Project Workflow impact
+
+Project Workflow impact: updated OR no-impact
+Project Workflow reason: Describe the changed instruction or why no skill update is needed.
