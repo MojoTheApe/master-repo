@@ -5,9 +5,12 @@ cheapest meaningful check for changed risk, then all required combined-candidate
 and actual delivery checks. Unknown/mixed scope keeps full applicable checks;
 test counts alone do not justify removal or a different product stack.
 
-Read author evidence before repeating it. Reuse only when the adopted collector
-proves matching repository/tested content, trusted workflow/profile/jobs and
-relevant environment/dependency/build inputs. Run missing coverage. An open
+Read author evidence before repeating it. Preserve the existing adopted bounded
+collector's proof rules, including older exact-tree/merged-PR reuse; a newer skill
+does not add environment requirements or force reruns of valid old-pin evidence.
+Stronger repository/content, trusted workflow/profile/jobs and resolved environment,
+dependency/build proof apply to a reviewed expansion or adoption only when the
+compatible collector supports them. Run missing adopted coverage. An open
 Approved source supplies proof only through actual compatible approval/content
 validation. Never bypass a merged-PR-only collector. Keep independent composition
 review and actual stage/delivery freshness; skipped/cancelled results are not tests.
