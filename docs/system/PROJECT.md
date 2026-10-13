@@ -114,7 +114,9 @@ Conservative upgrades preserve local capacities and pristine template ancestry;
 inconsistent settings fail before any write. The canonical skill and templates
 describe source-specific ownership, current evidence and idle queue-preserving
 consumer activation. Task Tracker companion TT-97 expands its reviewed TT-93 pool.
-Source integration here does not deploy the service or activate an existing project.
+Compatibility pins independently reviewed Tracker TT-97 / PR98 merge
+`46283b8a6fe444065838e136c89ef4ed64bd1528`. Source integration here does not
+deploy the service or activate an existing project.
 
 ## MR-20 — Skill ownership and central distribution
 
