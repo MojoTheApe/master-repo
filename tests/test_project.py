@@ -51,6 +51,29 @@ class OptionalProducerExport(unittest.TestCase):
         project.separate_export(exported)
         self.assertFalse(any('ci_evidence' in path for path in exported))
 
+    def test_receipt_recorder_keeps_bytes_portable_import_and_both_entry_points(self):
+        producer = ('try:\n    from . import delivery_policy as rules\n'
+                    'except ImportError:\n    import tracker_delivery_policy as rules\n'
+                    'if __name__ == "__main__":\n    print(rules.VALUE)\n')
+        exported = self.exported()
+        exported['scripts/tracker_delivery_policy.py'] = 'VALUE = 42\n'
+        exported['scripts/tracker_delivery_receipt.py'] = producer
+        project.separate_export(exported)
+        self.assertEqual(exported['.workflow/tools/tracker_delivery_receipt.py'], producer)
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for name, content in exported.items():
+                path = root/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(content)
+            for name in ('scripts/tracker_delivery_receipt.py', '.workflow/tools/tracker_delivery_receipt.py'):
+                result = subprocess.run([sys.executable, name], cwd=root, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout.strip(), '42')
+
+    def test_older_export_does_not_require_or_invent_receipt_recorder(self):
+        exported = self.exported()
+        project.separate_export(exported)
+        self.assertFalse(any('delivery_receipt' in path for path in exported))
+
 
 def files(inputs=INPUTS, revision=OLD, *_args):
     """Minimal exported contract; real pinned exporter is exercised separately."""
@@ -68,6 +91,8 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     out['scripts/tracker_process_instructions.py'] = '# instruction route check\n'
     if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
         out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
+        if data['completion'] != 'reviewed-merge':
+            out['scripts/tracker_delivery_receipt.py'] = '# portable receipt recorder\n'
     project.separate_export(out)
     out.update(project.layout_files())
     for source,destination in project.FILES.items():
@@ -217,6 +242,20 @@ class Projects(unittest.TestCase):
         stale = copy.deepcopy(config); stale['delivery_policy']['staging']['enabled'] = True
         self.put('tracker/config.json', stale)
         self.assertTrue(any('policy differs' in e for e in self.errors()))
+    def test_delivery_batch_requires_both_receipt_paths_and_upgrade_cannot_hide_deletion(self):
+        for staging in (True, False):
+            for extra in ({'implementation_limit':5, 'batch_limit':5},
+                          {'implementation_limit':5, 'batch_limit':5, 'review_limit':5}):
+                for name in ('.workflow/tools/tracker_delivery_receipt.py', 'scripts/tracker_delivery_receipt.py'):
+                    with self.subTest(staging=staging, extra=extra, name=name), tempfile.TemporaryDirectory() as scratch:
+                        self.root = Path(scratch)/'project'
+                        self.create(dict(INPUTS, profile='package', staging=staging, **extra))
+                        (self.root/name).unlink()
+                        self.assertTrue(any(name in error for error in self.errors()))
+                        before = {p.relative_to(self.root):p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+                        result = project.upgrade(self.root, NEW, 'unused', apply=True)
+                        self.assertFalse(result['applied'])
+                        self.assertEqual(before, {p.relative_to(self.root):p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
     def test_upgrade_retains_explicit_no_stage_batch_and_pristine_stage_baseline(self):
         self.create(dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=5))
         data = self.json('delivery.json'); data['workflow']['staging'] = False
@@ -479,7 +518,7 @@ class Projects(unittest.TestCase):
             (target/'tracker/config.json').write_text(project.dumps(config))
             (target/'docs').mkdir(); (target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
             (target/'scripts').mkdir()
-            for name in (*project.HELPERS, 'tracker_batch_policy.py'):
+            for name in (*project.HELPERS, 'tracker_batch_policy.py', 'tracker_delivery_receipt.py'):
                 (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
             return mock.Mock(returncode=0, stderr='', stdout='')
         inputs = dict(INPUTS, staging=False, profile='package', implementation_limit=5, batch_limit=5, review_limit=5)
@@ -489,6 +528,15 @@ class Projects(unittest.TestCase):
         self.assertEqual(config['workflow'][-3:], ['review', 'approved', 'merged'])
         self.assertEqual(config['delivery_policy']['completion'], 'verified-stable-package')
         self.assertIn('.workflow/tools/tracker_batch_policy.py', result)
+        self.assertIn('.workflow/tools/tracker_delivery_receipt.py', result)
+        def incomplete(command, **kwargs):
+            result = exporter(command, **kwargs)
+            target = Path(command[command.index('--output')+1])
+            (target/'scripts/tracker_delivery_receipt.py').unlink()
+            return result
+        with mock.patch.object(project, 'tracker_checkout', return_value=engine), mock.patch.object(project.subprocess, 'run', side_effect=incomplete):
+            with self.assertRaisesRegex(ValueError, 'lacks the delivery receipt helper'):
+                REAL_RENDER(inputs, NEW, engine)
         for drift in ('workflow', 'delivery_policy'):
             def stale_export(command, **kwargs):
                 result = exporter(command, **kwargs)

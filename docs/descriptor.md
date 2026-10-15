@@ -46,7 +46,12 @@ check does not prove readiness, registration, publication or runtime setup.
 The Tracker `delivery_policy` is derived from stage target/choice, completion,
 production identity and required checks. Keep both files synchronized in each
 project PR. `tracker/engine.json` must match `compatibility.json` from the selected
-standard. The Action must be called once at the descriptor's exact commit.
+standard. The Action must be called once at the descriptor's exact commit. Execution-v2/v3
+projects with required production/package delivery also retain both portable
+recorder paths (`.workflow/tools/tracker_delivery_receipt.py` and its `scripts/`
+entry point); validation rejects a missing implementation or wrapper. Export
+relocation preserves actual helper bytes; older exports without the optional
+producer still separate successfully for their own supported contracts.
 Independent source/client validation runs in project CI as `tracker-link`;
 `descriptor` validates the project contract. Add real project tests as required
 checks. Agent `check-merge` separately checks review/stage/check evidence.

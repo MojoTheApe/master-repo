@@ -43,7 +43,7 @@ def separate_export(files):
         guide = guide.replace('`docs/PROCESS_INSTRUCTIONS.md`', '`docs/repository/PROCESS_INSTRUCTIONS.md`')
     files['docs/repository/TRACKER.md'] = guide
     helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py',
-                                           'tracker_ci_evidence.py')
+                                           'tracker_ci_evidence.py', 'tracker_delivery_receipt.py')
                           if 'scripts/' + name in files))
     for name in helpers:
         source = files.pop('scripts/' + name)
@@ -210,6 +210,8 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             if (exported_config.get('delivery_policy') != delivery_policy(data)
                     or exported_phases != phases(inputs['staging'], data['workflow']['execution'])):
                 raise ValueError('Tracker export batch route differs from the explicit staging/delivery choice')
+            if data['completion'] != 'reviewed-merge' and 'scripts/tracker_delivery_receipt.py' not in files:
+                raise ValueError('Pinned Tracker export lacks the delivery receipt helper')
         if (('process_instructions' in exported_config) != ('process_instructions' in data['workflow'])
                 or exported_config.get('process_instructions') != data['workflow'].get('process_instructions')):
             raise ValueError('Tracker export process instructions differ from the explicit project choice')
@@ -382,6 +384,8 @@ def inspect(root, expected_revision=None):
         required.update('scripts/' + name for name in HELPERS)
         if wf.get('execution', {}).get('schema_version') in (2, 3):
             required.update({'.workflow/tools/tracker_batch_policy.py', 'scripts/tracker_batch_policy.py'})
+            if data['completion'] != 'reviewed-merge':
+                required.update({'.workflow/tools/tracker_delivery_receipt.py', 'scripts/tracker_delivery_receipt.py'})
         if 'process_instructions' in wf:
             required.update({'.workflow/tools/tracker_process_instructions.py', 'scripts/tracker_process_instructions.py'})
         for name in sorted(required):

@@ -90,3 +90,18 @@ checks and exact original receipt/scope/source binding. Pending delivery stays
 pending. Preserve historical task allowlists and all provenance; a policy edit
 alone grants no completion or admission. Consumer config/registry and fresh board
 verification are separately reviewed activation steps.
+
+The same companion provides explicit `batch begin --deliver --delivery-workflow
+PATH --delivery-job EXACT_NAME` authorization and the standalone portable native
+recorder `tracker_delivery_receipt.py`. Master relocates the implementation without
+changing its bytes and retains the compatible `scripts/` entry point; required
+batch delivery contracts validate both paths. A same-repository token is enough;
+no private-engine read token is needed. See the shared
+[native adapter contract](delivery-continuation.md#portable-native-receipt-adapter).
+Pending target delivery serializes later integration. Explicit abandonment uses
+`batch delivery-cancel` with genuine Coordinator ownership/report and keeps all
+unfinished task/receipt evidence.
+
+ACL [parent task 1923](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/923)
+and [source task 1924](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/924)
+separate the old-route source integration from live activation.

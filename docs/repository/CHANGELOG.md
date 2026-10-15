@@ -18,6 +18,16 @@ merged pin is required before consumer adoption. No existing consumer, live stat
 global skill installation or runtime is implicitly changed.
 [MR-28](https://github.com/MojoTheApe/master-repo/issues/28).
 
+MR-28 follow-through: preserve the TT-127 standalone delivery recorder byte-for-byte
+in separated exports, with a compatible scripts entry point; required v2/v3
+production/package delivery validates both paths. Explicit `--deliver` binds the
+real authorized batch and configured native verification producer. The maintained
+project CI owns delivery; the recorder revalidates real Merged handoff and native
+job/log evidence before writing the receipt.
+ACL [parent 1923](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/923)
+and [source 1924](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/924)
+retain separate old-stage source integration and authorized live activation.
+
 ## MR-26 — Select the owned-maintenance and bounded CI companion
 
 Select the independently reviewed TT-107 engine, preserve its optional native CI

@@ -10,6 +10,14 @@ permission, access or failed check instead.
 
 The Coordinator must continue or hand off durably to the configured project CI.
 Shared templates do not create a release/deploy mechanism or a background agent.
+For compatible runtime/package batches, the Coordinator freezes the existing
+authorization with `batch begin --deliver --delivery-workflow PATH --delivery-job
+EXACT_NAME`, selecting the real project native verification producer. A trusted
+workflow can use the exported `tracker_delivery_receipt.py resolve`/`record` with
+a same-repository token, successful main CI, actual Merged handoff and exact native
+verification job/log proof. Follow the pinned guide; the portable recorder creates
+no authorization or deployment. No private engine access token is required.
+
 Before claiming it works automatically, implement and test the project's actual
 adapter, including a failed run, resumable retry and duplicate request.
 

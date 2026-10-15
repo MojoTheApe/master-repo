@@ -72,7 +72,11 @@ them. Partition that fixed intake into sequential batches no larger than the
 project's batch_limit (initial ACL setting: five). One task is a valid urgent batch;
 never wait to fill all five. Implementation capacity and batch size are independent.
 
-Acquire the separate Coordinator integration claim for one frozen batch. Preserve
+Acquire the separate Coordinator integration claim for one frozen batch. When
+the selected request includes required delivery, use the compatible `batch begin
+--deliver --delivery-workflow PATH --delivery-job EXACT_NAME` to retain the actual
+permission and trusted native verification producer. Omitting it is ordinary
+integration; an arbitrary later push cannot authorize delivery. Preserve
 each member's task, source PR/head/base, approval/scope/policy evidence and current
 main baseline. Assemble approved source revisions in an isolated integration
 branch. Conflict resolution is code: return affected tasks to their authors and

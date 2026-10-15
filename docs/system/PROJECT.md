@@ -179,3 +179,13 @@ checks and exact original receipt/scope/source binding. ACL adoption is a separa
 authorized consumer task. Compatibility must select the independently reviewed
 merged companion before release/adoption; a source candidate alone is not readiness.
 Master task: [MR-28](https://github.com/MojoTheApe/master-repo/issues/28).
+
+MR-28 follow-through: preserve the TT-127 standalone delivery recorder byte-for-byte
+in separated exports, with a compatible scripts entry point; required v2/v3
+production/package delivery validates both paths. Explicit `--deliver` binds the
+real authorized batch and configured native verification producer. The maintained
+project CI owns delivery; the recorder revalidates real Merged handoff and native
+job/log evidence before writing the receipt.
+ACL [parent 1923](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/923)
+and [source 1924](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/924)
+retain separate old-stage source integration and authorized live activation.
