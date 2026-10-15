@@ -24,11 +24,16 @@ remain on the ordinary route. Installing a skill alone never selects the excepti
 If matching execution policies use schema 2 or 3, follow the pinned guide's Approved
 and batch-integration lifecycle for all other work. Each source PR still represents one task; current
 independent review and required source checks move it to Approved and release the
-review lane. A separate Coordinator claim owns one frozen integration batch of
+review lane. A development request ends there until integration is authorized.
+A separate Coordinator claim owns one frozen integration batch of
 1..batch_limit members (recommended limit five), retaining every real Worker and
 reviewer. Ship-all snapshots current Approved intake; new arrivals wait. An urgent
 single task may ship alone. Independently review/check the combined candidate,
-verify its exact stage target/tree, then promote the unchanged member set to main.
+with staging enabled verify its exact stage target/tree, then promote the unchanged
+member set to main. With staging explicitly disabled, admit the reserved independently
+reviewed batch directly into main using the pinned `batch` direction and matching
+batch identity. Ordinary source PRs remain approval-only; keep all source and
+combined checks.
 Keep failed post-stage batches owned through claimed author fixes and fresh proof.
 Explicit schema 3 adds 1..5 independent source-review slots, with distinct actual
 Reviewer runs/claims and one separate integration Reviewer. Schema 2 retains one
@@ -92,7 +97,11 @@ Tracker guide; labels and merge alone do not prove a required delivery.
 
 Update current-system docs and meaningful change history in the same PR, or explain
 no documentation impact. Preserve original specifications and local deployment
-controls. Assess Master Repo / Task Tracker impact for process changes and propose
+controls. A selected integration/main-merge request includes the maintained release,
+verification and receipt after main; continue without a routine second approval
+through [delivery continuation](DELIVERY_CONTINUATION.md). A configured adapter/CI
+supplies durable execution; instructions alone do not launch it. Assess Master Repo /
+Task Tracker impact for process changes and propose
 linked fixes when needed. Ordinary feature work does not upgrade the standard.
 
 The optional installed `project-workflow` skill helps navigate these instructions.

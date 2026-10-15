@@ -69,3 +69,47 @@ adopted policy/state change. Source merge, standard release, service publication
 and activation are separate results. Preserve stronger local controls, actual
 delivery obligations and private before/after evidence. Product test restructuring
 and ACL/React Forge adapters require their own authorized implementation.
+
+## Direct-main frozen batches and Stage policy migration
+
+[TT-127](https://github.com/MojoTheApe/task-tracker/issues/127), coordinated with
+[MR-28](https://github.com/MojoTheApe/master-repo/issues/28), is selected at reviewed
+[Tracker PR 128](https://github.com/MojoTheApe/task-tracker/pull/128) merge
+`e775c624e0323e69ed891926691c3dee6587081a`. It supports the same
+execution-v2/v3 object with explicit staging disabled. Approved sources remain
+approval-only. Only the live reserved frozen batch with current combined review,
+CI, `batch` direction, supported batch branch and matching batch line can enter
+main. There is no synthetic Stage receipt; real merged inclusion and subsequent
+profile-specific delivery remain required. Read the exact compatible engine guide.
+
+`delivery-policy migrate --previous-config FILE --previous-revision FULL_SHA
+--report-file FILE [--apply]` previews/applies an idle compare-and-swap policy transition. Under owned maintenance
+use its actual required credentials. The previous config must match that official
+immutable repository revision included in main; apply checks that the exact
+reviewed candidate config is published on current main. Preserve original queue/authors/history and
+receipts; old-policy approvals remain history and need supported author-return/
+handoff/review/approval under the new policy. Explicit staging-only audited
+reconciliation can retain successful completion only for unchanged target/completion/
+checks and exact original receipt/scope/source binding. Pending delivery stays
+pending. Preserve historical task allowlists and all provenance; a policy edit
+alone grants no completion or admission. Consumer config/registry and fresh board
+verification are separately reviewed activation steps.
+
+The same companion provides explicit `batch begin --deliver --delivery-workflow
+PATH --delivery-job EXACT_NAME` authorization and the standalone portable native
+recorder `tracker_delivery_receipt.py`. Master relocates the implementation without
+changing its bytes and retains the compatible `scripts/` entry point; required
+batch delivery contracts validate both paths. A same-repository token is enough;
+no private-engine read token is needed. See the shared
+[native adapter contract](delivery-continuation.md#portable-native-receipt-adapter).
+Under the adopted Master flow, owner approval to integrate/merge selected runtime/
+package tasks includes delivery; agents set `--deliver` by default without another
+owner phrase or approval. Explicit source-only/skip-release overrides defer delivery
+and keep it unfinished; source approval/raw main pushes create no authorization.
+Pending target delivery serializes later integration. Explicit abandonment uses
+`batch delivery-cancel` with genuine Coordinator ownership/report and keeps all
+unfinished task/receipt evidence.
+
+ACL [parent task 1923](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/923)
+and [source task 1924](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/924)
+separate the old-route source integration from live activation.

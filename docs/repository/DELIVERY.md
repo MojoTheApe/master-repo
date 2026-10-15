@@ -10,8 +10,15 @@ these maintenance procedures are defined; it does not claim a published version.
   moves work to Review. Status labels are maintained explicitly for now; this
   repository does not install a second tracker or claim automatic transitions.
 - CI runs unit tests, descriptor validation and local link checks on PRs and main.
-- Review and merge complete this non-deployed implementation task. Keep its issue
-  open until reviewed, checked and merged; release publication is separate.
+- An authorized integration request carries this tooling task through completion.
+  After independent full-scope review and admitted main merge, the running agent
+  waits for successful required checks on the actual merged candidate, verifies
+  that the complete Issue scope is included, records merged SHA/PR/review/check
+  links on the Issue, and closes it. No further routine owner approval is needed.
+  If scope/checks are incomplete, retain the open Issue with the concrete next action.
+  A retry inspects current Issue/merge/check evidence before writing another result.
+  This is agent continuation, not a configured background closer: if interrupted,
+  resume from the Issue and linked evidence. Release publication is separate.
 - Publish the standard only through [versioning](../versioning.md), with an exact
   immutable tag, release notes and verified merged-commit checks.
 - Consumers remain pinned. Recovery from a bad standard release is a reviewed
@@ -21,3 +28,10 @@ these maintenance procedures are defined; it does not claim a published version.
 Actual GitHub access/protection depends on repository settings and plan. Record
 their observed state in the implementation PR. Do not infer protection from this
 document or a green CI check. No auto-merge, tag or production job is configured.
+
+The shared [delivery continuation contract](../delivery-continuation.md) applies
+according to each project's profile. This repository retains reviewed-merge tooling
+completion: it does not publish a consumer installer, deploy Tracker, migrate live
+consumer state, install the global skill or release the standard as a side effect.
+Those operations remain separately scoped. Required CI runs automatically; the
+running agent performs the final verified Issue transition.

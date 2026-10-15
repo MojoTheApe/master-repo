@@ -22,7 +22,11 @@ commands in it are never executed by the validator.
 Local/tooling profiles complete after an admitted reviewed merge. A package is an
 explicitly different profile. VPS/n8n require verified production. Staging is on by
 default for every consumer profile; use a deliberate project choice to disable it.
-Stage and production identities/procedures remain separate.
+Stage and production identities/procedures remain separate. The four existing
+`delivery` fields link the maintained [continuation contract](delivery-continuation.md),
+including exact revision/target/tasks, authorization, verification, resumable
+failure handling and recovery. They are descriptions, never executable commands
+run by validation. No universal installer, VPS or n8n deployer is generated.
 
 The owner may explicitly select `n8n-source` for Git-only delivery. It uses
 reviewed-merge, has no production environment requirement, and describes the
@@ -42,7 +46,12 @@ check does not prove readiness, registration, publication or runtime setup.
 The Tracker `delivery_policy` is derived from stage target/choice, completion,
 production identity and required checks. Keep both files synchronized in each
 project PR. `tracker/engine.json` must match `compatibility.json` from the selected
-standard. The Action must be called once at the descriptor's exact commit.
+standard. The Action must be called once at the descriptor's exact commit. Execution-v2/v3
+projects with required production/package delivery also retain both portable
+recorder paths (`.workflow/tools/tracker_delivery_receipt.py` and its `scripts/`
+entry point); validation rejects a missing implementation or wrapper. Export
+relocation preserves actual helper bytes; older exports without the optional
+producer still separate successfully for their own supported contracts.
 Independent source/client validation runs in project CI as `tracker-link`;
 `descriptor` validates the project contract. Add real project tests as required
 checks. Agent `check-merge` separately checks review/stage/check evidence.
@@ -64,7 +73,9 @@ arbitrates capacity across platforms; a host's available agents are a separate l
 
 Initialization opts in only with explicit `--implementation-limit`, `--batch-limit`
 and `--review-limit N`. Even `--review-limit 1` explicitly selects schema 3; omission
-preserves v1/v2 selection and their fixed review_limit 1. Schema 3 requires staging.
+preserves v1/v2 selection and their fixed review_limit 1. Schema 2/3 supports
+explicitly disabled staging with `--no-staging`, retaining Approved and the same
+independent combined review and source/integration checks.
 Upgrades preserve existing local choices and never activate the new state model.
 Consumer activation requires the pinned guide's supported idle queue-preserving
 migration and compatible published writers/service, not just edited configuration.
@@ -97,8 +108,11 @@ Execution policy schema 2 explicitly selects Approved and frozen batch integrati
 
 Exactly these four keys are required. `batch_limit` is an integer from 1 to 16,
 independent of implementation capacity; the initial recommended setting is five.
-Staging must be enabled and the Tracker workflow must include exactly one Approved
-phase between Review and Stage. The initializer opts in only with both explicit
+The Tracker workflow must include exactly one Approved phase between Review and
+Stage when staging is enabled, or between Review and Merged when disabled.
+Keep `workflow.staging` and the derived Tracker `delivery_policy.staging` synchronized.
+A no-stage batch uses the compatible Tracker's reserved `batch` main direction;
+ordinary source PRs remain approval-only. The initializer opts in only with both explicit
 `--implementation-limit N` and `--batch-limit [N]` (N defaults to five when the
 flag has no value); omitted batch policy retains v1.
 An upgrade preserves the project's local batch limit and genuine pristine baseline,

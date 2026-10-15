@@ -29,7 +29,14 @@ requires compatible published writers; CI coverage requires explicit reviewed
 consumer adoption and retains every unsupported/missing job as fresh. This source
 selection does not change consumer execution capacity, state or runtime delivery.
 
-New projects default to permanent main/stage branches. Staging can be disabled.
+New projects default to permanent main/stage branches. Staging can be disabled,
+including execution-v2/v3 frozen batches with Approved and independent combined
+review retained. The reserved combined candidate enters main directly; ordinary
+sources remain approval-only. The [continuation contract](../delivery-continuation.md)
+carries one selected integration/main-merge authorization through project-owned
+delivery, verification and the exact Tracker receipt. Templates/skill guide the
+agent and require a maintained consumer adapter; they do not create executable
+deployment or activate a consumer.
 The descriptor selects local manual pull, VPS, n8n, package or tooling completion.
 Reviews are performed by a separate subagent invoked by the running implementer;
 files alone do not start agents. The Tracker records evidence and checks admission;
@@ -145,3 +152,45 @@ Agency Builder and AIO remain library-owned. No consumer pins, Tracker contracts
 source release tags or runtime settings change.
 Task Tracker impact: no application/engine change; this is source skill maintenance
 and distribution. Master task: https://github.com/MojoTheApe/master-repo/issues/20
+
+## MR-28 — Delivery continuation and deliberate no-stage batches
+
+Generation and validation allow explicit `workflow.staging: false` with execution
+schema 2/3 while retaining real source authors, Approved, independent combined
+review, bounded frozen composition and all applicable CI. Export postconditions
+reject mismatched phases or delivery policy. Three-way upgrades preserve deliberate
+local choices and pristine template ancestry; defaults and legacy/schema-1 consumers
+are unchanged. The generated delivery continuation reading map and runtime seed
+cover exact merged tasks/revision/target, trusted project adapter/CI, serialized
+mutations, durable failures/retries and verified receipts. No universal deployer
+or new descriptor key is introduced.
+
+One selected integration/main-merge approval covers the maintained chain after
+main without routine second approval or a separate “and deliver” request. Agents
+persist `--deliver` by default for eligible runtime/package batches; explicit
+source-only/skip-release instructions defer delivery without declaring completion.
+Starting development still ends at Approved in v2/v3. Master itself is tooling: its running agent verifies the full
+reviewed merged scope and successful main checks, records evidence and closes the
+Issue; source publication and consumer rollout remain separate.
+
+Task Tracker companion [TT-127](https://github.com/MojoTheApe/task-tracker/issues/127)
+owns direct-main batch admission and the explicit idle delivery-policy migration.
+Staging changes retain old policy proof as history; verified delivery can survive
+only through the supported audited reconciliation with unchanged target/completion/
+checks and exact original receipt/scope/source binding. ACL adoption is a separate
+authorized consumer task. Compatibility selects the independently reviewed
+Tracker [PR 128](https://github.com/MojoTheApe/task-tracker/pull/128) merge
+`e775c624e0323e69ed891926691c3dee6587081a`. Consumer publication, policy activation
+and package delivery remain separate verified operations; source selection alone
+is not readiness.
+Master task: [MR-28](https://github.com/MojoTheApe/master-repo/issues/28).
+
+MR-28 follow-through: preserve the TT-127 standalone delivery recorder byte-for-byte
+in separated exports, with a compatible scripts entry point; required v2/v3
+production/package delivery validates both paths. Explicit `--deliver` binds the
+real authorized batch and configured native verification producer. The maintained
+project CI owns delivery; the recorder revalidates real Merged handoff and native
+job/log evidence before writing the receipt.
+ACL [parent 1923](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/923)
+and [source 1924](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/924)
+retain separate old-stage source integration and authorized live activation.

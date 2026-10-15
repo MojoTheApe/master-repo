@@ -25,7 +25,8 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    limits are 1..16 and do not change the single review limit.
    Add `--batch-limit 5` together with `--implementation-limit N` to explicitly
    choose execution v2, Approved and one frozen integration batch at a time.
-   This requires staging. Worker capacity and batch size are independent; batches
+   Add `--no-staging` for an explicitly disabled stage with the same frozen batches.
+   Worker capacity and batch size are independent; batches
    need not be full and an urgent task may ship alone.
    Add `--review-limit 5` with explicit implementation/batch choices to select
    schema 3 and five independent source reviews, retaining one combined reviewer.
@@ -252,3 +253,34 @@ configuration/code/CI, so follows the existing delivery route. Finish old-policy
 claims and stage work, preserve history/local controls, and verify the actual
 checks before admitting instruction-only main PRs. Master MR-16 coordinates the
 matching Task Tracker change; source/skill integration alone activates no consumer.
+
+## Delivery continuation and a deliberate staging change
+
+The [continuation contract](delivery-continuation.md) makes one selected integration/
+delivery request cover verified completion. Configure the actual project adapter
+and durable CI under its maintained runtime procedure. A standard/skill update
+does not create an installer, credentials, deploy connection or live listener.
+Local/tooling and explicitly n8n-source work retain reviewed-merge completion.
+
+Disabling staging for an existing execution-v2/v3 consumer is a reviewed delivery-
+policy change, not a capacity change or a new execution schema. Finish its source
+upgrade through the old route, publish compatible writers, and drain all active
+implementation, review, intake/batch and stage owners. Preserve a private copy of
+the exact previous configuration and state. Align the descriptor, Tracker config,
+engine and registry fallback: no Stage phase/environment, explicit disabled stage,
+unchanged Approved and independently reviewed frozen batches. Use the compatible
+Tracker's `delivery-policy migrate --previous-config FILE --previous-revision
+FULL_SHA --report-file FILE` preview. The previous config must match that official
+immutable repository revision already included in main. Inspect every reported
+change and preserved proof, then explicitly apply under owned maintenance after
+the exact reviewed candidate config is on current main.
+
+The migration preserves queue/author/history and original receipts, and retains
+old-policy approval evidence as history rather than current admission. It cannot
+turn an unverified delivery into completion. Any retained verified deliveries need
+the supported explicit audit binding unchanged target/completion/checks to old and
+new policy; keep its report and original evidence. Verify the fresh board/state
+before new intake. Never delete state, remove ownership or manufacture approvals
+to change the Stage option. Re-enabling stage uses the same reviewed idle-policy
+procedure and real target verification; an unreleased product does not by itself
+change this configuration. Other consumers retain their existing pins and route.

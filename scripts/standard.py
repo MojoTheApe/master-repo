@@ -244,9 +244,9 @@ def main(argv=None):
     init.add_argument("--implementation-limit", type=int, choices=range(1, 17), metavar="N",
                       help="Opt in to N implementation slots (1..16) and one review/integration lane; omitted keeps legacy execution")
     init.add_argument("--batch-limit", type=int, nargs="?", const=5, choices=range(1, 17), metavar="N",
-                      help="Explicitly enable Approved and frozen integration batches (recommended N=5); requires staging and --implementation-limit")
+                      help="Explicitly enable Approved and frozen integration batches (recommended N=5); requires --implementation-limit; --no-staging selects direct-main batches")
     init.add_argument("--review-limit", type=int, choices=range(1, 6), metavar="N",
-                      help="Explicitly select execution schema 3 with N source reviewers (1..5), one integration reviewer; requires staging, --implementation-limit and --batch-limit 1..5")
+                      help="Explicitly select execution schema 3 with N source reviewers (1..5), one integration reviewer; requires --implementation-limit and --batch-limit 1..5")
     for cmd in (init, commands.add_parser("upgrade")):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
         cmd.add_argument("--tracker-root", type=Path, required=True)

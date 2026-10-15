@@ -17,6 +17,7 @@ PROJECT_AREAS = ('docs/system/', 'docs/runtime/')
 HELPERS = ('task_tracker.py', 'tracker_pr_check.py', 'tracker_delivery_policy.py')
 FILES = {'AGENTS.md': 'AGENTS.md', 'WORKFLOW.md': 'docs/repository/WORKFLOW.md',
          'VERIFICATION.md': 'docs/repository/VERIFICATION.md',
+         'DELIVERY_CONTINUATION.md': 'docs/repository/DELIVERY_CONTINUATION.md',
          'LAYOUT.md': 'docs/repository/LAYOUT.md', 'DELIVERY.md': 'docs/repository/DELIVERY.md',
          'REPOSITORY_CHANGELOG.md': 'docs/repository/CHANGELOG.md',
          'PROJECT.md': 'docs/system/PROJECT.md', 'CONTEXT.md': 'docs/system/AGENT_CONTEXT.md',
@@ -42,7 +43,7 @@ def separate_export(files):
         guide = guide.replace('`docs/PROCESS_INSTRUCTIONS.md`', '`docs/repository/PROCESS_INSTRUCTIONS.md`')
     files['docs/repository/TRACKER.md'] = guide
     helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py',
-                                           'tracker_ci_evidence.py')
+                                           'tracker_ci_evidence.py', 'tracker_delivery_receipt.py')
                           if 'scripts/' + name in files))
     for name in helpers:
         source = files.pop('scripts/' + name)
@@ -134,8 +135,7 @@ def validate_process_instructions(value):
 def phases(staging, execution=None):
     result = [p for p in PHASES if p != 'stage' or staging]
     if execution and execution['schema_version'] in (2, 3):
-        if not staging: raise ValueError('Batch integration requires staging')
-        result.insert(result.index('stage'), 'approved')
+        result.insert(result.index('stage' if staging else 'merged'), 'approved')
     return result
 
 
@@ -205,6 +205,13 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
             raise ValueError('Tracker export execution policy differs from the explicit project choice')
+        if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
+            exported_phases = [v if isinstance(v, str) else v['phase'] for v in exported_config.get('workflow', [])]
+            if (exported_config.get('delivery_policy') != delivery_policy(data)
+                    or exported_phases != phases(inputs['staging'], data['workflow']['execution'])):
+                raise ValueError('Tracker export batch route differs from the explicit staging/delivery choice')
+            if data['completion'] != 'reviewed-merge' and 'scripts/tracker_delivery_receipt.py' not in files:
+                raise ValueError('Pinned Tracker export lacks the delivery receipt helper')
         if (('process_instructions' in exported_config) != ('process_instructions' in data['workflow'])
                 or exported_config.get('process_instructions') != data['workflow'].get('process_instructions')):
             raise ValueError('Tracker export process instructions differ from the explicit project choice')
@@ -377,6 +384,8 @@ def inspect(root, expected_revision=None):
         required.update('scripts/' + name for name in HELPERS)
         if wf.get('execution', {}).get('schema_version') in (2, 3):
             required.update({'.workflow/tools/tracker_batch_policy.py', 'scripts/tracker_batch_policy.py'})
+            if data['completion'] != 'reviewed-merge':
+                required.update({'.workflow/tools/tracker_delivery_receipt.py', 'scripts/tracker_delivery_receipt.py'})
         if 'process_instructions' in wf:
             required.update({'.workflow/tools/tracker_process_instructions.py', 'scripts/tracker_process_instructions.py'})
         for name in sorted(required):

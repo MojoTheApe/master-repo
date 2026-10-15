@@ -1,5 +1,34 @@
 # Repository process history
 
+## MR-28 — Continue authorized delivery and permit no-stage batches
+
+Support explicitly disabled Stage for execution schemas 2/3 without removing
+Approved, real source authors, independent source/combined review or required CI.
+Validate mirrored exported route/policy and preserve local settings and pristine
+upgrade ancestry. Shared instructions, generated delivery guidance and the canonical
+Project Workflow skill make one integration/main-merge authorization cover main, the
+project-owned maintained delivery, verification and exact receipt without a routine
+second approval. Concrete adapters/CI remain consumer-owned; tooling/source-only
+completion retains its existing boundary. Master's active agent completes the
+verified merged Issue without claiming a background auto-close service.
+
+Task Tracker companion [TT-127](https://github.com/MojoTheApe/task-tracker/issues/127)
+supplies admission and audited idle delivery-policy migration. Compatibility pins
+reviewed [Tracker PR 128](https://github.com/MojoTheApe/task-tracker/pull/128) merge
+`e775c624e0323e69ed891926691c3dee6587081a` before separate consumer adoption. No existing consumer, live state,
+global skill installation or runtime is implicitly changed.
+[MR-28](https://github.com/MojoTheApe/master-repo/issues/28).
+
+MR-28 follow-through: preserve the TT-127 standalone delivery recorder byte-for-byte
+in separated exports, with a compatible scripts entry point; required v2/v3
+production/package delivery validates both paths. Explicit `--deliver` binds the
+real authorized batch and configured native verification producer. The maintained
+project CI owns delivery; the recorder revalidates real Merged handoff and native
+job/log evidence before writing the receipt.
+ACL [parent 1923](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/923)
+and [source 1924](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/924)
+retain separate old-stage source integration and authorized live activation.
+
 ## MR-26 — Select the owned-maintenance and bounded CI companion
 
 Select the independently reviewed TT-107 engine, preserve its optional native CI

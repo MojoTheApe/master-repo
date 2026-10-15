@@ -18,7 +18,8 @@ Other divergence requires the existing claimed reconciliation procedure.
 Application, build, configuration, CI, automation and system/runtime changes keep
 their ordinary route and actual delivery requirements.
 
-For other work, execution schema 2 or 3 selects Review -> Approved -> Stage -> Merged.
+For other work, execution schema 2 or 3 selects Review -> Approved -> Stage -> Merged
+with staging enabled, or Review -> Approved -> Merged with staging explicitly disabled.
 Schema 3 permits 1..5 separately owned source reviews and one separate combined
 integration reviewer; schema 2 retains one source-review slot. Source approval,
 return and takeover select only the exact source claim. Actual consumer activation
@@ -26,10 +27,18 @@ requires the pinned guide's idle preserved-state migration and compatible servic
 Independent source approval releases the review lane; one separate Coordinator
 integration claim covers a frozen batch of 1..batch_limit tasks. The recommended
 limit is five, independent of Worker capacity. Preserve each member's author,
-source PR/current approval and scope; verify the combined stage candidate before
-unchanged promotion. Ship-all snapshots intake and processes sequential batches,
+source PR/current approval and scope; independently review/check the combined
+candidate. With staging enabled verify it before unchanged promotion; otherwise
+use the reserved `batch` direction for direct main admission. Ordinary sources
+remain approval-only. Ship-all snapshots intake and processes sequential batches,
 rechecking remaining approvals after each main change. A single task may ship
-without filling the batch. The v1 single-task lane instructions below apply only
+without filling the batch. Development alone ends at Approved. A selected
+integration/main-merge request covers the maintained chain through verified completion without a routine second
+approval after main; the owner need not also request delivery. Eligible runtime and
+package batches use `--deliver` by default, honoring explicit source-only or
+skip-release overrides while retaining unfinished runtime delivery. Follow
+[delivery continuation](DELIVERY_CONTINUATION.md).
+The v1 single-task lane instructions below apply only
 to schema 1. Completion and runtime authorization remain project-specific.
 
 ## Path from request to completion
@@ -53,7 +62,8 @@ implementation claim, branch updates/checks and handoff before resuming independ
 review and staging a fresh candidate. Legacy execution follows its adopted slot rules.
 Do not add fixes to the promotion PR or delete the working branch prematurely.
 
-Without staging: working branch -> main after review and checks. No Stage column.
+Without staging: legacy/v1 working branch -> main after review and checks;
+v2/v3 reserved independently reviewed batch -> main. No Stage column.
 Run the pinned client's `check-pr N`, `record-review`, `check-merge N`, `stage`,
 `verify-stage` and `merged ... --reviewed-complete --apply` as appropriate; see its
 `guide`. Commands record verified actions; they do not deploy or run a reviewer.
