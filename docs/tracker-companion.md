@@ -80,9 +80,11 @@ CI, `batch` direction, supported batch branch and matching batch line can enter
 main. There is no synthetic Stage receipt; real merged inclusion and subsequent
 profile-specific delivery remain required. Read the exact compatible engine guide.
 
-`delivery-policy migrate --previous-config FILE --report-file FILE [--apply]`
-previews/applies an idle compare-and-swap policy transition. Under owned maintenance
-use its actual required credentials. Preserve original queue/authors/history and
+`delivery-policy migrate --previous-config FILE --previous-revision FULL_SHA
+--report-file FILE [--apply]` previews/applies an idle compare-and-swap policy transition. Under owned maintenance
+use its actual required credentials. The previous config must match that official
+immutable repository revision included in main; apply checks that the exact
+reviewed candidate config is published on current main. Preserve original queue/authors/history and
 receipts; old-policy approvals remain history and need supported author-return/
 handoff/review/approval under the new policy. Explicit staging-only audited
 reconciliation can retain successful completion only for unchanged target/completion/

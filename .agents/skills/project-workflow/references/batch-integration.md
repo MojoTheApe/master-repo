@@ -128,7 +128,10 @@ descriptor and Tracker delivery policy/columns. This changes the delivery policy
 fingerprint. Integrate the upgrade through the old route first, publish compatible
 writers, drain all active owners and retain exact prior config/state snapshots.
 Use the pinned engine's `delivery-policy migrate --previous-config FILE
---report-file FILE` preview/apply with actual maintenance credentials when held.
+--previous-revision FULL_SHA --report-file FILE` preview/apply. The previous file
+must match the official immutable revision already included in main; apply only
+after the exact reviewed candidate config is on current main, under actual owned
+maintenance with its real credentials.
 Inspect its report: original queue/authors/history and receipts survive; old-policy
 approvals are historical and need supported return to author, handoff, current
 independent review and approval before a fresh batch. A staging-only audited

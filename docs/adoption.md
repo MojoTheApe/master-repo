@@ -269,8 +269,11 @@ implementation, review, intake/batch and stage owners. Preserve a private copy o
 the exact previous configuration and state. Align the descriptor, Tracker config,
 engine and registry fallback: no Stage phase/environment, explicit disabled stage,
 unchanged Approved and independently reviewed frozen batches. Use the compatible
-Tracker's `delivery-policy migrate --previous-config FILE --report-file FILE`
-preview, inspect every reported change and preserved proof, then explicitly apply.
+Tracker's `delivery-policy migrate --previous-config FILE --previous-revision
+FULL_SHA --report-file FILE` preview. The previous config must match that official
+immutable repository revision already included in main. Inspect every reported
+change and preserved proof, then explicitly apply under owned maintenance after
+the exact reviewed candidate config is on current main.
 
 The migration preserves queue/author/history and original receipts, and retains
 old-policy approval evidence as history rather than current admission. It cannot
