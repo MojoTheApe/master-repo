@@ -56,7 +56,10 @@ environments, check commands or live registration proof.
   fixes, resolve conflicts explicitly, keep pins/config/CI consistent, test and
   independently review. Bulk requests use an inventory and one project PR each.
 - **Release:** follow the local maintained mechanism, exact verified content and
-  current authorization. Descriptor/merge are not installation or behavior proof.
+  current authorization. Read [delivery continuation](references/delivery-continuation.md).
+  A selected integration/delivery request covers the whole maintained chain after
+  main without another routine approval. Development alone does not authorize it.
+  Descriptor/merge are not installation or behavior proof.
 
 ## Execute the ticket lifecycle
 
@@ -144,6 +147,9 @@ stage and verification. If disabled: working branch -> main, no Stage column.
 
 For work outside the instruction-only exception, execution v2/v3 uses the [batch integration](references/batch-integration.md) ownership,
 assembly and recovery procedure instead of that v1 single-source stage sequence.
+Staging can be explicitly disabled only under a compatible pinned policy; keep
+Approved, source checks and independent combined review, and use the reserved
+`batch` main direction. Ordinary sources remain approval-only.
 After source approval, use its separate Coordinator batch claim; do not acquire a
 v1 review/integration lane for multiple tasks or infer v2 return-command syntax.
 
@@ -152,6 +158,11 @@ Instruction-only and local manual-pull/tooling work completes after admitted mer
 For other work, VPS/n8n need verified
 production delivery; package needs its stable release and installation check.
 Pending/failed delivery is unfinished in dependencies and release readiness.
+Continue the authorized project release/deploy and verification after main, or
+hand off to its tested durable CI, until completed or concretely blocked. Read
+[delivery continuation](references/delivery-continuation.md) for exact task/revision/
+target binding, serialization, resumable failure and receipt retries. The skill
+directs the active agent; it does not create a background listener or deployer.
 Record actual receipts against the configured target; never relabel stage evidence
 as production success or change completion merely to bypass a failure.
 

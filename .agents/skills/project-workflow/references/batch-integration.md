@@ -80,16 +80,21 @@ independent review rather than inventing unreviewed fixes in the batch branch.
 
 Arrange independent integration review of the actual combined candidate and its
 composition; the Reviewer must be independent of every implementing member. Run
-the complete applicable integration checks. Merge the admitted candidate into
-permanent stage, record every member as Stage, and verify the actual configured
-stage target and exact tree. No new task or content joins a testing batch.
-
-Promote only the same passed tree/member set into main. Reuse valid exact-content
-proof, not checks of separate source trees. Record Merged per fully included task
-and release the integration claim only after the durable handoff succeeds.
+the complete applicable integration checks. If staging is enabled, merge the
+admitted candidate into
+permanent stage, record every member as Stage, verify the configured target/tree
+and promote only the same passed tree/member set into main. Reuse valid exact-content
+proof, not checks of separate source trees. If explicitly disabled, use the compatible
+Tracker's `batch` direction, reserved `codex/batch-<32hex>` branch and matching batch
+line to admit the combined candidate directly into main. Do not merge ordinary
+source PRs individually; they stay approval-only. No new task or content joins
+an admitted batch. Record Merged per fully included task and release the integration claim only after the durable handoff succeeds.
 Close superseded source PRs only with actual inclusion evidence, retaining their
-branches, links and review history. Required package/production delivery remains
-unfinished until its own verified receipt.
+branches, links and review history. Continue the authorized package/production
+delivery through its own verified
+receipt using [delivery continuation](delivery-continuation.md); no routine second
+approval follows main. Development alone does not authorize batch integration.
+Delivery remains unfinished until verification/receipt actually succeeds.
 
 ## Failure and recovery
 
@@ -107,7 +112,25 @@ supported author-fix/rebuild path. Selective recovery after stage requires a
 separately supported and reviewed recovery procedure. Preserve all actual authors
 and history.
 
-Before the next batch, reconcile stage/main and recheck each source approval against
-the new baseline. Do not automatically repeat a passing unchanged CI run. Use the
+Before the next batch, reconcile the enabled integration branches and recheck each
+source approval against the new baseline. Do not automatically repeat a passing unchanged CI run. Use the
 project's actual installer/release controls after main; merging does not deliver
 an update to employee machines.
+
+## Deliberately disable or restore staging
+
+Keep the existing execution schema/capacity and mirror the Stage choice in the
+descriptor and Tracker delivery policy/columns. This changes the delivery policy
+fingerprint. Integrate the upgrade through the old route first, publish compatible
+writers, drain all active owners and retain exact prior config/state snapshots.
+Use the pinned engine's `delivery-policy migrate --previous-config FILE
+--report-file FILE` preview/apply with actual maintenance credentials when held.
+Inspect its report: original queue/authors/history and receipts survive; old-policy
+approvals are historical and need supported return to author, handoff, current
+independent review and approval before a fresh batch. A staging-only audited
+reconciliation may retain verified delivery only for unchanged target/completion/
+checks and exact receipt/scope/source binding. Pending work stays pending. Preserve
+any historical allowlist/provenance exactly. Verify a fresh board/state; never
+clear ownership or fabricate approval. Restore stage with the same reviewed idle
+procedure and actual configured target checks. Read the exact pinned guide for
+supported flags; a newer skill does not upgrade an older engine.

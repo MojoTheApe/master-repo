@@ -155,8 +155,8 @@ class Projects(unittest.TestCase):
         self.assertEqual(self.json('delivery.json')['workflow']['execution']['batch_limit'], 3)
         self.assertEqual(self.json('tracker/config.json')['execution_policy']['batch_limit'], 3)
         self.assertEqual(json.loads(self.json(project.BASELINE)['files']['tracker/config.json'])['execution_policy']['batch_limit'], 5)
-    def test_batch_opt_in_requires_staging_capacity_and_valid_limit(self):
-        for inputs in (dict(INPUTS,batch_limit=5), dict(INPUTS,implementation_limit=5,batch_limit=5,staging=False)):
+    def test_batch_opt_in_requires_capacity_and_valid_limit(self):
+        for inputs in (dict(INPUTS,batch_limit=5),):
             with self.subTest(inputs=inputs), self.assertRaises(ValueError): project.descriptor(inputs, OLD)
         for limit in (0,17,True,None,5.0,'5'):
             with self.subTest(limit=limit), self.assertRaises(ValueError):
@@ -182,16 +182,57 @@ class Projects(unittest.TestCase):
         config = self.json('tracker/config.json'); config['execution_policy']['review_limit'] = 4
         self.put('tracker/config.json', config)
         self.assertTrue(any('execution policy differs' in e for e in self.errors()))
-    def test_parallel_review_selection_requires_explicit_batch_and_staging(self):
+    def test_parallel_review_selection_requires_explicit_batch_and_capacity(self):
         for inputs in (dict(INPUTS, review_limit=5),
                        dict(INPUTS, implementation_limit=5, review_limit=5),
-                       dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=5, staging=False),
                        dict(INPUTS, implementation_limit=5, batch_limit=6, review_limit=5)):
             with self.subTest(inputs=inputs), self.assertRaises(ValueError):
                 project.descriptor(inputs, OLD)
         # The earlier v2 contract deliberately retains its wider batch ceiling.
         self.assertEqual(project.descriptor(dict(INPUTS, implementation_limit=5, batch_limit=16), OLD)
                          ['workflow']['execution']['schema_version'], 2)
+    def test_no_stage_batches_keep_approved_and_production_completion(self):
+        for extra in ({'implementation_limit':5, 'batch_limit':5},
+                      {'implementation_limit':5, 'batch_limit':5, 'review_limit':5}):
+            for profile, completion in project.PROFILES.items():
+                with self.subTest(extra=extra, profile=profile), tempfile.TemporaryDirectory() as scratch:
+                    root = Path(scratch)/'project'
+                    project.init(root, dict(INPUTS, staging=False, profile=profile, **extra), OLD, 'unused', apply=True)
+                    self.assertEqual([m for k,m in standard.inspect(root) if k=='error'], [])
+                    data = json.loads((root/'delivery.json').read_text())
+                    config = json.loads((root/'tracker/config.json').read_text())
+                    self.assertEqual(config['workflow'][-3:], ['review', 'approved', 'merged'])
+                    self.assertEqual(set(data['environments']),
+                                     set() if completion=='reviewed-merge' else {'production'})
+                    self.assertEqual(data['completion'], completion)
+                    self.assertEqual(config['delivery_policy']['staging'],
+                                     {'enabled':False, 'branch':'stage', 'target':'disabled'})
+                    self.assertEqual(config['delivery_policy']['completion'], completion)
+    def test_no_stage_batch_validator_rejects_stale_column_or_delivery_mirror(self):
+        self.create(dict(INPUTS, staging=False, implementation_limit=5, batch_limit=5, review_limit=5))
+        config = self.json('tracker/config.json')
+        stale = copy.deepcopy(config); stale['workflow'].insert(-1, 'stage')
+        self.put('tracker/config.json', stale)
+        self.assertTrue(any('stages differ' in e for e in self.errors()))
+        stale = copy.deepcopy(config); stale['delivery_policy']['staging']['enabled'] = True
+        self.put('tracker/config.json', stale)
+        self.assertTrue(any('policy differs' in e for e in self.errors()))
+    def test_upgrade_retains_explicit_no_stage_batch_and_pristine_stage_baseline(self):
+        self.create(dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=5))
+        data = self.json('delivery.json'); data['workflow']['staging'] = False
+        data['environments'].pop('stage')
+        config = self.json('tracker/config.json')
+        config['delivery_policy'] = project.delivery_policy(data)
+        config['workflow'] = project.phases(False, config['execution_policy'])
+        self.put('delivery.json', data); self.put('tracker/config.json', config)
+        self.assertTrue(project.upgrade(self.root, NEW, 'unused', apply=True)['applied'])
+        self.assertEqual(self.errors(), [])
+        self.assertFalse(self.json('delivery.json')['workflow']['staging'])
+        self.assertNotIn('stage', self.json('tracker/config.json')['workflow'])
+        base = self.json(project.BASELINE)
+        self.assertTrue(base['inputs']['staging'])
+        self.assertTrue(json.loads(base['files']['delivery.json'])['workflow']['staging'])
+        self.assertEqual(project.upgrade(self.root, NEW, 'unused', apply=True)['changed'], [])
     def test_parallel_review_upgrade_preserves_local_limits_and_rejects_drift_without_writes(self):
         self.create(dict(INPUTS, implementation_limit=5, batch_limit=5, review_limit=5))
         data = self.json('delivery.json'); config = self.json('tracker/config.json')
@@ -423,6 +464,43 @@ class Projects(unittest.TestCase):
             self.assertNotIn('review_limit', initialize.call_args.args[1])
             self.assertEqual(standard.main(args+['--implementation-limit','5','--batch-limit','--review-limit','5']),0)
             self.assertEqual(initialize.call_args.args[1]['review_limit'],5)
+            self.assertEqual(standard.main(args+['--no-staging','--implementation-limit','5','--batch-limit','5','--review-limit','5']),0)
+            self.assertFalse(initialize.call_args.args[1]['staging'])
+    def test_renderer_keeps_no_stage_batch_policy_and_rejects_stale_export(self):
+        engine = Path(self.tmp.name)/'engine'; (engine/'tracker').mkdir(parents=True)
+        observed = []
+        def exporter(command, **kwargs):
+            target = Path(command[command.index('--output')+1]); (target/'tracker').mkdir(parents=True)
+            policy = json.loads(Path(command[command.index('--delivery-policy')+1]).read_text())
+            execution = json.loads(Path(command[command.index('--execution-policy')+1]).read_text())
+            config = {'execution_policy':execution, 'delivery_policy':policy,
+                      'workflow':project.phases(policy['staging']['enabled'], execution)}
+            observed.append(config)
+            (target/'tracker/config.json').write_text(project.dumps(config))
+            (target/'docs').mkdir(); (target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            (target/'scripts').mkdir()
+            for name in (*project.HELPERS, 'tracker_batch_policy.py'):
+                (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
+            return mock.Mock(returncode=0, stderr='', stdout='')
+        inputs = dict(INPUTS, staging=False, profile='package', implementation_limit=5, batch_limit=5, review_limit=5)
+        with mock.patch.object(project, 'tracker_checkout', return_value=engine), mock.patch.object(project.subprocess, 'run', side_effect=exporter):
+            result = REAL_RENDER(inputs, NEW, engine)
+        config = json.loads(result['tracker/config.json'])
+        self.assertEqual(config['workflow'][-3:], ['review', 'approved', 'merged'])
+        self.assertEqual(config['delivery_policy']['completion'], 'verified-stable-package')
+        self.assertIn('.workflow/tools/tracker_batch_policy.py', result)
+        for drift in ('workflow', 'delivery_policy'):
+            def stale_export(command, **kwargs):
+                result = exporter(command, **kwargs)
+                config = copy.deepcopy(observed[-1])
+                if drift == 'workflow': config['workflow'].insert(-1, 'stage')
+                else: config['delivery_policy']['staging']['enabled'] = True
+                target = Path(command[command.index('--output')+1])
+                (target/'tracker/config.json').write_text(project.dumps(config))
+                return result
+            with self.subTest(drift=drift), mock.patch.object(project, 'tracker_checkout', return_value=engine), mock.patch.object(project.subprocess, 'run', side_effect=stale_export):
+                with self.assertRaisesRegex(ValueError, 'batch route differs'):
+                    REAL_RENDER(inputs, NEW, engine)
     def test_process_route_is_explicit_and_preserves_delivery_and_execution(self):
         process={'schema_version':1,'required_checks':['descriptor','tracker-link','Process verification']}
         for extra in ({}, {'implementation_limit':2}, {'implementation_limit':5,'batch_limit':5}):

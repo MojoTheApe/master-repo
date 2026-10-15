@@ -69,3 +69,24 @@ adopted policy/state change. Source merge, standard release, service publication
 and activation are separate results. Preserve stronger local controls, actual
 delivery obligations and private before/after evidence. Product test restructuring
 and ACL/React Forge adapters require their own authorized implementation.
+
+## Direct-main frozen batches and Stage policy migration
+
+[TT-127](https://github.com/MojoTheApe/task-tracker/issues/127), coordinated with
+[MR-28](https://github.com/MojoTheApe/master-repo/issues/28), supports the same
+execution-v2/v3 object with explicit staging disabled. Approved sources remain
+approval-only. Only the live reserved frozen batch with current combined review,
+CI, `batch` direction, supported batch branch and matching batch line can enter
+main. There is no synthetic Stage receipt; real merged inclusion and subsequent
+profile-specific delivery remain required. Read the exact compatible engine guide.
+
+`delivery-policy migrate --previous-config FILE --report-file FILE [--apply]`
+previews/applies an idle compare-and-swap policy transition. Under owned maintenance
+use its actual required credentials. Preserve original queue/authors/history and
+receipts; old-policy approvals remain history and need supported author-return/
+handoff/review/approval under the new policy. Explicit staging-only audited
+reconciliation can retain successful completion only for unchanged target/completion/
+checks and exact original receipt/scope/source binding. Pending delivery stays
+pending. Preserve historical task allowlists and all provenance; a policy edit
+alone grants no completion or admission. Consumer config/registry and fresh board
+verification are separately reviewed activation steps.

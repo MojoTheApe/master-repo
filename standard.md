@@ -98,12 +98,13 @@ Explicit execution policy schema 2 selects the following mirrored settings:
 ```
 
 Implementation capacity and batch size are independent integers from 1 to 16.
-The initial recommended batch limit is five. This mode requires staging and a
-compatible Tracker; absence or schema 1 retains the existing lifecycle. Upgrading
+The initial recommended batch limit is five. This mode requires a compatible
+Tracker; absence or schema 1 retains the existing lifecycle. Upgrading
 the source, engine or installed skill never activates it implicitly.
 
 For work outside the instruction-only exception, the workflow becomes
-In Progress -> Review -> Approved -> Stage -> Merged. A
+In Progress -> Review -> Approved -> Stage -> Merged when staging is enabled,
+or In Progress -> Review -> Approved -> Merged when explicitly disabled. A
 separate independent Reviewer reserves one source review at a time, records exact
 head/base/scope evidence and verifies all required source checks. The supported
 approval transition releases the review lane and retains genuine authorship and
@@ -121,15 +122,18 @@ Assemble exact reviewed source revisions in an isolated integration branch;
 conflict fixes require claimed author work and fresh independent approval. An
 independent integration Reviewer checks the complete candidate and composition,
 and must be independent of every implementing member. All complete applicable
-integration checks remain required. After actual admitted stage integration,
-record every member as Stage and verify the exact configured target/tree. No new
-member joins a testing batch.
+integration checks remain required. With staging enabled, after actual admitted
+stage integration record every member as Stage and verify the configured target/tree.
+Promote the unchanged verified content and member set to main; matching exact-content
+proof may be reused. With staging explicitly disabled, the reserved batch candidate
+enters main directly through the pinned Tracker's `batch` direction and matching
+batch identity. Ordinary sources remain approval-only; disabling stage never
+authorizes merging them individually. No new member joins an admitted batch.
 
-Promote unchanged verified content and the same member set to main; exact-content
-proof may be reused. Record per-task Merged only for fully included scope, retain
+Record per-task Merged only for fully included scope, retain
 working branches and delivery obligations, and release integration ownership after
-the durable completion handoff. Before a later batch, reconcile stage/main and
-revalidate approvals against the new baseline. Source PR closure requires actual
+the durable completion handoff. Before a later batch, reconcile the enabled
+integration branches and revalidate approvals against the new main baseline. Source PR closure requires actual
 inclusion evidence, not merely a shared task ID.
 
 Persist every transition with the Tracker's compare-and-swap/recovery protocol.
@@ -277,7 +281,11 @@ Tracker's evidence commands do not merge or deploy. Configure and verify actual
 branch rules separately; `tracker-link` CI only checks links. Never claim an agent
 admission check is a GitHub-enforced protection. Merge after independent approval
 and required checks within the authorized task; do not add an unnecessary manual
-approval round. Existing production authorization still applies.
+approval round. One explicit request to integrate and deliver a selected task set
+authorizes its admitted merge, maintained project delivery, verification and final
+receipt without another routine approval after main. Preserve any genuinely separate
+local authorization boundary; never infer production access from development alone.
+See the [delivery continuation contract](docs/delivery-continuation.md).
 
 ## Optional stage before main
 
@@ -338,6 +346,12 @@ complete in task views, dependencies or release readiness. Record delivery again
 actual merged revisions and configured target. Closing an Issue, repeating sync or
 calling a non-code completion command must not bypass that requirement. Decide
 completion and task scope before implementation, not after a failed release.
+
+Continue authorized delivery after main until verified completion or a concrete
+blocker, using the [continuation contract](docs/delivery-continuation.md).
+A release failure is a resumable unfinished delivery, not a request for a routine
+second approval or a reason to close the task. A skill directs the running agent;
+only a configured project adapter/CI supplies a durable executable continuation.
 
 Project runbooks own actual installers, n8n synchronization, credentials, approvals,
 backup and compatible rollback. Git storage does not authorize deployment. Use

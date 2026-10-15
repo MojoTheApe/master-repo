@@ -9,7 +9,9 @@ consumer's existing tracker and operational safeguards.
   local issues with commas. Link the PR back from the issue.
 - Treat merge, publication, installation and verified business behavior as
   separate facts. This tooling repository completes work after review, passing
-  checks and merge; it has no application staging or production service.
+  checks and merge, then the running agent records the exact evidence and closes
+  the fully satisfied Issue under [repository delivery](DELIVERY.md), without a
+  routine extra owner approval. It has no application staging or production service.
 - Run `python3 -m unittest discover -s tests -v`, then
   `python3 scripts/standard.py validate --root .` and
   `python3 scripts/check_links.py` for the completed candidate.

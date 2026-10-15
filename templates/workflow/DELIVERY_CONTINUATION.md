@@ -1,0 +1,25 @@
+# Authorized delivery continuation
+
+Follow the [shared continuation contract](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/delivery-continuation.md)
+at this project's exact standard pin and [runtime procedure](../runtime/DELIVERY.md).
+One explicit request to integrate and deliver selected tasks covers review/checks,
+optional stage, admitted main merge, maintained delivery, verification and final
+Tracker receipt. Starting development alone does not authorize integration/deployment.
+Do not request another routine owner approval after main; report a concrete missing
+permission, access or failed check instead.
+
+The Coordinator must continue or hand off durably to the configured project CI.
+Shared templates do not create a release/deploy mechanism or a background agent.
+Before claiming it works automatically, implement and test the project's actual
+adapter, including a failed run, resumable retry and duplicate request.
+
+Persist exact merged revision/tree, task set, configured target and run/artifact
+identity; serialize changes per target and prevent stale runs replacing newer work.
+Verify actual profile-specific acceptance, then record delivery through the exact
+pinned Tracker and read back completion. Preserve failed/pending tasks and evidence.
+A receipt retry must not repeat a completed install/deploy or create a new version.
+
+Tooling/local and explicitly n8n-source work retains admitted reviewed-merge
+completion. Package requires stable publication and agreed installation verification;
+VPS/ordinary n8n requires actual configured production behavior. Preserve local
+release, credential, backup, rollback and separate authorization controls.
