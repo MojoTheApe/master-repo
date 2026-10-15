@@ -1,17 +1,22 @@
 # Continue selected integration through verified delivery
 
-Follow the exact adopted standard and project runtime runbook. One explicit request
-to integrate and deliver selected tasks authorizes the whole maintained chain:
+Follow the exact adopted standard and project runtime runbook. Under this adopted
+flow, owner approval to integrate or merge selected tasks into main includes the
+whole maintained chain:
 independent combined review/checks, optional stage, admitted main merge, project
 release/deploy, verification and Tracker receipt. Do not insert a routine second
-owner approval after main. Starting development alone ends at Approved in execution
-v2/v3; a source approval is neither merge nor deployment authorization. Preserve any
+owner approval after main. The owner need not also say “and deliver”. Starting development alone ends at
+Approved in execution v2/v3; a source approval is neither merge nor deployment authorization. Preserve any
 explicit local separate approval or missing access as a concrete blocker.
 
-For compatible runtime/package batches, persist the already-authorized permission
-with `batch begin --deliver --delivery-workflow PATH --delivery-job EXACT_NAME`,
-using the actual maintained producer. Omitting it retains ordinary integration;
-resuming a batch or an arbitrary main push cannot add permission.
+For compatible runtime/package batches, persist that standing permission by
+default with `batch begin --deliver --delivery-workflow PATH --delivery-job EXACT_NAME`,
+using the actual maintained producer. This flag is the agent's internal handoff,
+not another manual approval. Honor explicit source-only or merge-only/skip-release
+instructions by omitting it. A deferred runtime delivery stays unfinished under
+its existing completion rule and uses the maintained separate release path when
+later authorized; do not retrofit permission onto an old batch. Source approval,
+resuming a batch or an arbitrary main push cannot add integration authorization.
 
 Before main, identify the actual adapter/CI, configured target, exact revision/task
 handoff, verification and recovery. After merge continue using that mechanism.

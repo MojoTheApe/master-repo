@@ -41,7 +41,7 @@ installation is performed automatically by this repository.
 
 For an explicitly Git-only n8n project, select `n8n-source`: source delivery ends
 after reviewed main integration (through stage when enabled), and n8n transfer
-remains a separate process. One explicitly authorized selected integration/delivery
+remains a separate process. One explicitly authorized selected integration/main-merge
 request follows the [continuation contract](docs/delivery-continuation.md) through
 verified project completion; actual deployment adapters remain project-owned.
 The regular `n8n` profile continues to require verified production delivery.

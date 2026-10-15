@@ -73,10 +73,13 @@ project's batch_limit (initial ACL setting: five). One task is a valid urgent ba
 never wait to fill all five. Implementation capacity and batch size are independent.
 
 Acquire the separate Coordinator integration claim for one frozen batch. When
-the selected request includes required delivery, use the compatible `batch begin
---deliver --delivery-workflow PATH --delivery-job EXACT_NAME` to retain the actual
-permission and trusted native verification producer. Omitting it is ordinary
-integration; an arbitrary later push cannot authorize delivery. Preserve
+this adopted flow receives owner approval to integrate/merge selected tasks into
+main, eligible runtime/package delivery is included by default. Use the compatible
+`batch begin --deliver --delivery-workflow PATH --delivery-job EXACT_NAME` to retain
+that standing permission and real native producer; the owner need not separately
+request delivery. Omit it for source-only scope or an explicit merge-only or
+skip-release override and keep any deferred runtime delivery unfinished. Source
+approval or an arbitrary later push cannot authorize integration/delivery. Preserve
 each member's task, source PR/head/base, approval/scope/policy evidence and current
 main baseline. Assemble approved source revisions in an isolated integration
 branch. Conflict resolution is code: return affected tasks to their authors and

@@ -97,7 +97,7 @@ Tracker guide; labels and merge alone do not prove a required delivery.
 
 Update current-system docs and meaningful change history in the same PR, or explain
 no documentation impact. Preserve original specifications and local deployment
-controls. A selected integration/delivery request includes the maintained release,
+controls. A selected integration/main-merge request includes the maintained release,
 verification and receipt after main; continue without a routine second approval
 through [delivery continuation](DELIVERY_CONTINUATION.md). A configured adapter/CI
 supplies durable execution; instructions alone do not launch it. Assess Master Repo /

@@ -57,8 +57,12 @@ environments, check commands or live registration proof.
   independently review. Bulk requests use an inventory and one project PR each.
 - **Release:** follow the local maintained mechanism, exact verified content and
   current authorization. Read [delivery continuation](references/delivery-continuation.md).
-  A selected integration/delivery request covers the whole maintained chain after
-  main without another routine approval. Development alone does not authorize it.
+  Under the adopted flow, owner approval to integrate/merge selected tasks into
+  main includes maintained delivery and verification without also saying “and
+  deliver”. For eligible runtime/package batches persist it with `--deliver` by
+  default; honor explicit source-only/skip-release instructions and keep deferred
+  runtime delivery unfinished. Development or source approval alone does not
+  authorize integration, and arbitrary pushes cannot start a release.
   Descriptor/merge are not installation or behavior proof.
 
 ## Execute the ticket lifecycle

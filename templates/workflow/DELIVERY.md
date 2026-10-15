@@ -33,9 +33,11 @@ use the reserved `batch` direction for direct main admission. Ordinary sources
 remain approval-only. Ship-all snapshots intake and processes sequential batches,
 rechecking remaining approvals after each main change. A single task may ship
 without filling the batch. Development alone ends at Approved. A selected
-integration/delivery request
-covers the maintained chain through verified completion without a routine second
-approval after main; follow [delivery continuation](DELIVERY_CONTINUATION.md).
+integration/main-merge request covers the maintained chain through verified completion without a routine second
+approval after main; the owner need not also request delivery. Eligible runtime and
+package batches use `--deliver` by default, honoring explicit source-only or
+skip-release overrides while retaining unfinished runtime delivery. Follow
+[delivery continuation](DELIVERY_CONTINUATION.md).
 The v1 single-task lane instructions below apply only
 to schema 1. Completion and runtime authorization remain project-specific.
 

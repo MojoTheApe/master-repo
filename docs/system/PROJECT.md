@@ -33,7 +33,7 @@ New projects default to permanent main/stage branches. Staging can be disabled,
 including execution-v2/v3 frozen batches with Approved and independent combined
 review retained. The reserved combined candidate enters main directly; ordinary
 sources remain approval-only. The [continuation contract](../delivery-continuation.md)
-carries one selected integration/delivery authorization through project-owned
+carries one selected integration/main-merge authorization through project-owned
 delivery, verification and the exact Tracker receipt. Templates/skill guide the
 agent and require a maintained consumer adapter; they do not create executable
 deployment or activate a consumer.
@@ -165,9 +165,11 @@ cover exact merged tasks/revision/target, trusted project adapter/CI, serialized
 mutations, durable failures/retries and verified receipts. No universal deployer
 or new descriptor key is introduced.
 
-One explicit selected integration/delivery request covers the maintained chain
-after main without routine second approval. Starting development still ends at
-Approved in v2/v3. Master itself is tooling: its running agent verifies the full
+One selected integration/main-merge approval covers the maintained chain after
+main without routine second approval or a separate “and deliver” request. Agents
+persist `--deliver` by default for eligible runtime/package batches; explicit
+source-only/skip-release instructions defer delivery without declaring completion.
+Starting development still ends at Approved in v2/v3. Master itself is tooling: its running agent verifies the full
 reviewed merged scope and successful main checks, records evidence and closes the
 Issue; source publication and consumer rollout remain separate.
 
@@ -176,8 +178,11 @@ owns direct-main batch admission and the explicit idle delivery-policy migration
 Staging changes retain old policy proof as history; verified delivery can survive
 only through the supported audited reconciliation with unchanged target/completion/
 checks and exact original receipt/scope/source binding. ACL adoption is a separate
-authorized consumer task. Compatibility must select the independently reviewed
-merged companion before release/adoption; a source candidate alone is not readiness.
+authorized consumer task. Compatibility selects the independently reviewed
+Tracker [PR 128](https://github.com/MojoTheApe/task-tracker/pull/128) merge
+`e775c624e0323e69ed891926691c3dee6587081a`. Consumer publication, policy activation
+and package delivery remain separate verified operations; source selection alone
+is not readiness.
 Master task: [MR-28](https://github.com/MojoTheApe/master-repo/issues/28).
 
 MR-28 follow-through: preserve the TT-127 standalone delivery recorder byte-for-byte

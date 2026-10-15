@@ -281,9 +281,14 @@ Tracker's evidence commands do not merge or deploy. Configure and verify actual
 branch rules separately; `tracker-link` CI only checks links. Never claim an agent
 admission check is a GitHub-enforced protection. Merge after independent approval
 and required checks within the authorized task; do not add an unnecessary manual
-approval round. One explicit request to integrate and deliver a selected task set
-authorizes its admitted merge, maintained project delivery, verification and final
-receipt without another routine approval after main. Preserve any genuinely separate
+approval round. Under this adopted flow, owner approval to integrate or merge a
+selected task set into main includes its maintained project delivery, verification
+and final receipt. The owner need not also say “and deliver”. For eligible
+runtime/package batches the agent persists this standing authorization with
+`batch begin --deliver` and the real configured producer. Explicit source-only or
+merge-only/skip-release instructions override that default; deferred runtime
+delivery stays unfinished. An arbitrary main push or source approval cannot grant
+this authorization. No routine second approval follows main. Preserve any genuinely separate
 local authorization boundary; never infer production access from development alone.
 See the [delivery continuation contract](docs/delivery-continuation.md).
 

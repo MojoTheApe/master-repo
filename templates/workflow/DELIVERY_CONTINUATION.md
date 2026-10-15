@@ -2,17 +2,23 @@
 
 Follow the [shared continuation contract](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/delivery-continuation.md)
 at this project's exact standard pin and [runtime procedure](../runtime/DELIVERY.md).
-One explicit request to integrate and deliver selected tasks covers review/checks,
+Under this adopted flow, owner approval to integrate/merge selected tasks into
+main covers review/checks,
 optional stage, admitted main merge, maintained delivery, verification and final
-Tracker receipt. Starting development alone does not authorize integration/deployment.
+Tracker receipt. The owner need not also say “and deliver”. Starting development
+or source approval alone does not authorize integration/deployment.
 Do not request another routine owner approval after main; report a concrete missing
 permission, access or failed check instead.
 
 The Coordinator must continue or hand off durably to the configured project CI.
 Shared templates do not create a release/deploy mechanism or a background agent.
-For compatible runtime/package batches, the Coordinator freezes the existing
-authorization with `batch begin --deliver --delivery-workflow PATH --delivery-job
-EXACT_NAME`, selecting the real project native verification producer. A trusted
+For compatible runtime/package batches, the Coordinator persists this standing
+authorization by default with `batch begin --deliver --delivery-workflow PATH --delivery-job
+EXACT_NAME`, selecting the real project native verification producer. This is an
+agent implementation detail, not another approval. Honor explicit source-only or
+merge-only/skip-release instructions; deferred runtime delivery stays unfinished.
+Use the maintained separate release path when later authorized rather than adding
+permission by resuming an old batch. Arbitrary main pushes cannot authorize release. A trusted
 workflow can use the exported `tracker_delivery_receipt.py resolve`/`record` with
 a same-repository token, successful main CI, actual Merged handoff and exact native
 verification job/log proof. Follow the pinned guide; the portable recorder creates

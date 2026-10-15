@@ -6,15 +6,16 @@ Support explicitly disabled Stage for execution schemas 2/3 without removing
 Approved, real source authors, independent source/combined review or required CI.
 Validate mirrored exported route/policy and preserve local settings and pristine
 upgrade ancestry. Shared instructions, generated delivery guidance and the canonical
-Project Workflow skill make one integration/delivery authorization cover main, the
+Project Workflow skill make one integration/main-merge authorization cover main, the
 project-owned maintained delivery, verification and exact receipt without a routine
 second approval. Concrete adapters/CI remain consumer-owned; tooling/source-only
 completion retains its existing boundary. Master's active agent completes the
 verified merged Issue without claiming a background auto-close service.
 
 Task Tracker companion [TT-127](https://github.com/MojoTheApe/task-tracker/issues/127)
-supplies admission and audited idle delivery-policy migration; its exact reviewed
-merged pin is required before consumer adoption. No existing consumer, live state,
+supplies admission and audited idle delivery-policy migration. Compatibility pins
+reviewed [Tracker PR 128](https://github.com/MojoTheApe/task-tracker/pull/128) merge
+`e775c624e0323e69ed891926691c3dee6587081a` before separate consumer adoption. No existing consumer, live state,
 global skill installation or runtime is implicitly changed.
 [MR-28](https://github.com/MojoTheApe/master-repo/issues/28).
 

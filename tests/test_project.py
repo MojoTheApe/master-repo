@@ -54,6 +54,8 @@ class OptionalProducerExport(unittest.TestCase):
     def test_receipt_recorder_keeps_bytes_portable_import_and_both_entry_points(self):
         producer = ('try:\n    from . import delivery_policy as rules\n'
                     'except ImportError:\n    import tracker_delivery_policy as rules\n'
+                    'def github(path):\n    return "github:" + path\n'
+                    'def verification_job(*args):\n    return (rules.VALUE, 2)\n'
                     'if __name__ == "__main__":\n    print(rules.VALUE)\n')
         exported = self.exported()
         exported['scripts/tracker_delivery_policy.py'] = 'VALUE = 42\n'
@@ -68,6 +70,11 @@ class OptionalProducerExport(unittest.TestCase):
                 result = subprocess.run([sys.executable, name], cwd=root, capture_output=True, text=True)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertEqual(result.stdout.strip(), '42')
+            imported = subprocess.run([sys.executable, '-c',
+                'from scripts.tracker_delivery_receipt import github, verification_job; '
+                'assert github("synthetic") == "github:synthetic"; '
+                'assert verification_job() == (42, 2)'], cwd=root, capture_output=True, text=True)
+            self.assertEqual(imported.returncode, 0, imported.stderr)
 
     def test_older_export_does_not_require_or_invent_receipt_recorder(self):
         exported = self.exported()

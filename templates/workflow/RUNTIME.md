@@ -18,7 +18,7 @@ replacement; persist attempts and resume retries idempotently. Distinguish deplo
 verification and receipt failures. Record final Tracker delivery only after actual
 acceptance, and retry a missing receipt without repeating a completed deployment.
 Test failure/retry and duplicate requests before claiming automatic delivery.
-An authorized integration/delivery request covers this chain after main without
+An authorized integration/main-merge request covers this chain after main without
 another routine owner approval; retain any explicit separate local boundary. Keep Git review and task rules in
 [repository delivery](../repository/DELIVERY.md).
 

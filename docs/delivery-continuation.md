@@ -6,23 +6,31 @@ not migrate consumers, publish services, grant credentials or execute deployment
 
 ## Authorization and responsibility
 
-An explicit owner request to integrate and deliver a defined task set includes
-independent combined review, required checks, its admitted main merge, maintained
+Under this adopted flow, an owner request to integrate or merge a defined task
+set into main includes independent combined review, required checks, its admitted
+main merge, maintained
 project delivery, verification and completion receipt. Continue without asking for
 another routine approval after main. Preserve any explicitly separate local
-approval boundary or concrete missing access. A development request alone ends at
-Approved in execution v2/v3; source approval does not authorize integration.
+approval boundary or concrete missing access. The owner does not need to add
+“and deliver” or issue a second release request.
+A development request alone ends at Approved in execution v2/v3; source approval
+does not authorize integration.
 
 This is the same authorization whether stage is enabled or disabled. With stage,
 verify the exact configured stage candidate before unchanged main promotion. With
 stage disabled, a reserved independently reviewed frozen batch enters main directly;
 ordinary sources remain approval-only and all source/combined CI gates stay required.
 Use the exact pinned Tracker guide for commands and current admission. For a
-compatible batch that needs runtime/package delivery, freeze the existing owner
-authorization with `batch begin --deliver --delivery-workflow PATH --delivery-job
-EXACT_NAME`, selecting the actual maintained trusted project workflow/job. These
-values describe the real adapter; they do not create one. Omitting `--deliver`
-retains ordinary integration behavior; a later main push cannot add permission.
+compatible batch that needs runtime/package delivery, the agent records this
+standing authorization by default with `batch begin --deliver --delivery-workflow
+PATH --delivery-job EXACT_NAME`, selecting the actual maintained trusted project workflow/job. These
+values describe the real adapter; they do not create one. `--deliver` is the
+agent's persistence detail, not another owner-facing approval. Omit it only for
+source-only/reviewed-merge scope or an explicit merge-only/skip-release override.
+A runtime task merged with release explicitly deferred remains awaiting actual
+delivery; its completion rule is unchanged. Follow the maintained separate release
+procedure when later authorized; never retrofit permission by resuming an old
+batch. An arbitrary main push cannot create a selected integration authorization.
 
 The running Coordinator follows through until success or a concrete blocker.
 For tooling/local and explicitly source-only profiles, the existing admitted
@@ -35,7 +43,8 @@ Use `delivery.procedure`, `authorization`, `rollback` and `backup` to reference 
 maintained runtime procedure. It must specify these actual executable steps:
 
 1. Persist the approved task set, source PRs, actual main merge revision/tree,
-   configured target, completion rule and durable run identifier before delivery. The supported batch request retains the real requester and
+   configured target, completion rule and durable run identifier before delivery.
+   The supported batch request retains the real requester and
    native verification producer as well as exact batch/policy/target membership.
    Bind a package to its immutable artifact/release identity; VPS to deployed
    revision; n8n to published workflow revision and intended activation state.
