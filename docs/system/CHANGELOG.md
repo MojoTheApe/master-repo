@@ -1,5 +1,16 @@
 # System changes
 
+## Shared task context and retained source approvals (MR-30)
+
+Add one responsibility/check contract across delivery profiles and explicit
+schema-1 task context with the TT-136 companion. New-policy readiness is bound to
+real scope/main and Worker; the terminal journal does not masquerade as changed
+requirements. Independent forward-main compatibility preserves original source
+review while combined checks and actual delivery remain required. Explicit init,
+mirrored validation and conservative exports/upgrades preserve prior consumers.
+Canonical Project Workflow navigation is updated in the same source change.
+Consumer migrations, default activation, CI reuse expansion and releases are deferred.
+
 ## Optional owned maintenance and native CI evidence (MR-26)
 
 Compatibility selects the reviewed TT-107 companion. The exporter relocates its

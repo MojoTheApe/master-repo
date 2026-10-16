@@ -1,5 +1,13 @@
 # Optional maintenance and CI evidence support
 
+MR-30 / TT-136 additionally define explicit [task context](task-context.md).
+Matching `workflow.task_context` / `task_context_policy` schema 1 selects readiness,
+versioned requirements scope and independent source compatibility for execution
+v2/v3. Exported `tracker_task_context.py` retains portable admission semantics.
+Outer protocol 4 fences old writers; owned maintenance wraps/restores it. Existing
+activation checks official current-main config and preserves old whole-body proof.
+No registry/service/consumer adoption or CI reuse expansion is implicit.
+
 The compatible Tracker selected in `compatibility.json` supplies the bounded
 [TT-107](https://github.com/MojoTheApe/task-tracker/issues/107) companion. Read its
 `docs/MAINTENANCE_AND_CI_EVIDENCE.md` in a clean checkout at that exact engine

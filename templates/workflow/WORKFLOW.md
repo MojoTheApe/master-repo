@@ -1,5 +1,11 @@
 # Repository workflow
 
+Follow the [common lifecycle and task context](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/task-context.md)
+for responsibilities across all delivery profiles. If matching descriptor/config
+explicitly adopt task context, use the exact pinned guide for pre-start assessment,
+the terminal work journal and owned independent source compatibility review.
+Other projects retain their adopted command and scope semantics.
+
 Read `delivery.json`, `docs/system/PROJECT.md`, `docs/repository/DELIVERY.md` and
 `docs/repository/TRACKER.md` before work. They define this project's adopted
 standard, system, tracker, stage option, completion rule and local exceptions.

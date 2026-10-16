@@ -89,6 +89,7 @@ def files(inputs=INPUTS, revision=OLD, *_args):
             'workflow':project.phases(inputs['staging'], data['workflow'].get('execution')), 'delivery_policy':project.delivery_policy(data),
             'modules':[{'id':'product','name':'Product','description':'Product functionality'}]}
     if 'execution' in data['workflow']: config['execution_policy']=data['workflow']['execution']
+    if 'task_context' in data['workflow']: config['task_context_policy']=data['workflow']['task_context']
     if 'process_instructions' in data['workflow']:
         config['process_instructions']=data['workflow']['process_instructions']
     out={'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
@@ -96,6 +97,8 @@ def files(inputs=INPUTS, revision=OLD, *_args):
          'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'root = Path(__file__).resolve().parents[1]\n',
          'scripts/tracker_pr_check.py':'root = Path(__file__).resolve().parents[1]\n','scripts/tracker_delivery_policy.py':'# policy check\n'}
     out['scripts/tracker_process_instructions.py'] = '# instruction route check\n'
+    out['scripts/tracker_task_context.py'] = '# portable task context\n'
+    out['docs/TASK_CONTEXT.md'] = '# Exact task context guide\n'
     if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
         out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
         if data['completion'] != 'reviewed-merge':

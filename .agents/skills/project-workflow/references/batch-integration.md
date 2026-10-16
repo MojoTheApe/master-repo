@@ -1,5 +1,11 @@
 # Independently approved tasks, frozen integration batches
 
+An explicitly adopted [task-context policy](task-context.md) can revalidate
+unchanged Approved sources after forward main changes through a real independent
+compatibility lane and retained proof. It does not rewrite original source reviews
+or weaken combined verification. Other baseline changes retain the author-return
+procedure below. Frozen batches retain their existing recovery rules.
+
 Use only when the project's pinned standard and Tracker support execution policy
 schema 2 or 3, the descriptor/config policies match, and the supported shared-state
 migration has actually completed. Installing this skill never enables the mode.

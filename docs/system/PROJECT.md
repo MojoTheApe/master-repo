@@ -1,5 +1,13 @@
 # Master Repo system
 
+MR-30 adds the shared lifecycle/check matrix and explicit task-context companion
+selection (TT-136): pre-start semantic readiness, versioned requirements excluding
+only a strict terminal journal, and independent source compatibility after forward
+main changes. Initializer/validation/export preserve explicit policy mirroring and
+older consumers; compatible outer protocol 4 fences old Tracker writers. These
+source capabilities do not activate existing projects or expand CI reuse. See
+[task context](../task-context.md); release/default rollout remains separately scoped.
+
 Current navigation: [verification](../verification.md),
 [coordinated upgrades](../workflow-upgrades.md) and
 [optional Tracker companion](../tracker-companion.md).
