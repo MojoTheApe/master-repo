@@ -88,3 +88,16 @@ contract extension, not an automatic consumer migration or standard publication.
 Integrate the matching Tracker first, pin its immutable reviewed revision, review
 and integrate Master, install the canonical skill when authorized, then adopt in
 each consumer under its existing route. Omitted options preserve older consumers.
+
+
+## WFO-05–08 compatible source publication
+
+The coordinated source versions are Tracker 3.2.0 and Master 1.0.0. Publish the
+independently reviewed Tracker merge after its actual-main checks, then select
+that exact merged engine in compatibility.json, validate all profile exports/
+upgrades, independently review Master and publish its checked merge. Keep tags
+immutable and consult the actual release catalog before claiming publication.
+The [validation report](validation/wfo-05-08.md) records native reuse, measurements
+and limits. Verify the canonical skill through AI Skills' maintained mirror sync;
+never author its generated mirror by hand. None of these source releases opts
+existing consumers in or performs a live state/service upgrade.
