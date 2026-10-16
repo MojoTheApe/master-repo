@@ -1,0 +1,73 @@
+{
+  "ci_evidence": {
+    "schema_version": 1,
+    "records": {
+      "0832a6aabc968b0d638efeffdba7e6b1af654b4e5d1b591ed3250f3fa7cb4775": {
+        "schema_version": 1,
+        "repository": "MojoTheApe/master-repo",
+        "profile": "checks",
+        "policy": "c414578b80cbf12a93bda8fe06c9417a56eef46e1db578fd7e09c69f1ab25830",
+        "profile_digest": "595b0bdf6bbf5e2321ea526617cbbd7af706eff8e0a8da44addb1f0994d72113",
+        "tested_sha": "c495c3148d4453d085660a5fef0b73e430dcccb5",
+        "tree_sha": "207ddeb7351373dc83196d0e66a16a25c9a3a99a",
+        "source_pr": 34,
+        "source_binding": {
+          "head_sha": "93604e9ad37ad7d30e7673cd9a39ad6d58a6e4d0",
+          "base_sha": "b0d2531b55497000fd895676c3fd79004f76ef65",
+          "branch": "codex/mr-32-native-fixture-candidate",
+          "scope": {
+            "32": "2e78198af5661ce2aa8f5499e16e454fec4d0f19df6c109c4aed606546adaff5"
+          },
+          "delivery_policy": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "execution_policy": null
+        },
+        "run_id": 38881985668,
+        "attempt": 1,
+        "producer_blobs": {
+          "native-fixture/engine/tracker/ci_evidence.py": "d67128b4ae3d2fa5a665abe110913bd9628c3eb3"
+        },
+        "jobs": [
+          {
+            "name": "Offline shared suite",
+            "id": 116910734353,
+            "run_id": 38881985668,
+            "attempt": 1,
+            "url": "https://github.com/MojoTheApe/master-repo/actions/runs/38881985668/job/116910734353",
+            "check_run_url": "https://api.github.com/repos/MojoTheApe/master-repo/check-runs/116910734353",
+            "completed_at": "2026-10-16T09:40:29Z",
+            "context": {
+              "checkout_sha": "c495c3148d4453d085660a5fef0b73e430dcccb5",
+              "context": {
+                "build_inputs": {},
+                "container": "python@sha256:edd0b3ec946cc68bd20e39480bd03929016d0fb6254cbf870cd3bc55ea25116d",
+                "dependencies": {
+                  "VERSION": "3eefcb9dd5b38e2c1dc061052455dd97bcd51e6c"
+                },
+                "fixtures": {},
+                "host_independent": true,
+                "toolchains": {
+                  "python3": "3.12.15"
+                }
+              },
+              "job": "Offline shared suite",
+              "profile": "checks",
+              "repository": "MojoTheApe/master-repo",
+              "run_attempt": 1,
+              "run_id": 38881985668,
+              "schema_version": 1,
+              "tree_sha": "207ddeb7351373dc83196d0e66a16a25c9a3a99a",
+              "workflow_sha": "c495c3148d4453d085660a5fef0b73e430dcccb5"
+            }
+          }
+        ],
+        "provenance": {
+          "kind": "native-actions-job-log",
+          "workflow": ".github/workflows/native-fixture.json.yml",
+          "run_url": "https://github.com/MojoTheApe/master-repo/actions/runs/38881985668"
+        },
+        "artifacts": [],
+        "bounds": "No run-level artifact job/attempt inference; no package/runtime acceptance."
+      }
+    }
+  }
+}
