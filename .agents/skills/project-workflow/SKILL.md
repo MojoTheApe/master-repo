@@ -46,6 +46,10 @@ environments, check commands or live registration proof.
   registry publication and verify the fresh live project board. Record actual
   onboarding proof and validate before marking ready. A local scaffold is not a
   connected project. Keep the application in Task Tracker, only its client locally.
+  When the released pin supplies new batch/task-context defaults, use them for
+  new projects; legacy selection and actual migration follow that exact guide.
+  Select CI evidence only from reviewed actual jobs/inputs, never guessed generic
+  environments. Existing consumer upgrades retain their adopted choices.
 - **Existing adoption:** audit IDs/history, modules, open PRs, release state,
   deployment, installers and exceptions. Preserve them. Finish pre-adoption open
   PRs under original rules before activating new checks; reconcile historical
@@ -133,8 +137,9 @@ independent reviewer is a limitation to report, not self-approval. Changed code,
 base, task scope or policy needs fresh approval. Preserve the durable report and
 record it using the pinned Tracker evidence command when supported.
 
-Run `check-pr N` for links and `check-merge N` for admission immediately before
-merge in the new contract. The latter verifies current review, required checks and
+Use `check-pr N` for early link feedback and `check-merge N` for final admission
+in the supported contract; the latter already includes linkage, so do not repeat
+both immediately before merge. Keep older pins' actual commands. Admission verifies current review, required checks and
 stage; a link check alone does not authorize merge. Verify actual GitHub branch
 protections separately. Merge after valid review/checks within the existing task
 authorization; no additional routine owner-confirmation step is needed.

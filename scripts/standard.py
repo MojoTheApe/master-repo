@@ -248,6 +248,8 @@ def main(argv=None):
     init.add_argument("--review-limit", type=int, choices=range(1, 6), metavar="N",
                       help="Explicitly select execution schema 3 with N source reviewers (1..5), one integration reviewer; requires --implementation-limit and --batch-limit 1..5")
     init.add_argument('--task-context', action='store_true', help='Explicit task readiness, requirements journal and source compatibility; requires batch execution')
+    init.add_argument('--legacy-execution', action='store_true', help='Select original explicit execution choices instead of new-project batch/task-context defaults; never used by upgrade')
+    init.add_argument('--ci-evidence-policy', type=Path, help='Explicit reviewed native CI policy JSON; unsupported coverage stays fresh')
     for cmd in (init, commands.add_parser("upgrade")):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
         cmd.add_argument("--tracker-root", type=Path, required=True)
@@ -265,6 +267,12 @@ def main(argv=None):
                 if args.batch_limit is not None: inputs["batch_limit"] = args.batch_limit
                 if args.review_limit is not None: inputs["review_limit"] = args.review_limit
                 if args.task_context: inputs['task_context'] = {'schema_version': 1}
+                if not args.legacy_execution:
+                    inputs.setdefault('implementation_limit', 5)
+                    inputs.setdefault('batch_limit', 5)
+                    inputs.setdefault('task_context', {'schema_version': 1})
+                if args.ci_evidence_policy:
+                    inputs['ci_evidence'] = json.loads(args.ci_evidence_policy.read_text(encoding='utf-8'))
                 if args.process_check and not args.process_instructions:
                     raise ValueError('--process-check requires explicit --process-instructions')
                 if args.process_instructions:

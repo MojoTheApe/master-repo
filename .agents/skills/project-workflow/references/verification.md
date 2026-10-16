@@ -1,5 +1,13 @@
 # Verification and coordinated upgrades
 
+Where the pin supplies CI_REUSE.md and matching `workflow.ci_evidence` /
+`ci_evidence_policy`, use its maintained plan/missing-job/final-gate recipe.
+Explicit protocol 2 supports retained exact merged-main proof; old protocols keep
+their context limits. Preserve native job/platform names, real producer/attempt
+provenance and actual delivery. Run unsupported or missing coverage fresh.
+Supported final `check-merge` includes linkage; retain early link feedback without
+an immediately duplicated `check-pr` admission step. Keep old pins' commands.
+
 Follow the adopted verification policy and actual product commands. Select the
 cheapest meaningful check for changed risk, then all required combined-candidate
 and actual delivery checks. Unknown/mixed scope keeps full applicable checks;

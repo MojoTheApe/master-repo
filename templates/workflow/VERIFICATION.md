@@ -1,5 +1,13 @@
 # Verification policy
 
+For explicitly adopted `workflow.ci_evidence`, read the exact engine's
+docs/repository/CI_REUSE.md and the [shared recipe](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/ci-reuse.md).
+Plan missing jobs, run them and retain the final native-evidence gate. Collect
+successful actual source/integration producers before merge for supported reuse.
+One supported `check-merge` includes linkage; use `check-pr` for early feedback,
+not an immediately repeated final admission check. Absent-policy/old pins keep
+their actual commands and checks.
+
 Follow the [shared verification policy](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/verification.md)
 at this project's exact standard pin. `delivery.json` defines actual product
 commands/required CI names; retain matching Tracker settings, runtime checks and

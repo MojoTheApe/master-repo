@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import standard
+import ci_policy
 
 SOURCE = Path(__file__).resolve().parents[1]
 PROFILES = {'vps': 'verified-production', 'n8n': 'verified-production', 'n8n-source': 'reviewed-merge', 'local': 'reviewed-merge',
@@ -44,6 +45,9 @@ def separate_export(files):
     if 'docs/TASK_CONTEXT.md' in files:
         files['docs/repository/TASK_CONTEXT.md'] = files.pop('docs/TASK_CONTEXT.md')
         guide = guide.replace('docs/TASK_CONTEXT.md', 'docs/repository/TASK_CONTEXT.md')
+    if 'docs/CI_REUSE.md' in files:
+        files['docs/repository/CI_REUSE.md'] = files.pop('docs/CI_REUSE.md')
+        guide = guide.replace('docs/CI_REUSE.md', 'docs/repository/CI_REUSE.md')
     files['docs/repository/TRACKER.md'] = guide
     helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py',
                                            'tracker_ci_evidence.py', 'tracker_delivery_receipt.py', 'tracker_task_context.py')
@@ -180,6 +184,11 @@ def descriptor(inputs, revision):
     if 'task_context' in inputs:
         validate_task_context(inputs['task_context'], workflow.get('execution'))
         workflow['task_context'] = inputs['task_context']
+    if 'ci_evidence' in inputs:
+        if inputs['ci_evidence'] is None:
+            raise ValueError('CI evidence policy must be explicit and non-null')
+        ci_policy.policy({'ci_evidence_policy': inputs['ci_evidence']})
+        workflow['ci_evidence'] = inputs['ci_evidence']
     return {'schema_version': 2, 'project': {'name': inputs['name'], 'repository': 'https://github.com/' + repo},
             'standard': {'repository': standard.REPOSITORY, 'revision': revision, 'version': (SOURCE/'VERSION').read_text().strip()},
             'profile': profile, 'adoption': 'draft',
@@ -214,6 +223,9 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         if 'task_context' in data['workflow']:
             context = scratch/'task-context.json'; context.write_text(dumps(data['workflow']['task_context']))
             command.extend(['--task-context-policy', str(context)])
+        if 'ci_evidence' in data['workflow']:
+            evidence = scratch/'ci-evidence.json'; evidence.write_text(dumps(data['workflow']['ci_evidence']))
+            command.extend(['--ci-evidence-policy', str(evidence)])
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
         files = {p.relative_to(target).as_posix(): p.read_text() for p in target.rglob('*') if p.is_file()}
@@ -239,6 +251,11 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export task context differs from the explicit project choice')
         if 'task_context' in data['workflow'] and not {'scripts/tracker_task_context.py', 'docs/TASK_CONTEXT.md'} <= files.keys():
             raise ValueError('Pinned Tracker export lacks the task context helper or exact guide')
+        if (('ci_evidence_policy' in exported_config) != ('ci_evidence' in data['workflow'])
+                or exported_config.get('ci_evidence_policy') != data['workflow'].get('ci_evidence')):
+            raise ValueError('Tracker export CI evidence differs from the explicit project choice')
+        if 'ci_evidence' in data['workflow'] and not {'scripts/tracker_ci_evidence.py', 'docs/CI_REUSE.md'} <= files.keys():
+            raise ValueError('Pinned Tracker export lacks the CI evidence helper or exact guide')
     files = separate_export(files)
     files.update(layout_files())
     files['delivery.json'] = dumps(data)
@@ -367,10 +384,14 @@ def inspect(root, expected_revision=None):
         if isinstance(wf, dict) and 'execution' in wf: workflow_keys.add('execution')
         if isinstance(wf, dict) and 'process_instructions' in wf: workflow_keys.add('process_instructions')
         if isinstance(wf, dict) and 'task_context' in wf: workflow_keys.add('task_context')
+        if isinstance(wf, dict) and 'ci_evidence' in wf: workflow_keys.add('ci_evidence')
         if not standard.object_keys(wf, workflow_keys, 'workflow', findings): return findings
         if 'execution' in wf: validate_execution_policy(wf['execution'])
         if 'process_instructions' in wf: validate_process_instructions(wf['process_instructions'])
         if 'task_context' in wf: validate_task_context(wf['task_context'], wf.get('execution'))
+        if 'ci_evidence' in wf:
+            if wf['ci_evidence'] is None: raise ValueError('CI evidence policy must be explicit and non-null')
+            ci_policy.policy({'ci_evidence_policy': wf['ci_evidence']})
         if type(wf['staging']) is not bool or wf['main_branch'] != 'main' or wf['stage_branch'] != 'stage': raise ValueError('Version 2 uses main and stage with an explicit boolean stage option')
         expected_env = ({'stage'} if wf['staging'] else set()) | ({'production'} if data['completion'] != 'reviewed-merge' else set())
         if not standard.object_keys(data['environments'], expected_env, 'environments', findings): return findings
@@ -398,6 +419,9 @@ def inspect(root, expected_revision=None):
         if (('task_context_policy' in config) != ('task_context' in wf)
                 or config.get('task_context_policy') != wf.get('task_context')):
             raise ValueError('Tracker task context differs from delivery.json; synchronize both in this PR')
+        if (('ci_evidence_policy' in config) != ('ci_evidence' in wf)
+                or config.get('ci_evidence_policy') != wf.get('ci_evidence')):
+            raise ValueError('Tracker CI evidence differs from delivery.json; synchronize both in this PR')
         actual_phases = [v if isinstance(v,str) else v['phase'] for v in config['workflow']]
         if actual_phases != phases(wf['staging'], wf.get('execution')): raise ValueError('Tracker stages differ from the adopted workflow')
         checks = wf['required_checks']
@@ -416,6 +440,8 @@ def inspect(root, expected_revision=None):
             required.update({'.workflow/tools/tracker_process_instructions.py', 'scripts/tracker_process_instructions.py'})
         if 'task_context' in wf:
             required.update({'.workflow/tools/tracker_task_context.py', 'scripts/tracker_task_context.py', 'docs/repository/TASK_CONTEXT.md'})
+        if 'ci_evidence' in wf:
+            required.update({'.workflow/tools/tracker_ci_evidence.py', 'scripts/tracker_ci_evidence.py', 'docs/repository/CI_REUSE.md'})
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)

@@ -90,6 +90,7 @@ def files(inputs=INPUTS, revision=OLD, *_args):
             'modules':[{'id':'product','name':'Product','description':'Product functionality'}]}
     if 'execution' in data['workflow']: config['execution_policy']=data['workflow']['execution']
     if 'task_context' in data['workflow']: config['task_context_policy']=data['workflow']['task_context']
+    if 'ci_evidence' in data['workflow']: config['ci_evidence_policy']=data['workflow']['ci_evidence']
     if 'process_instructions' in data['workflow']:
         config['process_instructions']=data['workflow']['process_instructions']
     out={'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
@@ -99,6 +100,8 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     out['scripts/tracker_process_instructions.py'] = '# instruction route check\n'
     out['scripts/tracker_task_context.py'] = '# portable task context\n'
     out['docs/TASK_CONTEXT.md'] = '# Exact task context guide\n'
+    out['scripts/tracker_ci_evidence.py'] = '# portable native CI proof\n'
+    out['docs/CI_REUSE.md'] = '# Exact CI reuse guide\n'
     if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
         out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
         if data['completion'] != 'reviewed-merge':
@@ -497,10 +500,15 @@ class Projects(unittest.TestCase):
             return result
         with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=leaking_exporter):
             with self.assertRaisesRegex(ValueError,'explicit project choice'):REAL_RENDER(INPUTS,NEW,engine)
-    def test_init_cli_omits_policy_unless_requested(self):
+    def test_new_cli_defaults_and_explicit_legacy_choices_are_separate_from_upgrade(self):
         args=['init','--root',str(self.root),'--profile','local','--repository','owner/example',
               '--name','Example','--id-prefix','EX','--workspace-id','example','--tracker-root','unused']
         with mock.patch.object(standard,'source_revision',return_value=OLD),mock.patch.object(project,'init',return_value={}) as initialize:
+            self.assertEqual(standard.main(args),0)
+            self.assertEqual(initialize.call_args.args[1]['implementation_limit'],5)
+            self.assertEqual(initialize.call_args.args[1]['batch_limit'],5)
+            self.assertEqual(initialize.call_args.args[1]['task_context'],{'schema_version':1})
+            args += ['--legacy-execution']
             self.assertEqual(standard.main(args),0)
             self.assertNotIn('implementation_limit',initialize.call_args.args[1])
             self.assertEqual(standard.main(args+['--implementation-limit','2']),0)
