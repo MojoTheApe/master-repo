@@ -12,8 +12,13 @@ Current navigation: [verification](../verification.md),
 [coordinated upgrades](../workflow-upgrades.md) and
 [optional Tracker companion](../tracker-companion.md).
 Execution versions remain explicit choices; schema 3 permits up to five source
-reviews with single combined integration. VERSION1.0.0 remains unreleased, which
-is distinct from an existing consumer's recorded active workflow.
+reviews with single combined integration. VERSION identifies the source version;
+actual immutable releases and existing consumer activation are separate facts.
+
+New CLI initialization selects execution v2 (implementation/batch limits five,
+one source reviewer) and task-context schema 1. Explicit legacy selection remains
+available; upgrades preserve old local policies. CI evidence is explicitly selected
+only after its actual product environment and checks are known.
 
 Master Repo defines the shared path from project creation and ticket intake to
 review, optional staging, main integration and verified delivery. It owns the
@@ -28,11 +33,17 @@ implements rendering and three-way upgrades. `scripts/onboard.py` prepares branc
 labels and workspace registration; publishing the registry and proving live board
 readiness use the Tracker's maintained delivery process.
 
+MR-32 / TT-140 add explicit mirrored CI evidence, maintained missing-job planning
+and final native gating, plus retained exact main proof under protocol 2. Read
+[CI reuse](../ci-reuse.md) for the supported recipe and measured limits.
+PR metadata validation has a separate concurrency group/workflow, so body edits
+cannot restart or cancel code suites. Product checks and runtime acceptance remain.
+
 MR-26 selects the reviewed TT-107 maintenance/native-CI companion. The separated
 export preserves its optional producer byte-for-byte in `.workflow/tools/`, with
 the existing compatibility entry point. Actual producer trust binds that
 implementation through the pinned engine's exact self-contained/isolated protocol.
-No CI-evidence policy is inherited or enabled by the initializer. Owned maintenance
+No CI-evidence policy is inherited; initializer adoption is explicit. Owned maintenance
 requires compatible published writers; CI coverage requires explicit reviewed
 consumer adoption and retains every unsupported/missing job as fresh. This source
 selection does not change consumer execution capacity, state or runtime delivery.

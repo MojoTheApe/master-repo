@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "measurement_kind": "local-command-comparison",
+  "repetitions": 3,
+  "rows": [
+    {
+      "iteration": 1,
+      "route": "fresh",
+      "first_feedback_seconds": 9.122851165942848,
+      "main_seconds": 7.9073535409988835,
+      "cycle_seconds": 17.03022175002843,
+      "local_step_seconds": 17.03020470694173
+    },
+    {
+      "iteration": 1,
+      "route": "reuse",
+      "first_feedback_seconds": 8.420675208093598,
+      "main_seconds": 19.786221708054654,
+      "cycle_seconds": 28.206921125063673,
+      "local_step_seconds": 28.206896916148253
+    },
+    {
+      "iteration": 2,
+      "route": "reuse",
+      "first_feedback_seconds": 8.262507124920376,
+      "main_seconds": 23.191603458020836,
+      "cycle_seconds": 31.45412137499079,
+      "local_step_seconds": 31.45411058294121
+    },
+    {
+      "iteration": 2,
+      "route": "fresh",
+      "first_feedback_seconds": 8.886645417078398,
+      "main_seconds": 8.05484862497542,
+      "cycle_seconds": 16.941505082999356,
+      "local_step_seconds": 16.94149404205382
+    },
+    {
+      "iteration": 3,
+      "route": "fresh",
+      "first_feedback_seconds": 7.600934208021499,
+      "main_seconds": 8.381482583004981,
+      "cycle_seconds": 15.982426207978278,
+      "local_step_seconds": 15.98241679102648
+    },
+    {
+      "iteration": 3,
+      "route": "reuse",
+      "first_feedback_seconds": 8.156132332980633,
+      "main_seconds": 22.18305183306802,
+      "cycle_seconds": 30.339197083958425,
+      "local_step_seconds": 30.339184166048653
+    }
+  ],
+  "medians": {
+    "fresh": {
+      "first_feedback_seconds": 8.886645417078398,
+      "main_seconds": 8.05484862497542,
+      "cycle_seconds": 16.941505082999356,
+      "local_step_seconds": 16.94149404205382
+    },
+    "reuse": {
+      "first_feedback_seconds": 8.262507124920376,
+      "main_seconds": 22.18305183306802,
+      "cycle_seconds": 30.339197083958425,
+      "local_step_seconds": 30.339184166048653
+    }
+  },
+  "native_job_seconds": null,
+  "limits": "Local commands only; not native billing, network latency, platform acceptance or fleet savings. Fresh commands execute on the owner local interpreter; reused proof was produced on the declared Linux container. This diagnostic compares local suite cost with real native-proof network latency; it is not an equivalent-platform acceptance or CI billing estimate.",
+  "proof_case": {
+    "kind": "replay of genuine immutable-container native merged proof, revalidated against GitHub on every invocation",
+    "native_run": 38883022993,
+    "merged_head": "28ba3dd06886b5298afbfb5e412031397b2a1db6",
+    "covered": [
+      "Offline shared suite"
+    ],
+    "missing": []
+  },
+  "commands": {
+    "fresh": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-q"
+    ],
+    "reuse": [
+      "python3",
+      "native-fixture/run.py",
+      "gate",
+      "--head",
+      "28ba3dd06886b5298afbfb5e412031397b2a1db6",
+      "--run",
+      "38883022993"
+    ],
+    "reuse_assertion": "passed true; covered only Offline shared suite; missing and fresh both empty"
+  },
+  "native_observations": [
+    {
+      "id": 38878725093,
+      "name": "Standard checks",
+      "event": "pull_request",
+      "head_sha": "1c04c76e40b6d9af1604bd4805428ea2a4a8b346",
+      "created_at": "2026-10-16T09:11:16Z",
+      "run_started_at": "2026-10-16T09:11:16Z",
+      "updated_at": "2026-10-16T09:11:29Z",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 116899979897,
+          "name": "validate",
+          "started_at": "2026-10-16T09:11:19Z",
+          "completed_at": "2026-10-16T09:11:29Z",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 38878725033,
+      "name": "PR metadata checks",
+      "event": "pull_request",
+      "head_sha": "1c04c76e40b6d9af1604bd4805428ea2a4a8b346",
+      "created_at": "2026-10-16T09:11:16Z",
+      "run_started_at": "2026-10-16T09:11:16Z",
+      "updated_at": "2026-10-16T09:11:25Z",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 116899979787,
+          "name": "tracker-link",
+          "started_at": "2026-10-16T09:11:20Z",
+          "completed_at": "2026-10-16T09:11:24Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 116899979905,
+          "name": "skill-impact",
+          "started_at": "2026-10-16T09:11:19Z",
+          "completed_at": "2026-10-16T09:11:24Z",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 38878805459,
+      "name": "PR metadata checks",
+      "event": "pull_request",
+      "head_sha": "1c04c76e40b6d9af1604bd4805428ea2a4a8b346",
+      "created_at": "2026-10-16T09:11:59Z",
+      "run_started_at": "2026-10-16T09:11:59Z",
+      "updated_at": "2026-10-16T09:12:09Z",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 116900243710,
+          "name": "skill-impact",
+          "started_at": "2026-10-16T09:12:03Z",
+          "completed_at": "2026-10-16T09:12:08Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 116900244055,
+          "name": "tracker-link",
+          "started_at": "2026-10-16T09:12:03Z",
+          "completed_at": "2026-10-16T09:12:08Z",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 38882678746,
+      "name": "Isolated native CI reuse experiment",
+      "event": "push",
+      "head_sha": "b94e469cdf956b98c92647b7a7157e2e566288a0",
+      "created_at": "2026-10-16T09:45:49Z",
+      "run_started_at": "2026-10-16T09:45:49Z",
+      "updated_at": "2026-10-16T09:46:52Z",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 116912905399,
+          "name": "plan",
+          "started_at": "2026-10-16T09:45:52Z",
+          "completed_at": "2026-10-16T09:45:59Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 116912964549,
+          "name": "Offline shared suite",
+          "started_at": "2026-10-16T09:46:02Z",
+          "completed_at": "2026-10-16T09:46:37Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 116913192427,
+          "name": "Isolated Verification",
+          "started_at": "2026-10-16T09:46:40Z",
+          "completed_at": "2026-10-16T09:46:51Z",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 38882691624,
+      "name": "Isolated native CI reuse experiment",
+      "event": "pull_request",
+      "head_sha": "e6476db6b86b96d555fc52e3ebcc92214f66c4c2",
+      "created_at": "2026-10-16T09:45:56Z",
+      "run_started_at": "2026-10-16T09:45:56Z",
+      "updated_at": "2026-10-16T09:46:49Z",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 116912946817,
+          "name": "plan",
+          "started_at": "2026-10-16T09:45:59Z",
+          "completed_at": "2026-10-16T09:46:05Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 116913004109,
+          "name": "Offline shared suite",
+          "started_at": "2026-10-16T09:46:08Z",
+          "completed_at": "2026-10-16T09:46:33Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 116913173656,
+          "name": "Isolated Verification",
+          "started_at": "2026-10-16T09:46:36Z",
+          "completed_at": "2026-10-16T09:46:48Z",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 38883022993,
+      "name": "Isolated native CI reuse experiment",
+      "event": "push",
+      "head_sha": "28ba3dd06886b5298afbfb5e412031397b2a1db6",
+      "created_at": "2026-10-16T09:48:53Z",
+      "run_started_at": "2026-10-16T09:48:53Z",
+      "updated_at": "2026-10-16T09:49:28Z",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 116914027772,
+          "name": "plan",
+          "started_at": "2026-10-16T09:48:56Z",
+          "completed_at": "2026-10-16T09:49:09Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 116914120861,
+          "name": "Isolated Verification",
+          "started_at": "2026-10-16T09:49:12Z",
+          "completed_at": "2026-10-16T09:49:28Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 116914122290,
+          "name": "Offline shared suite",
+          "started_at": "2026-10-16T09:49:09Z",
+          "completed_at": "2026-10-16T09:49:09Z",
+          "conclusion": "skipped"
+        }
+      ]
+    }
+  ]
+}

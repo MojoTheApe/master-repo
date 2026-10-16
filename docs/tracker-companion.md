@@ -41,9 +41,10 @@ required checks, current independent review, merge admission or delivery receipt
 
 Adoption is an explicit reviewed current-main `ci_evidence_policy` in the
 consumer's Tracker configuration. Export strips upstream policy by default. This
-Master revision has no descriptor CI-policy field, initializer opt-in or automatic
-product-CI adapter. A consumer adopting coverage must define its actual trust
-profile and run missing jobs while preserving its required check names.
+Master revision mirrors the explicit policy at `workflow.ci_evidence` and accepts
+`init --ci-evidence-policy FILE`. The [shared recipe](ci-reuse.md) and exact
+CI_REUSE.md supply maintained planning/final gating; a consumer still defines its
+actual trust profile and product jobs, preserving required check names.
 
 The first protocol supports reviewed static JSON-formatted Actions workflows,
 immutable container/userland, explicitly host-independent jobs, exact toolchain
@@ -53,7 +54,10 @@ Commit metadata mode is conservative; tree mode needs explicit review excluding
 commit/branch/history-sensitive behavior. An individual source tree does not prove
 a different combined batch. Even one member needs independent composition review.
 
-Unsupported dynamic YAML/matrices, mutable or external inputs, unproven hosts,
+Explicit protocol 2 supports conditional fixed jobs and retained proof at the
+actual identical main merge, with native outcomes revalidated at its final gate.
+Protocol 1 retains its supported source/integration contexts. Unsupported
+dynamic YAML/matrices, mutable or external inputs, unproven hosts,
 installer/platform acceptance and missing/expired proof require fresh relevant
 jobs. Manual, release, promotion and runtime contexts retain full/fresh gates.
 This version supplies no package/artifact-to-job provenance or runtime attestation.

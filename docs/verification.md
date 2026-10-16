@@ -1,5 +1,10 @@
 # Efficient verification
 
+For the executable shared recipe, explicit policy mirroring and missing-job
+adapter, read [CI result reuse](ci-reuse.md) and the pinned engine's CI_REUSE.md.
+Use one supported final `check-merge`: it already validates linkage. Keep early
+link feedback; do not immediately repeat it solely as a second admission step.
+
 This is the shared verification policy. Product commands, supported platforms and
 runtime acceptance remain project-owned. Adopt it through a reviewed standard
 upgrade; it does not change an existing project's required checks or engine pin.

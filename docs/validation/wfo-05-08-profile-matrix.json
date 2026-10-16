@@ -1,0 +1,260 @@
+{
+  "master_head": "7ca7121807c18d1289a437e217f3ff26772f8bd0",
+  "tracker_pin": "2c01481a86ee8e8af31736378574a91505c7f94f",
+  "isolated_draft_configurations_only": true,
+  "cases": [
+    {
+      "profile": "vps",
+      "staging": false,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "vps",
+      "staging": true,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "n8n",
+      "staging": false,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "n8n",
+      "staging": true,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "n8n-source",
+      "staging": false,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "n8n-source",
+      "staging": true,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "local",
+      "staging": false,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "local",
+      "staging": true,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "package",
+      "staging": false,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "package",
+      "staging": true,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "tooling",
+      "staging": false,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "tooling",
+      "staging": true,
+      "real_export": true,
+      "new_defaults": true,
+      "explicit_policy_mirror": true,
+      "exact_helper_guide": true,
+      "upgrade_preview_apply": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "vps",
+      "staging": false,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "vps",
+      "staging": true,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "n8n",
+      "staging": false,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "n8n",
+      "staging": true,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "n8n-source",
+      "staging": false,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "n8n-source",
+      "staging": true,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "local",
+      "staging": false,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "local",
+      "staging": true,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "package",
+      "staging": false,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "package",
+      "staging": true,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "tooling",
+      "staging": false,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    },
+    {
+      "profile": "tooling",
+      "staging": true,
+      "old_master": "f280cb0de96bad629b3a5b4040d4797545a9053f",
+      "real_upgrade_preview_apply": true,
+      "existing_capacities_preserved": true,
+      "absent_ci_not_adopted": true,
+      "project_knowledge_controls_preserved": true,
+      "errors": 0
+    }
+  ],
+  "limits": "Explicit fresh-job structural policy fixture only. No fake native producer proof, connected board, actual product command or runtime/deployment readiness is inferred."
+}

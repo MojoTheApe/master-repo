@@ -1,5 +1,11 @@
 # Delivery descriptor
 
+Optional `workflow.ci_evidence` mirrors Tracker `ci_evidence_policy` exactly.
+`init --ci-evidence-policy FILE` explicitly selects its reviewed native policy.
+The [shared reuse recipe](ci-reuse.md) and exact exported CI_REUSE.md describe
+supported coverage, missing-job execution, final gating and main verification.
+Omission preserves existing consumer checks and collectors.
+
 Optional `workflow.task_context` is exactly `{"schema_version": 1}`, mirrored as
 Tracker `task_context_policy`. It requires explicit execution schema 2 or 3 and a
 compatible engine. `init --task-context` selects it; absence keeps prior behavior.

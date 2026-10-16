@@ -1,0 +1,49 @@
+{
+  "name": "Product verification",
+  "on": {
+    "pull_request": {"types": ["opened", "synchronize", "reopened", "ready_for_review"]},
+    "push": {"branches": ["main"]}
+  },
+  "permissions": {"contents": "read", "actions": "read", "issues": "read", "pull-requests": "read"},
+  "concurrency": {
+    "group": "product-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || format('run-{0}', github.run_id) }}",
+    "cancel-in-progress": "${{ github.event_name == 'pull_request' }}"
+  },
+  "jobs": {
+    "plan": {
+      "runs-on": "ubuntu-24.04",
+      "timeout-minutes": 5,
+      "outputs": {"missing": "${{ steps.plan.outputs.missing }}"},
+      "steps": [
+        {"uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"},
+        {"id": "plan", "name": "Plan native coverage", "env": {"GH_TOKEN": "${{ github.token }}"},
+         "run": "python3 scripts/tracker_ci_gate.py plan --profile checks --pr '${{ github.event.pull_request.number || 0 }}' --head '${{ github.event.pull_request.head.sha || github.sha }}' --context auto --github-output \"$GITHUB_OUTPUT\""}
+      ]
+    },
+    "product_tests": {
+      "name": "Product tests",
+      "needs": ["plan"],
+      "if": "${{ !cancelled() && (needs.plan.result != 'success' || contains(fromJSON(needs.plan.outputs.missing || '[]'), 'Product tests')) }}",
+      "runs-on": ["ubuntu-24.04"],
+      "container": "__REVIEWED_IMAGE_AT_SHA256__",
+      "timeout-minutes": 15,
+      "steps": [
+        {"uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"},
+        {"name": "Observe actual context", "run": "python3 -I .workflow/tools/tracker_ci_evidence.py emit-context --profile checks --job 'Product tests'"},
+        {"name": "Run offline product tests", "run": "__ACTUAL_OFFLINE_PRODUCT_TEST_COMMAND__"}
+      ]
+    },
+    "verification": {
+      "name": "Verification",
+      "needs": ["plan", "product_tests"],
+      "if": "${{ always() }}",
+      "runs-on": "ubuntu-24.04",
+      "timeout-minutes": 5,
+      "steps": [
+        {"uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"},
+        {"name": "Verify retained proof and fresh native outcomes", "env": {"GH_TOKEN": "${{ github.token }}"},
+         "run": "python3 scripts/tracker_ci_gate.py gate --profile checks --pr '${{ github.event.pull_request.number || 0 }}' --head '${{ github.event.pull_request.head.sha || github.sha }}' --context auto --run '${{ github.run_id }}'"}
+      ]
+    }
+  }
+}

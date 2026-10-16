@@ -20,16 +20,22 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    ```
 
    Add `--apply` to create files; add `--no-staging` for an explicitly disabled stage.
-   Add `--implementation-limit 2` only to opt in to two implementation slots and one
-   sequential review/integration lane. Omission preserves legacy execution; accepted
-   limits are 1..16 and do not change the single review limit.
-   Add `--batch-limit 5` together with `--implementation-limit N` to explicitly
-   choose execution v2, Approved and one frozen integration batch at a time.
+   New CLI initialization defaults to execution v2, five implementation slots,
+   one source-review lane, batches up to five, and task-context schema 1. This
+   selects the common current workflow; actual ownership still requires compatible
+   published writers and the exact guide's initial migration. Existing upgrades
+   retain their original policy and capacity. Override the limits explicitly.
+   `--legacy-execution` keeps original explicit policy selection: omission means
+   legacy, implementation-limit alone selects v1, and adding batch-limit selects v2.
    Add `--no-staging` for an explicitly disabled stage with the same frozen batches.
    Worker capacity and batch size are independent; batches
    need not be full and an urgent task may ship alone.
    Add `--review-limit 5` with explicit implementation/batch choices to select
    schema 3 and five independent source reviews, retaining one combined reviewer.
+   Add `--ci-evidence-policy FILE` only after reviewing actual product jobs,
+   immutable environments and proof inputs under [CI reuse](ci-reuse.md). A generic
+   initializer cannot invent product dependencies or safe coverage. Its guide and
+   maintained adapter are available without silently enabling reuse.
    `--python /path/to/python3.12` selects the export runtime if necessary. Profiles:
    `vps`, `n8n`, `n8n-source` (explicit Git-only scope), `local` (manual pull),
    `package`, `tooling`.
