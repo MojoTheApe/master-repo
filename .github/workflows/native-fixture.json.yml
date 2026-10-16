@@ -1,0 +1,90 @@
+{
+  "name": "Isolated native CI reuse experiment",
+  "on": {
+    "pull_request": {
+      "branches": [
+        "codex/mr-32-native-fixture-base"
+      ],
+      "types": [
+        "opened",
+        "synchronize",
+        "reopened"
+      ]
+    },
+    "push": {
+      "branches": [
+        "codex/mr-32-native-fixture-base"
+      ]
+    }
+  },
+  "permissions": {
+    "contents": "read",
+    "actions": "read",
+    "issues": "read",
+    "pull-requests": "read"
+  },
+  "jobs": {
+    "plan": {
+      "runs-on": "ubuntu-24.04",
+      "outputs": {
+        "missing": "${{ steps.plan.outputs.missing }}"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+        },
+        {
+          "id": "plan",
+          "env": {
+            "GH_TOKEN": "${{ github.token }}"
+          },
+          "run": "python3 native-fixture/run.py plan --pr '${{ github.event.pull_request.number || 0 }}' --head '${{ github.event.pull_request.head.sha || github.sha }}' --github-output \"$GITHUB_OUTPUT\""
+        }
+      ]
+    },
+    "suite": {
+      "name": "Offline shared suite",
+      "needs": [
+        "plan"
+      ],
+      "if": "${{ !cancelled() && (needs.plan.result != 'success' || contains(fromJSON(needs.plan.outputs.missing || '[]'), 'Offline shared suite')) }}",
+      "runs-on": [
+        "ubuntu-24.04"
+      ],
+      "container": "python@sha256:edd0b3ec946cc68bd20e39480bd03929016d0fb6254cbf870cd3bc55ea25116d",
+      "steps": [
+        {
+          "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+        },
+        {
+          "name": "Observe actual context",
+          "run": "python3 -I native-fixture/engine/tracker/ci_evidence.py emit-context --profile checks --job 'Offline shared suite'"
+        },
+        {
+          "name": "Run offline tests",
+          "run": "python3 -m unittest discover -s tests -q"
+        }
+      ]
+    },
+    "verification": {
+      "name": "Isolated Verification",
+      "needs": [
+        "plan",
+        "suite"
+      ],
+      "if": "${{ always() }}",
+      "runs-on": "ubuntu-24.04",
+      "steps": [
+        {
+          "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"
+        },
+        {
+          "env": {
+            "GH_TOKEN": "${{ github.token }}"
+          },
+          "run": "python3 native-fixture/run.py gate --pr '${{ github.event.pull_request.number || 0 }}' --head '${{ github.event.pull_request.head.sha || github.sha }}' --run '${{ github.run_id }}'"
+        }
+      ]
+    }
+  }
+}

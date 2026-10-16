@@ -1,0 +1,49 @@
+{
+  "schema_version": 2,
+  "project": {
+    "name": "Isolated MR-32 CI experiment",
+    "repository": "MojoTheApe/master-repo",
+    "base_branch": "codex/mr-32-native-fixture-base",
+    "id_prefix": "MR"
+  },
+  "ci_evidence_policy": {
+    "schema_version": 2,
+    "profiles": {
+      "checks": {
+        "workflow_path": ".github/workflows/native-fixture.json.yml",
+        "workflow_blob_sha": "972f9491dec064272313b96bdae82dd3be1eaf1f",
+        "producer_files": {
+          "native-fixture/engine/tracker/ci_evidence.py": "6c658b6ce234bcde270992336132b0709f2b56d4"
+        },
+        "metadata_mode": "tree",
+        "max_age_seconds": 86400,
+        "jobs": {
+          "Offline shared suite": {
+            "mode": "fixed",
+            "workflow_job": "suite",
+            "runner_labels": [
+              "ubuntu-24.04"
+            ],
+            "producer_step": "Observe actual context",
+            "producer_path": "native-fixture/engine/tracker/ci_evidence.py",
+            "verification_steps": [
+              "Run offline tests"
+            ],
+            "context": {
+              "container": "python@sha256:edd0b3ec946cc68bd20e39480bd03929016d0fb6254cbf870cd3bc55ea25116d",
+              "host_independent": true,
+              "toolchains": {
+                "python3": "3.12.15"
+              },
+              "dependencies": {
+                "VERSION": "3eefcb9dd5b38e2c1dc061052455dd97bcd51e6c"
+              },
+              "build_inputs": {},
+              "fixtures": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
