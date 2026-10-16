@@ -203,7 +203,8 @@ def tested(request, root, run, source_pr, retained=None):
         historical = bool(retained and pr.get('state') == 'closed' and pr.get('merged'))
         if (run.get('event') != 'pull_request' or not historical and (pr.get('state') != 'open' or pr.get('merged')) or pr.get('draft')
                 or pr['head']['sha'] != run['head_sha'] or pr['head']['repo']['full_name'] != run['repository']['full_name']
-                or source_pr not in [r['number'] for r in run.get('pull_requests', [])]):
+                or source_pr not in [r['number'] for r in run.get('pull_requests', [])]
+                    and not (historical and run.get('pull_requests') == [])):
             raise ValueError('CI source proof needs the actual unchanged open official PR')
         sha = retained['tested_sha'] if historical else pr.get('merge_commit_sha')
         commit = request(root + '/git/commits/' + str(sha))
@@ -283,6 +284,11 @@ def collect(request, read_log, config, key, run_id, source_pr=None, *, retained=
                     'job': name, 'run_id': int(run_id), 'run_attempt': run['run_attempt'],
                     'workflow_sha': checkout, 'checkout_sha': checkout, 'tree_sha': tree,
                     'context': job['context']}
+        if policy(config)['schema_version'] == 2:
+            # GitHub empties a merged run's PR list. The maintained producer
+            # binds its original actual PR ref inside the native step log.
+            expected['native_ref'] = (f'refs/pull/{source_pr}/merge' if source_pr is not None
+                                      else 'refs/heads/' + str(run.get('head_branch')))
         if (context != expected or any(type(context.get(k)) is not int for k in ('schema_version', 'run_id', 'run_attempt'))):
             raise ValueError('CI producer context/checkout/attempt does not match independent native proof')
         for group in ('dependencies', 'build_inputs', 'fixtures'):
@@ -540,9 +546,17 @@ def emit(config, key, name, run=subprocess.run, environ=None):
         for path, expected in job['context'][group].items():
             if output(['git', 'rev-parse', 'HEAD:' + path]) != expected:
                 raise ValueError('CI actual resolved input differs from fixed context')
-    return {'schema_version': VERSION, 'repository': repository, 'profile': key, 'job': name,
-            'run_id': int(env['GITHUB_RUN_ID']), 'run_attempt': int(env['GITHUB_RUN_ATTEMPT']),
-            'workflow_sha': checkout, 'checkout_sha': checkout, 'tree_sha': tree, 'context': copy.deepcopy(job['context'])}
+    result = {'schema_version': VERSION, 'repository': repository, 'profile': key, 'job': name,
+              'run_id': int(env['GITHUB_RUN_ID']), 'run_attempt': int(env['GITHUB_RUN_ATTEMPT']),
+              'workflow_sha': checkout, 'checkout_sha': checkout, 'tree_sha': tree, 'context': copy.deepcopy(job['context'])}
+    if policy(config)['schema_version'] == 2:
+        reference = env.get('GITHUB_REF', '')
+        event = env.get('GITHUB_EVENT_NAME')
+        if not (event == 'pull_request' and re.fullmatch(r'refs/pull/[1-9]\d*/merge', reference)
+                or event in ('push', 'workflow_dispatch') and reference.startswith('refs/heads/') and reference[11:]):
+            raise ValueError('CI protocol 2 needs its actual native event/ref')
+        result['native_ref'] = reference
+    return result
 
 
 def main():
