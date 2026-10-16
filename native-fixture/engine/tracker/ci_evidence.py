@@ -512,6 +512,11 @@ def emit(config, key, name, run=subprocess.run, environ=None):
     if not job or job['mode'] != 'fixed':
         raise ValueError('CI context emission requires the explicit fixed job profile')
     def output(argv):
+        if argv[:2] == ['git', 'rev-parse']:
+            # Actions container checkouts can be owned by the host runner. Scope
+            # this read-only invocation to its exact working directory; never
+            # persist config or trust a wildcard/another repository.
+            argv = ['git', '-c', 'safe.directory=' + str(Path.cwd()), *argv[1:]]
         result = run(argv, text=True, capture_output=True, check=True)
         return result.stdout.strip()
     repository = config['project']['repository']
