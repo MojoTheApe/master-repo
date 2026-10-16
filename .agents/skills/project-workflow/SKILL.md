@@ -67,6 +67,14 @@ environments, check commands or live registration proof.
 
 ## Execute the ticket lifecycle
 
+Check for matching explicit `workflow.task_context` and Tracker
+`task_context_policy`. When adopted with a compatible engine, read
+[task context](references/task-context.md) and its exact command guide before
+starting or resuming work. It binds semantic readiness to current requirements
+and main, separates an explicit terminal journal, and permits owned independent
+compatibility review of unchanged Approved sources. Older pins retain their
+actual commands and whole-body evidence; this skill never opts them in.
+
 Check whether matching descriptor `workflow.process_instructions` and Tracker
 `process_instructions` explicitly adopt the [instruction-only route](references/process-instructions.md).
 Use the pinned complete-diff classifier: eligible regular process instructions

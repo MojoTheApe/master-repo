@@ -247,6 +247,7 @@ def main(argv=None):
                       help="Explicitly enable Approved and frozen integration batches (recommended N=5); requires --implementation-limit; --no-staging selects direct-main batches")
     init.add_argument("--review-limit", type=int, choices=range(1, 6), metavar="N",
                       help="Explicitly select execution schema 3 with N source reviewers (1..5), one integration reviewer; requires --implementation-limit and --batch-limit 1..5")
+    init.add_argument('--task-context', action='store_true', help='Explicit task readiness, requirements journal and source compatibility; requires batch execution')
     for cmd in (init, commands.add_parser("upgrade")):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
         cmd.add_argument("--tracker-root", type=Path, required=True)
@@ -263,6 +264,7 @@ def main(argv=None):
                 if args.implementation_limit is not None: inputs["implementation_limit"] = args.implementation_limit
                 if args.batch_limit is not None: inputs["batch_limit"] = args.batch_limit
                 if args.review_limit is not None: inputs["review_limit"] = args.review_limit
+                if args.task_context: inputs['task_context'] = {'schema_version': 1}
                 if args.process_check and not args.process_instructions:
                     raise ValueError('--process-check requires explicit --process-instructions')
                 if args.process_instructions:

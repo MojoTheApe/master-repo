@@ -13,6 +13,12 @@ maintenance/evidence mechanisms the pinned engine does not implement.
 
 ## Ticket lifecycle
 
+Use the [shared lifecycle and task-context contract](docs/task-context.md) for the
+responsibility/check matrix across every profile. Its explicit compatible
+`workflow.task_context` policy adds pre-start relevance assessment, a strict
+requirements/journal boundary and independent forward-main compatibility review.
+Existing consumers and absent-policy workflows retain their adopted rules.
+
 | Event | Responsible actor | Status and required result |
 | --- | --- | --- |
 | Owner asks for an idea | Agent | Idea; record context under Tracker's intake rules |
