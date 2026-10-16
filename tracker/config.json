@@ -3,17 +3,17 @@
   "project": {
     "name": "Isolated MR-32 CI experiment",
     "repository": "MojoTheApe/master-repo",
-    "base_branch": "codex/mr-32-native-fixture-base",
+    "base_branch": "codex/mr-32-portable-fixture-base",
     "id_prefix": "MR"
   },
   "ci_evidence_policy": {
     "schema_version": 2,
     "profiles": {
       "checks": {
-        "workflow_path": ".github/workflows/native-fixture.json.yml",
-        "workflow_blob_sha": "972f9491dec064272313b96bdae82dd3be1eaf1f",
+        "workflow_path": ".github/workflows/native-portable.json.yml",
+        "workflow_blob_sha": "29c8edcefe023d9f708f0b20f36fd92ef3c3c236",
         "producer_files": {
-          "native-fixture/engine/tracker/ci_evidence.py": "cdb8d7ec94e84fa7a717a64da12a05d8d4cd49eb"
+          ".workflow/tools/tracker_ci_evidence.py": "cdb8d7ec94e84fa7a717a64da12a05d8d4cd49eb"
         },
         "metadata_mode": "tree",
         "max_age_seconds": 86400,
@@ -25,7 +25,7 @@
               "ubuntu-24.04"
             ],
             "producer_step": "Observe actual context",
-            "producer_path": "native-fixture/engine/tracker/ci_evidence.py",
+            "producer_path": ".workflow/tools/tracker_ci_evidence.py",
             "verification_steps": [
               "Run offline tests"
             ],
