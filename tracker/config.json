@@ -13,7 +13,7 @@
         "workflow_path": ".github/workflows/native-fixture.json.yml",
         "workflow_blob_sha": "972f9491dec064272313b96bdae82dd3be1eaf1f",
         "producer_files": {
-          "native-fixture/engine/tracker/ci_evidence.py": "6c658b6ce234bcde270992336132b0709f2b56d4"
+          "native-fixture/engine/tracker/ci_evidence.py": "d67128b4ae3d2fa5a665abe110913bd9628c3eb3"
         },
         "metadata_mode": "tree",
         "max_age_seconds": 86400,
