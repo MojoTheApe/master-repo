@@ -67,6 +67,73 @@
         },
         "artifacts": [],
         "bounds": "No run-level artifact job/attempt inference; no package/runtime acceptance."
+      },
+      "66da546446a27107beb58f446903e79c36378738c606589b5e3af0f5ea2ac633": {
+        "schema_version": 1,
+        "repository": "MojoTheApe/master-repo",
+        "profile": "checks",
+        "policy": "bd5313d36b7f66ff466a1bcd3da352cf61989da78e3a649c4e11b2a2934ef055",
+        "profile_digest": "c726dc38b55f1f0f663c3237f024b9d261b75459e66cc03d714bffeff5f84dd9",
+        "tested_sha": "ce5b5eaed6f562961fcf78f9c1e26f1122687511",
+        "tree_sha": "960ae628cf6095d86d007b1eb15725b6c164e51c",
+        "source_pr": 35,
+        "source_binding": {
+          "head_sha": "e6476db6b86b96d555fc52e3ebcc92214f66c4c2",
+          "base_sha": "b94e469cdf956b98c92647b7a7157e2e566288a0",
+          "branch": "codex/mr-32-native-fixture-candidate-two",
+          "scope": {
+            "32": "2e78198af5661ce2aa8f5499e16e454fec4d0f19df6c109c4aed606546adaff5"
+          },
+          "delivery_policy": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "execution_policy": null
+        },
+        "run_id": 38882691624,
+        "attempt": 1,
+        "producer_blobs": {
+          "native-fixture/engine/tracker/ci_evidence.py": "cdb8d7ec94e84fa7a717a64da12a05d8d4cd49eb"
+        },
+        "jobs": [
+          {
+            "name": "Offline shared suite",
+            "id": 116913004109,
+            "run_id": 38882691624,
+            "attempt": 1,
+            "url": "https://github.com/MojoTheApe/master-repo/actions/runs/38882691624/job/116913004109",
+            "check_run_url": "https://api.github.com/repos/MojoTheApe/master-repo/check-runs/116913004109",
+            "completed_at": "2026-10-16T09:46:33Z",
+            "context": {
+              "checkout_sha": "ce5b5eaed6f562961fcf78f9c1e26f1122687511",
+              "context": {
+                "build_inputs": {},
+                "container": "python@sha256:edd0b3ec946cc68bd20e39480bd03929016d0fb6254cbf870cd3bc55ea25116d",
+                "dependencies": {
+                  "VERSION": "3eefcb9dd5b38e2c1dc061052455dd97bcd51e6c"
+                },
+                "fixtures": {},
+                "host_independent": true,
+                "toolchains": {
+                  "python3": "3.12.15"
+                }
+              },
+              "job": "Offline shared suite",
+              "native_ref": "refs/pull/35/merge",
+              "profile": "checks",
+              "repository": "MojoTheApe/master-repo",
+              "run_attempt": 1,
+              "run_id": 38882691624,
+              "schema_version": 1,
+              "tree_sha": "960ae628cf6095d86d007b1eb15725b6c164e51c",
+              "workflow_sha": "ce5b5eaed6f562961fcf78f9c1e26f1122687511"
+            }
+          }
+        ],
+        "provenance": {
+          "kind": "native-actions-job-log",
+          "workflow": ".github/workflows/native-fixture.json.yml",
+          "run_url": "https://github.com/MojoTheApe/master-repo/actions/runs/38882691624"
+        },
+        "artifacts": [],
+        "bounds": "No run-level artifact job/attempt inference; no package/runtime acceptance."
       }
     }
   }
