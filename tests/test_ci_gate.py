@@ -100,8 +100,10 @@ class PortableGate(unittest.TestCase):
         # portable frontend and compatibility wrapper are actually rendered.
         for relative in ('.workflow/tools/tracker_ci_gate.py','scripts/tracker_ci_gate.py'):
             self.assertTrue((case.root/relative).is_file())
-        (case.root/'.workflow/tools/tracker_ci_gate.py').unlink()
-        self.assertTrue(any('tracker_ci_gate.py' in x for x in case.errors()))
+        for helper in ('tracker_ci_gate.py', 'tracker_task_context.py', 'tracker_process_instructions.py'):
+            path=case.root/'.workflow/tools'/helper;content=path.read_bytes();path.unlink()
+            self.assertTrue(any(helper in x for x in case.errors()))
+            path.write_bytes(content)
 
 
 if __name__=='__main__':unittest.main()

@@ -443,7 +443,7 @@ def inspect(root, expected_revision=None):
             required.update({'.workflow/tools/tracker_task_context.py', 'scripts/tracker_task_context.py', 'docs/repository/TASK_CONTEXT.md'})
         if 'ci_evidence' in wf:
             required.update({'.workflow/tools/tracker_ci_evidence.py', 'scripts/tracker_ci_evidence.py', '.workflow/tools/tracker_ci_gate.py', 'scripts/tracker_ci_gate.py', 'docs/repository/CI_REUSE.md'})
-            for helper in ('tracker_delivery_receipt.py', 'tracker_batch_policy.py'):
+            for helper in ('tracker_delivery_receipt.py', 'tracker_batch_policy.py', 'tracker_task_context.py', 'tracker_process_instructions.py'):
                 required.update({'.workflow/tools/'+helper, 'scripts/'+helper})
         for name in sorted(required):
             path = standard.safe_path(root,name)

@@ -3,7 +3,8 @@
 ## Shared CI reuse and measured verification (MR-32)
 
 Add explicit CI-policy mirroring/init/export/upgrade, native plan/final-gate
-navigation and protocol-2 exact-main coverage with Tracker TT-140. Preserve real
+navigation and a portable same-repository-token CI adapter (no private engine
+bootstrap), plus protocol-2 exact-main coverage with Tracker TT-140. Preserve real
 producer/job/attempt/context proof, missing platforms, combined review and delivery.
 Separate PR metadata checks from code validation and their cancellation groups.
 The reusable local measurement harness reports first feedback, main/cycle time

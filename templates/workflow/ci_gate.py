@@ -27,7 +27,8 @@ def read_state(request, repository):
     if len(exact) != 1:
         raise ValueError('CI needs exactly one official tracker state ref')
     target = exact[0].get('object', {})
-    if target.get('type') != 'commit' or not ci.SHA.fullmatch(target.get('sha', '')):
+    if (not isinstance(target, dict) or target.get('type') != 'commit'
+            or not isinstance(target.get('sha'), str) or not ci.SHA.fullmatch(target['sha'])):
         raise ValueError('CI state ref must identify an immutable commit')
     row = request(root + '/contents/.tracker-state.json?ref=' + target['sha'])
     value = json.loads(rules.file_bytes(request, root, row), object_pairs_hook=ci.unique_object)
