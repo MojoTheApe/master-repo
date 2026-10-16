@@ -242,11 +242,11 @@ def main(argv=None):
     init.add_argument("--process-check", action="append", default=[], metavar="NAME",
                       help="Additional real required check for the instruction route; requires --process-instructions")
     init.add_argument("--implementation-limit", type=int, choices=range(1, 17), metavar="N",
-                      help="Opt in to N implementation slots (1..16) and one review/integration lane; omitted keeps legacy execution")
+                      help="Implementation capacity 1..16 (new-project default 5); with --legacy-execution this explicitly selects execution v1")
     init.add_argument("--batch-limit", type=int, nargs="?", const=5, choices=range(1, 17), metavar="N",
-                      help="Explicitly enable Approved and frozen integration batches (recommended N=5); requires --implementation-limit; --no-staging selects direct-main batches")
+                      help="Batch capacity (new-project default 5); legacy selection requires explicit implementation capacity; --no-staging selects direct-main batches")
     init.add_argument("--review-limit", type=int, choices=range(1, 6), metavar="N",
-                      help="Explicitly select execution schema 3 with N source reviewers (1..5), one integration reviewer; requires --implementation-limit and --batch-limit 1..5")
+                      help="Select schema 3 with 1..5 source reviewers and one integration reviewer; new defaults supply implementation/batch limits; legacy selection requires both explicitly")
     init.add_argument('--task-context', action='store_true', help='Explicit task readiness, requirements journal and source compatibility; requires batch execution')
     init.add_argument('--legacy-execution', action='store_true', help='Select original explicit execution choices instead of new-project batch/task-context defaults; never used by upgrade')
     init.add_argument('--ci-evidence-policy', type=Path, help='Explicit reviewed native CI policy JSON; unsupported coverage stays fresh')

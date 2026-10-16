@@ -38,10 +38,14 @@ def measure(fresh, reuse, repetitions=3, timeout=300):
                 try:
                     process.communicate(timeout=timeout)
                 except subprocess.TimeoutExpired:
+                    raise RuntimeError('A measurement command timed out; its process group was stopped') from None
+                finally:
+                    # Reap redirected descendants on success, failure and user
+                    # interruption as well as timeout. Each command owns a fresh
+                    # process group; no unrelated process is targeted.
                     try: os.killpg(process.pid, signal.SIGKILL)
                     except ProcessLookupError: pass
                     process.communicate()
-                    raise RuntimeError('A measurement command timed out; its process group was stopped') from None
                 if process.returncode:
                     raise RuntimeError('A measurement command failed; no performance result is valid')
                 steps.append(time.perf_counter()-at)
