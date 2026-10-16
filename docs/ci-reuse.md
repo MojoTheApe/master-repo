@@ -21,6 +21,18 @@ lifetime and metadata sensitivity. Unsupported platforms, installers, mutable
 dependencies and external acceptance stay fresh. Tree equality cannot prove a
 metadata-sensitive build.
 
+## CI runtime and author client
+
+Generated `scripts/tracker_ci_gate.py plan|gate` uses only exported portable
+helpers, Python/gh and the current repository's read token. It never clones the
+private shared engine or writes Tracker state. The actual maintained state ref
+is resolved and read by immutable commit; invalid state/transport fails closed.
+The full `scripts/task_tracker.py ci-evidence ...` commands in the pinned engine
+guide are for author environments with authenticated access to that exact engine.
+Use the portable CI entry point in fresh runners; no cross-repository secret or
+prewarmed engine cache is required. Retain actual successful producers before
+merge through the full author's supported CAS collection command.
+
 ## Candidate recipe
 
 The maintained [JSON workflow example](../templates/workflow/ci-reuse.example.json.yml)

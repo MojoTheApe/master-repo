@@ -17,7 +17,7 @@
       "steps": [
         {"uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"},
         {"id": "plan", "name": "Plan native coverage", "env": {"GH_TOKEN": "${{ github.token }}"},
-         "run": "python3 scripts/task_tracker.py ci-evidence plan --profile checks --pr '${{ github.event.pull_request.number || 0 }}' --head '${{ github.event.pull_request.head.sha || github.sha }}' --context auto --github-output \"$GITHUB_OUTPUT\""}
+         "run": "python3 scripts/tracker_ci_gate.py plan --profile checks --pr '${{ github.event.pull_request.number || 0 }}' --head '${{ github.event.pull_request.head.sha || github.sha }}' --context auto --github-output \"$GITHUB_OUTPUT\""}
       ]
     },
     "product_tests": {
@@ -42,7 +42,7 @@
       "steps": [
         {"uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262"},
         {"name": "Verify retained proof and fresh native outcomes", "env": {"GH_TOKEN": "${{ github.token }}"},
-         "run": "python3 scripts/task_tracker.py ci-evidence gate --profile checks --pr '${{ github.event.pull_request.number || 0 }}' --head '${{ github.event.pull_request.head.sha || github.sha }}' --context auto --run '${{ github.run_id }}'"}
+         "run": "python3 scripts/tracker_ci_gate.py gate --profile checks --pr '${{ github.event.pull_request.number || 0 }}' --head '${{ github.event.pull_request.head.sha || github.sha }}' --context auto --run '${{ github.run_id }}'"}
       ]
     }
   }

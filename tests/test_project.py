@@ -101,7 +101,10 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     out['scripts/tracker_task_context.py'] = '# portable task context\n'
     out['docs/TASK_CONTEXT.md'] = '# Exact task context guide\n'
     out['scripts/tracker_ci_evidence.py'] = '# portable native CI proof\n'
+    out['scripts/tracker_ci_gate.py'] = (project.SOURCE/'templates/workflow/ci_gate.py').read_text()
     out['docs/CI_REUSE.md'] = '# Exact CI reuse guide\n'
+    out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
+    out['scripts/tracker_delivery_receipt.py'] = '# portable receipt recorder\n'
     if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
         out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
         if data['completion'] != 'reviewed-merge':

@@ -26,3 +26,8 @@ For an authorized standard upgrade, use the
 [coordinated procedure](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/workflow-upgrades.md).
 Only the exact compatible Tracker guide supplies commands. A newer standard/skill
 cannot activate an unimplemented maintenance or evidence collector.
+
+For explicit native CI policy, use generated `scripts/tracker_ci_gate.py plan|gate`
+on CI with its same-repository read token. This portable route needs no private
+engine checkout. Full task_tracker.py commands and pre-merge CAS collection belong
+to author environments with authenticated access to the exact pinned engine.

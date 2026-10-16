@@ -50,7 +50,7 @@ def separate_export(files):
         guide = guide.replace('docs/CI_REUSE.md', 'docs/repository/CI_REUSE.md')
     files['docs/repository/TRACKER.md'] = guide
     helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py',
-                                           'tracker_ci_evidence.py', 'tracker_delivery_receipt.py', 'tracker_task_context.py')
+                                           'tracker_ci_evidence.py', 'tracker_ci_gate.py', 'tracker_delivery_receipt.py', 'tracker_task_context.py')
                           if 'scripts/' + name in files))
     for name in helpers:
         source = files.pop('scripts/' + name)
@@ -256,6 +256,7 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export CI evidence differs from the explicit project choice')
         if 'ci_evidence' in data['workflow'] and not {'scripts/tracker_ci_evidence.py', 'docs/CI_REUSE.md'} <= files.keys():
             raise ValueError('Pinned Tracker export lacks the CI evidence helper or exact guide')
+    files['scripts/tracker_ci_gate.py'] = (SOURCE/'templates/workflow/ci_gate.py').read_text()
     files = separate_export(files)
     files.update(layout_files())
     files['delivery.json'] = dumps(data)
@@ -441,7 +442,9 @@ def inspect(root, expected_revision=None):
         if 'task_context' in wf:
             required.update({'.workflow/tools/tracker_task_context.py', 'scripts/tracker_task_context.py', 'docs/repository/TASK_CONTEXT.md'})
         if 'ci_evidence' in wf:
-            required.update({'.workflow/tools/tracker_ci_evidence.py', 'scripts/tracker_ci_evidence.py', 'docs/repository/CI_REUSE.md'})
+            required.update({'.workflow/tools/tracker_ci_evidence.py', 'scripts/tracker_ci_evidence.py', '.workflow/tools/tracker_ci_gate.py', 'scripts/tracker_ci_gate.py', 'docs/repository/CI_REUSE.md'})
+            for helper in ('tracker_delivery_receipt.py', 'tracker_batch_policy.py'):
+                required.update({'.workflow/tools/'+helper, 'scripts/'+helper})
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)

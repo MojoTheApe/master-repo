@@ -5,6 +5,9 @@ Where the pin supplies CI_REUSE.md and matching `workflow.ci_evidence` /
 Explicit protocol 2 supports retained exact merged-main proof; old protocols keep
 their context limits. Preserve native job/platform names, real producer/attempt
 provenance and actual delivery. Run unsupported or missing coverage fresh.
+On CI use the generated portable `scripts/tracker_ci_gate.py plan|gate` entry
+point with the same-repository read token; it needs no private engine checkout.
+Author CAS collection still uses the authenticated exact pinned full client.
 Supported final `check-merge` includes linkage; retain early link feedback without
 an immediately duplicated `check-pr` admission step. Keep old pins' commands.
 
