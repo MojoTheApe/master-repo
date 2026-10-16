@@ -13,6 +13,8 @@ configuring jobs. Validation never executes consumer-owned code.
 
 Protocol 1 retains source/integration semantics. Explicit protocol 2 additionally
 supports conditional fixed jobs and retained evidence for the actual main merge.
+Its exact direct producer binds the native Git ref in the timestamped job log,
+so GitHub clearing a merged run’s PR list does not discard genuine original proof.
 Reuse requires successful native jobs/attempts, reviewed immutable workflow,
 producer and container, exact toolchain and resolved Git-bound inputs, explicit
 lifetime and metadata sensitivity. Unsupported platforms, installers, mutable
@@ -20,6 +22,13 @@ dependencies and external acceptance stay fresh. Tree equality cannot prove a
 metadata-sensitive build.
 
 ## Candidate recipe
+
+The maintained [JSON workflow example](../templates/workflow/ci-reuse.example.json.yml)
+shows conditional jobs and an always-running native aggregate. It is deliberately
+not enabled or copied as a ready product workflow: fill real commands, reviewed
+digest-pinned environment and policy blobs first. Preserve actual platform jobs;
+make `Verification` required and do not retain skippable product names as required
+success contexts. Review bootstrap/adoption under the old working checks.
 
 1. `ci-evidence plan` for the actual candidate lists covered native producers and
    every missing job. New/changed candidates normally run all checks.
@@ -51,7 +60,9 @@ superseded candidates within a PR; retain every integration/main push.
 Measure comparable first feedback, wall-clock cycle, native job seconds,
 covered/missing names and retry reasons. Label synthetic/local measurements;
 parallel job cost is not wall time. Unsupported cases can have zero savings.
-Do not claim fleet savings before consumer adoption and observation.
+Do not claim fleet savings before consumer adoption and observation. See the
+[measured validation report](validation/wfo-05-08.md) for the isolated native case
+and the cost of checking real proof; short checks can be cheaper to rerun.
 
 `scripts/measure_verification.py` accepts fresh and verified-reuse JSON argv
 commands, alternates their order, and reports repeated local source/main feedback
