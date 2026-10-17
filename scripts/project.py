@@ -558,10 +558,17 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
         local_descriptor = standard.read_descriptor(root)
         if not isinstance(local_descriptor, dict):
             raise ValueError('Local delivery.json must be an object')
+        version = local_descriptor.get('schema_version')
+        if type(version) is not int or version not in (1, 2, 3):
+            raise ValueError('Local descriptor schema_version must be a supported true integer')
         require_engine_choices(local_descriptor)
         local_workflow = local_descriptor.get('workflow', {})
         if not isinstance(local_workflow, dict):
             raise ValueError('Local workflow must be an object')
+        if version in (2, 3) and type(local_workflow.get('staging')) is not bool:
+            raise ValueError('Local workflow staging must remain an explicit boolean')
+        if version == 3 and (not isinstance(local_descriptor.get('role'), str) or local_descriptor['role'] not in ROLES):
+            raise ValueError('Unknown local project role')
         if 'execution' in local_workflow:
             validate_execution_policy(local_workflow['execution'])
         if 'task_context' in local_workflow and local_descriptor.get('schema_version') != 3:

@@ -297,6 +297,24 @@ class UpgradeChoices(unittest.TestCase):
                     self.assertFalse(result['applied'])
                     self.assertEqual(snapshot(root), before)
 
+    def test_local_descriptor_numeric_aliases_refuse_before_export_or_three_way_equality(self):
+        for location, field, value in (('top', 'schema_version', 2.0),
+                                       ('workflow', 'staging', 1)):
+            with self.subTest(field=field, value=value), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)/'consumer'
+                with mock.patch.object(project, 'render', side_effect=old_files):
+                    project.init(root, INPUTS, OLD, 'unused', apply=True)
+                path = root/'delivery.json'; data = json.loads(path.read_text())
+                (data if location == 'top' else data['workflow'])[field] = value
+                path.write_text(project.dumps(data)); before = snapshot(root)
+                for apply in (False, True):
+                    with mock.patch.object(project, 'render', side_effect=AssertionError('Invalid local descriptor reached exporter')) as exporter:
+                        result = project.upgrade(root, NEW, 'unused', apply=apply)
+                        exporter.assert_not_called()
+                    self.assertEqual(result['conflicts'], ['configuration validation'])
+                    self.assertFalse(result['applied'])
+                    self.assertEqual(snapshot(root), before)
+
     def test_canonical_modern_bundle_refuses_bad_local_guards_before_export_or_merge(self):
         _, record, _ = project.export_contract.trusted()
         if 'route_validator' not in record:
