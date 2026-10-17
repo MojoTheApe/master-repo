@@ -1,5 +1,13 @@
 # Delivery descriptor
 
+Optional `workflow.completion_policy` is exactly `{"schema_version": 1}` and mirrors
+Tracker `completion_policy`. It selects accepted-scope completion independently of
+the top-level completion target, execution route and Stage. Init/upgrade select it
+only with explicit `--completion-policy`; an ordinary upgrade retains absence.
+The exact export must contain its assessment and local guide. Supporting reader,
+all actual writers and owned durable state activation precede incompatible writes.
+See [accepted-scope completion](completion-policy.md); configuration is not activation.
+
 Optional `workflow.ci_evidence` mirrors Tracker `ci_evidence_policy` exactly.
 `init --ci-evidence-policy FILE` explicitly selects its reviewed native policy.
 The [shared reuse recipe](ci-reuse.md) and exact exported CI_REUSE.md describe

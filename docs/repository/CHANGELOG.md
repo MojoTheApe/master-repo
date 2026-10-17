@@ -1,5 +1,15 @@
 # Repository process history
 
+## 2026-10-17 — MR-45 explicit accepted-scope completion
+
+Mirror the TT-142 completion contract through an explicit descriptor choice and
+exact compatible export. Init/upgrade preserve absence unless selected; genuine
+three-way upgrade retains local knowledge, commands, targets and original template
+ancestry. The canonical skill navigates actual reader/writer compatibility and
+owned durable activation without treating current Issue bodies as historical proof.
+The immutable supporting engine selection, real-pair validation and publication
+are recorded with the final candidate; no consumer activation is implied.
+
 ## 2026-10-17 — MR-36 workflow execution baseline
 
 Preserve the complete supplied scope and all 202 original acceptance criteria,

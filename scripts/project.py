@@ -16,6 +16,7 @@ BASELINE = '.workflow/template-base.json'
 LAYOUT = '.workflow/layout.json'
 PROJECT_AREAS = ('docs/system/', 'docs/runtime/')
 HELPERS = ('task_tracker.py', 'tracker_pr_check.py', 'tracker_delivery_policy.py')
+COMPLETION_HELPERS = ('tracker_delivery_policy.py', 'tracker_task_context.py', 'tracker_delivery_receipt.py')
 FILES = {'AGENTS.md': 'AGENTS.md', 'WORKFLOW.md': 'docs/repository/WORKFLOW.md',
          'VERIFICATION.md': 'docs/repository/VERIFICATION.md',
          'DELIVERY_CONTINUATION.md': 'docs/repository/DELIVERY_CONTINUATION.md',
@@ -48,6 +49,10 @@ def separate_export(files):
     if 'docs/CI_REUSE.md' in files:
         files['docs/repository/CI_REUSE.md'] = files.pop('docs/CI_REUSE.md')
         guide = guide.replace('docs/CI_REUSE.md', 'docs/repository/CI_REUSE.md')
+    if 'docs/COMPLETION_POLICY.md' in files:
+        files['docs/repository/COMPLETION_POLICY.md'] = files.pop('docs/COMPLETION_POLICY.md')
+        files['docs/COMPLETION_POLICY.md'] = '# Moved\n\nSee [completion policy](repository/COMPLETION_POLICY.md).\n'
+        guide = guide.replace('docs/COMPLETION_POLICY.md', 'docs/repository/COMPLETION_POLICY.md')
     files['docs/repository/TRACKER.md'] = guide
     helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py',
                                            'tracker_ci_evidence.py', 'tracker_ci_gate.py', 'tracker_delivery_receipt.py', 'tracker_task_context.py')
@@ -153,6 +158,13 @@ def validate_task_context(value, execution):
         raise ValueError('Task context schema 1 requires explicit execution schema 2 or 3')
 
 
+def validate_completion_policy(value):
+    """Select accepted-scope checking without changing the completion target."""
+    if (not isinstance(value, dict) or set(value) != {'schema_version'}
+            or type(value.get('schema_version')) is not int or value['schema_version'] != 1):
+        raise ValueError('Completion policy requires exactly schema_version 1')
+
+
 def descriptor(inputs, revision):
     c = compatibility(); profile = inputs['profile']; repo = inputs['repository']
     if (profile not in PROFILES or not re.fullmatch(r'[\w.-]+/[\w.-]+', repo)
@@ -184,6 +196,9 @@ def descriptor(inputs, revision):
     if 'task_context' in inputs:
         validate_task_context(inputs['task_context'], workflow.get('execution'))
         workflow['task_context'] = inputs['task_context']
+    if 'completion_policy' in inputs:
+        validate_completion_policy(inputs['completion_policy'])
+        workflow['completion_policy'] = inputs['completion_policy']
     if 'ci_evidence' in inputs:
         if inputs['ci_evidence'] is None:
             raise ValueError('CI evidence policy must be explicit and non-null')
@@ -223,6 +238,9 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         if 'task_context' in data['workflow']:
             context = scratch/'task-context.json'; context.write_text(dumps(data['workflow']['task_context']))
             command.extend(['--task-context-policy', str(context)])
+        if 'completion_policy' in data['workflow']:
+            completion = scratch/'completion-policy.json'; completion.write_text(dumps(data['workflow']['completion_policy']))
+            command.extend(['--completion-policy', str(completion)])
         if 'ci_evidence' in data['workflow']:
             evidence = scratch/'ci-evidence.json'; evidence.write_text(dumps(data['workflow']['ci_evidence']))
             command.extend(['--ci-evidence-policy', str(evidence)])
@@ -251,6 +269,13 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export task context differs from the explicit project choice')
         if 'task_context' in data['workflow'] and not {'scripts/tracker_task_context.py', 'docs/TASK_CONTEXT.md'} <= files.keys():
             raise ValueError('Pinned Tracker export lacks the task context helper or exact guide')
+        if (('completion_policy' in exported_config) != ('completion_policy' in data['workflow'])
+                or exported_config.get('completion_policy') != data['workflow'].get('completion_policy')):
+            raise ValueError('Tracker export completion policy differs from the explicit project choice')
+        if ('completion_policy' in data['workflow']
+                and not ({'scripts/' + name for name in COMPLETION_HELPERS}
+                         | {'docs/COMPLETION_POLICY.md'}) <= files.keys()):
+            raise ValueError('Pinned Tracker export lacks the completion assessment helper or exact guide')
         if (('ci_evidence_policy' in exported_config) != ('ci_evidence' in data['workflow'])
                 or exported_config.get('ci_evidence_policy') != data['workflow'].get('ci_evidence')):
             raise ValueError('Tracker export CI evidence differs from the explicit project choice')
@@ -332,7 +357,7 @@ def merge_file(name, old, new, local):
         return result.stdout
 
 
-def upgrade(root, revision, tracker_root, python=sys.executable, apply=False):
+def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None):
     path = standard.safe_path(root, BASELINE)
     if not path.is_file(): raise ValueError('No recorded template base; audit and adopt manually without inventing a baseline')
     raw = path.read_text(); base = json.loads(raw)
@@ -341,7 +366,11 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False):
     if LAYOUT not in old:
         return {'applied': False, 'conflicts': ['legacy mixed layout'], 'changed': [],
                 'next': 'Audit and separate repository/system/runtime documents in a project PR; nothing was overwritten.'}
-    new = render(base['inputs'], revision, tracker_root, python)
+    new_inputs = dict(base['inputs'])
+    if completion_policy is not None:
+        validate_completion_policy(completion_policy)
+        new_inputs['completion_policy'] = completion_policy
+    new = render(new_inputs, revision, tracker_root, python)
     planned, before, conflicts = {}, {}, []
     for name in sorted(old.keys() | new.keys()):
         path = standard.safe_path(root, name)
@@ -354,7 +383,7 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False):
         except ValueError: conflicts.append(name)
     if conflicts: return {'applied': False, 'conflicts': conflicts, 'changed': [], 'next': 'Resolve explicitly in a project PR; nothing was overwritten.'}
     planned = {n: value for n, value in planned.items() if value != before[n]}
-    planned[BASELINE] = baseline(base['inputs'], revision, new)
+    planned[BASELINE] = baseline(new_inputs, revision, new)
     before[BASELINE] = raw
     if planned[BASELINE] == raw: planned.pop(BASELINE)
     with tempfile.TemporaryDirectory(prefix='master-validate-') as scratch:
@@ -385,11 +414,13 @@ def inspect(root, expected_revision=None):
         if isinstance(wf, dict) and 'execution' in wf: workflow_keys.add('execution')
         if isinstance(wf, dict) and 'process_instructions' in wf: workflow_keys.add('process_instructions')
         if isinstance(wf, dict) and 'task_context' in wf: workflow_keys.add('task_context')
+        if isinstance(wf, dict) and 'completion_policy' in wf: workflow_keys.add('completion_policy')
         if isinstance(wf, dict) and 'ci_evidence' in wf: workflow_keys.add('ci_evidence')
         if not standard.object_keys(wf, workflow_keys, 'workflow', findings): return findings
         if 'execution' in wf: validate_execution_policy(wf['execution'])
         if 'process_instructions' in wf: validate_process_instructions(wf['process_instructions'])
         if 'task_context' in wf: validate_task_context(wf['task_context'], wf.get('execution'))
+        if 'completion_policy' in wf: validate_completion_policy(wf['completion_policy'])
         if 'ci_evidence' in wf:
             if wf['ci_evidence'] is None: raise ValueError('CI evidence policy must be explicit and non-null')
             ci_policy.policy({'ci_evidence_policy': wf['ci_evidence']})
@@ -420,6 +451,9 @@ def inspect(root, expected_revision=None):
         if (('task_context_policy' in config) != ('task_context' in wf)
                 or config.get('task_context_policy') != wf.get('task_context')):
             raise ValueError('Tracker task context differs from delivery.json; synchronize both in this PR')
+        if (('completion_policy' in config) != ('completion_policy' in wf)
+                or config.get('completion_policy') != wf.get('completion_policy')):
+            raise ValueError('Tracker completion policy differs from delivery.json; synchronize both in this PR')
         if (('ci_evidence_policy' in config) != ('ci_evidence' in wf)
                 or config.get('ci_evidence_policy') != wf.get('ci_evidence')):
             raise ValueError('Tracker CI evidence differs from delivery.json; synchronize both in this PR')
@@ -441,6 +475,10 @@ def inspect(root, expected_revision=None):
             required.update({'.workflow/tools/tracker_process_instructions.py', 'scripts/tracker_process_instructions.py'})
         if 'task_context' in wf:
             required.update({'.workflow/tools/tracker_task_context.py', 'scripts/tracker_task_context.py', 'docs/repository/TASK_CONTEXT.md'})
+        if 'completion_policy' in wf:
+            required.add('docs/repository/COMPLETION_POLICY.md')
+            for helper in COMPLETION_HELPERS:
+                required.update({'.workflow/tools/' + helper, 'scripts/' + helper})
         if 'ci_evidence' in wf:
             required.update({'.workflow/tools/tracker_ci_evidence.py', 'scripts/tracker_ci_evidence.py', '.workflow/tools/tracker_ci_gate.py', 'scripts/tracker_ci_gate.py', 'docs/repository/CI_REUSE.md'})
             for helper in ('tracker_delivery_receipt.py', 'tracker_batch_policy.py', 'tracker_task_context.py', 'tracker_process_instructions.py'):

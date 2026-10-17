@@ -29,6 +29,8 @@
       "result": "passed; 10 entries exact"
     }
   ],
-  "hosted_checks": "pending current PR",
-  "independent_review": "pending corrected exact-head review"
+  "hosted_checks": "Required exact-head validate/tracker-link/skill-impact passed; actual merged-main Standard checks passed at https://github.com/MojoTheApe/master-repo/actions/runs/39018384481",
+  "independent_review": "Approved complete exact candidate; retained on https://github.com/MojoTheApe/master-repo/issues/36",
+  "reviewed_head": "48aaa8027682719fc752b1d067d3c9ac9da0dfad",
+  "accepted_main": "0249474c265c22d386f0a1aaa915b0a345321bbd"
 }

@@ -252,6 +252,7 @@ def main(argv=None):
     init.add_argument('--ci-evidence-policy', type=Path, help='Explicit reviewed native CI policy JSON; unsupported coverage stays fresh')
     for cmd in (init, commands.add_parser("upgrade")):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
+        cmd.add_argument('--completion-policy', action='store_true', help='Explicit accepted-scope completion checking; requires supporting published reader/writers and separate durable activation')
         cmd.add_argument("--tracker-root", type=Path, required=True)
         cmd.add_argument("--python", default=sys.executable, help="Python 3.11+ for the pinned Tracker exporter")
         cmd.add_argument("--apply", action="store_true")
@@ -267,6 +268,7 @@ def main(argv=None):
                 if args.batch_limit is not None: inputs["batch_limit"] = args.batch_limit
                 if args.review_limit is not None: inputs["review_limit"] = args.review_limit
                 if args.task_context: inputs['task_context'] = {'schema_version': 1}
+                if args.completion_policy: inputs['completion_policy'] = {'schema_version': 1}
                 if not args.legacy_execution:
                     inputs.setdefault('implementation_limit', 5)
                     inputs.setdefault('batch_limit', 5)
@@ -280,7 +282,8 @@ def main(argv=None):
                         'required_checks': ['descriptor', 'tracker-link', *args.process_check]}
                 result = project.init(args.root, inputs, revision, args.tracker_root, args.python, args.apply)
             else:
-                result = project.upgrade(args.root, revision, args.tracker_root, args.python, args.apply)
+                result = project.upgrade(args.root, revision, args.tracker_root, args.python, args.apply,
+                                         completion_policy={'schema_version': 1} if args.completion_policy else None)
             print(json.dumps(result, indent=2))
             return 1 if result.get("conflicts") else 0
         findings = inspect(args.root, args.expected_revision)

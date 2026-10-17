@@ -4,9 +4,9 @@ This is the execution record for the supplied 16 October handoff. Task 01 source
 
 | Task | Deliverable / actual Issue | Prerequisites | State |
 | --- | --- | --- | --- |
-| 01 | [Refresh the baseline and prepare execution](https://github.com/MojoTheApe/master-repo/issues/36) | None | In progress |
-| 02 | [Make current completion trustworthy](https://github.com/MojoTheApe/task-tracker/issues/142) | 01 | Planned |
-| 03 | [Unify instructions and generated templates](https://github.com/MojoTheApe/master-repo/issues/37) | 01, 02 (contract) | Planned |
+| 01 | [Refresh the baseline and prepare execution](https://github.com/MojoTheApe/master-repo/issues/36) | None | Accepted |
+| 02 | [Make current completion trustworthy](https://github.com/MojoTheApe/task-tracker/issues/142) | 01 | In progress |
+| 03 | [Unify instructions and generated templates](https://github.com/MojoTheApe/master-repo/issues/37) | 01, 02 (contract) | In progress (preparation) |
 | 04 | [Publish one portable technical contract](https://github.com/MojoTheApe/task-tracker/issues/143) | 03 | Planned |
 | 05 | [Measure CI accurately and bound retries](https://github.com/MojoTheApe/master-repo/issues/38) | 01, 03, 04 (export changes) | Planned |
 | 06 | [Adopt available improvements early](https://github.com/MojoTheApe/master-repo/issues/39) | 02, 03, 05 or verified native baseline, compatible reader | Planned |

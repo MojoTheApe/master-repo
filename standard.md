@@ -19,6 +19,11 @@ responsibility/check matrix across every profile. Its explicit compatible
 requirements/journal boundary and independent forward-main compatibility review.
 Existing consumers and absent-policy workflows retain their adopted rules.
 
+The separate explicit [accepted-scope completion policy](docs/completion-policy.md)
+binds current success to genuine review/acceptance and keeps changed requirements
+or unverified old scope unfinished. Its matching export and owned durable
+activation do not change the selected delivery target or existing Archive rules.
+
 | Event | Responsible actor | Status and required result |
 | --- | --- | --- |
 | Owner asks for an idea | Agent | Idea; record context under Tracker's intake rules |
