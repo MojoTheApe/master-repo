@@ -24,6 +24,30 @@ def portable_files():
 
 
 class ExportedHelperConsumption(unittest.TestCase):
+    def test_init_rejects_missing_or_changed_exported_engine_before_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)/'consumer'
+            engine = Path(directory)/'engine'; engine.mkdir()
+            def exporter(command, **kwargs):
+                target = Path(command[command.index('--output')+1])
+                exported = portable_files()
+                exported.update({'tracker/config.json': files()['tracker/config.json'],
+                    'docs/TRACKER_AGENT_WORKFLOW.md': 'Pinned guide\n',
+                    '.github/pull_request_template.md': 'Tracker issues: EX-12\n'})
+                if lock is None: exported.pop('tracker/engine.json')
+                else: exported['tracker/engine.json'] = lock
+                for name, text in exported.items():
+                    path=target/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode())
+                return mock.Mock(returncode=0, stderr='', stdout='')
+            locks = (None, '{"repository":"MojoTheApe/task-tracker","revision":"'+'f'*40+'"}',
+                     '{"repository":"foreign/repo","revision":"'+'f'*40+'"}', 'not json')
+            for lock in locks:
+                with self.subTest(lock=lock), mock.patch.object(project, 'tracker_checkout', return_value=engine), \
+                        mock.patch.object(project.subprocess, 'run', side_effect=exporter):
+                    with self.assertRaisesRegex(ValueError, 'engine lock'):
+                        project.init(root, INPUTS, OLD, engine, apply=True)
+                    self.assertFalse(root.exists())
+
     def test_document_relocation_preserves_all_exact_exported_helpers(self):
         exported = portable_files()
         before = exported.copy()

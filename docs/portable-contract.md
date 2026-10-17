@@ -67,7 +67,9 @@ python3 tests/verify_completion_pair.py --master /path/to/master \
   --selected-instructions --require-pinned
 ```
 
-It requires clean exact sources and the actual compatibility pin, verifies six
+It records the head, tree, origin and dirty status of all four current/old source
+inputs. Final admission requires every input to be clean and official and the old
+Master compatibility pin to match the actual old engine. It verifies six
 representative outputs and both separated import/CLI paths, exercises the eight
 native fixture cases against exact engine-owned artifacts, and performs four
 genuine old-source upgrades. It also commits a real canonical rule change in an

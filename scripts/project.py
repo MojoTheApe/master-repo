@@ -226,6 +226,12 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
         files = {p.relative_to(target).as_posix(): p.read_bytes().decode('utf-8') for p in target.rglob('*') if p.is_file()}
+        try:
+            exported_lock = json.loads(files['tracker/engine.json'], object_pairs_hook=export_contract.unique)
+        except (KeyError, ValueError) as error:
+            raise ValueError('Tracker export needs a valid immutable engine lock') from error
+        if exported_lock != {'repository': data['tracker']['repository'], 'revision': data['tracker']['revision']}:
+            raise ValueError('Tracker export engine lock differs from the trusted compatible pin')
         exported_config = json.loads(files['tracker/config.json'])
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):

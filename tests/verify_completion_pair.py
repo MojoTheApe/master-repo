@@ -16,6 +16,28 @@ def git(root, *args):
     return subprocess.check_output(['git', '-C', str(root), *args], text=True).strip()
 
 
+def source_inputs(args):
+    """Bind every current/old input before any export or upgrade is attempted."""
+    sources = {}
+    for name, repository in (('master', 'master-repo'), ('tracker', 'task-tracker'),
+                             ('old_master', 'master-repo'), ('old_tracker', 'task-tracker')):
+        root = getattr(args, name)
+        origin = git(root, 'remote', 'get-url', 'origin')
+        official = origin.removesuffix('.git') in ('https://github.com/MojoTheApe/'+repository,
+                                                  'git@github.com:MojoTheApe/'+repository)
+        row = dict(head=git(root, 'rev-parse', 'HEAD'), tree=git(root, 'rev-parse', 'HEAD^{tree}'),
+                   dirty=bool(git(root, 'status', '--porcelain')), origin=origin, official_origin=official)
+        sources[name] = row
+        if args.require_pinned and (row['dirty'] or not official):
+            raise ValueError('Final pair requires a clean official '+name+' input')
+    old = json.loads((args.old_master/'compatibility.json').read_bytes())
+    matched = old.get('tracker_repository') == 'MojoTheApe/task-tracker' and old.get('tracker_revision') == sources['old_tracker']['head']
+    if args.require_pinned and not matched:
+        raise ValueError('Old Master compatibility pin differs from the actual old Tracker input')
+    sources['old_compatibility_pin_matches'] = matched
+    return sources
+
+
 def changed_engine_contract(args, scratch):
     """Actual committed rule drift must fail even with freshly matching pin metadata."""
     engine = scratch/'changed-engine'
@@ -122,6 +144,7 @@ def main():
     args = parser.parse_args()
     for name in ('master', 'tracker', 'old_master', 'old_tracker', 'output'):
         setattr(args, name, getattr(args, name).resolve())
+    sources = source_inputs(args)
     sys.path.insert(0, str(args.master / 'scripts'))
     import project
     tracker_revision = git(args.tracker, 'rev-parse', 'HEAD')
@@ -135,7 +158,7 @@ def main():
               'matrix': [], 'upgrades': [], 'python39': args.python39,
               'consumer_activation': False, 'selected_instructions': args.selected_instructions}
     result.update(bounded=args.bounded, portable_contract=args.portable_contract,
-                  publication_verified_by_this_command=False)
+                  publication_verified_by_this_command=False, source_inputs=sources)
     if result['tracker_dirty']:
         raise ValueError('The actual Tracker candidate must be clean and immutable')
     if args.require_pinned and (result['master_dirty'] or result['candidate_pair_override']):
