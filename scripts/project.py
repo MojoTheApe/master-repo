@@ -373,6 +373,8 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         export_contract.structural_retry_policy(exported_config)
         if data['schema_version'] == 3:
             export_contract.structural_route_policy(exported_config)
+            if 'docs/DIRECT_WORKFLOW.md' not in files:
+                raise ValueError('Pinned Tracker export lacks its exact modern route runbook')
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
             raise ValueError('Tracker export execution policy differs from the explicit project choice')
@@ -777,6 +779,8 @@ def inspect(root, expected_revision=None):
             required.add('docs/repository/CI_REUSE.md')
         if 'ci_retry' in wf:
             required.add('docs/repository/CI_RETRY.md')
+        if data['schema_version'] == 3:
+            required.add('docs/repository/DIRECT_WORKFLOW.md')
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)

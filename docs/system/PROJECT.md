@@ -12,6 +12,13 @@ consumer writes. The actual complete reviewed engine, final compatible pin,
 paired/native evidence and coordinated publication remain pending. No consumer
 state, capture mandate or delivery permission is activated by this candidate.
 
+The refresh tool also consumes the engine-owned modern direct fixture data and
+runner when the exact selected manifest supplies execution4. The paired gate's
+explicit `--direct-contract` checks actual Master-generated configurations and
+their selected guides separately from canonical saved admission/receipt replay.
+The current released pin keeps its old fixture closure; provisional source checks
+do not install a new trusted snapshot or claim a published compatible pair.
+
 MR-51 documents [actual capacity](../capacity.md) for the existing legacy and
 execution1/2/3 topologies. Tracker owns the reservation projection and UI; Master
 explains held versus active work, pool limits, separate review waiting/batch

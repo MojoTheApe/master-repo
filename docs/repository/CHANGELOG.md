@@ -14,6 +14,13 @@ engine/state/lifecycle companion; its completion, compatible publication/final
 pin, native pair and independent full-scope admission are still required. This
 candidate changes no consumer policy, mandate, capacity, state or service.
 
+Extend mechanical refresh/provenance and the existing portable/final-pair runners
+to consume Tracker's exact modern direct fixture closure when supported. Keep
+canonical saved lifecycle replay separate from actual Master-rendered choices,
+guide/provider validation and the coordinator's generated-config lifecycle proof.
+Missing or changed fixture/provider artifacts fail closed. The released03e trust
+record stays in place until the real compatible engine is reviewed and published.
+
 ## 2026-10-17 — MR-51 / TT-144 truthful capacity
 
 Document durable project-wide occupancy for existing legacy/v1/v2/v3 modes,

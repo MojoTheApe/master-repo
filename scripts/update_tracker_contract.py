@@ -91,6 +91,10 @@ def plan(engine, revision, python):
         'native.json': 'tests/fixtures/portable_native.json',
         'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json',
     }
+    if 4 in record.get('contracts', {}).get('execution_policy', []):
+        if 'scripts/vendor/tracker_direct_policy.py' not in planned:
+            raise ValueError('Modern fixtures require the actual canonical route validator')
+        fixture_sources['direct.json'] = 'tests/fixtures/portable_direct.json'
     provenance = {'schema_version': 1, 'synthetic': True,
         'engine': {'repository': 'MojoTheApe/task-tracker', 'revision': revision}, 'files': {}}
     for destination, source in fixture_sources.items():

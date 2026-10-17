@@ -15,14 +15,41 @@ import export_contract as contract
 FIXTURES = 'tests/fixtures/portable-contract'
 
 
+def fixture_sources(record):
+    sources = {'runner.py': 'tests/portable_fixture.py', 'native.json': 'tests/fixtures/portable_native.json',
+               'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json'}
+    if 4 in record.get('contracts', {}).get('execution_policy', []):
+        validator = record.get('route_validator')
+        if (not isinstance(validator, dict) or set(validator) != {'source', 'sha256'}
+                or validator['source'] != 'tracker/direct_policy.py'):
+            raise ValueError('Modern fixtures require the canonical route validator')
+        sources['direct.json'] = 'tests/fixtures/portable_direct.json'
+    return sources
+
+
+def direct_cases(artifacts):
+    """Validate only the copied fixture envelope; Tracker owns its proof semantics."""
+    if 'direct.json' not in artifacts:
+        return []
+    data = json.loads(artifacts['direct.json'], object_pairs_hook=contract.unique)
+    expected = ['task-main', 'task-stage', 'capture-main', 'capture-stage']
+    if (not isinstance(data, dict) or set(data) != {'schema_version', 'synthetic', 'cases'}
+            or type(data['schema_version']) is not int or data['schema_version'] != 1
+            or data['synthetic'] is not True or not isinstance(data['cases'], list)
+            or len(data['cases']) != len(expected)
+            or any(not isinstance(row, dict) for row in data['cases'])
+            or [row.get('case') for row in data['cases']] != expected):
+        raise ValueError('Canonical direct fixtures need all four exact synthetic cases')
+    return data['cases']
+
+
 def verified_artifacts():
     raw, record, _ = contract.trusted()
     base = SOURCE/FIXTURES
     provenance = json.loads(contract.safe_file(base, 'provenance.json').read_bytes(), object_pairs_hook=contract.unique)
     assert provenance['schema_version'] == 1 and provenance['synthetic'] is True
     assert provenance['engine'] == record['engine']
-    expected_sources = {'runner.py': 'tests/portable_fixture.py', 'native.json': 'tests/fixtures/portable_native.json',
-                        'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json'}
+    expected_sources = fixture_sources(record)
     assert set(provenance['files']) == set(expected_sources)
     artifacts = {}
     for name, source in expected_sources.items():
@@ -35,6 +62,7 @@ def verified_artifacts():
         (layout, context) for layout in ('raw', 'separated') for context in ('source', 'integration', 'main', 'promotion')}
     accounting = json.loads(artifacts['accounting.json'], object_pairs_hook=contract.unique)
     assert accounting['schema_version'] == 1 and accounting['synthetic'] is True
+    direct_cases(artifacts)
     for layout in ('raw', 'separated'):
         root = base/layout
         contract.check_manifest(contract.safe_file(root, contract.MANIFEST).read_bytes(), raw)
@@ -54,6 +82,9 @@ import tracker_ci_gate, tracker_ci_evidence, tracker_batch_policy, tracker_pr_ch
 import tracker_ci_retry, tracker_ci_accounting
 config=json.loads((Path(sys.argv[2])/'tracker/config.json').read_bytes())
 assert tracker_ci_retry.policy(config)==config.get('ci_retry_policy')
+if config.get('execution_policy',{}).get('schema_version')==4:
+ import tracker_direct_policy
+ assert tracker_direct_policy.bundle(config)['execution_policy']==config['execution_policy']
 assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
 '''
     import os
@@ -70,6 +101,21 @@ assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
     return {'isolated_imports': ['scripts', '.workflow/tools'], 'actual_cli_help': True, 'private_engine_imported': False}
 
 
+def exercise_direct_cases(record, artifacts, runner, python, temporary):
+    """Replay only the verified engine-owned direct rows, without engine imports."""
+    results = []
+    for row in direct_cases(artifacts):
+        for layout in ('raw', 'separated'):
+            root = Path(temporary)/('direct-'+row['case']+'-'+layout); root.mkdir()
+            for name in contract.layout_files(record, layout):
+                path = root/name; path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes((SOURCE/FIXTURES/layout/name).read_bytes())
+            config = root/'tracker/config.json'; config.parent.mkdir(parents=True, exist_ok=True)
+            config.write_text(json.dumps(row['config']))
+            results.append(runner.exercise_direct(root, python, layout, row))
+    return results
+
+
 def exercise_all(python, tracker=None):
     record, provenance, artifacts, data = verified_artifacts()
     if tracker is not None:
@@ -79,7 +125,7 @@ def exercise_all(python, tracker=None):
     runner = types.ModuleType('_canonical_tracker_portable_fixture')
     runner.__file__ = str(SOURCE/FIXTURES/'runner.py')
     exec(compile(artifacts['runner.py'], runner.__file__, 'exec'), runner.__dict__)
-    results, accounting_results = [], []
+    results, accounting_results, direct_results = [], [], []
     with tempfile.TemporaryDirectory(prefix='master-portable-native-') as temporary:
         for index, row in enumerate(data['contexts']):
             root = Path(temporary)/str(index); root.mkdir()
@@ -96,8 +142,9 @@ def exercise_all(python, tracker=None):
                 path.write_bytes((SOURCE/FIXTURES/layout/name).read_bytes())
             accounting_results.append(runner.exercise_accounting(root, python, layout,
                 json.loads(artifacts['accounting.json'], object_pairs_hook=contract.unique)))
+        direct_results = exercise_direct_cases(record, artifacts, runner, python, temporary)
     return {'engine': record['engine'], 'provenance': provenance, 'cases': results,
-            'accounting': accounting_results, 'clock_fixture_only': True,
+            'accounting': accounting_results, 'direct': direct_results, 'clock_fixture_only': True,
             'private_engine_required': False, 'live_requests': 0}
 
 
