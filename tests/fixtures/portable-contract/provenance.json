@@ -1,7 +1,7 @@
 {
   "engine": {
     "repository": "MojoTheApe/task-tracker",
-    "revision": "c439ef651cf8eb07a18e5b5b6baa2ccc0097af56"
+    "revision": "407649dc62eea5f9ff8747e1184bc49dd7be4bd7"
   },
   "files": {
     "accounting.json": {
@@ -9,7 +9,7 @@
       "source": "tests/fixtures/ci_accounting_synthetic.json"
     },
     "native.json": {
-      "sha256": "44a099f5401d499d92575a8952dafb4698438b00c818a5aff716e3a395874115",
+      "sha256": "3abbc4aa6daf0b0068b044d9c130f5a54a093c8e8653a8f39240e6cc016ae7a3",
       "source": "tests/fixtures/portable_native.json"
     },
     "runner.py": {

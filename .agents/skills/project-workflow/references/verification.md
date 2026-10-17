@@ -26,6 +26,10 @@ outside this lock. Native rerun keeps the original SHA/ref/triggering privileges
 a real fixed head needs new-candidate verification. Partial retry requires the
 adopted gate's real original-job/dependent proof, otherwise a supported bounded
 full attempt or stop. Retry permission never grants deployment/release permission.
+The first adoption anchor never rolls forward. Preserve imported originals and
+retained episode work; old-created post-cutover attempts still count. Only actual
+native completion evidence can exclude other pre-governance work under the exact
+pinned guide. Policy edits or missing historical context cannot refill budget.
 
 Use an on-demand read-only human/JSON report with versioned saved observations
 when supplied by the pin. Count actual intervals separately from carried-forward

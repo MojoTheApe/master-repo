@@ -101,6 +101,8 @@ def adopt(api, config, store, args):
                              'readiness': {}, 'history': [{'event': 'adopted', 'main_sha': ref, 'report': text}]}
     if state.get('completion'):
         state['completion']['base_schema_version'] = 4
+    elif state.get('ci_retry'):
+        state['ci_retry']['base_schema_version'] = 4
     else:
         state['maintenance']['base_schema_version'] = 4
     execution.audit(state['execution'], 'task-context-adopted', main_sha=ref)

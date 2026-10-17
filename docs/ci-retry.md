@@ -77,6 +77,15 @@ and recorded fix relation; disjoint files or a different SHA alone prove no fix.
 Persist unresolved causes separately from candidate identity. Count equivalent
 native executions started outside the wrapper, preserving ambiguous attribution.
 
+The first owned activation fixes the start of governed work. It never moves on a
+policy edit, new chat, diagnosis or later activation call. Keep all original and
+retained work for the same episode, including its pre-activation attempts. Other
+old runs can be treated as pre-governance only through the exact guide's actual
+native terminal/completion evidence; creation age alone is insufficient. An
+old-created run rerun after activation still counts. Missing evidence stays held.
+A verified relevant fix can create a new candidate's budget while preserving the
+old episode and unresolved causes; this is not a rolling time-based reset.
+
 Native reruns retain the original event SHA/ref and original triggering actor's
 privileges. They cannot test a newly fixed head by relabelling an old run. Start
 appropriate new-candidate verification for genuine fixes. Partial retry requires

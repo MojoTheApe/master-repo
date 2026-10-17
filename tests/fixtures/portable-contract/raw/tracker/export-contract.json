@@ -54,7 +54,7 @@
   },
   "engine": {
     "repository": "MojoTheApe/task-tracker",
-    "revision": "c439ef651cf8eb07a18e5b5b6baa2ccc0097af56"
+    "revision": "407649dc62eea5f9ff8747e1184bc49dd7be4bd7"
   },
   "format_version": 1,
   "layouts": {
@@ -62,27 +62,27 @@
       "scripts/task_tracker.py": "c3de0aaf6b2c66616e497d559f069b3232b5396eff3bd8dc39bb4d2a9f3b4d43",
       "scripts/tracker_batch_policy.py": "f8ab211b8d4577f0fd5a9ff007593bdc1de566a5f6ffdbf469c4f70630b64cc3",
       "scripts/tracker_ci_accounting.py": "c9c8d12aa05ced4775956fecae7bfa69bbb945e6a940a5bd7fbd326b68f28aed",
-      "scripts/tracker_ci_evidence.py": "83fe75a2d73b5052c42b82d1e8c82027be8a35de4d47dc19ae3b0bb88b78cbf2",
+      "scripts/tracker_ci_evidence.py": "a35c57b079c6774662c9e15a2f033bf605df6b166c71d65a7f67c9f5b9cdf230",
       "scripts/tracker_ci_gate.py": "8496073ab5c4deabacb26255420963d7a531cd4b6cc0541d6b29a6bb1462f307",
-      "scripts/tracker_ci_retry.py": "a488ce01b5226a14dcbbc446eaf0c06a4c29d74e66848640ac9c35e5f63d6459",
-      "scripts/tracker_delivery_policy.py": "94ca15bbbb4cc4c09fd2f470c49fc2ee9551a286321ed7d8d8251df11bf3c597",
+      "scripts/tracker_ci_retry.py": "8bc593377ca3991f2843bc6291cc5bcc99bde171ac4d044121e753febfd00598",
+      "scripts/tracker_delivery_policy.py": "a3d786e5cbb65325da9540a51f6371240d64b0dff2dfc95c54add84f8b72872e",
       "scripts/tracker_delivery_receipt.py": "722aeb6e170366c6ff30bdc52d679e9d79841808b90b5df8750a4b6882cb6f36",
       "scripts/tracker_pr_check.py": "4925f25c8401924d95de71d951472124b4dc583775f89a5e87027221afc7954c",
       "scripts/tracker_process_instructions.py": "7282c5d77d2e3b5273a80df788ca92906aa0928dfc0207aeefba76e18a839108",
-      "scripts/tracker_task_context.py": "ce8e36ad286416ee69564961a2cdb90d00125cb9142e0dafad942a50c7c6c379"
+      "scripts/tracker_task_context.py": "59da625315fb1c0b2a7a22631fd994c218041d2ce85c85347e1a6c01cf8a37f1"
     },
     "separated": {
       ".workflow/tools/task_tracker.py": "dfc707bd0c2a726531c7478f1ed576c9df20b92388a4f7a0564a868c39e31bba",
       ".workflow/tools/tracker_batch_policy.py": "f8ab211b8d4577f0fd5a9ff007593bdc1de566a5f6ffdbf469c4f70630b64cc3",
       ".workflow/tools/tracker_ci_accounting.py": "c9c8d12aa05ced4775956fecae7bfa69bbb945e6a940a5bd7fbd326b68f28aed",
-      ".workflow/tools/tracker_ci_evidence.py": "83fe75a2d73b5052c42b82d1e8c82027be8a35de4d47dc19ae3b0bb88b78cbf2",
+      ".workflow/tools/tracker_ci_evidence.py": "a35c57b079c6774662c9e15a2f033bf605df6b166c71d65a7f67c9f5b9cdf230",
       ".workflow/tools/tracker_ci_gate.py": "8496073ab5c4deabacb26255420963d7a531cd4b6cc0541d6b29a6bb1462f307",
-      ".workflow/tools/tracker_ci_retry.py": "a488ce01b5226a14dcbbc446eaf0c06a4c29d74e66848640ac9c35e5f63d6459",
-      ".workflow/tools/tracker_delivery_policy.py": "94ca15bbbb4cc4c09fd2f470c49fc2ee9551a286321ed7d8d8251df11bf3c597",
+      ".workflow/tools/tracker_ci_retry.py": "8bc593377ca3991f2843bc6291cc5bcc99bde171ac4d044121e753febfd00598",
+      ".workflow/tools/tracker_delivery_policy.py": "a3d786e5cbb65325da9540a51f6371240d64b0dff2dfc95c54add84f8b72872e",
       ".workflow/tools/tracker_delivery_receipt.py": "722aeb6e170366c6ff30bdc52d679e9d79841808b90b5df8750a4b6882cb6f36",
       ".workflow/tools/tracker_pr_check.py": "0f708cc968d777bfed9d2e5f4be50d04145bd97762c1b6ddbed1a6bd32a529c5",
       ".workflow/tools/tracker_process_instructions.py": "7282c5d77d2e3b5273a80df788ca92906aa0928dfc0207aeefba76e18a839108",
-      ".workflow/tools/tracker_task_context.py": "ce8e36ad286416ee69564961a2cdb90d00125cb9142e0dafad942a50c7c6c379",
+      ".workflow/tools/tracker_task_context.py": "59da625315fb1c0b2a7a22631fd994c218041d2ce85c85347e1a6c01cf8a37f1",
       "scripts/task_tracker.py": "404a87faf60b4daec1965c7ff5bd34e0da11215b53cc6dfa5216c9e205e55887",
       "scripts/tracker_batch_policy.py": "fcd088bcfc2d282f4a8e6d6daee22dbce6e780c29e484090f00f7cac8020240e",
       "scripts/tracker_ci_accounting.py": "a100c55c6de8419d01f6b79a0d30c40bcdea9fc4412aeb5ff3c92f5187f50737",
@@ -97,7 +97,7 @@
     }
   },
   "retry_validator": {
-    "sha256": "a488ce01b5226a14dcbbc446eaf0c06a4c29d74e66848640ac9c35e5f63d6459",
+    "sha256": "8bc593377ca3991f2843bc6291cc5bcc99bde171ac4d044121e753febfd00598",
     "source": "tracker/ci_retry.py"
   },
   "runtime": {
@@ -105,7 +105,7 @@
     "portable_min_python": "3.9"
   },
   "validator": {
-    "sha256": "83fe75a2d73b5052c42b82d1e8c82027be8a35de4d47dc19ae3b0bb88b78cbf2",
+    "sha256": "a35c57b079c6774662c9e15a2f033bf605df6b166c71d65a7f67c9f5b9cdf230",
     "source": "tracker/ci_evidence.py"
   }
 }
