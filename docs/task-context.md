@@ -122,6 +122,10 @@ reconcile Stage with main before the next staged batch.
 
 Initial explicit execution adoption creates fenced outer protocol 4 with retained
 execution state 2; old writers reject it. Maintenance wraps/restores that fence.
+For package projects, complete the separate selection source's required package
+through the exact engine's supported [selection-delivery transition](workflow-upgrades.md)
+before maintenance. Every other pending target delivery and unresolved operation
+still blocks adoption; source release alone does not settle them.
 Existing adoption uses the exact engine's inspected idle `task-context adopt`
 under genuine owned maintenance after reviewed official current-main config and
 compatible writer/projection publication. Preserve queues, old approvals, delivery

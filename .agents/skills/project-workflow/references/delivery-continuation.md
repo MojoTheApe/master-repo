@@ -41,6 +41,15 @@ retry/resume. The actual configured native verification job emits the exact
 revalidates authorization, exact merge/tasks/target/policy and native job/log before
 CAS. An artifact manifest alone is insufficient.
 
+For an optional-policy selection package, first verify that the exact pinned engine
+supports its bounded selection-delivery transition. Only the actual single-selection
+batch may use its genuinely frozen prior operative contract for the already
+authorized package, with exact current main and all normal native acceptance.
+Complete that package before maintenance/adoption. The receipt view is not general
+admission, an arbitrary previous-config option or an in-maintenance exception.
+Every other pending delivery and unknown effect remains blocking; unsupported pins
+need compatible support before selection.
+
 Record successful delivery with the exact pinned Tracker command against the real
 merged tasks/revision, current policy and configured target. Retain report/run and
 artifact references, read back completion, and close only fully satisfied scope.

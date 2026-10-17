@@ -9,6 +9,13 @@ label. A privileged authenticated principal does not prove the human owner
 personally reviewed the evidence. Unknown, product, permanent configuration and
 billing/access/quota causes do not automatically retry.
 
+Package retry-policy selection has its own delivery order: verify compatible
+selection-delivery support, finish the existing authorized selection package, then
+drain remaining owners/effects and adopt under owned maintenance. Follow
+[delivery continuation](delivery-continuation.md) and the exact engine guide.
+No receipt-only prior-policy view grants retry dispatch, changes an episode budget
+or establishes compatible recovery for the new retry state.
+
 If the pin supports a specific-human-instruction grant, follow its separate
 operator-attestation procedure and bind the actual message/source/time/action to
 the current native identity, episode and explicitly named cause set. Follow the

@@ -101,6 +101,16 @@ revision, target, current policy/request and exact log evidence before CAS write
 An uploaded manifest, green build, arbitrary workflow or main push cannot create
 authorization or acceptance. The project owns release/deploy and real checks.
 
+An optional-policy configuration package may need the pinned engine's bounded
+selection-delivery transition: its new selection is not yet operative, and adoption
+must wait for verified delivery. Only a supported, independently reviewed single
+selection batch may finish its existing authorized package against the genuinely
+frozen prior contract and exact current main merge. Preserve every source, native
+producer, target and package acceptance check. The receipt view grants no ordinary
+admission or new authorization, accepts no caller-selected historical config and
+does not run under maintenance. Follow [the coordinated selection order](workflow-upgrades.md)
+and the exact engine guide; unsupported cases remain unfinished.
+
 ## Failure and resumption
 
 Persist pending/running/succeeded/failed state with exact task set, candidate,
