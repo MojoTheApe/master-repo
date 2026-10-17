@@ -3,7 +3,9 @@
 This is the canonical process for new projects. Task Tracker owns its application
 and command guide; every project's Issues stay in that project's repository.
 Project settings choose staging and delivery. Existing projects adopt changes in
-separate reviewed migrations, preserving their local controls and history.
+separate reviewed migrations, preserving their local controls and history. Read
+the [ownership map](docs/ownership.md) for authored policy, executable Tracker
+contracts, selected generated instructions and local product/runtime knowledge.
 
 Use the [verification policy](docs/verification.md) for changed-risk source checks,
 complete applicable combined-candidate tests and actual delivery acceptance. Reuse

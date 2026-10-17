@@ -156,6 +156,8 @@ class CompletionPolicy(unittest.TestCase):
             (target / 'tracker/config.json').write_text(project.dumps(config))
             (target / 'docs').mkdir()
             (target / 'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide\n')
+            (target / '.github').mkdir()
+            (target / '.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             if selected:
                 (target / 'docs/COMPLETION_POLICY.md').write_text('Exact guide\n')
             (target / 'scripts').mkdir()

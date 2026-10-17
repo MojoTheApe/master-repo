@@ -82,7 +82,8 @@ class SelectedInstructions(unittest.TestCase):
 
     def test_separated_local_route_reference_keeps_exact_body_and_navigation(self):
         original = '# Full supported route reference\n\nPinned reference content.\n'
-        exported = {'docs/TRACKER_AGENT_WORKFLOW.md': 'Read docs/WORKFLOW_REFERENCE.md and [reference](WORKFLOW_REFERENCE.md).\n',
+        exported = {'docs/TRACKER_AGENT_WORKFLOW.md': 'Read docs/WORKFLOW_REFERENCE.md and [reference](WORKFLOW_REFERENCE.md).\n'
+                '[Config](../tracker/config.json), [task](../tracker/task-template.md).\n',
                     'docs/WORKFLOW_REFERENCE.md': original}
         for name in project.HELPERS:
             exported['scripts/'+name] = 'root = Path(__file__).resolve().parents[1]\n'
@@ -91,3 +92,5 @@ class SelectedInstructions(unittest.TestCase):
         self.assertIn('docs/repository/WORKFLOW_REFERENCE.md', exported['docs/repository/TRACKER.md'])
         self.assertIn('[reference](WORKFLOW_REFERENCE.md)', exported['docs/repository/TRACKER.md'])
         self.assertIn('repository/WORKFLOW_REFERENCE.md', exported['docs/WORKFLOW_REFERENCE.md'])
+        self.assertIn('[Config](../../tracker/config.json)', exported['docs/repository/TRACKER.md'])
+        self.assertIn('[task](../../tracker/task-template.md)', exported['docs/repository/TRACKER.md'])

@@ -1,5 +1,21 @@
 # Repository process history
 
+## 2026-10-17 — MR-37 selected primary instructions
+
+Define authored ownership across common Master policy, executable Tracker
+contracts, project knowledge and mirrored skill distribution. Generate primary
+workflow/delivery guidance for only the selected mode, Stage and target. Preserve
+Tracker's selected PR template and append the common documentation/impact notes.
+Move the complete exported Markdown reference closure together, retain old-path
+forwarding pages and adjust generated primary navigation for the separated layout.
+
+TT-148 supplies canonical selected command rendering, standalone export and local
+product/engineering documentation moves. Final compatibility must select its
+actual reviewed merge `6859f7b15e3bde361beba5f07a24b90492ee1f27`; source versions, published releases, installed reader and
+consumer activation remain separate facts. No execution/default/state/target
+change is introduced by this instruction patch. The canonical skill navigates
+the same ownership and selected-guide boundary.
+
 ## 2026-10-17 — MR-45 explicit accepted-scope completion
 
 Mirror the TT-142 completion contract through an explicit descriptor choice and

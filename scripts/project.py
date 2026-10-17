@@ -38,25 +38,19 @@ LAYOUT_DATA = {'schema_version': 1, 'repository': 'docs/repository/',
 def separate_export(files):
     """Separate shared guidance and tools; preserve the pinned engine contract."""
     guide = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
-    if 'docs/WORKFLOW_REFERENCE.md' in files:
-        files['docs/repository/WORKFLOW_REFERENCE.md'] = files.pop('docs/WORKFLOW_REFERENCE.md')
-        files['docs/WORKFLOW_REFERENCE.md'] = '# Moved\n\nSee [workflow reference](repository/WORKFLOW_REFERENCE.md).\n'
-        guide = guide.replace('docs/WORKFLOW_REFERENCE.md', 'docs/repository/WORKFLOW_REFERENCE.md')
-    if 'docs/PROCESS_INSTRUCTIONS.md' in files:
-        files['docs/repository/PROCESS_INSTRUCTIONS.md'] = files.pop('docs/PROCESS_INSTRUCTIONS.md')
-        files['docs/PROCESS_INSTRUCTIONS.md'] = '# Moved\n\nSee [process instructions](repository/PROCESS_INSTRUCTIONS.md).\n'
-        guide = guide.replace('../docs/PROCESS_INSTRUCTIONS.md', 'PROCESS_INSTRUCTIONS.md')
-        guide = guide.replace('`docs/PROCESS_INSTRUCTIONS.md`', '`docs/repository/PROCESS_INSTRUCTIONS.md`')
-    if 'docs/TASK_CONTEXT.md' in files:
-        files['docs/repository/TASK_CONTEXT.md'] = files.pop('docs/TASK_CONTEXT.md')
-        guide = guide.replace('docs/TASK_CONTEXT.md', 'docs/repository/TASK_CONTEXT.md')
-    if 'docs/CI_REUSE.md' in files:
-        files['docs/repository/CI_REUSE.md'] = files.pop('docs/CI_REUSE.md')
-        guide = guide.replace('docs/CI_REUSE.md', 'docs/repository/CI_REUSE.md')
-    if 'docs/COMPLETION_POLICY.md' in files:
-        files['docs/repository/COMPLETION_POLICY.md'] = files.pop('docs/COMPLETION_POLICY.md')
-        files['docs/COMPLETION_POLICY.md'] = '# Moved\n\nSee [completion policy](repository/COMPLETION_POLICY.md).\n'
-        guide = guide.replace('docs/COMPLETION_POLICY.md', 'docs/repository/COMPLETION_POLICY.md')
+    # Move the entire exported reference closure together. Sibling Markdown
+    # links remain valid and the pinned reference bodies stay byte-for-byte.
+    references = sorted(name for name in files
+                        if name.startswith('docs/') and name.count('/') == 1
+                        and name.endswith('.md'))
+    for old in references:
+        name = Path(old).name
+        files['docs/repository/' + name] = files.pop(old)
+        files[old] = '# Moved\n\nSee [' + name + '](repository/' + name + ').\n'
+        # The generated primary guide is navigation, not a contract source.
+        guide = guide.replace('../docs/' + name, name)
+        guide = guide.replace(old, 'docs/repository/' + name)
+    guide = guide.replace('](../tracker/', '](../../tracker/')
     files['docs/repository/TRACKER.md'] = guide
     helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py',
                                            'tracker_ci_evidence.py', 'tracker_ci_gate.py', 'tracker_delivery_receipt.py', 'tracker_task_context.py')

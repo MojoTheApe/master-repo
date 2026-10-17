@@ -1,5 +1,21 @@
 # System changes
 
+## 2026-10-17 — MR-37 selected primary instructions
+
+Define authored ownership across common Master policy, executable Tracker
+contracts, project knowledge and mirrored skill distribution. Generate primary
+workflow/delivery guidance for only the selected mode, Stage and target. Preserve
+Tracker's selected PR template and append the common documentation/impact notes.
+Move the complete exported Markdown reference closure together, retain old-path
+forwarding pages and adjust generated primary navigation for the separated layout.
+
+TT-148 supplies canonical selected command rendering, standalone export and local
+product/engineering documentation moves. Final compatibility must select its
+actual reviewed merge; source versions, published releases, installed reader and
+consumer activation remain separate facts. No execution/default/state/target
+change is introduced by this instruction patch. The canonical skill navigates
+the same ownership and selected-guide boundary.
+
 ## Shared CI reuse and measured verification (MR-32)
 
 Add explicit CI-policy mirroring/init/export/upgrade, native plan/final-gate

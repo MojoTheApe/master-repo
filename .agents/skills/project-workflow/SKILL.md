@@ -71,6 +71,14 @@ environments, check commands or live registration proof.
 
 ## Execute the ticket lifecycle
 
+Use the project's generated local Tracker guide as the primary route for its
+actual selected execution mode, Stage and delivery target. Supported older routes
+remain reference material and never imply activation. Read the
+[instruction ownership map](references/instruction-ownership.md) before changing
+shared rules or templates. Tracker owns exact commands and parser fields; Master
+retains common lifecycle and profile guarantees. Keep generated consumer PR fields
+and frozen batch/promotion member identity intact.
+
 When descriptor `workflow.completion_policy` and Tracker `completion_policy`
 explicitly match, read [accepted-scope completion](references/completion-policy.md)
 and the exact exported engine guide. Verify the actual reader/writers and durable
@@ -120,10 +128,11 @@ On explicit development, read the full Issue, claim the Tracker slot with its
 `work` command and create a task branch under the pinned naming rules and any
 host/user prefix policy. Legacy projects use `codex/<public-id-lowercase>-<short-name>`;
 opted-in execution also accepts neutral `work/<public-id-lowercase>-<short-name>`. Preserve
-classification, dependencies and existing queue semantics. Opted-in execution v1
-uses exactly one task per source PR: `[RF-67] Summary`, one `Tracker issues: RF-67`
-line and a link back from that Issue. Multiple related IDs in one PR are supported
-only under legacy execution. PR numbers are different from Issue IDs. Avoid automatic closing keywords
+classification, dependencies and existing queue semantics. All opted-in execution versions
+use exactly one task per ordinary source PR: `[RF-67] Summary`, one `Tracker issues: RF-67`
+line and a link back from that Issue. Frozen integration and promotion PRs carry their complete original batch member
+set; several related IDs in an ordinary source PR are supported only under legacy
+execution. PR numbers are different from Issue IDs. Avoid automatic closing keywords
 in both PR text and commits. Keep partial tasks and abandoned PRs unfinished.
 
 Implement and self-check, update affected system docs/history or explain no impact,
