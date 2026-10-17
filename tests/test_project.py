@@ -95,6 +95,7 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     if 'process_instructions' in data['workflow']:
         config['process_instructions']=data['workflow']['process_instructions']
     out={'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
+         '.github/pull_request_template.md': 'Tracker issues: EX-12\n\nPinned selected Tracker PR guidance.\n',
          'tracker/engine.json':project.dumps({'repository':data['tracker']['repository'],'revision':data['tracker']['revision']}),
          'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'root = Path(__file__).resolve().parents[1]\n',
          'scripts/tracker_pr_check.py':'root = Path(__file__).resolve().parents[1]\n','scripts/tracker_delivery_policy.py':'# policy check\n'}
@@ -115,7 +116,8 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     project.separate_export(out)
     out.update(project.layout_files())
     for source,destination in project.FILES.items():
-        out[destination]=(project.SOURCE/'templates/workflow'/source).read_text().replace('__STANDARD_REVISION__',revision)
+        text=(project.SOURCE/'templates/workflow'/source).read_text().replace('__STANDARD_REVISION__',revision)
+        out[destination]=project.instruction_render.render(text,data)
     return out
 
 
@@ -468,6 +470,7 @@ class Projects(unittest.TestCase):
             target=Path(command[command.index('--output')+1]);(target/'tracker').mkdir(parents=True)
             (target/'tracker/config.json').write_text(source.read_text())
             (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            (target/'.github').mkdir(); (target/'.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             (target/'scripts').mkdir()
             for name in project.HELPERS:
                 (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
@@ -489,6 +492,7 @@ class Projects(unittest.TestCase):
             observed.append(config.copy())
             (target/'tracker/config.json').write_text(project.dumps(config))
             (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            (target/'.github').mkdir(); (target/'.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             (target/'scripts').mkdir()
             for name in project.HELPERS:
                 (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
@@ -541,6 +545,7 @@ class Projects(unittest.TestCase):
             observed.append(config)
             (target/'tracker/config.json').write_text(project.dumps(config))
             (target/'docs').mkdir(); (target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            (target/'.github').mkdir(); (target/'.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             (target/'scripts').mkdir()
             for name in (*project.HELPERS, 'tracker_batch_policy.py', 'tracker_delivery_receipt.py'):
                 (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
@@ -643,6 +648,7 @@ class Projects(unittest.TestCase):
                 config['process_instructions']=json.loads(Path(command[command.index('--process-instructions')+1]).read_text())
             observed.append(config.copy());(target/'tracker/config.json').write_text(project.dumps(config))
             (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
+            (target/'.github').mkdir(); (target/'.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             if 'process_instructions' in config:
                 (target/'docs/PROCESS_INSTRUCTIONS.md').write_text('Actual instruction route guide.\n')
                 (target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text(

@@ -1,123 +1,76 @@
 # Repository workflow
 
-Follow the [common lifecycle and task context](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/task-context.md)
-for responsibilities across all delivery profiles. If matching descriptor/config
-explicitly adopt task context, use the exact pinned guide for pre-start assessment,
-the terminal work journal and owned independent source compatibility review.
-Other projects retain their adopted command and scope semantics.
+Read `delivery.json`, the [system description](../system/PROJECT.md),
+[delivery rules](DELIVERY.md), [selected Tracker guide](TRACKER.md) and
+[verification](VERIFICATION.md) before work. These checked-in files describe this
+project's actual immutable standard/engine pair, selected route and local controls.
+Use `python scripts/task_tracker.py guide` for the same pinned command guidance.
 
-When `workflow.completion_policy` and Tracker `completion_policy` explicitly match,
-read the exact local `docs/repository/COMPLETION_POLICY.md`. Current success follows
-the genuinely accepted scope and configured delivery target; a descriptor edit or
-installed skill alone does not activate the durable contract. Preserve old proof
-and unknown historical scope through the documented owned migration.
+## Selected route
 
-Read `delivery.json`, `docs/system/PROJECT.md`, `docs/repository/DELIVERY.md` and
-`docs/repository/TRACKER.md` before work. They define this project's adopted
-standard, system, tracker, stage option, completion rule and local exceptions.
-Use `python scripts/task_tracker.py guide` for the pinned Tracker commands.
-Use [verification](VERIFICATION.md) for selecting checks and retaining reusable
-results under this project's exact standard pin.
+__SELECTED_WORKFLOW__
 
-If matching descriptor/Tracker `process_instructions` is explicitly adopted,
-one source PR changing only regular AGENTS.md, CLAUDE.md or Markdown under
-docs/repository goes through independent review and its instruction checks directly
-to main. The complete actual diff must qualify, including both rename paths;
-mixed, unknown, unsafe or incomplete proof keeps the normal route. Keep the genuine
-author claim/handoff and, when execution is adopted, its review lane through admitted main completion. Do not move
-this source to Approved, stage or a batch or invent installation proof. Wait for
-any reserved integration/unpromoted stage ownership to finish before changing main.
-Later staged work starts from current main. Use the pinned Tracker's baseline proof
-for a complete instruction-only gap covered by retained verified process merges;
-missing receipts or other divergence needs ordinary claimed reconciliation.
-Configuration, helpers, CI, system/runtime knowledge and application/build changes
-remain on the ordinary route. Installing a skill alone never selects the exception.
+__TASK_CONTEXT_GUIDANCE__
 
-If matching execution policies use schema 2 or 3, follow the pinned guide's Approved
-and batch-integration lifecycle for all other work. Each source PR still represents one task; current
-independent review and required source checks move it to Approved and release the
-review lane. A development request ends there until integration is authorized.
-A separate Coordinator claim owns one frozen integration batch of
-1..batch_limit members (recommended limit five), retaining every real Worker and
-reviewer. Ship-all snapshots current Approved intake; new arrivals wait. An urgent
-single task may ship alone. Independently review/check the combined candidate,
-with staging enabled verify its exact stage target/tree, then promote the unchanged
-member set to main. With staging explicitly disabled, admit the reserved independently
-reviewed batch directly into main using the pinned `batch` direction and matching
-batch identity. Ordinary source PRs remain approval-only; keep all source and
-combined checks.
-Keep failed post-stage batches owned through claimed author fixes and fresh proof.
-Explicit schema 3 adds 1..5 independent source-review slots, with distinct actual
-Reviewer runs/claims and one separate integration Reviewer. Schema 2 retains one
-source slot. Source approvals may continue during ordinary batch review; each
-source return/takeover/evidence operation selects its exact claim. Instruction-only
-sources retain their idle-integration restrictions. Opt-in requires compatible
-published writers/service and an idle preserved-state migration under the pinned
-guide; changing configuration alone cannot reserve more capacity.
-The execution-v1 lane lifetime and single-task staging instructions below apply
-only to schema 1. Installing a skill or changing upstream pins does not enable v2.
+__PROCESS_GUIDANCE__
 
-Create an Issue before implementation. Idea requests stay Idea; task requests
-start Backlog. Start development only when requested; claim the Tracker slot and
-use the pinned task-branch rules (`codex/<public-id>-<short-name>` remains
-compatible; opted-in execution also accepts `work/<public-id>-<short-name>`).
-Honor a host/user prefix requirement. PR title: `[EX-12] Summary`; one
-`Tracker issues: EX-12` line, with a link back from the Issue. Opted-in execution v1
-requires exactly one task per source PR. Multiple related IDs in one PR are allowed
-only under legacy execution. No automatic closing keywords.
+## Work and independent review
 
-If `workflow.execution` and Tracker `execution_policy` are explicitly enabled and
-equal, use their implementation capacity and version-specific ownership. Schema 1
-has one review/integration lane; schema 2/3 separates source review from a Coordinator
-integration batch. Otherwise
-keep the pinned legacy slot behavior. A Coordinator stays in the current
-conversation, screens task dependencies/overlap and delegates independent tasks to
-Workers in separate branches/worktrees using available subagents. Two independent
-tasks with two free slots use two Workers. Use platform-neutral opaque actor and
-session IDs; record Worker ownership separately from coordinator/reviewer metadata
-and real GitHub Assignees. No new user-owned conversations without an explicit
-request. If delegation is unavailable, disclose serial implementation; never
-substitute self-review for an independent Reviewer.
+Create a real Issue before implementation. Ideas remain Idea; requested tasks
+start Backlog. Planning does not claim code capacity. When development is
+requested, read the entire Description and Specifications and use the pinned
+Tracker's `work` command to claim the actual available slot and verify In Progress.
+Follow its supported branch/actor/session rules and any host-required prefix.
+An older task needs current readiness assessment, not routine owner reapproval.
 
-Use the pinned Tracker guide to claim, resume, hand off and recover work. In schema 1, handoff
-to the review queue releases implementation capacity. Multiple tasks may wait in
-Review; acquire the sole review/integration lane before launching a Reviewer. Hold
-it through current review, checks, optional stage and main merge. The next task
-waits until explicit release. Review fixes take priority and reacquire implementation
-capacity. Preserve current source/base/policy evidence and stage ownership when
-returning work or recovering; no timeout or label change permits duplicate claims.
-Any post-handoff branch edit, including base updates and conflict resolution,
-requires the Reviewer to call `execution review-return`, followed by a fresh author
-implementation claim, checks and another handoff. Use `--keep-lane` to retain review
-ownership; it is mandatory after entering stage. Reacquire or resume the lane and
-review current content. Coordinators and Reviewers never edit an unclaimed branch.
+The Coordinator checks dependencies, overlap and actual ownership, and delegates
+independent eligible work to Workers in isolated branches/worktrees through
+available subagents. Respect the selected capacity and any tighter commissioned
+work limit. Keep roles separate from GitHub assignees and use genuine opaque
+actor/session identities. Do not create new user-owned chats without an explicit
+request. If delegation is unavailable, record serial implementation; independent
+review still cannot be replaced by self-review.
 
-After implementation and self-check, prepare the PR and set Review. Automatically
-arrange a separate non-implementing subagent for independent review when the lane
-is available. Delegated Workers hand off to the Coordinator, who starts the review
-of the actual
-head/base, requirements and docs. Fix on the same branch and obtain fresh approval.
-Run `check-merge PR_NUMBER` immediately before merging. For a proven adopted
-instruction-only source, main integration completes the fully reviewed task scope,
-including in a package project; supply no Stage or installation receipt. Legacy
-projects keep their slot and independent attestation without unsupported execution
-lane commands. For other work, in schema 1 or legacy mode, if staging is enabled,
-working branch -> stage -> main, using the same single task in execution v1
-(related task sets are legacy-only) and unchanged verified
-content. Preserve the working branch for fixes. Use evidence commands from the
-Tracker guide; labels and merge alone do not prove a required delivery.
+Prepare a linked PR after implementation and self-checks. Preserve the exact
+machine-readable `Tracker issues:` field and source-versus-integration identity
+from this project's PR template. No automatic Issue-closing keywords. Update
+current system knowledge and meaningful history in the same PR, or explain the
+specific no-impact result. Preserve original specifications and local safeguards.
 
-Update current-system docs and meaningful change history in the same PR, or explain
-no documentation impact. Preserve original specifications and local deployment
-controls. A selected integration/main-merge request includes the maintained release,
-verification and receipt after main; continue without a routine second approval
-through [delivery continuation](DELIVERY_CONTINUATION.md). A configured adapter/CI
-supplies durable execution; instructions alone do not launch it. Assess Master Repo /
-Task Tracker impact for process changes and propose
-linked fixes when needed. Ordinary feature work does not upgrade the standard.
+Follow the selected Tracker guide for the genuine handoff and review ownership.
+Arrange a separate non-implementing subagent to review the actual head/base, full
+requirements, changed files and checks. Delegated Workers hand off to their
+Coordinator, who starts the independent review. Keep fixes on the task branch;
+reclaim author ownership through the adopted return procedure before editing after
+handoff, including base updates or conflict resolution. Reviewers and coordinators
+must not edit an unclaimed branch. Changed code, base, scope or policy requires
+fresh appropriate proof. A missing independent reviewer is an explicit limitation,
+never self-approval.
 
-The optional installed `project-workflow` skill helps navigate these instructions.
-Its canonical source lives in Master Repo; updating that skill never changes this
-project's pinned contract. Record project-specific exceptions in `delivery.json`.
+Use `check-pr` for early linkage feedback and the supported `check-merge` once for
+final admission; final admission already includes linkage. Verify actual branch
+protection and required checks rather than inferring them from a label or guide.
+Preserve exact reviewed content through admitted integration. Use the selected
+Tracker guide for evidence, return/takeover, recovery and optional Stage commands;
+no timeout or status-label edit clears a genuine owner.
 
-File ownership and placement: see `docs/repository/LAYOUT.md`.
+## Local knowledge and delivery
+
+A selected integration/main-merge request includes the maintained delivery and
+verification required by this project's adopted target. Continue through
+[delivery continuation](DELIVERY_CONTINUATION.md) without a routine second approval;
+read [runtime procedures](../runtime/DELIVERY.md) for actual authorization, access,
+backup and compatible recovery. Instructions do not create a background producer.
+A partial ticket, pending/failed delivery or unknown accepted outcome stays
+unfinished. Merge, publication, installation and verified behavior are separate
+facts. Do not reduce a completion obligation to bypass missing proof.
+
+Use the [ownership map](LAYOUT.md) for repository/system/runtime files. Shared
+upgrades preserve project-owned system/runtime knowledge, unique commands,
+installers, data and deployment controls. Ordinary feature work does not upgrade
+standard or engine pins. For process changes assess Master Repo / Task Tracker
+impact and link the matching fix or concrete no-impact result.
+
+The installed `project-workflow` skill is navigation. Its canonical Master source
+and verified AI Skills mirror do not activate this project's policies or replace
+its adopted local instructions. Record actual exceptions in `delivery.json`.

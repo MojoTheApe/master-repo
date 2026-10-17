@@ -7,6 +7,7 @@ import sys
 import tempfile
 import standard
 import ci_policy
+import instruction_render
 
 SOURCE = Path(__file__).resolve().parents[1]
 PROFILES = {'vps': 'verified-production', 'n8n': 'verified-production', 'n8n-source': 'reviewed-merge', 'local': 'reviewed-merge',
@@ -25,7 +26,6 @@ FILES = {'AGENTS.md': 'AGENTS.md', 'WORKFLOW.md': 'docs/repository/WORKFLOW.md',
          'PROJECT.md': 'docs/system/PROJECT.md', 'CONTEXT.md': 'docs/system/AGENT_CONTEXT.md',
          'RUNTIME.md': 'docs/runtime/DELIVERY.md', 'CHANGELOG.md': 'docs/system/CHANGELOG.md',
          'SPECS.md': 'docs/system/specs/README.md',
-         'PULL_REQUEST_TEMPLATE.md': '.github/pull_request_template.md',
          'delivery-check.yml': '.github/workflows/delivery-check.yml'}
 FORWARDS = {'docs/PROJECT.md': 'system/PROJECT.md', 'AGENT_CONTEXT.md': 'docs/system/AGENT_CONTEXT.md',
             'docs/DELIVERY.md': 'repository/DELIVERY.md', 'docs/CHANGELOG.md': 'system/CHANGELOG.md',
@@ -38,6 +38,10 @@ LAYOUT_DATA = {'schema_version': 1, 'repository': 'docs/repository/',
 def separate_export(files):
     """Separate shared guidance and tools; preserve the pinned engine contract."""
     guide = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
+    if 'docs/WORKFLOW_REFERENCE.md' in files:
+        files['docs/repository/WORKFLOW_REFERENCE.md'] = files.pop('docs/WORKFLOW_REFERENCE.md')
+        files['docs/WORKFLOW_REFERENCE.md'] = '# Moved\n\nSee [workflow reference](repository/WORKFLOW_REFERENCE.md).\n'
+        guide = guide.replace('docs/WORKFLOW_REFERENCE.md', 'docs/repository/WORKFLOW_REFERENCE.md')
     if 'docs/PROCESS_INSTRUCTIONS.md' in files:
         files['docs/repository/PROCESS_INSTRUCTIONS.md'] = files.pop('docs/PROCESS_INSTRUCTIONS.md')
         files['docs/PROCESS_INSTRUCTIONS.md'] = '# Moved\n\nSee [process instructions](repository/PROCESS_INSTRUCTIONS.md).\n'
@@ -285,8 +289,13 @@ def render(inputs, revision, tracker_root, python=sys.executable):
     files = separate_export(files)
     files.update(layout_files())
     files['delivery.json'] = dumps(data)
+    pr_template = '.github/pull_request_template.md'
+    if pr_template not in files:
+        raise ValueError('Pinned Tracker export lacks the selected PR template')
+    files[pr_template] += '\n\n' + (SOURCE/'templates/workflow/PULL_REQUEST_TEMPLATE.md').read_text()
     for name, dest in FILES.items():
-        files[dest] = (SOURCE/'templates/workflow'/name).read_text().replace('__STANDARD_REVISION__', revision).replace('EX-12', inputs['prefix']+'-12')
+        text = (SOURCE/'templates/workflow'/name).read_text().replace('__STANDARD_REVISION__', revision).replace('EX-12', inputs['prefix']+'-12')
+        files[dest] = instruction_render.render(text, data)
     files['CLAUDE.md'] = 'Read AGENTS.md and the project instructions it links before work.\n'
     return files
 
@@ -464,7 +473,7 @@ def inspect(root, expected_revision=None):
         if not {'descriptor','tracker-link'} <= set(checks): raise ValueError('Descriptor and tracker-link checks are required')
         layout = json.loads(standard.safe_path(root, LAYOUT).read_text())
         if layout != LAYOUT_DATA: raise ValueError('Use the separated repository/system/runtime layout')
-        required = set(FILES.values()) | set(FORWARDS) | {'docs/repository/TRACKER.md'}
+        required = set(FILES.values()) | set(FORWARDS) | {'docs/repository/TRACKER.md', '.github/pull_request_template.md'}
         required.update('.workflow/tools/' + name for name in HELPERS)
         required.update('scripts/' + name for name in HELPERS)
         if wf.get('execution', {}).get('schema_version') in (2, 3):
