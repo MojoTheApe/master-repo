@@ -11,6 +11,17 @@ schema 2 or 3, the descriptor/config policies match, and the supported shared-st
 migration has actually completed. Installing this skill never enables the mode.
 Keep execution-v1 and legacy consumers on their own pinned lifecycle.
 
+Read occupied/limit/free from actual held reservations, separately from activity,
+review waiting and batch members. In schema2 the single review lane is shared by
+source and batch Reviewers. In schema3 only source-review claims consume the
+source pool; the integration Reviewer is a subrole of one integration reservation.
+Four batch members still occupy one integration slot. Retained fixing/pending
+claims count until supported release; historical batch Reviewers do not add slots.
+Free integration can remain paused by pending authorized delivery after a valid
+release, without globally pausing Workers. Keep each real barrier scoped, and use
+the command's fresh admission checks. Stale/missing projection cannot promise a
+currently free slot; filters and project switching never redefine total capacity.
+
 Schema 3 explicitly supports 1..5 independent source Reviewers, each in a distinct
 actual run with its own PR-bound claim, alongside one integration Coordinator and
 one separate integration Reviewer. Schema 2 retains one source lane. Use matching

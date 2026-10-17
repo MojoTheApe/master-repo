@@ -130,6 +130,13 @@ and grants no approval or admission. The one-task source PR rule remains. The ex
 task staging instructions below apply only to v1. Use only commands supported by
 the exact pinned engine; preserve older consumers and their actual delivery rules.
 
+Read capacity from a compatible board's project-wide held-reservation projection,
+not filtered tasks, activity animations or timers. Occupied/limit/free, review
+queue length and batch member count have different meanings. A numerically free
+pool does not authorize a claim; scoped admission barriers and stale/unknown data
+still require the exact command's current checks. Missing projection is unknown,
+not an empty legacy slot. The selected execution references explain its real pools.
+
 Idea request -> Idea; task request -> Backlog. Planning and To Do do not start code.
 On explicit development, read the full Issue, claim the Tracker slot with its
 `work` command and create a task branch under the pinned naming rules and any

@@ -109,6 +109,22 @@ claimed reconciliation. Configuration, executable
 helpers, CI, system/runtime knowledge and application/build changes keep the normal
 project route. Absence of this opt-in preserves the existing contract and history.
 
+## Observe capacity without granting admission
+
+The compatible Tracker projection reports actual project-wide held reservations,
+visible occupied/limit/free values and a separate review queue. Count a held lane
+through pending transitions and fixes until its supported owned release. A batch
+with several tasks occupies one integration slot. Respect the adopted topology:
+v2 shares its review lane between source and batch Reviewers; v3 source reviews
+are separate from its integration Reviewer. Never derive capacity from filtered
+Issues, activity, historical owners or elapsed time.
+
+Numeric free capacity does not authorize work, integration or delivery. Keep
+operation-specific maintenance/delivery barriers and stale/unknown observations
+separate from occupancy, and use the actual command's fresh admission/CAS checks.
+See [capacity](docs/capacity.md) for current legacy/v1/v2/v3 semantics. This display
+changes no configured limit, state protocol, selected route or consumer policy.
+
 ## Optional Approved queue and batch integration
 
 Explicit execution policy schema 2 selects the following mirrored settings:
