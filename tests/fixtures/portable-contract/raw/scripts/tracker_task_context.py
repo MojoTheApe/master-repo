@@ -84,11 +84,11 @@ def adopt(api, config, store, args):
         rules.execution_state(state, config)
         return {'already_adopted': True, 'applied': False}
     maintenance.owned(state, args)
-    if maintenance.busy(state):
-        raise ValueError('Drain actual owners, pending operations, intake and stage before adoption')
     previous = dict(config)
     previous.pop('task_context_policy', None)
     rules.execution_state(state, previous)
+    if maintenance.busy(state) or rules.pending_delivery(state, previous):
+        raise ValueError('Drain actual owners, pending delivery/operations, intake and stage before adoption')
     ref = baseline(api, config)
     row = api.request(api.root + '/contents/tracker/config.json?ref=' + ref)
     if json.loads(rules.file_bytes(api.request, api.root, row)) != config:

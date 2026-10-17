@@ -1,5 +1,25 @@
 # Versioning and safe upgrades
 
+## One-policy package continuation
+
+Source candidate1.5.1 corrects the optional-policy package/adoption order and
+requires the canonical engine-owned selection receipt fixtures in the portable
+pair. It adds no consumer policy default, state protocol or admission authority.
+Its compatible Tracker3.7.1 source is published at
+`be87599d1b5e625058bbddc33c35bda86687b5bf`, tag `v3.7.1`, release415992924,
+after successful checks on that actual merged commit. The exact source pin and
+complete53-file artifact closure were refreshed mechanically. The native release
+has `immutable:false`; exact tag/commit verification remains required. Master1.5.1
+is still a source candidate until its own final checks and publication succeed.
+
+For this patch, require the clean final pair with `--portable-contract --retry-contract
+--direct-contract --selection-delivery-contract --require-pinned` and the genuine
+previous Master1.5.0 `37090f0cf11eca5203a40932e2192f7eb47e2566` /
+Tracker3.7.0 `0b317d99997a4d3ef35b637bd6d19244630539f9` inputs. Final independent
+Master review, actual Source/main checks, stable publication and the exact
+canonical skill mirror remain separate gates. No reader/service installation,
+policy selection, activation or live recovery follows from these publications.
+
 ## Explicit project choices and modern routes
 
 Source version1.5.0 adds descriptor3, independent role/profile/completion/Stage
@@ -13,10 +33,12 @@ never-move-tag rule remain required without claiming native enforcement.
 The selected canonical provider owns the complete12raw/24separated closure,
 modern direct native fixture/runner, selected guide and owned state/admission.
 Verify the full actual Python3.9 Master suite and the final exact clean source pair
-with `--portable-contract --direct-contract` before standard publication; keep the
-genuine previous Master31daf/Tracker03e inputs. Source version1.5.0 is not yet a
-release or compatible-pair claim. Publish the reviewed checked Master, then verify
-the exact canonical skill mirror/catalog through its maintained path.
+with `--portable-contract --direct-contract` before standard publication; its
+original pair used genuine previous Master31daf/Tracker03e inputs. Master1.5.0 is
+published at `37090f0cf11eca5203a40932e2192f7eb47e2566`, tag `v1.5.0`,
+release415935589. Publication does not establish an installed reader or complete
+the separate consumer outcomes. New patch publication follows the current
+one-policy source-pair boundary above and the maintained exact skill mirror path.
 
 Preserve existing project settings and old policy absence. New modern config is
 not activation: compatible readers/all writers and owned idle outer7 migration

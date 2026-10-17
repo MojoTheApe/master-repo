@@ -90,6 +90,7 @@ def plan(engine, revision, python):
         'runner.py': 'tests/portable_fixture.py',
         'native.json': 'tests/fixtures/portable_native.json',
         'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json',
+        'selection.json': 'tests/fixtures/portable_selection.json',
     }
     if 4 in record.get('contracts', {}).get('execution_policy', []):
         if 'scripts/vendor/tracker_direct_policy.py' not in planned:

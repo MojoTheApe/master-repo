@@ -25,6 +25,14 @@ activation. Retain other selected policy fences, task/claim/batch/history and
 completion receipts. Source release, service deployment, selection and actual
 consumer activation are separate outcomes. Existing projects retain their pins.
 
+A package project's separate retry-selection source must complete its required
+package before maintenance/adoption, using only the exact engine's supported
+[selection-delivery transition](workflow-upgrades.md). Verify that support before
+selecting the policy. Preserve all other pending delivery and uncertain effects;
+the special package view supplies neither retry dispatch permission nor a general
+old-config admission path. Actual retry-state recovery compatibility is a separate
+cutover requirement, even when context/completion is already supported.
+
 ## Diagnose before dispatch
 
 Product defects, configuration, billing/access/quota and unknown failures do not

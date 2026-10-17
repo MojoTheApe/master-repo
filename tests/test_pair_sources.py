@@ -11,14 +11,27 @@ from verify_completion_pair import source_inputs
 
 
 class PairSources(unittest.TestCase):
-    def test_direct_pair_requires_portable_proof_before_any_source_read(self):
+    def test_optional_pair_contracts_require_portable_proof_before_any_source_read(self):
         script=Path(__file__).with_name('verify_completion_pair.py')
-        command=[sys.executable,'-B',str(script),'--direct-contract','--master','/missing-master',
-                 '--tracker','/missing-tracker','--old-master','/missing-old-master',
-                 '--old-tracker','/missing-old-tracker','--python39',sys.executable,'--output','/missing-output']
-        result=subprocess.run(command,capture_output=True,text=True)
+        for flag in ('--retry-contract', '--direct-contract', '--selection-delivery-contract'):
+            with self.subTest(flag=flag):
+                command=[sys.executable,'-B',str(script),flag,'--master','/missing-master',
+                         '--tracker','/missing-tracker','--old-master','/missing-old-master',
+                         '--old-tracker','/missing-old-tracker','--python39',sys.executable,'--output','/missing-output']
+                result=subprocess.run(command,capture_output=True,text=True)
+                self.assertNotEqual(result.returncode,0)
+                self.assertIn(flag+' requires --portable-contract',result.stderr)
+                self.assertNotIn('not a git repository',result.stderr)
+
+    def test_selection_delivery_pair_cannot_silently_skip_runtime_replay(self):
+        script=Path(__file__).with_name('verify_completion_pair.py')
+        result=subprocess.run([sys.executable,'-B',str(script),'--portable-contract',
+            '--selection-delivery-contract','--upgrades-only','--master','/missing-master',
+            '--tracker','/missing-tracker','--old-master','/missing-old-master',
+            '--old-tracker','/missing-old-tracker','--python39',sys.executable,
+            '--output','/missing-output'],capture_output=True,text=True)
         self.assertNotEqual(result.returncode,0)
-        self.assertIn('--direct-contract requires --portable-contract',result.stderr)
+        self.assertIn('requires actual portable replay; omit --upgrades-only',result.stderr)
         self.assertNotIn('not a git repository',result.stderr)
 
     def test_every_source_must_be_clean_official_and_old_pair_must_match(self):

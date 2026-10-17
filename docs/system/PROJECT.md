@@ -1,5 +1,20 @@
 # Master Repo system
 
+MR-54 prepares the bounded package-selection delivery companion to Tracker's
+canonical support fix. Common upgrade/delivery and selected-policy guidance keeps
+the genuine existing authorization and complete package verification before
+maintenance/adoption. The prior-operative-policy view belongs only to the exact
+supported selection receipt; ordinary admission and all other pending obligations
+stay strict. The canonical skill follows that order without inventing an old-config
+flag, in-maintenance exception or consumer rollout. The maintained refresh consumes
+published Tracker3.7.1 at `be87599d1b5e625058bbddc33c35bda86687b5bf` and its
+complete53-file canonical receipt/fixture closure, including four
+saved selection cases and their eight layout replays through all three portable
+entry locations. Full immutable source-pair proof and Master publication remain
+pending in this candidate. Generated package guidance is present before
+selection, preserving the exact one-policy governance diff during later adoption.
+See [coordinated upgrades](../workflow-upgrades.md) and [delivery continuation](../delivery-continuation.md).
+
 MR-40's candidate adds [explicit project choices](../project-choices.md):
 descriptor3 role, route, Stage, capacities, profile and required completion remain
 independent. Master constructs choices, preserves actual choices during explicit

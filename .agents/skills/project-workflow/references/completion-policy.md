@@ -21,6 +21,13 @@ separate reviewed selections and activations; do not select both unactivated
 policies together. Use its distinct new-project initialization procedure where
 applicable.
 
+An existing package project must first have compatible support for delivering its
+one reviewed selection package before maintenance/adoption. Use only the exact
+pinned engine's bounded receipt transition; retain normal authorization, native
+package acceptance and every other pending obligation. See
+[delivery continuation](delivery-continuation.md). An unsupported selection cannot
+be repaired by removing a guard or calling it source-only.
+
 Retain the genuinely reviewed requirements and their source/policy/target bindings.
 Use frozen original review/batch evidence; today's Issue body is not historical
 proof. Changed requirements invalidate current completion without erasing prior

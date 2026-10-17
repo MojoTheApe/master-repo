@@ -30,3 +30,8 @@ New sources use the explicit v2 requirements digest; old proof stays conservativ
 Existing activation follows reviewed official config, compatible writers and owned
 idle maintenance, preserving queues, approvals/history and delivery. A new skill
 or source merge does not perform a consumer upgrade or live activation.
+For a package selection, verify the pinned engine's bounded selection-delivery
+support first; finish its existing authorized, fully verified package before
+maintenance. All other pending delivery and actual owners must drain. Follow
+[delivery continuation](delivery-continuation.md); no old-config admission fallback
+or source-only exemption is implied.

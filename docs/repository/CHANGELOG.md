@@ -1,5 +1,24 @@
 # Repository process history
 
+## 2026-10-17 — MR-54 package selection before activation
+
+Separate compatible support, one reviewed configuration selection, its existing
+authorized package verification and later owned idle adoption. Document the exact
+pinned engine's bounded prior-operative-policy receipt route without weakening
+ordinary admission, source/combined/main/package checks, other pending delivery or
+uncertain-effect recovery. Keep reader/writer and compatible checkpoint evidence
+specific to the actual selected state. Update canonical Project Workflow navigation
+with the common guidance. Extend the maintained refresh and portable/final-pair
+orchestration to require the exact canonical synthetic selection dataset and
+receipt CLI runner, with no second admission algorithm. Verify every case's
+package/recorded/adopted phases, complete provenance and portable entry locations.
+Generated package instructions precede selection so they do not add another
+changed governance path. Mechanically pin the actual published Tracker3.7.1 merge
+`be87599d1b5e625058bbddc33c35bda86687b5bf` and its complete53-file closure.
+The final exact pair, independent admission and Master publication remain
+separate unfinished work in this candidate; no consumer or
+service is changed. Source task: https://github.com/MojoTheApe/master-repo/issues/54.
+
 ## 2026-10-17 — MR-40 explicit choices / source1.5.0
 
 Construct descriptor3 choices independently and retain actual Stage/capacities,

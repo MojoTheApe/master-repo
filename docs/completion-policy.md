@@ -39,6 +39,12 @@ project: select and activate the two policies in separate reviewed configuration
 changes. Do not leave both selected but unactivated. New-project initialization
 uses the exact engine's documented execution migration before completion adoption.
 
+For an existing package project, verify support for the bounded
+[selection-delivery transition](workflow-upgrades.md) before selecting this policy.
+Finish its already authorized, fully verified configuration package before owned
+maintenance and adoption. Other pending delivery and unresolved owners remain
+blocking; neither a source handoff nor a new completion flag waives that obligation.
+
 Publish supporting immutable engine/export and compatible standard releases,
 verify the actual service reader, then perform the reviewed consumer upgrade and
 owned state activation. Inspect all actual CLI, portable receipt, CI and service

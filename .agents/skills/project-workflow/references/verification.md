@@ -9,6 +9,13 @@ label. A privileged authenticated principal does not prove the human owner
 personally reviewed the evidence. Unknown, product, permanent configuration and
 billing/access/quota causes do not automatically retry.
 
+Package retry-policy selection has its own delivery order: verify compatible
+selection-delivery support, finish the existing authorized selection package, then
+drain remaining owners/effects and adopt under owned maintenance. Follow
+[delivery continuation](delivery-continuation.md) and the exact engine guide.
+No receipt-only prior-policy view grants retry dispatch, changes an episode budget
+or establishes compatible recovery for the new retry state.
+
 If the pin supports a specific-human-instruction grant, follow its separate
 operator-attestation procedure and bind the actual message/source/time/action to
 the current native identity, episode and explicitly named cause set. Follow the
@@ -51,6 +58,10 @@ Public CI uses the exported closure and its own repository read token; author
 operations still use the exact private engine in an authorized environment.
 Refreshing source artifacts, passing a provisional peer check and publishing a
 clean final pair are distinct facts. Consumer adoption remains separately scoped.
+When the exact pin supplies the selection-delivery pair contract, require its
+canonical receipt CLI replays with `--selection-delivery-contract` alongside the
+portable gate. These synthetic package/recorded/adopted cases do not establish
+live installation, policy activation or a compatible recovery checkpoint.
 
 Where the pin supplies CI_REUSE.md and matching `workflow.ci_evidence` /
 `ci_evidence_policy`, use its maintained plan/missing-job/final-gate recipe.

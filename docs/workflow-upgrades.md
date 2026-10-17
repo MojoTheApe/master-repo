@@ -37,6 +37,35 @@ unchanged; an ordinary upgrade preserves policy choices and cannot invent those
 new attestations. Follow the [portable artifact boundary](portable-contract.md)
 and obtain the actual missing native proof before admission.
 
+## Deliver an optional-policy selection before activation
+
+For a package project, first deliver compatible support without selecting a new
+policy. Before preparing a selection, verify that the exact pinned engine supplies
+the required delivery transition. Source compatibility alone does not establish
+that support. An unsupported selection remains blocked; removing a pending-delivery
+guard or inventing a source-only exception cannot make it safe.
+
+Where the canonical engine supports it, use a separate reviewed source and
+one-member execution-v2/v3 batch for one new context, completion or retry selection.
+The initial supported boundary is Stage off with verified-stable-package delivery;
+retain every existing choice, helper pin, product/runtime input and target control.
+The engine derives the still-operative configuration from the genuine frozen
+baseline and exact admitted main merge. The current selection merge, original
+authorization, source/combined/main checks and actual package acceptance remain
+binding. A caller-supplied old configuration or matching delivery fingerprint is
+insufficient. This view is confined to that package receipt; ordinary admission
+retains selected/adopted matching.
+
+Finish and reconcile that exact authorized package before reserving maintenance.
+Then inspect all actual owners, intake, unresolved effects and other pending target
+delivery, and perform the documented owned idle adoption against official main.
+Do not co-select policies or use an in-maintenance delivery exception. Verify the
+compatible reader, every writer and a recovery checkpoint for each resulting state
+version; support for context/completion does not establish retry-state recovery.
+Record publication, selection, package verification, activation and actual fresh
+consumer behavior separately. The exact commands and supported cases belong to
+the pinned Tracker guide.
+
 ## Prevent new starts during cutover
 
 Use a durable maintenance admission gate only when all actual clients/writers

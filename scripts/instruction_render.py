@@ -127,6 +127,13 @@ def selected(data):
         target += (' An authorized eligible runtime/package integration uses the '
                    'pinned batch delivery continuation by default, unless explicitly '
                    'deferred. Source approval alone authorizes no delivery.')
+    if version in (2, 3) and not stage and completion == 'verified-stable-package':
+        target += (' When adding a new optional policy to an existing project, first '
+                   'verify the exact pinned engine supports its bounded one-member '
+                   'selection package. Finish and reconcile that fully verified package '
+                   'before reserving maintenance for owned idle activation. Do not '
+                   'co-select policies or deliver through a held maintenance gate; '
+                   'other pending delivery and unresolved owners still block adoption.')
 
     scoped = ''
     if 'completion_policy' in workflow:

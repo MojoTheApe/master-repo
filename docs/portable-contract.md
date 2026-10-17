@@ -67,7 +67,8 @@ all canonical validator modules, generated helpers and offline proof artifacts.
 `tests/fixtures/portable-contract/provenance.json` records the exact engine/source
 paths and hashes of the canonical runner, native context data, synthetic
 accounting snapshot and, when execution4 is advertised, the four direct task/capture
-Stage-on/off rows. Those files
+Stage-on/off rows. This pin also requires the four canonical one-policy package
+selection rows; fixture provenance cannot remove this part of the proof closure. Those files
 contain no live state, credentials or consumer captures. Do not edit generated
 copies by hand. Refreshing artifacts grants no release or acceptance.
 
@@ -88,6 +89,13 @@ The same verified runner executes the four exact direct rows in raw/separated
 layouts on Python3.9, including held admission, released receipts and meaningful
 refusals. These engine-owned saved rows are distinct from actual Master-generated
 configurations and the separate engine-backed generated-config lifecycle proof.
+The canonical selection runner likewise uses the real receipt CLI, validators and
+CAS payload builder in all three raw/separated entry locations. Its four saved
+v2/v3 cases cover context, completion, retry and completion retaining retry. Each
+replays pending package, one exact synthetic receipt write, recorded idempotence
+and genuinely owned-adopted state. Only fixture transport and clock are replaced;
+there is no engine import, authenticated transport or consumer write. This proves
+the portable boundary, not a live package, policy activation or rollback.
 
 The final source-pair gate is this single maintained harness:
 
@@ -96,7 +104,8 @@ python3 tests/verify_completion_pair.py --master /path/to/master \
   --tracker /path/to/released-tracker --old-master /path/to/old-master \
   --old-tracker /path/to/old-tracker --python39 /path/to/python39 \
   --output /path/to/evidence.json --bounded --portable-contract \
-  --selected-instructions --retry-contract --direct-contract --require-pinned
+  --selected-instructions --retry-contract --direct-contract \
+  --selection-delivery-contract --require-pinned
 ```
 
 It records the head, tree, origin and dirty status of all four current/old source
@@ -109,6 +118,9 @@ and retains absence on the other representative outputs and one genuine upgrade.
 With `--direct-contract`, it also validates nine actual modern Master output/
 guide/provider combinations, the eight canonical direct layout replays, and four
 explicit modern conversions from genuine legacy/v1/v2/v3 old-source templates.
+With `--selection-delivery-contract`, it requires all eight canonical selection
+layout replays and their package/recorded/adopted phases. This flag requires
+`--portable-contract` and cannot be combined with `--upgrades-only`.
 Previews preserve bytes/mtimes/modes; actual local system/runtime and installer
 controls survive; repeat apply is unchanged. The final native pair uses this full
 route and never `--upgrades-only`.

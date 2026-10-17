@@ -89,6 +89,15 @@ shared rules or templates. Tracker owns exact commands and parser fields; Master
 retains common lifecycle and profile guarantees. Keep generated consumer PR fields
 and frozen batch/promotion member identity intact.
 
+Before selecting an optional policy in an existing package project, verify that
+the exact compatible pin supports delivery of that selection before activation.
+Use its bounded prior-operative-policy receipt path only for the genuinely frozen
+single-selection batch and existing authorized package. Complete actual package
+verification before maintenance; then drain every other owner/pending delivery and
+perform the documented owned adoption. This supplies no general old-config
+admission, in-maintenance delivery or source-only exception. Unsupported pins and
+unknown effects remain blocked; follow [delivery continuation](references/delivery-continuation.md).
+
 When descriptor `workflow.completion_policy` and Tracker `completion_policy`
 explicitly match, read [accepted-scope completion](references/completion-policy.md)
 and the exact exported engine guide. Verify the actual reader/writers and durable
