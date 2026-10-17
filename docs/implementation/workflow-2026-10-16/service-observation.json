@@ -1,5 +1,5 @@
 {
-  "observed_at": "2026-10-17T08:01:42.453090+00:00",
+  "observed_at": "2026-10-17T08:05:35.210484+00:00",
   "deployed_revision": "4ac9b3fa3ea7559f43eb849778f99e347f2eb67b",
   "event_service": "active",
   "retired_minute_timer": "inactive",
@@ -14,7 +14,15 @@
   "capabilities": {
     "ci_plan": false,
     "ci_gate": false,
-    "context_execution_error": "Parallel execution requires the independent-review delivery policy",
+    "task_context_policy_1": {
+      "schema_version": 1
+    },
+    "execution_policy_3": {
+      "schema_version": 3,
+      "implementation_limit": 5,
+      "review_limit": 5,
+      "batch_limit": 5
+    },
     "ci_policy_1": "accepted",
     "ci_policy_2": "Invalid ci_evidence_policy version/fields"
   },
@@ -163,7 +171,7 @@
       "workspace_id": "task-tracker",
       "repository": "MojoTheApe/task-tracker",
       "snapshot_ok": true,
-      "synced_at": "2026-10-17T07:58:43+00:00",
+      "synced_at": "2026-10-17T08:03:22+00:00",
       "snapshot_schema": 3,
       "task_count": 84,
       "merged_incomplete_count": 0,

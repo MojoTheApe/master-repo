@@ -44,6 +44,8 @@ Master owns normative policy and the canonical workflow directory. Tracker owns 
 
 Proposed engineering homes total thirteen; acl-lib and acl-releases are ACL resources, with no duplicate board. The future categories are All / Backlog / In Progress / Review / Delivery / Done / Archive; they remain a Task 10 proposal. Task 02 preserves current Archive semantics. No role/category declaration grants a route or delivery bypass.
 
+ReactForge’s exact baseline release guide records dispatch disabled on 8 October for its build-only transition. Its maintained controller path exists; historical onboarding does not prove current automatic VPS activation. Preserve its explicit runtime authorization boundary.
+
 ## CI support and attributed baseline
 
 Current shared source supports explicit immutable fixed-container job evidence and fresh fallback. Consumer task-context and shared CI-evidence policies are absent; changing a pin would not activate them. ACL retains its local exact-tree/native collector and Windows/Python matrix, installer and delivery checks. Mutable-host, matrix, build and installer jobs have no blanket shared reuse claim. Task 12 must establish its bounded original-attempt support separately. Exact old-engine protocol, CI and client-cache guard source is recorded in [pinned engine capability evidence](pinned-engine-capabilities.json). Every repository row records actual portable/CI blobs, current producer paths and its operational authorization boundary. Cache observations cover this workspace only; unobserved employee overrides are an activation blocker, not assumed installed support.

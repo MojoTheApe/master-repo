@@ -1430,7 +1430,8 @@
       ],
       "parent_resource_producer": null,
       "authorization": "Repository owner; repository integration does not authorize VPS operations.",
-      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory",
+      "current_dispatch_note": "Exact baseline docs/operations/SYSTEM-RELEASES.md records dispatch set false on 2026-10-08 for the build-only transition; historical RF-84 onboarding is not current runtime activation proof."
     },
     "writer_inventory": {
       "pinned_engine": {
