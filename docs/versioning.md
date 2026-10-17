@@ -1,6 +1,6 @@
 # Versioning and safe upgrades
 
-## Current published pair and retry/accounting candidate
+## Portable baseline and retry/accounting publication
 
 Master 1.2.0 and Tracker 3.4.0 are published portable-contract releases at
 `864ca7a5814e703dd6e61207362d24cbc26dc9ad` and
@@ -8,17 +8,19 @@ Master 1.2.0 and Tracker 3.4.0 are published portable-contract releases at
 real paired export/upgrade evidence precede publication. Source publication is
 separate from installed readers, owned consumer activation and live outcome proof.
 
-Master 1.3.0 proposes [bounded retry](ci-retry.md), explicit policy selection,
+Master 1.3.0 adds [bounded retry](ci-retry.md), explicit policy selection,
 [fast/full submission guidance](verification-submission.md) and
 [on-demand accounting](ci-accounting.md) with Tracker 3.5.0. The portable contract
 adds the source-owned retry validator snapshot and generic accounting helper.
-These are proposed source versions, not claimed publications. Publish the
-reviewed checked Tracker merge first, then refresh Master from that exact released
-revision and run the single clean final source-pair gate before Master publication.
-The provisional source pin is not published-pair acceptance. Existing projects
+The selected Tracker technical source is its reviewed merge
+`df0154b96410296b50bc9d7a00af7847d9a97700`. Source versions and a selected commit
+do not prove publication. Verify the actual stable Tracker release at that exact
+commit before the final native paired gate and Master publication. Preparation
+against a merged candidate remains provisional until that release guard succeeds.
+Run the single clean final source-pair gate before Master publication. Existing projects
 retain selected policies, execution limits, targets and state until reviewed adoption.
 
-The observed current source releases have GitHub's native immutable flag false.
+The observed Master1.2.0 and Tracker3.4.0 releases have GitHub's native immutable flag false.
 Exact verified commit/tag identities and the never-move-tag rule are recorded
 without claiming native immutable-release enforcement.
 

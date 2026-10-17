@@ -45,9 +45,9 @@ branch-controls audit reports platform limitations; `check-merge` is not native
 protection. Durable maintenance and broader CI evidence transfer are a concrete
 Tracker companion, not features activated by this source update.
 
-Source version 1.3.0 proposes explicit bounded retry and shared CI accounting,
+Source version 1.3.0 adds explicit bounded retry and shared CI accounting,
 with a Tracker-owned structural snapshot and project fast/full guidance. The
-published portable-contract pair is Master 1.2.0 / Tracker 3.4.0; consult exact
+published portable-contract baseline is Master 1.2.0 / Tracker 3.4.0; consult exact
 releases for publication proof. A VERSION file is not a release. No app deployment, consumer migration or global skill
 installation is performed automatically by this repository.
 
