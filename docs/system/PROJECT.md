@@ -6,8 +6,12 @@ the genuine existing authorization and complete package verification before
 maintenance/adoption. The prior-operative-policy view belongs only to the exact
 supported selection receipt; ordinary admission and all other pending obligations
 stay strict. The canonical skill follows that order without inventing an old-config
-flag, in-maintenance exception or consumer rollout. The compatible artifact refresh,
-published pin and full immutable source-pair proof remain pending in this candidate.
+flag, in-maintenance exception or consumer rollout. The maintained refresh consumes
+the immutable engine candidate's canonical receipt/fixture closure, including four
+saved selection cases and their eight layout replays through all three portable
+entry locations. The final published pin and full immutable source-pair proof
+remain pending in this candidate. Generated package guidance is present before
+selection, preserving the exact one-policy governance diff during later adoption.
 See [coordinated upgrades](../workflow-upgrades.md) and [delivery continuation](../delivery-continuation.md).
 
 MR-40's candidate adds [explicit project choices](../project-choices.md):

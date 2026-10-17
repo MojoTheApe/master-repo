@@ -17,7 +17,8 @@ FIXTURES = 'tests/fixtures/portable-contract'
 
 def fixture_sources(record):
     sources = {'runner.py': 'tests/portable_fixture.py', 'native.json': 'tests/fixtures/portable_native.json',
-               'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json'}
+               'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json',
+               'selection.json': 'tests/fixtures/portable_selection.json'}
     if 4 in record.get('contracts', {}).get('execution_policy', []):
         validator = record.get('route_validator')
         if (not isinstance(validator, dict) or set(validator) != {'source', 'sha256'}
@@ -63,6 +64,7 @@ def verified_artifacts():
     accounting = json.loads(artifacts['accounting.json'], object_pairs_hook=contract.unique)
     assert accounting['schema_version'] == 1 and accounting['synthetic'] is True
     direct_cases(artifacts)
+    selection_cases(artifacts)
     for layout in ('raw', 'separated'):
         root = base/layout
         contract.check_manifest(contract.safe_file(root, contract.MANIFEST).read_bytes(), raw)
@@ -71,6 +73,20 @@ def verified_artifacts():
         for path, digest in contract.layout_files(record, layout).items():
             assert hashlib.sha256(contract.safe_file(root, path).read_bytes()).hexdigest() == digest, path
     return record, provenance, artifacts, data
+
+
+def selection_cases(artifacts):
+    """Require the complete canonical synthetic envelope, without proof rules."""
+    data = json.loads(artifacts['selection.json'], object_pairs_hook=contract.unique)
+    expected = ['context-v2', 'completion-v3', 'retry-v3', 'completion-retry-v2']
+    if (not isinstance(data, dict) or set(data) != {'schema_version', 'synthetic', 'cases'}
+            or type(data['schema_version']) is not int or data['schema_version'] != 1
+            or data['synthetic'] is not True or not isinstance(data['cases'], list)
+            or len(data['cases']) != len(expected)
+            or any(not isinstance(row, dict) for row in data['cases'])
+            or [row.get('case') for row in data['cases']] != expected):
+        raise ValueError('Canonical selection fixtures need all four exact synthetic cases')
+    return data['cases']
 
 
 def isolated_consumer(root, python):
@@ -116,6 +132,21 @@ def exercise_direct_cases(record, artifacts, runner, python, temporary):
     return results
 
 
+def exercise_selection_cases(record, artifacts, runner, python, temporary):
+    """Replay Tracker's complete selection package cases through every entry."""
+    results = []
+    for row in selection_cases(artifacts):
+        for layout in ('raw', 'separated'):
+            root = Path(temporary)/('selection-'+row['case']+'-'+layout); root.mkdir()
+            for name in contract.layout_files(record, layout):
+                path = root/name; path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes((SOURCE/FIXTURES/layout/name).read_bytes())
+            config = root/'tracker/config.json'; config.parent.mkdir(parents=True, exist_ok=True)
+            config.write_text(json.dumps(row['config']))
+            results.append(runner.exercise_selection(root, python, layout, row))
+    return results
+
+
 def exercise_all(python, tracker=None):
     record, provenance, artifacts, data = verified_artifacts()
     if tracker is not None:
@@ -125,7 +156,7 @@ def exercise_all(python, tracker=None):
     runner = types.ModuleType('_canonical_tracker_portable_fixture')
     runner.__file__ = str(SOURCE/FIXTURES/'runner.py')
     exec(compile(artifacts['runner.py'], runner.__file__, 'exec'), runner.__dict__)
-    results, accounting_results, direct_results = [], [], []
+    results, accounting_results, direct_results, selection_results = [], [], [], []
     with tempfile.TemporaryDirectory(prefix='master-portable-native-') as temporary:
         for index, row in enumerate(data['contexts']):
             root = Path(temporary)/str(index); root.mkdir()
@@ -143,8 +174,10 @@ def exercise_all(python, tracker=None):
             accounting_results.append(runner.exercise_accounting(root, python, layout,
                 json.loads(artifacts['accounting.json'], object_pairs_hook=contract.unique)))
         direct_results = exercise_direct_cases(record, artifacts, runner, python, temporary)
+        selection_results = exercise_selection_cases(record, artifacts, runner, python, temporary)
     return {'engine': record['engine'], 'provenance': provenance, 'cases': results,
-            'accounting': accounting_results, 'direct': direct_results, 'clock_fixture_only': True,
+            'accounting': accounting_results, 'direct': direct_results, 'selection_delivery': selection_results,
+            'clock_fixture_only': True,
             'private_engine_required': False, 'live_requests': 0}
 
 

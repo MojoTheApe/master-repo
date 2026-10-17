@@ -8,8 +8,13 @@ pinned engine's bounded prior-operative-policy receipt route without weakening
 ordinary admission, source/combined/main/package checks, other pending delivery or
 uncertain-effect recovery. Keep reader/writer and compatible checkpoint evidence
 specific to the actual selected state. Update canonical Project Workflow navigation
-with the common guidance. Source artifacts, exact pin/pair, independent admission
-and publication remain separate unfinished work in this candidate; no consumer or
+with the common guidance. Extend the maintained refresh and portable/final-pair
+orchestration to require the exact canonical synthetic selection dataset and
+receipt CLI runner, with no second admission algorithm. Verify every case's
+package/recorded/adopted phases, complete provenance and portable entry locations.
+Generated package instructions precede selection so they do not add another
+changed governance path. The exact published pin/pair, independent admission and
+publication remain separate unfinished work in this candidate; no consumer or
 service is changed. Source task: https://github.com/MojoTheApe/master-repo/issues/54.
 
 ## 2026-10-17 — MR-40 explicit choices / source1.5.0

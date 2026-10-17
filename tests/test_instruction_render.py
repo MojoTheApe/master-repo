@@ -11,6 +11,41 @@ import instruction_render
 
 
 class SelectedInstructions(unittest.TestCase):
+    def test_selection_package_order_precedes_selection_on_its_supported_route(self):
+        template = (project.SOURCE/'templates/workflow/DELIVERY.md').read_text()
+        for profile in project.PROFILES:
+            for stage in (False, True):
+                for version in (None, 1, 2, 3):
+                    choices = {None: {}, 1: {'implementation_limit': 3},
+                               2: {'implementation_limit': 5, 'batch_limit': 5},
+                               3: {'implementation_limit': 5, 'batch_limit': 5, 'review_limit': 4}}[version]
+                    inputs = dict(INPUTS, profile=profile, staging=stage, **choices)
+                    for selection in ({}, {'task_context': {'schema_version': 1}},
+                                      {'completion_policy': {'schema_version': 1}},
+                                      {'ci_retry': {'schema_version': 1, 'max_executions': 2}}):
+                        with self.subTest(profile=profile, stage=stage, version=version, selection=selection):
+                            if 'task_context' in selection and version not in (2, 3):
+                                with self.assertRaises(ValueError):
+                                    project.descriptor(dict(inputs, **selection), NEW)
+                                continue
+                            data = project.descriptor(dict(inputs, **selection), NEW)
+                            text = instruction_render.render(template, data)
+                            supported = profile == 'package' and not stage and version in (2, 3)
+                            self.assertEqual('before reserving maintenance' in text, supported)
+                            if supported:
+                                self.assertIn('fully verified package', text)
+                                self.assertIn('other pending delivery and unresolved owners', text)
+
+    def test_first_context_or_retry_selection_does_not_add_a_delivery_document_change(self):
+        template = (project.SOURCE/'templates/workflow/DELIVERY.md').read_text()
+        inputs = dict(INPUTS, profile='package', staging=False, implementation_limit=5, batch_limit=5)
+        before = instruction_render.render(template, project.descriptor(inputs, NEW))
+        for choice in ({'task_context': {'schema_version': 1}},
+                       {'ci_retry': {'schema_version': 1, 'max_executions': 2}}):
+            with self.subTest(choice=choice):
+                after = instruction_render.render(template, project.descriptor(dict(inputs, **choice), NEW))
+                self.assertEqual(before, after)
+
     def test_primary_route_target_and_optional_features_follow_actual_selection(self):
         modes = {None: {}, 1: {'implementation_limit': 3},
                  2: {'implementation_limit': 5, 'batch_limit': 5},
@@ -113,6 +148,7 @@ class SelectedInstructions(unittest.TestCase):
                         self.assertNotIn('__', text)
                         self.assertIn('Stage is enabled' if stage else 'Stage is disabled', text)
                         self.assertIn('outer7', target)
+                        self.assertNotIn('before reserving maintenance', target)
                         if route == 'direct':
                             self.assertIn('does not enter Approved or a synthetic batch', text)
                             self.assertIn('task-status reconciliation and archive/release', text)

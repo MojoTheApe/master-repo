@@ -190,12 +190,17 @@ def main():
     parser.add_argument('--portable-contract', action='store_true', help='Require exact trusted artifacts, engine-free native fixtures and real contract-drift refusal')
     parser.add_argument('--retry-contract', action='store_true', help='Exercise explicit retry selection/preservation, actual accounting CLI and retry-rule drift')
     parser.add_argument('--direct-contract', action='store_true', help='Exercise actual modern Master outputs and canonical direct admission/receipt fixtures')
+    parser.add_argument('--selection-delivery-contract', action='store_true', help='Require canonical one-policy package delivery before owned activation')
     parser.add_argument('--require-pinned', action='store_true', help='Reject a dirty Master or an engine override')
     args = parser.parse_args()
     if args.retry_contract and not args.portable_contract:
         parser.error('--retry-contract requires --portable-contract')
     if args.direct_contract and not args.portable_contract:
         parser.error('--direct-contract requires --portable-contract')
+    if args.selection_delivery_contract and not args.portable_contract:
+        parser.error('--selection-delivery-contract requires --portable-contract')
+    if args.selection_delivery_contract and args.upgrades_only:
+        parser.error('--selection-delivery-contract requires actual portable replay; omit --upgrades-only')
     for name in ('master', 'tracker', 'old_master', 'old_tracker', 'output'):
         setattr(args, name, getattr(args, name).resolve())
     sources = source_inputs(args)
@@ -214,6 +219,7 @@ def main():
     result.update(bounded=args.bounded, portable_contract=args.portable_contract,
                   retry_contract=args.retry_contract,
                   direct_contract=args.direct_contract,
+                  selection_delivery_contract=args.selection_delivery_contract,
                   upgrades_only=args.upgrades_only,
                   publication_verified_by_this_command=False, source_inputs=sources)
     if result['tracker_dirty']:
@@ -405,6 +411,12 @@ print('isolated portable assessment/import passed')
                 'Missing engine-free runtime fixture proof; finish the portable gate before acceptance'
             from portable_contract_fixture import exercise_all
             result['native_portable_contexts'] = exercise_all(args.python39, args.tracker)
+            if args.selection_delivery_contract:
+                selected = result['native_portable_contexts']['selection_delivery']
+                assert len(selected) == 8, 'Missing canonical selection package runtime cases'
+                assert all(row['phases'] == ['pending-package', 'recorded-package', 'owned-adopted']
+                           and not row['engine_imported'] and not row['consumer_writes']
+                           for row in selected), 'Incomplete engine-free selection package replay'
             if args.direct_contract:
                 assert len(result['native_portable_contexts']['direct']) == 8, 'Missing actual canonical direct runtime cases'
                 result['direct_matrix'] = modern_outputs(args, scratch, project, master_revision)

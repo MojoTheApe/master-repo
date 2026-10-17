@@ -359,3 +359,188 @@ def exercise_direct(root,python,layout,row):
     assert before==after and not (root/'.tracker-runtime').exists()
     return dict(case=row['case'],layout=layout,entrypoints=entries,phases=[p['name'] for p in row['phases']],
         negative_cases=negative_cases,native_fixture_gets=len(calls),engine_imported=False,consumer_writes=False)
+
+
+SELECTION_CASES = {
+    'context-v2': ('task_context_policy', (), 2),
+    'completion-v3': ('completion_policy', ('task_context_policy',), 3),
+    'retry-v3': ('ci_retry_policy', ('task_context_policy', 'completion_policy'), 3),
+    'completion-retry-v2': ('completion_policy', ('task_context_policy', 'ci_retry_policy'), 2),
+}
+
+
+def selection_fixture(case):
+    """Generate saved native data with actual batch, receipt and owned adoption.
+
+    Only this author-side function imports the engine/test fixtures. The public
+    replay below consumes ordinary synthetic JSON and the real exported CLI.
+    """
+    from contextlib import ExitStack, redirect_stdout
+    import io
+    import itertools
+    from types import SimpleNamespace
+    from unittest import mock
+    import uuid
+    from tracker import batches, ci_retry_actions, completion, delivery, delivery_receipt, execution, maintenance, queue, sync, task_context, timing
+    from selection_fixture import SelectionRepository
+    if case not in SELECTION_CASES:
+        raise ValueError('Unknown selection package fixture')
+    selection, prior, version = SELECTION_CASES[case]
+    clock = '2026-10-17T12:00:00Z'
+    class Clock(datetime.datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return cls.fromisoformat(clock.replace('Z', '+00:00'))
+    with tempfile.TemporaryDirectory(prefix='tracker-selection-author-') as directory, ExitStack() as patches, redirect_stdout(io.StringIO()):
+        sequence = itertools.count(1)
+        patches.enter_context(mock.patch.object(uuid, 'uuid4', lambda: SimpleNamespace(hex=f'{next(sequence):032x}')))
+        for module in (batches, ci_retry_actions, completion, delivery, execution, maintenance, queue, sync, task_context, timing):
+            if hasattr(module, 'now'):
+                patches.enter_context(mock.patch.object(module, 'now', lambda: clock))
+        patches.enter_context(mock.patch.object(delivery_receipt, 'datetime', Clock))
+        fixture = SelectionRepository(Path(directory), selection=selection, prior=prior, version=version, standalone=True)
+        project = fixture.project
+        project.api.state['fixture_secret'] = 'NEVER_PRINT_PRIVATE_SELECTION_STATE'
+        phases = []
+        for phase in ('pending-package', 'recorded-package', 'owned-adopted'):
+            if phase == 'owned-adopted':
+                project.config = fixture.selected
+                owner = fixture.maintainer()
+                owner.claim = maintenance.reserve(project.store, owner)['maintenance']['id']
+                {'task_context_policy': task_context, 'completion_policy': completion,
+                 'ci_retry_policy': ci_retry_actions}[selection].adopt(project.api, project.config, project.store, owner)
+                maintenance.resume(project.store, owner)
+            original = project.api.request
+            recorded, writes = {}, []
+            def request(path, method='GET', payload=None, **kwargs):
+                value = original(path, method, payload, **kwargs)
+                if method == 'GET':
+                    if path in recorded:
+                        assert recorded[path] == value, 'Native fixture changed during one recorded phase'
+                    recorded[path] = copy.deepcopy(value)
+                else:
+                    assert method == 'PUT' and path == 'repos/owner/repo/contents/.tracker-state.json'
+                    writes.append(dict(path=path, payload=copy.deepcopy(payload), response=copy.deepcopy(value)))
+                return value
+            document = delivery_receipt.resolve('owner/repo', fixture.main_sha, 100,
+                request=request, include_delivered=True)
+            expected = delivery_receipt.record(document, fixture.native.receipt, 200, 300, apply=True, request=request)
+            assert len(writes) == (1 if phase == 'pending-package' else 0)
+            phases.append(dict(name=phase, requests=recorded, writes=writes, document=document, record=expected))
+        return dict(schema_version=1, synthetic=True, case=case, clock=clock, config=fixture.selected,
+            receipt=fixture.native.receipt, run=200, job=300, phases=phases)
+
+
+SELECTION_BOOTSTRAP = '''import copy,datetime,json,os,sys
+from pathlib import Path
+entry=Path(sys.argv[1]);sys.path.insert(0,str(entry.parent))
+import tracker_delivery_receipt as receipt
+fixture=json.loads(Path(os.environ['TRACKER_TEST_HTTP_FIXTURE']).read_text())
+def request(path,method='GET',payload=None):
+    if not path.startswith('repos/owner/repo/'):
+        raise ValueError('Foreign fixture request')
+    with open(os.environ['TRACKER_TEST_REQUEST_LOG'],'a') as output:
+        output.write(json.dumps([method,path])+'\\n')
+    if method=='GET':
+        if path not in fixture['requests']:raise ValueError('Unrecorded fixture GET')
+        value=fixture['requests'][path]
+    elif method=='PUT':
+        if len(fixture['writes'])!=1:raise ValueError('Unapproved fixture write')
+        expected=fixture['writes'][0]
+        if path!=expected['path'] or payload!=expected['payload']:
+            raise ValueError('Receipt CAS payload differs from the actual canonical fixture')
+        value=expected['response']
+    else:raise ValueError('Unsupported fixture method')
+    return copy.deepcopy(value)
+class Clock(datetime.datetime):
+    @classmethod
+    def now(cls,tz=None):return cls.fromisoformat('2026-10-17T12:00:00+00:00')
+receipt.datetime=Clock
+receipt.main.__globals__['datetime']=Clock
+# Replace only the stdlib transport at the two real CLI entry functions. The
+# exported resolver/recorder, validators and CAS payload builder execute intact;
+# no gh binary, engine import or authenticated fallback exists in this process.
+for name in ('resolve','record'):
+    receipt.main.__globals__[name].__kwdefaults__['request']=request
+sys.argv=[str(entry),*sys.argv[2:]]
+try:status=receipt.main()
+except (ValueError,KeyError,OSError) as error:
+    print(str(error),file=sys.stderr);status=1
+assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
+raise SystemExit(status)
+'''
+
+
+def exercise_selection(root, python, layout, row):
+    """Real receipt resolve/one exact CAS/idempotence before and after adoption.
+
+    All target/native data are synthetic; no authenticated transport, engine
+    checkout, consumer mutation or workflow dispatch is available to the client.
+    """
+    root = Path(root).resolve()
+    assert row['schema_version'] == 1 and row['synthetic'] is True
+    before = {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    assert json.loads((root/'tracker/config.json').read_text()) == row['config']
+    entries = ['scripts/tracker_delivery_receipt.py']
+    if layout == 'separated':
+        entries.append('.workflow/tools/tracker_delivery_receipt.py')
+    with tempfile.TemporaryDirectory(prefix='tracker-selection-offline-') as directory:
+        scratch = Path(directory)
+        data = scratch/'http.json'; log = scratch/'requests.jsonl'
+        request_file = scratch/'request.json'; evidence = scratch/'receipt.json'
+        evidence.write_text(json.dumps(row['receipt']))
+        env = dict(os.environ, PATH=str(scratch),
+            PYTHONDONTWRITEBYTECODE='1', TRACKER_TEST_HTTP_FIXTURE=str(data), TRACKER_TEST_REQUEST_LOG=str(log))
+        for key in ('PYTHONPATH','TASK_TRACKER_HOME','GH_TOKEN','GITHUB_TOKEN'):
+            env.pop(key, None)
+        negative_cases = 0
+        for entry in entries:
+            base = [python, '-B', '-I', '-c', SELECTION_BOOTSTRAP, str(root/entry)]
+            for phase in row['phases']:
+                data.write_text(json.dumps(phase))
+                document = phase['document']
+                if phase['name'] == 'pending-package':
+                    result = subprocess.run(base+['resolve','--repository','owner/repo',
+                        '--merge-sha',document['merge_sha'],'--ci-run',str(document['ci_run']),
+                        '--output',str(request_file)], cwd=root, env=env, capture_output=True, text=True)
+                    assert result.returncode == 0, (row['case'],entry,result.stdout,result.stderr)
+                    assert json.loads(request_file.read_text()) == document
+                    assert json.loads(result.stdout) == document
+                request_file.write_text(json.dumps(document))
+                argv = base+['record','--request',str(request_file),'--evidence',str(evidence),
+                    '--verification-run',str(row['run']),'--verification-job',str(row['job']),'--apply']
+                result = subprocess.run(argv, cwd=root, env=env, capture_output=True, text=True)
+                assert result.returncode == 0, (row['case'],entry,phase['name'],result.stdout,result.stderr)
+                assert json.loads(result.stdout) == phase['record']
+                assert 'NEVER_PRINT_PRIVATE_SELECTION_STATE' not in result.stdout+result.stderr
+            pending = row['phases'][0]
+            path = 'repos/owner/repo/contents/.tracker-state.json?ref=tracker-state'
+            original = json.loads(base64.b64decode(pending['requests'][path]['content']))
+            for change in ('missing-freeze', 'changed-scope', 'old-outer', 'unknown-maintenance'):
+                bad = copy.deepcopy(pending)
+                shared = copy.deepcopy(original)
+                if change == 'missing-freeze':
+                    shared['execution']['history'] = [r for r in shared['execution']['history'] if r['event'] != 'batch-frozen']
+                elif change == 'changed-scope':
+                    issue_path = 'repos/owner/repo/issues/1'
+                    bad['requests'][issue_path]['body'] += '\nA new actual requirement'
+                elif change == 'old-outer':
+                    shared['schema_version'] = 1
+                else:
+                    shared['schema_version'] = 3
+                    shared['maintenance'] = {'schema_version': 99}
+                bad['requests'][path]['content'] = base64.b64encode(json.dumps(shared).encode()).decode()
+                data.write_text(json.dumps(bad))
+                request_file.write_text(json.dumps(pending['document']))
+                result = subprocess.run(argv, cwd=root, env=env, capture_output=True, text=True)
+                assert result.returncode != 0, (row['case'],entry,change,'incorrectly recorded')
+                assert 'NEVER_PRINT_PRIVATE_SELECTION_STATE' not in result.stdout+result.stderr
+                negative_cases += 1
+        calls = [json.loads(line) for line in log.read_text().splitlines()]
+        assert calls and all(method in ('GET','PUT') and path.startswith('repos/owner/repo/') for method,path in calls)
+        assert sum(method == 'PUT' for method,_ in calls) == len(entries)
+    after = {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    assert before == after and not (root/'.tracker-runtime').exists()
+    return dict(case=row['case'], layout=layout, entrypoints=entries, phases=[p['name'] for p in row['phases']],
+        negative_cases=negative_cases, native_fixture_gets=sum(method=='GET' for method,_ in calls),
+        fixture_receipt_cas=len(entries), engine_imported=False, consumer_writes=False)

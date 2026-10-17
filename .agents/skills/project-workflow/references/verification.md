@@ -58,6 +58,10 @@ Public CI uses the exported closure and its own repository read token; author
 operations still use the exact private engine in an authorized environment.
 Refreshing source artifacts, passing a provisional peer check and publishing a
 clean final pair are distinct facts. Consumer adoption remains separately scoped.
+When the exact pin supplies the selection-delivery pair contract, require its
+canonical receipt CLI replays with `--selection-delivery-contract` alongside the
+portable gate. These synthetic package/recorded/adopted cases do not establish
+live installation, policy activation or a compatible recovery checkpoint.
 
 Where the pin supplies CI_REUSE.md and matching `workflow.ci_evidence` /
 `ci_evidence_policy`, use its maintained plan/missing-job/final-gate recipe.
