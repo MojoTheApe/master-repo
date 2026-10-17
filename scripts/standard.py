@@ -253,6 +253,7 @@ def main(argv=None):
     for cmd in (init, commands.add_parser("upgrade")):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
         cmd.add_argument('--completion-policy', action='store_true', help='Explicit accepted-scope completion checking; requires supporting published reader/writers and separate durable activation')
+        cmd.add_argument('--ci-retry-policy', type=Path, help='Explicit reviewed retry policy JSON; compatible reader/writers and owned durable activation are separate')
         cmd.add_argument("--tracker-root", type=Path, required=True)
         cmd.add_argument("--python", default=sys.executable, help="Python 3.11+ for the pinned Tracker exporter")
         cmd.add_argument("--apply", action="store_true")
@@ -261,6 +262,13 @@ def main(argv=None):
         if args.command in ("init", "upgrade"):
             import project
             revision = source_revision()
+            retry_policy = None
+            if args.ci_retry_policy is not None:
+                retry_policy = json.loads(args.ci_retry_policy.read_text(encoding='utf-8'),
+                                          object_pairs_hook=project.export_contract.unique)
+                if retry_policy is None:
+                    raise ValueError('CI retry policy must be explicit and non-null')
+                project.export_contract.structural_retry_policy({'ci_retry_policy': retry_policy})
             if args.command == "init":
                 inputs = {"profile": args.profile, "repository": args.repository, "name": args.name,
                           "prefix": args.id_prefix, "workspace_id": args.workspace_id, "staging": not args.no_staging}
@@ -269,6 +277,7 @@ def main(argv=None):
                 if args.review_limit is not None: inputs["review_limit"] = args.review_limit
                 if args.task_context: inputs['task_context'] = {'schema_version': 1}
                 if args.completion_policy: inputs['completion_policy'] = {'schema_version': 1}
+                if args.ci_retry_policy is not None: inputs['ci_retry'] = retry_policy
                 if not args.legacy_execution:
                     inputs.setdefault('implementation_limit', 5)
                     inputs.setdefault('batch_limit', 5)
@@ -283,7 +292,8 @@ def main(argv=None):
                 result = project.init(args.root, inputs, revision, args.tracker_root, args.python, args.apply)
             else:
                 result = project.upgrade(args.root, revision, args.tracker_root, args.python, args.apply,
-                                         completion_policy={'schema_version': 1} if args.completion_policy else None)
+                                         completion_policy={'schema_version': 1} if args.completion_policy else None,
+                                         ci_retry_policy=retry_policy)
             print(json.dumps(result, indent=2))
             return 1 if result.get("conflicts") else 0
         findings = inspect(args.root, args.expected_revision)

@@ -121,9 +121,22 @@ def selected(data):
                   'unfinished, unknown old scope stays unverified, and explicit historical '
                   'acceptance never invents current delivery. Follow the exact separate '
                   'selection/activation order when task context is also new.')
+    retry = ''
+    if 'ci_retry' in workflow:
+        retry = ('## Adopted CI retry policy\n\n'
+                 'Read the exact [local retry guide](CI_RETRY.md). The explicitly '
+                 'mirrored policy needs published compatible readers/writers and '
+                 'owned durable activation. Use only the maintained command and '
+                 'persisted operator-attested diagnosis for a still-relevant '
+                 'verification-only run. Original executions, outside reruns and '
+                 'uncertain dispatches consume the durable episode budget. New '
+                 'chats, empty commits, run IDs or cause/plan renaming do not reset '
+                 'it. An uncertain POST remains held until supported reconciliation; '
+                 'elapsed time never authorizes another request. Read-only CI '
+                 'gates gain no write permission or release authority.')
     return {'__SELECTED_WORKFLOW__': route, '__TASK_CONTEXT_GUIDANCE__': context,
             '__PROCESS_GUIDANCE__': process, '__SELECTED_DELIVERY__': target,
-            '__COMPLETION_GUIDANCE__': scoped}
+            '__COMPLETION_GUIDANCE__': scoped, '__CI_RETRY_GUIDANCE__': retry}
 
 
 def render(text, data):

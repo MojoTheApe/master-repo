@@ -3,6 +3,7 @@ import base64
 import copy
 import datetime
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
@@ -170,3 +171,47 @@ def exercise(root, python, layout, fixture):
     assert before==after,'Portable planning/gating changed consumer files'
     assert not (root/'.tracker-runtime').exists()
     return {'layout':layout,'context':fixture['context'],'entrypoints':entries,'native_fixture_gets':len(calls),'engine_imported':False,'consumer_writes':False}
+
+
+def exercise_accounting(root, python, layout, row):
+    """Run the real generic report CLI using only wholly synthetic saved GETs."""
+    root=Path(root).resolve()
+    assert row.get('synthetic') is True and row.get('schema_version')==1
+    jobs=next(item['value']['jobs'] for item in row['responses'].values() if 'jobs' in item['value'])
+    naive=sum(math.ceil((datetime.datetime.fromisoformat(job['completed_at'].replace('Z','+00:00'))
+                         - datetime.datetime.fromisoformat(job['started_at'].replace('Z','+00:00'))).total_seconds()/60)
+              for job in jobs)
+    assert naive==row['expected']['naive_rounded_row_estimate']
+    before={p.relative_to(root).as_posix():p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    entries=['scripts/tracker_ci_accounting.py']
+    if layout=='separated':entries.append('.workflow/tools/tracker_ci_accounting.py')
+    bootstrap="""import runpy,sys
+from pathlib import Path
+entry=Path(sys.argv[1]);sys.path.insert(0,str(entry.parent))
+sys.argv=[str(entry),*sys.argv[2:]]
+try:runpy.run_path(str(entry),run_name='__main__')
+except SystemExit as result:status=result.code
+else:status=0
+assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
+raise SystemExit(status)
+"""
+    with tempfile.TemporaryDirectory(prefix='tracker-accounting-offline-') as directory:
+        scratch=Path(directory);data=scratch/'synthetic.json';data.write_text(json.dumps(row))
+        env=dict(os.environ,PATH=str(scratch),PYTHONDONTWRITEBYTECODE='1')
+        for key in ('PYTHONPATH','TASK_TRACKER_HOME','GH_TOKEN','GITHUB_TOKEN'):env.pop(key,None)
+        for entry in entries:
+            result=subprocess.run([python,'-B','-I','-c',bootstrap,str(root/entry),'--snapshot',str(data),'--json'],
+                                  cwd=scratch,env=env,capture_output=True,text=True)
+            assert result.returncode==0,(entry,result.stderr)
+            report=json.loads(result.stdout)
+            for key,value in row['expected'].items():
+                if key!='naive_rounded_row_estimate':assert report['totals'][key]==value,(entry,key)
+            assert report['coverage']['complete'] and report['billing']['status']=='unknown'
+            assert report['billing']['net_charge'] is None and report['billing']['rates'] is None
+            assert report['schema_version']==2 and report['required_coverage']['status']=='unknown'
+    after={p.relative_to(root).as_posix():p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    assert before==after,'Portable accounting changed consumer files'
+    assert not (root/'.tracker-runtime').exists()
+    return dict(layout=layout,entrypoints=entries,engine_imported=False,consumer_writes=False,
+                naive_rounded_row_estimate=naive,
+                counted_rounded_interval_estimate=row['expected']['rounded_interval_minutes_estimate'])

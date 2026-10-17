@@ -1,20 +1,26 @@
 # Versioning and safe upgrades
 
-## Current published pair and portable-contract candidate
+## Current published pair and retry/accounting candidate
 
-Master 1.1.1 and Tracker 3.3.1 are published immutable instruction releases at
-`c396e64222cb334780096a2f9e283a78c92b3829` and
-`6859f7b15e3bde361beba5f07a24b90492ee1f27`. Their successful actual-main checks and
+Master 1.2.0 and Tracker 3.4.0 are published portable-contract releases at
+`864ca7a5814e703dd6e61207362d24cbc26dc9ad` and
+`866baf6dec2bd82d8ca052002cc3dc6f4805e247`. Their successful actual-main checks and
 real paired export/upgrade evidence precede publication. Source publication is
 separate from installed readers, owned consumer activation and live outcome proof.
 
-Master 1.2.0 proposes the [portable contract](portable-contract.md) with Tracker
-3.4.0: Tracker-owned raw/separated helpers, an exact generated capability/hash
-record and a trusted whole-module structural validator snapshot. Publish the
+Master 1.3.0 proposes [bounded retry](ci-retry.md), explicit policy selection,
+[fast/full submission guidance](verification-submission.md) and
+[on-demand accounting](ci-accounting.md) with Tracker 3.5.0. The portable contract
+adds the source-owned retry validator snapshot and generic accounting helper.
+These are proposed source versions, not claimed publications. Publish the
 reviewed checked Tracker merge first, then refresh Master from that exact released
 revision and run the single clean final source-pair gate before Master publication.
 The provisional source pin is not published-pair acceptance. Existing projects
 retain selected policies, execution limits, targets and state until reviewed adoption.
+
+The observed current source releases have GitHub's native immutable flag false.
+Exact verified commit/tag identities and the never-move-tag rule are recorded
+without claiming native immutable-release enforcement.
 
 `VERSION` is a proposed source version, not proof of a published release. Version
 1.0.0 introduces the complete workflow and descriptor schema 2. Schema 1 validation

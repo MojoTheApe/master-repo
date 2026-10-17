@@ -21,7 +21,8 @@ def verified_artifacts():
     provenance = json.loads(contract.safe_file(base, 'provenance.json').read_bytes(), object_pairs_hook=contract.unique)
     assert provenance['schema_version'] == 1 and provenance['synthetic'] is True
     assert provenance['engine'] == record['engine']
-    expected_sources = {'runner.py': 'tests/portable_fixture.py', 'native.json': 'tests/fixtures/portable_native.json'}
+    expected_sources = {'runner.py': 'tests/portable_fixture.py', 'native.json': 'tests/fixtures/portable_native.json',
+                        'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json'}
     assert set(provenance['files']) == set(expected_sources)
     artifacts = {}
     for name, source in expected_sources.items():
@@ -32,6 +33,8 @@ def verified_artifacts():
     assert len(data['contexts']) == 8
     assert {(row['layout'], row['context']) for row in data['contexts']} == {
         (layout, context) for layout in ('raw', 'separated') for context in ('source', 'integration', 'main', 'promotion')}
+    accounting = json.loads(artifacts['accounting.json'], object_pairs_hook=contract.unique)
+    assert accounting['schema_version'] == 1 and accounting['synthetic'] is True
     for layout in ('raw', 'separated'):
         root = base/layout
         contract.check_manifest(contract.safe_file(root, contract.MANIFEST).read_bytes(), raw)
@@ -44,9 +47,13 @@ def verified_artifacts():
 
 def isolated_consumer(root, python):
     """Check both actual entry points/import locations on a representative render."""
-    code = '''import sys
+    code = '''import json,sys
+from pathlib import Path
 sys.path.insert(0,sys.argv[1])
 import tracker_ci_gate, tracker_ci_evidence, tracker_batch_policy, tracker_pr_check, tracker_task_context, tracker_delivery_receipt
+import tracker_ci_retry, tracker_ci_accounting
+config=json.loads((Path(sys.argv[2])/'tracker/config.json').read_bytes())
+assert tracker_ci_retry.policy(config)==config.get('ci_retry_policy')
 assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
 '''
     import os
@@ -54,7 +61,7 @@ assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
     for key in ('PYTHONPATH', 'TASK_TRACKER_HOME'): env.pop(key, None)
     with tempfile.TemporaryDirectory(prefix='master-portable-import-') as temporary:
         for directory in ('scripts', '.workflow/tools'):
-            result = subprocess.run([python, '-B', '-I', '-c', code, str(root/directory)],
+            result = subprocess.run([python, '-B', '-I', '-c', code, str(root/directory), str(root)],
                 cwd=temporary, env=env, capture_output=True, text=True)
             assert result.returncode == 0, result.stderr
             result = subprocess.run([python, '-B', str(root/directory/'tracker_ci_gate.py'), '--help'],
@@ -72,7 +79,7 @@ def exercise_all(python, tracker=None):
     runner = types.ModuleType('_canonical_tracker_portable_fixture')
     runner.__file__ = str(SOURCE/FIXTURES/'runner.py')
     exec(compile(artifacts['runner.py'], runner.__file__, 'exec'), runner.__dict__)
-    results = []
+    results, accounting_results = [], []
     with tempfile.TemporaryDirectory(prefix='master-portable-native-') as temporary:
         for index, row in enumerate(data['contexts']):
             root = Path(temporary)/str(index); root.mkdir()
@@ -82,8 +89,16 @@ def exercise_all(python, tracker=None):
             config = root/'tracker/config.json'; config.parent.mkdir(parents=True, exist_ok=True)
             config.write_text(json.dumps(row['config']))
             results.append(runner.exercise(root, python, row['layout'], row))
+        for layout in ('raw', 'separated'):
+            root = Path(temporary)/('accounting-'+layout); root.mkdir()
+            for name in contract.layout_files(record, layout):
+                path = root/name; path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes((SOURCE/FIXTURES/layout/name).read_bytes())
+            accounting_results.append(runner.exercise_accounting(root, python, layout,
+                json.loads(artifacts['accounting.json'], object_pairs_hook=contract.unique)))
     return {'engine': record['engine'], 'provenance': provenance, 'cases': results,
-            'clock_fixture_only': True, 'private_engine_required': False, 'live_requests': 0}
+            'accounting': accounting_results, 'clock_fixture_only': True,
+            'private_engine_required': False, 'live_requests': 0}
 
 
 def main():

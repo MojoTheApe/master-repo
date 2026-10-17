@@ -11,10 +11,11 @@ class PortableArtifacts(unittest.TestCase):
     def test_actual_canonical_artifacts_and_all_layout_contexts_are_bound(self):
         record, provenance, artifacts, data = verified_artifacts()
         self.assertEqual(len(data['contexts']), 8)
-        self.assertEqual(len(record['layouts']['raw']), 9)
-        self.assertEqual(len(record['layouts']['separated']), 18)
+        self.assertEqual(len(record['layouts']['raw']), 11)
+        self.assertEqual(len(record['layouts']['separated']), 22)
         self.assertEqual(provenance['engine'], record['engine'])
         self.assertIn(b'def exercise(', artifacts['runner.py'])
+        self.assertIn('accounting.json', artifacts)
 
 
 if __name__ == '__main__': unittest.main()

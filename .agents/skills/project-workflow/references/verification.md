@@ -1,5 +1,33 @@
 # Verification and coordinated upgrades
 
+When the adopted pin explicitly mirrors `workflow.ci_retry` with
+`ci_retry_policy`, read its exact generated CI_RETRY.md before diagnosis or a
+native rerun. Compatible published readers/all writers and owned durable
+activation precede live use. Use the persisted operator-attested diagnosis and
+reviewed verification-only plan, never a bare transient flag or startup_failure
+label. A privileged authenticated principal does not prove the human owner
+personally reviewed the evidence. Unknown, product, permanent configuration and
+billing/access/quota causes do not automatically retry.
+
+Retain consumed budget, unresolved causes and reservations across sessions, run
+IDs, empty commits and cause/plan renaming. Only the fresh dispatch-barrier CAS
+winner sends once; an ambiguous CAS/POST or crash keeps budget held for supported
+GET-only reconciliation. Timeout, an empty response or an unattributed external
+attempt cannot free an uncertain own request. Direct human Actions access is
+outside this lock. Native rerun keeps the original SHA/ref/triggering privileges;
+a real fixed head needs new-candidate verification. Partial retry requires the
+adopted gate's real original-job/dependent proof, otherwise a supported bounded
+full attempt or stop. Retry permission never grants deployment/release permission.
+
+Use an on-demand read-only human/JSON report with versioned saved observations
+when supplied by the pin. Count actual intervals separately from carried-forward
+attempt rows and keep unresolved coverage explicit. Creation cohorts differ from
+execution periods; bounded lookback can miss older reruns. Preserve observed,
+inferred and unknown reasons, unknown billing and separate current storage.
+Interval-minute estimates are not invoices or savings. Compare ordinary workloads
+with the same report method and report pending measurement gaps without scheduling
+unrequested monitoring or paid demonstrations.
+
 When the adopted pin supplies `docs/portable-contract.md`, follow its exact
 generated contract and source-pair gate. Tracker authors the portable frontend,
 fixed layout helpers and canonical CI-policy validator; Master consumes their
@@ -25,6 +53,15 @@ Follow the adopted verification policy and actual product commands. Select the
 cheapest meaningful check for changed risk, then all required combined-candidate
 and actual delivery checks. Unknown/mixed scope keeps full applicable checks;
 test counts alone do not justify removal or a different product stack.
+
+Where the adopted pin supplies `docs/verification-submission.md`, keep the real
+project fast/full plan and distinct check names. Group related local corrections
+on the same owned task branch while retaining useful early hosted feedback and
+checkpoints; impose no arbitrary waiting interval. Ready handoff/admission and
+unknown/mixed changes require full applicable coverage. Record why a new heavy
+run is needed and its actual candidate/native run; historical inferred reasons
+remain inferred. A fast result, renamed plan or instruction-only skip cannot
+satisfy missing full coverage or refresh an exhausted retry budget.
 
 Read author evidence before repeating it. Preserve the existing adopted bounded
 collector's proof rules, including older exact-tree/merged-PR reuse; a newer skill

@@ -23,6 +23,13 @@ than repeating broad inventories after every unrelated action.
 6. Verify retained queue/history/delivery and the actual fresh projection; resume
    authorized admissions. Record each source/publication/activation result once.
 
+Explicit bounded-retry selection follows the same order. Read the exact engine's
+CI_RETRY.md: all actual readers/writers must support its fenced durable state
+before owned activation. Preserve episode consumption, unresolved causes and
+uncertain intents across policy edits; absence and export are not activation.
+Independent reporting has no retry/state dependency and can remain an on-demand
+operation while a busy consumer's workflow adoption waits for its real owners.
+
 ## Prevent new starts during cutover
 
 Use a durable maintenance admission gate only when all actual clients/writers

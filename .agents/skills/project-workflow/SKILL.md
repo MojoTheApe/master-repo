@@ -71,6 +71,13 @@ environments, check commands or live registration proof.
 
 ## Execute the ticket lifecycle
 
+For CI work, read [verification](references/verification.md). Matching explicit
+`workflow.ci_retry` / Tracker `ci_retry_policy` selects the pinned bounded retry
+contract; files, a newer skill or a failed run do not activate it. Follow the
+exact local CI_RETRY.md and owned activation, evidence-backed operator diagnosis,
+durable reservations and reconciliation. Keep product fast/full commands local,
+full admission intact and actual billing separate from interval estimates.
+
 Use the project's generated local Tracker guide as the primary route for its
 actual selected execution mode, Stage and delivery target. Supported older routes
 remain reference material and never imply activation. Read the

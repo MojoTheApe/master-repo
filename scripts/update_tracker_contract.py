@@ -63,6 +63,14 @@ def plan(engine, revision, python):
                 if snapshot != canonical or hashlib.sha256(snapshot).hexdigest() != record['validator']['sha256']:
                     raise ValueError('Structural snapshot is not the actual canonical source module')
                 planned['scripts/vendor/tracker_ci_evidence.py'] = snapshot
+                retry = (output/'scripts/tracker_ci_retry.py').read_bytes()
+                canonical_retry = git(engine, 'show', revision+':tracker/ci_retry.py')
+                retry_validator = record.get('retry_validator', {})
+                if (retry != canonical_retry or not isinstance(retry_validator, dict)
+                        or retry_validator.get('source') != 'tracker/ci_retry.py'
+                        or hashlib.sha256(retry).hexdigest() != retry_validator.get('sha256')):
+                    raise ValueError('Retry snapshot is not the actual canonical source module')
+                planned['scripts/vendor/tracker_ci_retry.py'] = retry
     if manifests[0] != manifests[1]:
         raise ValueError('Tracker layouts exported different static capability manifests')
     planned['scripts/vendor/tracker-export-contract.json'] = manifests[0]
@@ -71,6 +79,7 @@ def plan(engine, revision, python):
     fixture_sources = {
         'runner.py': 'tests/portable_fixture.py',
         'native.json': 'tests/fixtures/portable_native.json',
+        'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json',
     }
     provenance = {'schema_version': 1, 'synthetic': True,
         'engine': {'repository': 'MojoTheApe/task-tracker', 'revision': revision}, 'files': {}}

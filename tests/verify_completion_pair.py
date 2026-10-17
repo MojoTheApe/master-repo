@@ -38,23 +38,25 @@ def source_inputs(args):
     return sources
 
 
-def changed_engine_contract(args, scratch):
+def changed_engine_contract(args, scratch, *, retry=False):
     """Actual committed rule drift must fail even with freshly matching pin metadata."""
-    engine = scratch/'changed-engine'
+    engine = scratch/('changed-retry-engine' if retry else 'changed-engine')
     subprocess.run(['git', 'clone', '--quiet', '--no-hardlinks', str(args.tracker), str(engine)], check=True)
     subprocess.run(['git', '-C', str(engine), 'remote', 'set-url', 'origin',
                     'https://github.com/MojoTheApe/task-tracker.git'], check=True)
-    source = engine/'tracker/ci_evidence.py'
+    source_name = 'tracker/ci_retry.py' if retry else 'tracker/ci_evidence.py'
+    source = engine/source_name
     before = source.read_bytes()
-    old, new = b"p['max_age_seconds'] <= 30 * 86400", b"p['max_age_seconds'] <= 31 * 86400"
+    old, new = ((b"value['max_executions'] not in (1, 2)", b"value['max_executions'] not in (1, 2, 3)") if retry else
+                (b"p['max_age_seconds'] <= 30 * 86400", b"p['max_age_seconds'] <= 31 * 86400"))
     assert before.count(old) == 1, 'Update the real contract-drift mutation for this engine'
     source.write_bytes(before.replace(old, new))
-    subprocess.run(['git', '-C', str(engine), 'add', 'tracker/ci_evidence.py'], check=True)
+    subprocess.run(['git', '-C', str(engine), 'add', source_name], check=True)
     subprocess.run(['git', '-C', str(engine), '-c', 'user.name=Isolated contract fixture',
                     '-c', 'user.email=fixture@example.invalid', 'commit', '--quiet',
-                    '-m', 'Fixture only: change the actual maximum evidence age rule'], check=True)
+                    '-m', 'Fixture only: change the actual canonical contract rule'], check=True)
     revision = git(engine, 'rev-parse', 'HEAD')
-    master = scratch/'stale-master-contract'
+    master = scratch/('stale-master-retry-contract' if retry else 'stale-master-contract')
     shutil.copytree(args.master, master, ignore=shutil.ignore_patterns('.git', '__pycache__', '.venv', '.pytest_cache'))
     # Refresh identity alone, deliberately retaining the old technical rules and
     # hashes. A manually wrong SHA or a dirty checkout is not this negative case.
@@ -82,6 +84,7 @@ else: raise AssertionError('Changed engine rules passed a stale trusted contract
     assert checked.returncode == 0, (checked.stdout, checked.stderr)
     return dict(actual_canonical_rule_changed=True, local_committed_engine=revision,
                 official_origin_preserved=True, clean_engine=True, matching_pin_metadata=True,
+                canonical_source=source_name,
                 stale_trusted_rule_and_helper_record_rejected=True, live_mutations=0)
 
 
@@ -106,7 +109,8 @@ def selected_instructions(root, exported, config, inputs, tracker):
     for key, heading in (('task_context_policy', 'Selected task context'),
                          ('completion_policy', 'Selected accepted-scope completion'),
                          ('process_instructions', 'Selected instruction-only exception'),
-                         ('ci_evidence_policy', 'Selected native CI evidence')):
+                         ('ci_evidence_policy', 'Selected native CI evidence'),
+                         ('ci_retry_policy', 'Selected CI retry policy')):
         assert (heading in guide) == (key in config), (key, heading)
     common = exported['docs/repository/WORKFLOW.md']
     assert ('Stage is enabled' in common) == inputs['staging']
@@ -140,8 +144,11 @@ def main():
     parser.add_argument('--selected-instructions', action='store_true', help='Check the complete final selected guide/reference/PR closure; synthetic explicit CI policy tests navigation only')
     parser.add_argument('--bounded', action='store_true', help='Six representative actual outputs plus four genuine old-source upgrades')
     parser.add_argument('--portable-contract', action='store_true', help='Require exact trusted artifacts, engine-free native fixtures and real contract-drift refusal')
+    parser.add_argument('--retry-contract', action='store_true', help='Exercise explicit retry selection/preservation, actual accounting CLI and retry-rule drift')
     parser.add_argument('--require-pinned', action='store_true', help='Reject a dirty Master or an engine override')
     args = parser.parse_args()
+    if args.retry_contract and not args.portable_contract:
+        parser.error('--retry-contract requires --portable-contract')
     for name in ('master', 'tracker', 'old_master', 'old_tracker', 'output'):
         setattr(args, name, getattr(args, name).resolve())
     sources = source_inputs(args)
@@ -158,6 +165,7 @@ def main():
               'matrix': [], 'upgrades': [], 'python39': args.python39,
               'consumer_activation': False, 'selected_instructions': args.selected_instructions}
     result.update(bounded=args.bounded, portable_contract=args.portable_contract,
+                  retry_contract=args.retry_contract,
                   publication_verified_by_this_command=False, source_inputs=sources)
     if result['tracker_dirty']:
         raise ValueError('The actual Tracker candidate must be clean and immutable')
@@ -213,6 +221,9 @@ print('isolated portable assessment/import passed')
                             actual = dict(inputs)
                             if selected:
                                 actual['completion_policy'] = {'schema_version': 1}
+                                if args.retry_contract:
+                                    actual['ci_retry'] = {'schema_version': 1,
+                                        'max_executions': 1 if (profile, mode)==('local','legacy') else 2}
                                 if args.selected_instructions:
                                     actual['process_instructions'] = {'schema_version': 1, 'required_checks': ['descriptor', 'tracker-link']}
                                     actual['ci_evidence'] = {'schema_version': 2, 'profiles': {'checks': {
@@ -232,9 +243,13 @@ print('isolated portable assessment/import passed')
                             descriptor = json.loads(exported['delivery.json'])
                             assert ('completion_policy' in config) == selected
                             assert ('completion_policy' in descriptor['workflow']) == selected
+                            if args.retry_contract:
+                                assert config.get('ci_retry_policy') == actual.get('ci_retry')
+                                assert descriptor['workflow'].get('ci_retry') == actual.get('ci_retry')
                             assert descriptor['completion'] == project.PROFILES[profile]
                             assert descriptor['workflow']['staging'] == staging
-                            row = dict(profile=profile, stage=staging, execution=mode, task_context=context, selected=selected)
+                            row = dict(profile=profile, stage=staging, execution=mode, task_context=context,
+                                       selected=selected, ci_retry=actual.get('ci_retry'))
                             if args.portable_contract:
                                 from portable_contract_fixture import isolated_consumer
                                 row['portable_runtime'] = isolated_consumer(root, args.python39)
@@ -278,20 +293,26 @@ print('isolated portable assessment/import passed')
             for name, content in custom.items():
                 (root / name).write_text(content)
             before = {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob('*') if p.is_file()}
+            retry_options = ({'ci_retry_policy': {'schema_version': 1, 'max_executions': 1 if mode=='legacy' else 2}}
+                             if args.retry_contract and mode!='v1' else {})
             preview = project.upgrade(root, master_revision, args.tracker, sys.executable,
-                                      completion_policy={'schema_version': 1})
+                                      completion_policy={'schema_version': 1}, **retry_options)
             assert not preview['applied'] and not preview['conflicts'], preview
             assert before == {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob('*') if p.is_file()}
             applied = project.upgrade(root, master_revision, args.tracker, sys.executable, apply=True,
-                                      completion_policy={'schema_version': 1})
+                                      completion_policy={'schema_version': 1}, **retry_options)
             assert applied['applied'] and not applied['conflicts'], applied
             for name, content in custom.items():
                 assert (root / name).read_text() == content
             assert json.loads((root / 'tracker/config.json').read_text())['completion_policy'] == {'schema_version': 1}
+            if args.retry_contract:
+                assert json.loads((root/'tracker/config.json').read_bytes()).get('ci_retry_policy') == retry_options.get('ci_retry_policy')
+                assert json.loads((root/'delivery.json').read_bytes())['workflow'].get('ci_retry') == retry_options.get('ci_retry_policy')
             assert project.upgrade(root, master_revision, args.tracker, sys.executable, apply=True)['changed'] == []
             result['upgrades'].append({'execution': mode, 'genuine_old_master': old_revision,
                                        'old_tracker': git(args.old_tracker, 'rev-parse', 'HEAD'),
                                        'preview_no_writes': True, 'local_knowledge_preserved': True,
+                                       'ci_retry': retry_options.get('ci_retry_policy'),
                                        'idempotent': True})
         if args.portable_contract:
             assert result['matrix'] and all(row.get('portable_runtime') for row in result['matrix']), \
@@ -299,6 +320,8 @@ print('isolated portable assessment/import passed')
             from portable_contract_fixture import exercise_all
             result['native_portable_contexts'] = exercise_all(args.python39, args.tracker)
             result['changed_engine_contract'] = changed_engine_contract(args, scratch)
+            if args.retry_contract:
+                result['changed_retry_contract'] = changed_engine_contract(args, scratch, retry=True)
     result['passed'] = True
     args.output.write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({'passed': True, 'exports': len(result['matrix']), 'real_upgrades': len(result['upgrades']),

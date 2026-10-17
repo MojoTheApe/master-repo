@@ -13,6 +13,13 @@ supported matching evidence and run missing coverage. Authorized upgrades follow
 the [coordinated procedure](docs/workflow-upgrades.md); instructions cannot activate
 maintenance/evidence mechanisms the pinned engine does not implement.
 
+The optional [bounded CI retry policy](docs/ci-retry.md) needs an explicitly
+mirrored reviewed selection, compatible reader/writers and owned durable
+activation. Use the [submission plan](docs/verification-submission.md) for actual
+project fast/full checks and the [on-demand report](docs/ci-accounting.md) for
+reproducible execution estimates and separately sourced billing. Preserve existing
+collector support and all full admission/delivery requirements.
+
 ## Ticket lifecycle
 
 Use the [shared lifecycle and task-context contract](docs/task-context.md) for the

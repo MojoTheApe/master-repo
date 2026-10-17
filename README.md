@@ -11,6 +11,8 @@ independent review, optional stage, main integration and verified delivery.
 - [Descriptor and compatibility](docs/descriptor.md)
 - [Portable Tracker contract and source-pair verification](docs/portable-contract.md)
 - [Efficient verification](docs/verification.md) and [coordinated upgrades](docs/workflow-upgrades.md)
+- [Bounded retry](docs/ci-retry.md), [fast/full submission](docs/verification-submission.md)
+  and [on-demand accounting](docs/ci-accounting.md)
 - [VPS](profiles/vps.md), [n8n](profiles/n8n.md), [local/package](profiles/local.md)
 - [Canonical agent skill](.agents/skills/project-workflow/SKILL.md)
 
@@ -43,9 +45,10 @@ branch-controls audit reports platform limitations; `check-merge` is not native
 protection. Durable maintenance and broader CI evidence transfer are a concrete
 Tracker companion, not features activated by this source update.
 
-Source version 1.2.0 proposes one Tracker-owned portable contract and trusted
-structural validator snapshot. The published instruction pair is Master 1.1.1 /
-Tracker 3.3.1; consult immutable releases for publication proof. A VERSION file is not a release. No app deployment, consumer migration or global skill
+Source version 1.3.0 proposes explicit bounded retry and shared CI accounting,
+with a Tracker-owned structural snapshot and project fast/full guidance. The
+published portable-contract pair is Master 1.2.0 / Tracker 3.4.0; consult exact
+releases for publication proof. A VERSION file is not a release. No app deployment, consumer migration or global skill
 installation is performed automatically by this repository.
 
 For an explicitly Git-only n8n project, select `n8n-source`: source delivery ends
