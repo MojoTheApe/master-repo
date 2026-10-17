@@ -24,9 +24,11 @@ A held record counts throughout its supported lifetime, including a pending
 handoff, return, fix or uncertain write. A returning Reviewer can retain a lane
 while an author holds a genuine implementation claim for the same task: those
 are two different pools, each occupied once. Do not count historical batch
-Reviewers, completed claims, activity aliases, labels or elapsed timers as extra
-reservations. Only the supported owned transition releases actual capacity;
-apparent inactivity does not establish abandonment.
+Reviewers, history of completed claims outside current ownership collections,
+activity aliases, labels or elapsed timers as extra reservations. A status name
+inside a retained current reservation does not release it. Only the supported
+owned transition releases actual capacity; apparent inactivity does not establish
+abandonment.
 
 ## Separate free capacity from admission
 
