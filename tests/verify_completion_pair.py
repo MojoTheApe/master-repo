@@ -3,6 +3,8 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
+from urllib.parse import unquote
 import subprocess
 import sys
 import tempfile
@@ -11,6 +13,49 @@ from unittest import mock
 
 def git(root, *args):
     return subprocess.check_output(['git', '-C', str(root), *args], text=True).strip()
+
+
+def selected_instructions(root, exported, config, inputs, tracker):
+    """Compare real final consumer prose with its engine-owned source and links."""
+    sys.path.insert(0, str(tracker))
+    from tracker import instructions
+    guide = exported['docs/repository/TRACKER.md']
+    expected = instructions.render_guide(config).replace('](../tracker/', '](../../tracker/')
+    assert guide == expected, 'Master changed selected Tracker rules beyond layout navigation'
+    pr = exported['.github/pull_request_template.md']
+    assert pr.startswith(instructions.render_pr_template(config))
+    assert len(re.findall(r'^Tracker issues:', pr, re.M)) == 1
+    for name in instructions.SHARED_DOCS:
+        assert exported['docs/repository/' + name] == (tracker/'docs'/name).read_text()
+        assert '(repository/' + name + ')' in exported['docs/' + name]
+    assert exported['docs/repository/WORKFLOW_REFERENCE.md'] == instructions.render_reference()
+    version = config.get('execution_policy', {}).get('schema_version')
+    for other in (1, 2, 3):
+        assert (f'execution schema {other}' in guide) == (version == other)
+    assert ('Selected route: legacy ownership' in guide) == (version is None)
+    for key, heading in (('task_context_policy', 'Selected task context'),
+                         ('completion_policy', 'Selected accepted-scope completion'),
+                         ('process_instructions', 'Selected instruction-only exception'),
+                         ('ci_evidence_policy', 'Selected native CI evidence')):
+        assert (heading in guide) == (key in config), (key, heading)
+    common = exported['docs/repository/WORKFLOW.md']
+    assert ('Stage is enabled' in common) == inputs['staging']
+    assert ('Stage is disabled' in common) != inputs['staging']
+    links = 0
+    for name, text in exported.items():
+        if not name.endswith('.md'):
+            continue
+        for raw in re.findall(r'(?<!!)\[[^\]]*\]\(([^)]+)\)', text):
+            target = raw.split('#', 1)[0].split('?', 1)[0]
+            if not target or re.match(r'^[a-zA-Z]+:', target):
+                continue
+            resolved = (root/name).parent/unquote(target)
+            assert root.resolve() in resolved.resolve().parents, (name, raw, 'escaped export')
+            assert resolved.is_file(), (name, raw, 'broken consumer navigation')
+            links += 1
+    return {'selected_guide_exact_except_navigation': True,
+            'tracker_pr_verbatim': True, 'shared_reference_bytes_exact': True,
+            'relative_markdown_links_checked': links}
 
 
 def main():
@@ -22,6 +67,7 @@ def main():
     parser.add_argument('--python39', required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--upgrades-only', action='store_true')
+    parser.add_argument('--selected-instructions', action='store_true', help='Check the complete final selected guide/reference/PR closure; synthetic explicit CI policy tests navigation only')
     parser.add_argument('--require-pinned', action='store_true', help='Reject a dirty Master or an engine override')
     args = parser.parse_args()
     for name in ('master', 'tracker', 'old_master', 'old_tracker', 'output'):
@@ -37,7 +83,7 @@ def main():
               'compatibility_pin_in_source': original_compatibility['tracker_revision'],
               'candidate_pair_override': original_compatibility != candidate,
               'matrix': [], 'upgrades': [], 'python39': args.python39,
-              'consumer_activation': False}
+              'consumer_activation': False, 'selected_instructions': args.selected_instructions}
     if result['tracker_dirty']:
         raise ValueError('The actual Tracker candidate must be clean and immutable')
     if args.require_pinned and (result['master_dirty'] or result['candidate_pair_override']):
@@ -47,6 +93,8 @@ def main():
              'v3': {'implementation_limit': 5, 'batch_limit': 5, 'review_limit': 5}}
     smoke = '''import copy, json, sys
 from pathlib import Path
+import re
+from urllib.parse import unquote
 root = Path(sys.argv[1])
 sys.path.insert(0, str(root / '.workflow/tools'))
 import tracker_delivery_policy as rules
@@ -85,6 +133,13 @@ print('isolated portable assessment/import passed')
                             actual = dict(inputs)
                             if selected:
                                 actual['completion_policy'] = {'schema_version': 1}
+                                if args.selected_instructions:
+                                    actual['process_instructions'] = {'schema_version': 1, 'required_checks': ['descriptor', 'tracker-link']}
+                                    actual['ci_evidence'] = {'schema_version': 2, 'profiles': {'checks': {
+                                        'workflow_path': '.github/workflows/product.yml', 'workflow_blob_sha': 'a'*40,
+                                        'producer_files': {'.workflow/tools/tracker_ci_evidence.py': 'b'*40},
+                                        'metadata_mode': 'commit', 'max_age_seconds': 3600,
+                                        'jobs': {'Product checks': {'mode': 'fresh'}}}}}
                             root = scratch / 'consumer'
                             exported = project.render(actual, master_revision, args.tracker, sys.executable)
                             for name, content in exported.items():
@@ -100,6 +155,8 @@ print('isolated portable assessment/import passed')
                             assert descriptor['completion'] == project.PROFILES[profile]
                             assert descriptor['workflow']['staging'] == staging
                             row = dict(profile=profile, stage=staging, execution=mode, task_context=context, selected=selected)
+                            if args.selected_instructions:
+                                row['instructions'] = selected_instructions(root, exported, config, actual, args.tracker)
                             if selected:
                                 guide = exported['docs/repository/COMPLETION_POLICY.md']
                                 assert guide == (args.tracker / 'docs/COMPLETION_POLICY.md').read_text()

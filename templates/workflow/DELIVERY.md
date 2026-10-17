@@ -1,101 +1,49 @@
 # Project delivery
 
-`delivery.json` is the project-specific delivery description. `tracker/config.json`
-is the matching Tracker configuration. The standard and engine use exact commit
-pins; neither automatically follows main. Populate actual procedures and verify
-registration before changing adoption from draft to ready.
+`delivery.json` records this project's intent; `tracker/config.json` is the
+matching executable selection. Both use exact compatible immutable pins. Source
+configuration, an installed engine or navigation skill never activates a new
+state contract. Populate actual procedures and retain verified registry/live-board
+proof before changing adoption from draft to ready.
 
-An explicitly matching `process_instructions` option permits one source PR limited
-to proven regular process instructions (AGENTS.md, CLAUDE.md and Markdown under
-docs/repository) to go Review -> main -> Merged after independent review and its
-configured checks. When execution is adopted, keep its real review lane through main completion. No stage,
-batch, installer or delivery receipt is created. The full immutable diff, not a
-title/label, selects it; mixed/unknown/unsafe or incomplete evidence never does.
-Wait for reserved integration/unpromoted stage ownership before changing main.
-Later staged work uses current main; the pinned Tracker permits a lagging stage
-only through complete eligible-diff and retained verified process merge proof.
-Other divergence requires the existing claimed reconciliation procedure.
-Application, build, configuration, CI, automation and system/runtime changes keep
-their ordinary route and actual delivery requirements.
+## Selected integration and target
 
-For other work, execution schema 2 or 3 selects Review -> Approved -> Stage -> Merged
-with staging enabled, or Review -> Approved -> Merged with staging explicitly disabled.
-Schema 3 permits 1..5 separately owned source reviews and one separate combined
-integration reviewer; schema 2 retains one source-review slot. Source approval,
-return and takeover select only the exact source claim. Actual consumer activation
-requires the pinned guide's idle preserved-state migration and compatible service.
-Independent source approval releases the review lane; one separate Coordinator
-integration claim covers a frozen batch of 1..batch_limit tasks. The recommended
-limit is five, independent of Worker capacity. Preserve each member's author,
-source PR/current approval and scope; independently review/check the combined
-candidate. With staging enabled verify it before unchanged promotion; otherwise
-use the reserved `batch` direction for direct main admission. Ordinary sources
-remain approval-only. Ship-all snapshots intake and processes sequential batches,
-rechecking remaining approvals after each main change. A single task may ship
-without filling the batch. Development alone ends at Approved. A selected
-integration/main-merge request covers the maintained chain through verified completion without a routine second
-approval after main; the owner need not also request delivery. Eligible runtime and
-package batches use `--deliver` by default, honoring explicit source-only or
-skip-release overrides while retaining unfinished runtime delivery. Follow
-[delivery continuation](DELIVERY_CONTINUATION.md).
-The v1 single-task lane instructions below apply only
-to schema 1. Completion and runtime authorization remain project-specific.
+__SELECTED_DELIVERY__
 
-## Path from request to completion
+__COMPLETION_GUIDANCE__
 
-Idea -> Backlog -> To Do are planning steps under the owner's direction. An
-explicit development request starts In Progress and a ticket branch. The author
-implements, self-checks and creates the linked PR, then sets Review. A separate
-subagent reviews; fixes stay on the same branch and require fresh approval.
-Opted-in execution v1 uses exactly one task per source PR and the single
-review/integration lane. Use explicit handoff and review claims from the pinned
-guide; follow the [workflow](WORKFLOW.md) for author claims before post-handoff edits.
+The [selected local Tracker guide](TRACKER.md) owns precise commands, claims,
+source-versus-integration membership, evidence and recovery. Preserve its current
+scope, policy, source tree and target bindings. A label, closed Issue or source
+merge cannot replace required independent review, checks or target verification.
+Keep partial tasks and unknown/pending/failed delivery unfinished. Historical
+acceptance retains only its exact proven bounds.
 
-Outside the adopted instruction-only exception, with staging enabled:
-working branch -> permanent stage, record Stage, test the
-configured target, then stage -> main with the same task and content. Use
-merge or squash with an unchanged tree and reviewed first parent. Keep one active
-task on stage; a related task set is permitted only under legacy execution.
-Reconcile with current main before the next task. If main changes during testing,
-opted-in execution requires `execution review-return --keep-lane`, a fresh author
-implementation claim, branch updates/checks and handoff before resuming independent
-review and staging a fresh candidate. Legacy execution follows its adopted slot rules.
-Do not add fixes to the promotion PR or delete the working branch prematurely.
+## Authorized continuation
 
-Without staging: legacy/v1 working branch -> main after review and checks;
-v2/v3 reserved independently reviewed batch -> main. No Stage column.
-Run the pinned client's `check-pr N`, `record-review`, `check-merge N`, `stage`,
-`verify-stage` and `merged ... --reviewed-complete --apply` as appropriate; see its
-`guide`. Commands record verified actions; they do not deploy or run a reviewer.
-Configure branch protection separately and verify that the required checks exist.
+A request to integrate selected work into main includes its maintained delivery
+and verification; do not add routine reapproval after the merge. Follow
+[delivery continuation](DELIVERY_CONTINUATION.md), honoring an explicit source-only
+or deferred-release instruction while keeping any resulting runtime obligation
+unfinished. Use only the project's actual maintained producer/adapter and local
+[operational procedures](../runtime/DELIVERY.md). A guide is not a background
+listener or release dispatcher. Never manufacture installation or business proof.
 
-Merged records inclusion in main. A proven instruction-only task completes its
-fully reviewed instruction scope at that admitted merge, including in a package
-project. Legacy projects use their slot and independent attestation; execution
-lane commands require an adopted execution policy. A local manual-pull project
-also completes at verified merge. For other work, VPS/n8n/package profiles require their actual delivery and checks,
-recorded with `record-delivery`. Failed or pending delivery remains unfinished.
-The explicitly selected n8n-source profile completes the Git source task after
-the admitted main merge. n8n transfer/publication is a separate process and must
-never be claimed from Git evidence. Existing runtime acceptance criteria survive
-adoption. For repository-only work, label stage evidence as Git checks; consult the project runtime guide when runtime verification is required;
-branch-to-environment connections require their own explicit setup.
-A partially implemented ticket stays active. Never substitute a closed Issue or
-non-code completion for missing code/delivery evidence.
+Verify actual native protection separately and keep configured checks current.
+Reconcile real scope/conflicts through a claimed author and fresh review. Preserve
+original history, current owners, pending operations, backups and compatible
+recovery; do not roll back accepted newer state for an incompatible old reader.
+Never delete permanent branches or rewrite project data to make a gate pass.
 
-## Procedure references
+## Onboarding and ownership
 
-Use `docs/runtime/DELIVERY.md` for actual environment identities, access,
-release authorization, rollback and backup. The descriptor links those procedures. A disabled
-stage is an explicit project choice. Production delivery is a separate operation
-using the project's maintained mechanism; Git storage gives no new deploy access.
-For n8n distinguish workflow publication from server upgrade. For local manual
-pull, no installer or automated update mechanism is required.
+Keep local environment identities, access, authorization and data safeguards in
+`docs/runtime/DELIVERY.md`; keep product truth in `docs/system/`. Generation and
+three-way upgrades preserve both areas and unique project behavior. Record
+project exceptions explicitly rather than silently rewriting shared intent.
 
-## Onboarding proof
-
-Record the shared workspace project ID and a durable verification reference after
-labels, branch configuration, registry publication and a fresh live board have been
-verified. A generated directory or local registry edit is not a connected project.
-Document pending setup honestly. Never put credentials or sensitive logs in these
-files or in published Tracker evidence.
+Onboarding proof identifies the exact workspace project, actual registry
+publication, labels/branches and a fresh correct live board with saved links.
+A generated directory or local registry change is not a connected project. Keep
+setup pending where proof is missing. No credentials or private reports belong
+in published project or Tracker output.

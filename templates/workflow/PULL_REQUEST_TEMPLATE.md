@@ -1,22 +1,8 @@
-Tracker issues: EX-12
+## System knowledge and related processes
 
-## Result
+Current system documentation and meaningful history are updated, or the specific
+no-impact reason is recorded. Preserve original specifications, local commands,
+installers, deployment authorization and data safeguards.
 
-Describe the problem and resulting behavior. Title: `[EX-12] Summary`. Opted-in
-execution v1 requires exactly one task per source PR; multiple related IDs are
-legacy-only. Link this PR back from its Issue(s).
-
-## Verification
-
-Self-checks and results. Independent reviewer/report and exact reviewed version.
-For an adopted instruction-only source: complete eligible-diff proof, current
-main/scope, explicit process checks and idle integration/stage ownership.
-For stage promotion: source PR, same single task (related sets are legacy-only),
-verified tree and environment proof.
-
-## Documentation and related processes
-
-Current system/history updated, or no impact with reason.
-Master Repo / Task Tracker impact: linked matching change, or no impact with reason.
-Local exceptions and deployment controls preserved. Completion and delivery still
-pending, where applicable. No automatic closing keywords.
+Master Repo / Task Tracker impact: linked matching change, or a concrete no-impact
+reason. Record any unfinished target delivery or partial parent scope explicitly.
