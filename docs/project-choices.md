@@ -1,10 +1,11 @@
 # Explicit project choices
 
-Task07 candidate: descriptor3 construction is present, but the current released
-Tracker3.6 pin rejects the new route before export or consumer writes. The actual
-canonical companion, compatible pin and complete paired verification must be in
-place before this candidate can be published or used. This document selects no
-consumer policy and grants no capture mandate.
+The Master1.5 source candidate pins actual published Tracker3.7.0 at
+`0b317d99997a4d3ef35b637bd6d19244630539f9` for descriptor3 and modern routes.
+The final Master review, native paired verification and publication remain
+required; a source version or successful engine release alone is not the
+published standard. This document selects no consumer policy and grants no
+capture mandate.
 
 ## Choose independent properties
 

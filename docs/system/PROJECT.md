@@ -6,18 +6,21 @@ independent. Master constructs choices, preserves actual choices during explicit
 three-way upgrades, and delegates modern policy validation to one fixed
 hash-verified canonical Tracker module. Selected common navigation distinguishes
 direct ownership/finalization, genuine batches and explicit ordinary capture.
-Legacy descriptors and optional absence remain unchanged. The current released
-compatibility pin still lacks this new route; it refuses modern export before
-consumer writes. The actual complete reviewed engine, final compatible pin,
-paired/native evidence and coordinated publication remain pending. No consumer
-state, capture mandate or delivery permission is activated by this candidate.
+Legacy descriptors and optional absence remain unchanged. The exact compatible
+source is published Tracker3.7.0 at `0b317d99997a4d3ef35b637bd6d19244630539f9`.
+Its canonical helper/fixture/validator closure is refreshed mechanically; final
+Master source review, paired/native evidence and standard publication remain
+separate required outcomes. No consumer state, capture mandate or delivery
+permission is activated by this candidate.
 
 The refresh tool also consumes the engine-owned modern direct fixture data and
 runner when the exact selected manifest supplies execution4. The paired gate's
 explicit `--direct-contract` checks actual Master-generated configurations and
 their selected guides separately from canonical saved admission/receipt replay.
-The current released pin keeps its old fixture closure; provisional source checks
-do not install a new trusted snapshot or claim a published compatible pair.
+The selected closure has12 raw/24 separated helpers and four canonical direct
+task/capture Stage-on/off cases. Their eight layout replays remain separate from
+the actual Master output matrix and genuine old-source upgrades. A refreshed
+trusted snapshot does not claim the final published compatible pair.
 
 MR-51 documents [actual capacity](../capacity.md) for the existing legacy and
 execution1/2/3 topologies. Tracker owns the reservation projection and UI; Master

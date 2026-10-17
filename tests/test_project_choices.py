@@ -1,4 +1,4 @@
-"""Master-owned choices and incumbent-provider refusal; no simulated v4 export."""
+"""Master choices and missing-provider refusal; no simulated positive v4 export."""
 import contextlib
 import copy
 import io
@@ -26,6 +26,19 @@ def choices(**overrides):
 def snapshot(root):
     return {p.relative_to(root).as_posix(): (p.read_bytes(), p.stat().st_mtime_ns)
             for p in root.rglob('*') if p.is_file()}
+
+
+@contextlib.contextmanager
+def missing_route_provider():
+    """Keep real current trust bytes, omitting only its fixed route snapshot."""
+    contract = project.export_contract
+    with tempfile.TemporaryDirectory() as directory:
+        root = Path(directory)
+        for name in ('compatibility.json', contract.RECORD, contract.SNAPSHOT, contract.RETRY_SNAPSHOT):
+            path = root/name; path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes((contract.SOURCE/name).read_bytes())
+        with mock.patch.object(contract, 'SOURCE', root):
+            yield
 
 
 class ProjectChoices(unittest.TestCase):
@@ -148,21 +161,23 @@ class ProjectChoices(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'descriptor schema3'):
             project.descriptor(choices(schema_version=2), OLD)
 
-    def test_pure_construction_is_not_canonical_execution4_support(self):
+    @missing_route_provider()
+    def test_pure_construction_cannot_supply_a_missing_canonical_provider(self):
         data = project.descriptor(choices(), OLD)
-        with self.assertRaisesRegex(ValueError, 'lacks the canonical route validator'):
+        with self.assertRaisesRegex(ValueError, 'Missing export contract file.*tracker_direct_policy'):
             project.validate_execution_policy(data['workflow']['execution'])
         for apply in (False, True):
             with tempfile.TemporaryDirectory() as directory:
                 root = Path(directory) / 'consumer'
                 with mock.patch.object(project, 'tracker_checkout') as checkout, \
                         mock.patch.object(project.subprocess, 'run') as exporter:
-                    with self.assertRaisesRegex(ValueError, 'released canonical route companion'):
+                    with self.assertRaisesRegex(ValueError, 'Missing export contract file.*tracker_direct_policy'):
                         project.init(root, choices(), OLD, 'not-an-engine', apply=apply)
                     checkout.assert_not_called(); exporter.assert_not_called()
                 self.assertFalse(root.exists())
 
-    def test_actual_inspection_and_upgrade_refuse_modern_selection_without_any_write(self):
+    @missing_route_provider()
+    def test_actual_inspection_and_upgrade_refuse_missing_provider_without_any_write(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'consumer'
             # Reuse only the incumbent schema2 fixture; never create a fake4 export.
@@ -170,7 +185,7 @@ class ProjectChoices(unittest.TestCase):
                 project.init(root, INPUTS, OLD, 'unused', apply=True)
             (root / 'delivery.json').write_text(project.dumps(project.descriptor(choices(), OLD)))
             before = snapshot(root)
-            self.assertTrue(any('released canonical route companion' in message
+            self.assertTrue(any('Missing export contract file: scripts/vendor/tracker_direct_policy.py' in message
                                 for kind, message in standard.inspect(root) if kind == 'error'))
             for apply in (False, True):
                 with mock.patch.object(project, 'render') as render:
@@ -260,7 +275,8 @@ class UpgradeChoices(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'legacy delivery adoption'):
             project.upgrade_inputs(INPUTS, {'schema_version': 1}, self.selection())
 
-    def test_real_old_fixture_upgrade_with_requested_modern_choices_refuses_before_export_or_any_write(self):
+    @missing_route_provider()
+    def test_old_fixture_modern_upgrade_without_provider_refuses_before_export_or_any_write(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)/'consumer'
             with mock.patch.object(project, 'render', side_effect=old_files):
@@ -273,7 +289,7 @@ class UpgradeChoices(unittest.TestCase):
                     checkout.assert_not_called(); exporter.assert_not_called()
                 self.assertFalse(result['applied'])
                 self.assertEqual(result['conflicts'], ['explicit project choices'])
-                self.assertIn('released canonical route companion', result['errors'][0])
+                self.assertIn('Missing export contract file: scripts/vendor/tracker_direct_policy.py', result['errors'][0])
                 self.assertEqual(snapshot(root), before)
 
     def test_old_local_policy_types_are_checked_before_three_way_equality_or_export(self):
@@ -398,7 +414,8 @@ class ChoicesCLI(unittest.TestCase):
             self.assertEqual((selected['implementation_limit'], selected['review_limit']), (4, 2))
             self.assertNotIn('batch_limit', selected)
 
-    def test_actual_cli_preview_and_apply_fail_before_export_or_target_writes(self):
+    @missing_route_provider()
+    def test_actual_cli_without_provider_refuses_before_export_or_target_writes(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'consumer'
             args = self.arguments(root) + ['--preset', 'simple', '--role', 'research',

@@ -215,3 +215,147 @@ raise SystemExit(status)
     return dict(layout=layout,entrypoints=entries,engine_imported=False,consumer_writes=False,
                 naive_rounded_row_estimate=naive,
                 counted_rounded_interval_estimate=row['expected']['rounded_interval_minutes_estimate'])
+
+
+def direct_fixture(case):
+    """Author-only real lifecycle generation; exported clients consume saved GETs.
+
+    No live repository/state/logs are used. The fixed clock, UUID sequence and
+    synthetic worktree make the committed fixture mechanically reproducible.
+    """
+    import itertools
+    from types import SimpleNamespace
+    from unittest import mock
+    import uuid
+    from tracker import delivery,direct_actions,execution,pr_checks,queue,sync
+    from test_capture_workflow import Capture
+    from test_direct_workflow import Project
+    from test_delivery import sha
+    if case not in ('task-main','task-stage','capture-main','capture-stage'):
+        raise ValueError('Unknown modern direct fixture')
+    capture=case.startswith('capture-');staged=case.endswith('-stage')
+    sequence=itertools.count(1);clock=lambda:'2026-10-17T12:00:00Z'
+    with tempfile.TemporaryDirectory(prefix='tracker-direct-author-') as directory, \
+            mock.patch.object(uuid,'uuid4',lambda:SimpleNamespace(hex=f'{next(sequence):032x}')), \
+            mock.patch.object(sync,'now',clock),mock.patch.object(queue,'now',clock), \
+            mock.patch.object(direct_actions,'now',clock),mock.patch.object(execution,'now',clock), \
+            mock.patch.object(delivery,'now',clock):
+        p=Capture(Path(directory),staged) if capture else Project(Path(directory),staged)
+        # Match actual standalone export defaults before any governed source.
+        p.config['schema_version']=3
+        p.config['modules']=[dict(id='product',name='Product',description="Replace with this project's functional boundaries before onboarding.",examples=[])]
+        for item in p.api.rows.values():
+            item['labels']=[{'name':'module:product'} if label['name'].startswith('module:') else label for label in item['labels']]
+        if capture:
+            p.worker.worktree='/synthetic/direct/'+case
+            review=p.reviewed();source=review.pr
+        else:
+            p.handoff(worktree='/synthetic/direct/'+case);review=p.review();p.approve()
+            direct_actions.reserve(p.api,p.config,p.store,review);source=review.pr
+        main=source
+        if staged:
+            p.api.merge(source,sha(3));delivery.stage(p.api,p.config,p.store,source,True)
+            delivery.verify_stage(p.api,p.config,p.store,dict(tree_sha=sha(102),source_sha=sha(3),result='passed',
+                target='example/stage',checks=['Synthetic Stage verification'],report='Actual synthetic Stage result'),True)
+            p.api.refs['stage']=sha(3)
+            if capture:
+                args=SimpleNamespace(**dict(vars(review),purpose='promotion',title='[Capture '+p.id+'] Promote note',
+                    body_file=p.body,journal_file=Path(directory)/'promotion.json'))
+                main=direct_actions.capture_pr(p.api,p.config,p.store,args)['pr']
+            else:
+                main=11;p.api.prs[main]=dict(copy.deepcopy(p.api.prs[source]),number=main,state='open',merged=False,
+                    head=dict(ref='stage',sha=sha(3),repo={'full_name':'owner/repo'}),base=dict(ref='main',sha=sha(1)))
+        phases=[]
+        def snapshot(name):
+            original=p.api.request;recorded={}
+            def request(path,method='GET',payload=None,**kwargs):
+                assert method=='GET','The portable fixture author records only GETs'
+                if path==p.api.root+'/contents/.tracker-state.json?ref=tracker-state':
+                    shared=copy.deepcopy(p.api.state);shared['fixture_secret']='NEVER_PRINT_PRIVATE_DIRECT_STATE'
+                    value=dict(content=base64.b64encode(json.dumps(shared).encode()).decode())
+                else:value=original(path,method,payload,**kwargs)
+                recorded[path]=copy.deepcopy(value);return value
+            expected=pr_checks.check(request,p.config,main,admission=True)
+            assert expected['subject']==({'kind':'capture','id':p.id} if capture else {'kind':'task','id':1})
+            phases.append(dict(name=name,requests=recorded,expected=expected))
+        snapshot('held-admission')
+        p.api.merge(main,sha(4));review.pr=main
+        if capture:direct_actions.capture_finish(p.api,p.config,p.store,review)
+        else:
+            delivery.record_merge(p.api,p.config,p.store,[dict(number=1,prs=[main])],[main])
+            p.api.labels(1,{'status:merged'},{'status:review','status:stage'})
+            execution.finish(p.config,p.store,[1],[main])
+        snapshot('released-receipt')
+        assert not p.section['integration'] and not p.section['source_reviews']
+        if capture:assert not p.issue_calls and p.operation['receipt']['result']=='accepted'
+        return dict(schema_version=1,synthetic=True,case=case,config=p.config,pr=main,phases=phases)
+
+
+DIRECT_BOOTSTRAP = '''import json,runpy,sys
+from pathlib import Path
+entry=Path(sys.argv[1]);sys.path.insert(0,str(entry.parent))
+sys.argv=[str(entry),*sys.argv[2:]]
+try:runpy.run_path(str(entry),run_name='__main__')
+except SystemExit as result:status=result.code
+else:status=0
+assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
+raise SystemExit(status)
+'''
+
+
+def exercise_direct(root,python,layout,row):
+    """Real exported PR admission, complete receipt replay and writer fences.
+
+    The actual engine-free stdlib3.9 client may read only recorded same-repo
+    endpoints. Both separated entrypoints execute their real shipped modules.
+    """
+    root=Path(root).resolve()
+    assert row['schema_version']==1 and row['synthetic'] is True
+    before={p.relative_to(root).as_posix():p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    assert json.loads((root/'tracker/config.json').read_text())==row['config']
+    entries=['scripts/tracker_pr_check.py']
+    if layout=='separated':entries.append('.workflow/tools/tracker_pr_check.py')
+    stub=GH_STUB.replace("if len(args)!=4 or args[:3]!=['api','--method','GET']:",
+                        "if len(args)!=2 or args[0]!='api':").replace('path=args[3]','path=args[1]')
+    with tempfile.TemporaryDirectory(prefix='tracker-direct-offline-') as directory:
+        scratch=Path(directory);binary=scratch/'gh';binary.write_text(stub);binary.chmod(0o755)
+        data=scratch/'http.json';log=scratch/'get.jsonl'
+        env=dict(os.environ,PATH=str(scratch)+os.pathsep+os.environ.get('PATH',''),PYTHONDONTWRITEBYTECODE='1',
+            TRACKER_TEST_HTTP_FIXTURE=str(data),TRACKER_TEST_REQUEST_LOG=str(log))
+        for key in ('PYTHONPATH','TASK_TRACKER_HOME','GH_TOKEN','GITHUB_TOKEN'):env.pop(key,None)
+        negative_cases=0
+        for entry in entries:
+            base=[python,'-B','-I','-c',DIRECT_BOOTSTRAP,str(root/entry),'--pr',str(row['pr']),'--admission']
+            for phase in row['phases']:
+                data.write_text(json.dumps(phase))
+                result=subprocess.run(base,cwd=root,env=env,capture_output=True,text=True)
+                assert result.returncode==0,(row['case'],entry,phase['name'],result.stdout,result.stderr)
+                assert json.loads(result.stdout)==phase['expected'],result.stdout
+                assert 'NEVER_PRINT_PRIVATE_DIRECT_STATE' not in result.stdout+result.stderr
+            phase=row['phases'][0]
+            path='repos/owner/repo/contents/.tracker-state.json?ref=tracker-state'
+            shared=json.loads(base64.b64decode(phase['requests'][path]['content']))
+            for mutation in ('old-outer','null-contract','missing-completion','legacy-owner','wrong-review','unknown-pr-intent'):
+                bad=copy.deepcopy(phase);state=copy.deepcopy(shared)
+                if mutation=='old-outer':state['schema_version']=2
+                elif mutation=='null-contract':state['execution_contract']=None
+                elif mutation=='missing-completion':state.pop('completion')
+                elif mutation=='legacy-owner':state['active']={'issue':2,'started_at':'2026-10-17T12:00:00Z'}
+                elif mutation=='wrong-review':state['execution']['source_reviews']={}
+                else:
+                    if not row['case'].startswith('capture'):continue
+                    next(iter(state['execution']['captures']['operations'].values()))['pr_intent']['state']='unknown'
+                bad['requests'][path]['content']=base64.b64encode(json.dumps(state).encode()).decode()
+                data.write_text(json.dumps(bad))
+                result=subprocess.run(base,cwd=root,env=env,capture_output=True,text=True)
+                assert result.returncode!=0,(row['case'],entry,mutation,'incorrectly admitted')
+                assert 'NEVER_PRINT_PRIVATE_DIRECT_STATE' not in result.stdout+result.stderr
+                negative_cases+=1
+            if row['case'].startswith('capture'):
+                assert not any('/issues' in key for phase in row['phases'] for key in phase['requests'])
+        calls=[json.loads(line) for line in log.read_text().splitlines()]
+        assert calls and all(method=='GET' and path.startswith('repos/owner/repo/') for method,path in calls)
+    after={p.relative_to(root).as_posix():p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    assert before==after and not (root/'.tracker-runtime').exists()
+    return dict(case=row['case'],layout=layout,entrypoints=entries,phases=[p['name'] for p in row['phases']],
+        negative_cases=negative_cases,native_fixture_gets=len(calls),engine_imported=False,consumer_writes=False)

@@ -60,16 +60,18 @@ def digest(value):
 def configuration(request, repo, revision):
     root = 'repos/' + repo
     row = request(root + '/contents/tracker/config.json?ref=' + quote(revision, safe=''))
-    config = json.loads(rules.file_bytes(request, root, row))
-    if config.get('project', {}).get('repository') != repo or not rules.batch_mode(config):
-        raise ValueError('Use the configured official batch project')
+    from_json = rules.direct_module().unique_object
+    config = json.loads(rules.file_bytes(request, root, row),object_pairs_hook=from_json)
+    modern=rules.execution_policy(config)
+    if config.get('project', {}).get('repository') != repo or not (rules.batch_mode(config) or modern and modern['schema_version']==4):
+        raise ValueError('Use the configured official batch or modern direct project')
     return config
 
 
 def state(request, repo):
     root = 'repos/' + repo
     row = request(root + '/contents/.tracker-state.json?ref=tracker-state')
-    shared = json.loads(rules.file_bytes(request, root, row))
+    shared = json.loads(rules.file_bytes(request, root, row),object_pairs_hook=rules.direct_module().unique_object)
     rules.state_schema(shared)
     if shared.get('maintenance'):
         raise PendingDelivery('Delivery continuation is paused by owned maintenance; resume after cutover')
@@ -160,6 +162,9 @@ def resolve(repo, merge_sha, ci_run, *, request=github, include_delivered=False)
         raise ValueError('Delivery version is no longer included in main')
     shared, _ = state(request, repo)
     section = rules.execution_state(shared, config)
+    if section['policy']['schema_version']==4:
+        direct_result=resolve_direct(request,repo,config,shared,merge_sha,ci_run,include_delivered)
+        if direct_result is not None:return direct_result
     matches = []
     for batch in section.get('batches', {}).values():
         if batch.get('state') != 'merged' or not batch.get('delivery_request'):
@@ -198,6 +203,69 @@ def resolve(repo, merge_sha, ci_run, *, request=github, include_delivered=False)
             'workflow': auth['workflow'], 'job': auth['job'], 'requested_at': auth['requested_at'],
             'authorization_sha256': digest(auth),
             'ci_run': ci_run}
+
+
+def authorization_direct(config,archive):
+    direct=rules.direct_module();auth=archive.get('delivery_request')
+    if not auth:return None
+    direct.direct_authorization(auth,archive)
+    selected=direct.subject(archive.get('subject'));direct.task_number(selected)
+    expected=dict(schema_version=2,kind='direct',state='requested',subject=selected,
+        reservation_sha256=direct.digest(archive['id']),source_pr=archive['source_pr'],source_head_sha=archive['source_head_sha'],
+        scope_sha256=archive['scope_sha256'],policy=rules.fingerprint(config),route_policy_sha256=direct.digest(direct.bundle(config)),
+        target=rules.policy(config)['delivery_target'])
+    if (type(auth.get('schema_version')) is not int or any(auth.get(k)!=v for k,v in expected.items())
+            or not isinstance(auth.get('workflow'),str) or not WORKFLOW.fullmatch(auth['workflow'])
+            or not direct.text(auth.get('job'),200) or not direct.timestamp(auth.get('requested_at'))):
+        raise ValueError('Exact typed direct delivery authorization changed')
+    return auth
+
+
+def direct_context(request,repo,config,shared,archive,merge_sha):
+    direct=rules.direct_module();section=rules.execution_state(shared,config)
+    number=direct.task_number(archive['subject']);journal=archive.get('finalization',{})
+    if archive.get('state')!='completed' or journal.get('phase')!='released' or journal.get('merge_sha')!=merge_sha:
+        raise PendingDelivery('Complete the genuine direct receipt/status/source-owner release first')
+    issue=request(f'repos/{repo}/issues/{number}');labels={r['name'] for r in issue.get('labels',[])}
+    merged={'status:'+(s if isinstance(s,str) else s['id']) for s in config['workflow'] if (s if isinstance(s,str) else s['phase'])=='merged'}
+    tasks=shared.get('delivery_workflow',{}).get('tasks',{});row=tasks.get(str(number),{})
+    if ({s for s in labels if s.startswith('status:')}!=merged or {'flag:blocked','flag:archived'}&labels
+            or 'pull_request' in issue or issue.get('state_reason')=='not_planned' or row.get('process')
+            or section['tasks'].get(str(number),{}).get('state')!='merged'
+            or not rules.scope_matches(issue,row.get('scope'),config)
+            or direct.digest(row.get('scope'))!=archive['scope_sha256']
+            or rules.reconciled_policy(row)[0]!=rules.fingerprint(config)
+            or row.get('sources')!=[dict(pr=journal['main_pr'],merge_sha=merge_sha,tree_sha=rules.tree(request,'repos/'+repo,merge_sha))]):
+        raise PendingDelivery('Exact real task scope/main receipt/status changed before direct delivery')
+    rules.require_completion_scope(issue,config,row)
+    verification=row.get('verification') or {}
+    verified=(row.get('state')=='verified' and verification.get('result')=='passed'
+              and verification.get('target')==rules.policy(config)['delivery_target'] and verification.get('merge_shas')==[merge_sha])
+    return tasks,number,verified
+
+
+def resolve_direct(request,repo,config,shared,merge_sha,ci_run,include_delivered):
+    section=rules.execution_state(shared,config);matches={}
+    for row in section['completed'].values():
+        if row.get('kind')=='direct' and row.get('delivery_request') and row.get('finalization',{}).get('merge_sha')==merge_sha:
+            matches[row['id']]=row
+    if len(matches)>1:raise ValueError('Ambiguous direct main delivery source')
+    if not matches:
+        held=section.get('integration') or {}
+        if held.get('kind')=='direct' and held.get('delivery_request') and (held.get('finalization') or {}).get('merge_sha')==merge_sha:
+            raise PendingDelivery('Finish retained direct main receipt/status/source owner first')
+        return None
+    archive=next(iter(matches.values()));auth=authorization_direct(config,archive)
+    _,_,verified=direct_context(request,repo,config,shared,archive,merge_sha)
+    pr=request(f'repos/{repo}/pulls/{archive["finalization"]["main_pr"]}')
+    if (not pr.get('merged') or pr.get('merge_commit_sha')!=merge_sha or pr['base']['ref']!=config['project']['base_branch']
+            or rules.direct_module().linkage(pr.get('body'),config)!=archive['subject']):
+        raise ValueError('Direct delivery needs the actual admitted typed main PR')
+    if verified and not include_delivered:return dict(eligible=False,reason='The exact authorized direct delivery is already verified')
+    return dict(eligible=True,schema_version=2,kind='direct',repository=repo,subject=copy.deepcopy(archive['subject']),
+        reservation_sha256=rules.direct_module().digest(archive['id']),main_pr=pr['number'],merge_sha=merge_sha,
+        tree_sha=rules.tree(request,'repos/'+repo,merge_sha),policy=rules.fingerprint(config),target=auth['target'],
+        workflow=auth['workflow'],job=auth['job'],requested_at=auth['requested_at'],authorization_sha256=digest(auth),ci_run=ci_run)
 
 
 def verification_job(request, repo, run_id, name, attempt):
@@ -270,11 +338,21 @@ def record(document, receipt, run_id, job_id, *, apply=False, request=github):
     shared, sha = state(request, repo)
     current = request('repos/' + repo + '/git/ref/heads/main')['object']['sha']
     config = configuration(request, repo, current)
-    batch = shared.get('execution', {}).get('batches', {}).get(document['batch_id'], {})
-    auth = authorization(config, batch)
+    is_direct=document.get('kind')=='direct'
+    if is_direct:
+        direct=rules.direct_module()
+        batch=shared.get('execution',{}).get('completed',{}).get(str(document['main_pr']),{})
+        if (document.get('schema_version')!=2 or type(document.get('schema_version')) is not int
+                or batch.get('kind')!='direct' or direct.digest(batch.get('id'))!=document.get('reservation_sha256')):
+            raise ValueError('Exact retained typed direct delivery archive required')
+        auth=authorization_direct(config,batch)
+    else:
+        batch = shared.get('execution', {}).get('batches', {}).get(document['batch_id'], {})
+        auth = authorization(config, batch)
     if not auth or digest(auth) != actual.get('authorization_sha256'):
         raise ValueError('Authorization changed before receipt write')
     if actual != document:
+        if is_direct:raise ValueError('Typed direct delivery request is stale; resolve the actual unchanged authorization again')
         # A retained successful native report can predate a staging-only audit.
         # Accept only an actual earlier prefix of that SAME immutable request's
         # validated reconciliation chain; all task/source/producer fields match.
@@ -294,27 +372,34 @@ def record(document, receipt, run_id, job_id, *, apply=False, request=github):
         document = actual
     if rules.fingerprint(config) != document['policy']:
         raise ValueError('Delivery policy changed before receipt write')
-    if document['main_pr'] not in batch.get('main_prs', []) or batch.get('issues') != document['issues']:
-        raise ValueError('Main handoff changed before receipt write')
-    tasks, _ = task_context(request, repo, config, shared, batch, document['merge_sha'])
+    if is_direct:
+        tasks,number,_=direct_context(request,repo,config,shared,batch,document['merge_sha']);numbers=[number]
+    else:
+        if document['main_pr'] not in batch.get('main_prs', []) or batch.get('issues') != document['issues']:
+            raise ValueError('Main handoff changed before receipt write')
+        tasks, _ = task_context(request, repo, config, shared, batch, document['merge_sha']);numbers=document['issues']
     native = {'run': run_id, 'job': job_id, 'workflow': document['workflow'],
               'authorization_sha256': document['authorization_sha256']}
     if all(tasks[str(n)].get('state') == 'verified'
            and tasks[str(n)].get('verification') == receipt
-           and tasks[str(n)].get('native_delivery') == native for n in document['issues']):
-        return {'applied': False, 'already_recorded': True, 'issues': document['issues']}
+           and tasks[str(n)].get('native_delivery') == native for n in numbers):
+        return {'applied': False, 'already_recorded': True, 'issues': numbers}
     verified_native(request, document, receipt, run_id, job_id)
     if all(tasks[str(n)].get('state') == 'verified'
            and tasks[str(n)].get('verification') == receipt
            and {k: v for k, v in tasks[str(n)].get('native_delivery', {}).items() if k != 'job'}
                == {k: v for k, v in native.items() if k != 'job'}
-           for n in document['issues']):
+           for n in numbers):
         # A successful uncertain CAS may be followed by a downstream-only rerun.
         # GitHub can clone upstream success under a new job ID. Fresh native proof
         # above validates the clone; retain the originally recorded job/evidence.
-        return {'applied': False, 'already_recorded': True, 'issues': document['issues']}
+        return {'applied': False, 'already_recorded': True, 'issues': numbers}
+    if is_direct:
+        if request('repos/'+repo+'/git/ref/heads/main')['object']['sha']!=current:
+            raise ValueError('Official main changed during native delivery verification; retain the pending authorization')
+        direct_context(request,repo,config,shared,batch,document['merge_sha'])
     at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-    for number in document['issues']:
+    for number in numbers:
         row = tasks[str(number)]
         if row.get('state') == 'verified':
             raise ValueError('Verified delivery already exists; preserve it instead of replacing evidence')
@@ -325,11 +410,12 @@ def record(document, receipt, run_id, job_id, *, apply=False, request=github):
                    verified_at=at, native_delivery=native)
     if apply:
         root = 'repos/' + repo
+        rules.execution_state(shared,config)
         # CAS failure/uncertain response is never retried with a stale body.
         request(root + '/contents/.tracker-state.json', 'PUT', {
             'message': 'Record verified authorized delivery [skip ci]', 'branch': 'tracker-state', 'sha': sha,
             'content': base64.b64encode(json.dumps(shared, indent=2).encode()).decode()})
-    return {'applied': apply, 'issues': document['issues'], 'result': 'passed'}
+    return {'applied': apply, 'issues': numbers, 'result': 'passed'}
 
 
 def main(argv=None):

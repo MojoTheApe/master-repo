@@ -1,5 +1,22 @@
 # System changes
 
+## 2026-10-17 — MR-40 / TT-157 explicit project choices
+
+Add descriptor3 with independent role, delivery profile/completion, direct/batch,
+Stage and actual capacities; expose conservative presets without changing old
+choices or ordinary upgrade absence. Delegate modern policy validation to the
+exact hash-verified Tracker provider and mechanically consume its guide/helper/
+native-fixture closure. Preserve genuine old-template ancestry and project-owned
+system/runtime and installer controls through explicit modern upgrades.
+
+Pin actual published Tracker3.7.0 at0b317d9 and retain separate canonical saved-row
+portable replay, real Master-generated output checks and coordinator-owned actual
+generated-config lifecycle proof. Canonical navigation explains typed capture,
+real direct source ownership/finalization, batch isolation and owned outer7
+activation/recovery. Master source1.5.0 still needs its own exact final review,
+native pair and coordinated publication. No consumer adoption, live reader change
+or Task08 publication authority is performed by these source changes.
+
 ## 2026-10-17 — MR-48 / TT-143 portable contract
 
 Consume Tracker-owned raw/separated helper artifacts without Master-authored

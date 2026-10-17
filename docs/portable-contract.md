@@ -8,8 +8,9 @@ The default standalone export keeps raw `scripts/` implementations.
 
 `compatibility.json` binds the official exact engine, export format 1 and SHA-256
 of the source-owned `scripts/vendor/tracker-export-contract.json`. That static
-record declares actual capabilities, runtime floors and all eleven raw/twenty-two
-separated helper hashes. The consumer's `tracker/export-contract.json` must equal
+record declares actual capabilities, runtime floors and all twelve raw/twenty-four
+separated helper hashes for the selected modern engine. Older pinned manifests
+retain their actual inventories. The consumer's `tracker/export-contract.json` must equal
 the trusted record byte-for-byte. Installed helpers must match its fixed layout.
 Missing files, changed bytes, unsafe paths, duplicate keys, unsupported formats
 and unsupported selected policy versions fail before transport. Rehashing a
@@ -64,8 +65,9 @@ Preview first, then repeat with `--apply`. The command runs both real exports,
 checks their byte-identical static manifests and actual file hashes, and copies
 all canonical validator modules, generated helpers and offline proof artifacts.
 `tests/fixtures/portable-contract/provenance.json` records the exact engine/source
-paths and hashes of the canonical runner, native context data and synthetic
-accounting snapshot. Those files
+paths and hashes of the canonical runner, native context data, synthetic
+accounting snapshot and, when execution4 is advertised, the four direct task/capture
+Stage-on/off rows. Those files
 contain no live state, credentials or consumer captures. Do not edit generated
 copies by hand. Refreshing artifacts grants no release or acceptance.
 
@@ -82,6 +84,10 @@ The same source-owned runner executes the real accounting CLI against wholly
 synthetic saved GETs in raw and separated layouts, including both separated paths.
 It proves the twenty-row/twelve-interval, 212-versus-112 rounded-estimate shape,
 unknown billing and no consumer writes without native requests or an engine.
+The same verified runner executes the four exact direct rows in raw/separated
+layouts on Python3.9, including held admission, released receipts and meaningful
+refusals. These engine-owned saved rows are distinct from actual Master-generated
+configurations and the separate engine-backed generated-config lifecycle proof.
 
 The final source-pair gate is this single maintained harness:
 
@@ -90,7 +96,7 @@ python3 tests/verify_completion_pair.py --master /path/to/master \
   --tracker /path/to/released-tracker --old-master /path/to/old-master \
   --old-tracker /path/to/old-tracker --python39 /path/to/python39 \
   --output /path/to/evidence.json --bounded --portable-contract \
-  --selected-instructions --retry-contract --require-pinned
+  --selected-instructions --retry-contract --direct-contract --require-pinned
 ```
 
 It records the head, tree, origin and dirty status of all four current/old source
@@ -100,7 +106,13 @@ representative outputs and both separated import/CLI paths, exercises the eight
 native fixture cases against exact engine-owned artifacts, and performs four
 genuine old-source upgrades. Explicit retry selection covers both supported limits
 and retains absence on the other representative outputs and one genuine upgrade.
-It also commits real CI-evidence and retry-rule changes in isolated clones and
+With `--direct-contract`, it also validates nine actual modern Master output/
+guide/provider combinations, the eight canonical direct layout replays, and four
+explicit modern conversions from genuine legacy/v1/v2/v3 old-source templates.
+Previews preserve bytes/mtimes/modes; actual local system/runtime and installer
+controls survive; repeat apply is unchanged. The final native pair uses this full
+route and never `--upgrades-only`.
+It also commits real CI-evidence, retry-rule and route-rule changes in isolated clones and
 proves that matching new identity metadata cannot make the
 stale trusted contract pass. Local knowledge, controls, preview no-write behavior
 and idempotence remain checked. A provisional dirty/overridden pair is disclosed

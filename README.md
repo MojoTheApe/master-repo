@@ -51,6 +51,12 @@ published portable-contract baseline is Master 1.2.0 / Tracker 3.4.0; consult ex
 releases for publication proof. A VERSION file is not a release. No app deployment, consumer migration or global skill
 installation is performed automatically by this repository.
 
+Source version1.5.0 adds [explicit project choices](docs/project-choices.md):
+descriptor3, direct/batch, independent Stage and conservative new-project presets,
+plus optional ordinary knowledge capture under the actual approved mandate.
+It pins published Tracker3.7.0; final Master/native-pair/release verification is
+separate. Existing descriptors, policies, targets and limits remain unchanged.
+
 For an explicitly Git-only n8n project, select `n8n-source`: source delivery ends
 after reviewed main integration (through stage when enabled), and n8n transfer
 remains a separate process. One explicitly authorized selected integration/main-merge

@@ -1,5 +1,29 @@
 # Versioning and safe upgrades
 
+## Explicit project choices and modern routes
+
+Source version1.5.0 adds descriptor3, independent role/profile/completion/Stage
+choices, explicit direct/batch execution4 and optional ordinary knowledge capture.
+Its exact Tracker3.7.0 dependency is published at
+`0b317d99997a4d3ef35b637bd6d19244630539f9`, tag `v3.7.0`, release415924055.
+Actual main checks and the stable-release guard precede this mechanical pin.
+The native release has `immutable:false`; exact tag/commit verification and the
+never-move-tag rule remain required without claiming native enforcement.
+
+The selected canonical provider owns the complete12raw/24separated closure,
+modern direct native fixture/runner, selected guide and owned state/admission.
+Verify the full actual Python3.9 Master suite and the final exact clean source pair
+with `--portable-contract --direct-contract` before standard publication; keep the
+genuine previous Master31daf/Tracker03e inputs. Source version1.5.0 is not yet a
+release or compatible-pair claim. Publish the reviewed checked Master, then verify
+the exact canonical skill mirror/catalog through its maintained path.
+
+Preserve existing project settings and old policy absence. New modern config is
+not activation: compatible readers/all writers and owned idle outer7 migration
+must precede actual use. Consumer producer blob pins need separately reviewed
+refresh when canonical producer bytes change. Task08's explicit publication
+completion/verified mirror authority is not introduced by Task07.
+
 ## Existing-topology capacity slice
 
 Master1.4.0 adds the [capacity contract](capacity.md) and canonical operational

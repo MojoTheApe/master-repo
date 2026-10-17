@@ -261,7 +261,14 @@ def state(shared, config, *, projected=False):
     summary = projected and isinstance(section,dict) and set(section)=={'policy','repository'} and 'schema_version' not in shared
     outer=shared.get('schema_version')
     held=shared.get('maintenance')
-    fenced=type(outer) is int and (outer==6 or outer==3 and isinstance(held,dict) and held.get('base_schema_version')==6)
+    effective = held.get('base_schema_version') if type(outer) is int and outer == 3 and isinstance(held, dict) else outer
+    if effective == 7 or 'execution_contract' in shared:
+        try:
+            from . import direct_policy
+        except ImportError:
+            import tracker_direct_policy as direct_policy
+        effective = direct_policy.protocol(shared)
+    fenced = type(effective) is int and effective == 6
     if not summary and ('ci_retry' in shared or fenced):
         if not fenced:
             raise ValueError('CI retry requires the fenced shared state protocol')
