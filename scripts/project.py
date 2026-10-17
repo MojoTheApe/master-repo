@@ -568,6 +568,10 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
                                   object_pairs_hook=export_contract.unique)
         if not isinstance(local_config, dict):
             raise ValueError('Local Tracker config must be an object')
+        if local_descriptor.get('schema_version') == 3:
+            # Validate every selected guard before Python's three-way equality
+            # can treat a malformed 2.0 as the old integer2 and normalize it.
+            export_contract.structural_route_policy(local_config)
         if 'execution_policy' in local_config:
             validate_execution_policy(local_config['execution_policy'])
         if 'task_context_policy' in local_config and local_descriptor.get('schema_version') != 3:

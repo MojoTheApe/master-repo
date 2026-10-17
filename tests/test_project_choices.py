@@ -287,6 +287,40 @@ class UpgradeChoices(unittest.TestCase):
                     self.assertFalse(result['applied'])
                     self.assertEqual(snapshot(root), before)
 
+    def test_canonical_modern_bundle_refuses_bad_local_guards_before_export_or_merge(self):
+        _, record, _ = project.export_contract.trusted()
+        if 'route_validator' not in record:
+            self.skipTest('Actual current released pin has no modern provider; the same test runs against the real provisional/final snapshot in paired preparation')
+        invalid = [('task_context_policy', {'schema_version': 2.0}),
+                   ('task_context_policy', {'schema_version': True}),
+                   ('task_context_policy', None),
+                   ('completion_policy', {'schema_version': 1.0}),
+                   ('completion_policy', None),
+                   ('knowledge_capture_policy', None)]
+        for field, value in invalid:
+            with self.subTest(field=field, value=value), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                data = project.descriptor(choices(), OLD)
+                project.require_engine_choices(data)
+                config = project.route_config(data); config[field] = value
+                # Negative configuration only. No simulated modern export/helper
+                # or positive consumer/lifecycle claim is made by this fixture.
+                for name, text in {'delivery.json': project.dumps(data),
+                    'tracker/config.json': project.dumps(config),
+                    project.BASELINE: project.dumps({'schema_version': 1,
+                        'files': {project.LAYOUT: project.dumps(project.LAYOUT_DATA)},
+                        'inputs': choices()})}.items():
+                    path = root/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(text)
+                before = snapshot(root)
+                for apply in (False, True):
+                    with mock.patch.object(project, 'render') as exporter:
+                        result = project.upgrade(root, NEW, 'unused', apply=apply, choices={'review_limit': 2})
+                        exporter.assert_not_called()
+                    self.assertEqual(result['conflicts'], ['configuration validation'])
+                    self.assertEqual(result['changed'], [])
+                    self.assertFalse(result['applied'])
+                    self.assertEqual(snapshot(root), before)
+
 
 class ChoicesCLI(unittest.TestCase):
     def arguments(self, root):
