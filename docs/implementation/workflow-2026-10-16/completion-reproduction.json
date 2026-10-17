@@ -1,0 +1,19 @@
+{
+  "source_sha": "2c01481a86ee8e8af31736378574a91505c7f94f",
+  "task_context_policy": {
+    "schema_version": 1
+  },
+  "complete_before": true,
+  "complete_after_changed_requirements": true,
+  "frozen_scope_matches_now": false,
+  "dependent_admission_accepted": true,
+  "historical_batch_complete_after_edit": true,
+  "completion_receipt_keys": [
+    "policy",
+    "recorded_at",
+    "sources",
+    "state"
+  ],
+  "complete_after_explicit_reopen": false,
+  "historical_batch_complete_after_reopen": true
+}

@@ -1,5 +1,13 @@
 # Repository process history
 
+## 2026-10-17 — MR-36 workflow execution baseline
+
+Preserve the complete supplied scope and all 202 original acceptance criteria,
+register fourteen linked implementation tasks, and refresh the fifteen-repository
+inventory, actual service capabilities and ownership cutover boundaries. The
+current-main synthetic completion defect remains reproducible and belongs to
+TT-142. This documentation slice activates no runtime or consumer contract.
+
 ## MR-28 — Continue authorized delivery and permit no-stage batches
 
 Support explicitly disabled Stage for execution schemas 2/3 without removing

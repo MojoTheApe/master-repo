@@ -1,0 +1,129 @@
+{
+  "master_revision": "9257f7be9f89e10eeb7b169247db368932662d6e",
+  "library_revision": "4a9ed1619002737fc8fa0ef627e2dbe1e922e8f9",
+  "complete_directory_exact": true,
+  "canonical": [
+    {
+      "mode": "100644",
+      "path": ".agents/skills/project-workflow/SKILL.md",
+      "sha": "06b34fbba59737013f9f4297a118c04eaf9458c1",
+      "type": "blob"
+    },
+    {
+      "mode": "040000",
+      "path": ".agents/skills/project-workflow/agents",
+      "sha": "d6d7c76b68e05bd0d35b4a449905a7d051f65839",
+      "type": "tree"
+    },
+    {
+      "mode": "100644",
+      "path": ".agents/skills/project-workflow/agents/openai.yaml",
+      "sha": "71943b6e4d8f6ea59e667dc7f6c89e1a530b3fcd",
+      "type": "blob"
+    },
+    {
+      "mode": "040000",
+      "path": ".agents/skills/project-workflow/references",
+      "sha": "78c28e0b2ad64c105b5d3969453f1ddbd2b2a034",
+      "type": "tree"
+    },
+    {
+      "mode": "100644",
+      "path": ".agents/skills/project-workflow/references/batch-integration.md",
+      "sha": "d34c25cc6b4ffbce270e78d5e34a82fee36f0555",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": ".agents/skills/project-workflow/references/delivery-continuation.md",
+      "sha": "ca83d061c43fbb7dbba90430f35c0370b5cc74a1",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": ".agents/skills/project-workflow/references/parallel-execution.md",
+      "sha": "88ac7337f8feed672b56d88dc7f47327c34a9d91",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": ".agents/skills/project-workflow/references/process-instructions.md",
+      "sha": "9360253cca5f26d424b1edee791185f0489caccf",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": ".agents/skills/project-workflow/references/task-context.md",
+      "sha": "965e0df891374b035af1a6056984a18832384272",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": ".agents/skills/project-workflow/references/verification.md",
+      "sha": "a4354f742535e358c35624a3ae4187cb36458ec2",
+      "type": "blob"
+    }
+  ],
+  "mirror": [
+    {
+      "mode": "100644",
+      "path": "skills/project-workflow/SKILL.md",
+      "sha": "06b34fbba59737013f9f4297a118c04eaf9458c1",
+      "type": "blob"
+    },
+    {
+      "mode": "040000",
+      "path": "skills/project-workflow/agents",
+      "sha": "d6d7c76b68e05bd0d35b4a449905a7d051f65839",
+      "type": "tree"
+    },
+    {
+      "mode": "100644",
+      "path": "skills/project-workflow/agents/openai.yaml",
+      "sha": "71943b6e4d8f6ea59e667dc7f6c89e1a530b3fcd",
+      "type": "blob"
+    },
+    {
+      "mode": "040000",
+      "path": "skills/project-workflow/references",
+      "sha": "78c28e0b2ad64c105b5d3969453f1ddbd2b2a034",
+      "type": "tree"
+    },
+    {
+      "mode": "100644",
+      "path": "skills/project-workflow/references/batch-integration.md",
+      "sha": "d34c25cc6b4ffbce270e78d5e34a82fee36f0555",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "skills/project-workflow/references/delivery-continuation.md",
+      "sha": "ca83d061c43fbb7dbba90430f35c0370b5cc74a1",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "skills/project-workflow/references/parallel-execution.md",
+      "sha": "88ac7337f8feed672b56d88dc7f47327c34a9d91",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "skills/project-workflow/references/process-instructions.md",
+      "sha": "9360253cca5f26d424b1edee791185f0489caccf",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "skills/project-workflow/references/task-context.md",
+      "sha": "965e0df891374b035af1a6056984a18832384272",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "skills/project-workflow/references/verification.md",
+      "sha": "a4354f742535e358c35624a3ae4187cb36458ec2",
+      "type": "blob"
+    }
+  ]
+}

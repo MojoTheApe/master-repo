@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "commissioned_on": "2026-10-17",
+  "source_handoff_date": "2026-10-16",
+  "status": "implementation_in_progress",
+  "allowed_task_states": [
+    "Planned",
+    "In progress",
+    "Source verified",
+    "Published",
+    "Activated",
+    "Accepted",
+    "Blocked"
+  ],
+  "tasks": [
+    {
+      "id": "01",
+      "title": "Refresh the baseline and prepare execution",
+      "repository": "MojoTheApe/master-repo",
+      "number": 36,
+      "url": "https://github.com/MojoTheApe/master-repo/issues/36",
+      "prerequisites": [],
+      "status": "In progress",
+      "implementation_prs": [
+        "https://github.com/MojoTheApe/master-repo/pull/44"
+      ],
+      "reviews": [
+        "Exact-head independent review is being retained on MR-36; source acceptance is pending."
+      ],
+      "tests": [
+        "verification.json"
+      ],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Finish independent current-head review and required hosted checks; no consumer/runtime acceptance is implied."
+    },
+    {
+      "id": "02",
+      "title": "Make current completion trustworthy",
+      "repository": "MojoTheApe/task-tracker",
+      "number": 142,
+      "url": "https://github.com/MojoTheApe/task-tracker/issues/142",
+      "prerequisites": [
+        "01"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "03",
+      "title": "Unify instructions and generated templates",
+      "repository": "MojoTheApe/master-repo",
+      "number": 37,
+      "url": "https://github.com/MojoTheApe/master-repo/issues/37",
+      "prerequisites": [
+        "01",
+        "02 (contract)"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "04",
+      "title": "Publish one portable technical contract",
+      "repository": "MojoTheApe/task-tracker",
+      "number": 143,
+      "url": "https://github.com/MojoTheApe/task-tracker/issues/143",
+      "prerequisites": [
+        "03"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "05",
+      "title": "Measure CI accurately and bound retries",
+      "repository": "MojoTheApe/master-repo",
+      "number": 38,
+      "url": "https://github.com/MojoTheApe/master-repo/issues/38",
+      "prerequisites": [
+        "01",
+        "03",
+        "04 (export changes)"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "06",
+      "title": "Adopt available improvements early",
+      "repository": "MojoTheApe/master-repo",
+      "number": 39,
+      "url": "https://github.com/MojoTheApe/master-repo/issues/39",
+      "prerequisites": [
+        "02",
+        "03",
+        "05 or verified native baseline",
+        "compatible reader"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "07",
+      "title": "Support explicit project choices and a simple direct route",
+      "repository": "MojoTheApe/master-repo",
+      "number": 40,
+      "url": "https://github.com/MojoTheApe/master-repo/issues/40",
+      "prerequisites": [
+        "02",
+        "03",
+        "04"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "08",
+      "title": "Verify publication and exact skill mirroring",
+      "repository": "MojoTheApe/master-repo",
+      "number": 41,
+      "url": "https://github.com/MojoTheApe/master-repo/issues/41",
+      "prerequisites": [
+        "07"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "09",
+      "title": "Display real occupied and available capacity",
+      "repository": "MojoTheApe/task-tracker",
+      "number": 144,
+      "url": "https://github.com/MojoTheApe/task-tracker/issues/144",
+      "prerequisites": [
+        "01",
+        "02"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "10",
+      "title": "Unify categories and separate archive from outcome",
+      "repository": "MojoTheApe/task-tracker",
+      "number": 145,
+      "url": "https://github.com/MojoTheApe/task-tracker/issues/145",
+      "prerequisites": [
+        "02",
+        "07"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "11",
+      "title": "Show related repositories and actual delivery progress",
+      "repository": "MojoTheApe/task-tracker",
+      "number": 146,
+      "url": "https://github.com/MojoTheApe/task-tracker/issues/146",
+      "prerequisites": [
+        "08",
+        "10"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "12",
+      "title": "Support measured matrix and per-attempt evidence",
+      "repository": "MojoTheApe/task-tracker",
+      "number": 147,
+      "url": "https://github.com/MojoTheApe/task-tracker/issues/147",
+      "prerequisites": [
+        "04",
+        "05"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "13",
+      "title": "Complete adoption and new-project onboarding",
+      "repository": "MojoTheApe/master-repo",
+      "number": 42,
+      "url": "https://github.com/MojoTheApe/master-repo/issues/42",
+      "prerequisites": [
+        "relevant 02\u201312 releases",
+        "compatible reader"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    },
+    {
+      "id": "14",
+      "title": "Prove the complete workflow and hand it over",
+      "repository": "MojoTheApe/master-repo",
+      "number": 43,
+      "url": "https://github.com/MojoTheApe/master-repo/issues/43",
+      "prerequisites": [
+        "01\u201313 accepted",
+        "all mandatory decisions resolved"
+      ],
+      "status": "Planned",
+      "implementation_prs": [],
+      "reviews": [],
+      "tests": [],
+      "published_pair": null,
+      "service_activation": null,
+      "consumer_activation": null,
+      "next_action": "Start when actual prerequisites and repository reservation permit"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D01",
+      "status": "Open; enforcement limitation identified",
+      "evidence": "repository-inventory.json",
+      "options": [
+        "retain honestly labelled cooperative review while native enforcement remains unavailable",
+        "owner-selected eligible account plan",
+        "owner-selected visibility change where appropriate"
+      ],
+      "boundary": "No plan purchase, visibility change, protection weakening or owner-accepted limitation has occurred."
+    },
+    {
+      "id": "D02",
+      "status": "Open if Task 02/10 encounters unprovable historical outcomes; never rehash current bodies"
+    },
+    {
+      "id": "D03",
+      "status": "Actual producer/target access remains to be verified per consumer; no source-only downgrade"
+    },
+    {
+      "id": "D04",
+      "status": "Task 12 must prove benefit or obtain an explicit changed performance outcome"
+    }
+  ]
+}

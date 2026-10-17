@@ -1,5 +1,10 @@
 # Master Repo system
 
+The commissioned 17 October workflow implementation is tracked in the
+[bounded execution ledger](../implementation/workflow-2026-10-16/README.md).
+Its initial slice records current evidence and real task dependencies; it does not
+activate new consumer contracts or change implemented workflow behavior.
+
 MR-30 adds the shared lifecycle/check matrix and explicit task-context companion
 selection (TT-136): pre-start semantic readiness, versioned requirements excluding
 only a strict terminal journal, and independent source compatibility after forward

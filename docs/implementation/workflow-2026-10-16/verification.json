@@ -1,0 +1,34 @@
+{
+  "base_revision": "9257f7be9f89e10eeb7b169247db368932662d6e",
+  "candidate_scope": "Task 01 documentation and planning only; no executable policy/state change",
+  "checks": [
+    {
+      "command": "python3 -m unittest discover -s tests -v",
+      "runtime": "Python 3.9.6",
+      "result": "passed",
+      "tests": 109
+    },
+    {
+      "command": "python3 scripts/standard.py validate --root .",
+      "result": "passed"
+    },
+    {
+      "command": "python3 scripts/check_links.py",
+      "result": "passed; local file links only"
+    },
+    {
+      "scenario": "compare original 29 goals and 202 criterion IDs/texts/mappings plus original specification bytes; require 14 real Issue links and 15 dispositions",
+      "result": "passed"
+    },
+    {
+      "scenario": "rerun inherited synthetic completion defect against current Tracker 2c01481 with Python 3.12.14 / isolated pytest",
+      "result": "defect reproduced; repair remains TT-142"
+    },
+    {
+      "scenario": "compare canonical and mirrored complete workflow directory Git objects/modes/paths at immutable refs",
+      "result": "passed; 10 entries exact"
+    }
+  ],
+  "hosted_checks": "pending current PR",
+  "independent_review": "pending corrected exact-head review"
+}

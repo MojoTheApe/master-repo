@@ -1,0 +1,3875 @@
+[
+  {
+    "repository": "MojoTheApe/master-repo",
+    "observed_at": "2026-10-17T07:56:06.309416+00:00",
+    "main_revision": "9257f7be9f89e10eeb7b169247db368932662d6e",
+    "default_branch": "main",
+    "role_proposed": "shared standard",
+    "task_home": "https://github.com/MojoTheApe/master-repo/issues",
+    "disposition": "onboard engineering workflow and live board; preserve self-pin exception until Task 08",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "not onboarded / self exception",
+    "stage_current": null,
+    "completion_current": "reviewed-merge",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "self",
+      "version": "1.0.0"
+    },
+    "engine": null,
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": null,
+    "required_checks": [],
+    "local_checks": [
+      "python3 -m unittest discover -s tests -v",
+      "python3 scripts/standard.py validate --root .",
+      "python3 scripts/check_links.py"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "sha": "8cde39addbbc475048df08bc49fa88c87f802979",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/metadata.yml",
+          "sha": "eff1edb63c96c4c62443f901ce240eab06b98d93",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Canonical policy/skill; reviewed-merge maintenance; publication remains separate.",
+    "exception_summaries": [],
+    "producer": {
+      "kind": "Manual immutable standard release under versioning guide; no release/deploy workflow currently configured",
+      "source_refs": [
+        "https://github.com/MojoTheApe/master-repo/blob/9257f7be9f89e10eeb7b169247db368932662d6e/docs/versioning.md",
+        "https://github.com/MojoTheApe/master-repo/blob/9257f7be9f89e10eeb7b169247db368932662d6e/docs/repository/DELIVERY.md"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Preserve current local reviewed source/publication controls; no new runtime authority inferred",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": null,
+      "pinned_support_ref": null,
+      "wrapper_and_portable_blobs": [],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "sha": "8cde39addbbc475048df08bc49fa88c87f802979",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/metadata.yml",
+          "sha": "eff1edb63c96c4c62443f901ce240eab06b98d93",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": "No pinned small client adopted / self-engine exception",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "_error": "gh: No commit found for the ref tracker-state (HTTP 404)",
+      "observed_at": "2026-10-17T07:58:58.926668+00:00"
+    },
+    "native_protection": {
+      "branch_protected": true,
+      "required_checks": [
+        "validate",
+        "tracker-link",
+        "skill-impact"
+      ],
+      "strict": true,
+      "enforce_admins": true,
+      "native_approval_count": 0,
+      "bypass_allowances": null,
+      "protection_error": null,
+      "rulesets": [],
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": "v1.0.0",
+      "target_commitish": "9257f7be9f89e10eeb7b169247db368932662d6e",
+      "published_at": "2026-10-16T10:07:31Z",
+      "html_url": "https://github.com/MojoTheApe/master-repo/releases/tag/v1.0.0",
+      "_error": null
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "03b91926f42455c54f9c43dba088e8fccde703c7",
+        "sha256": "716e56851374bc0b797fa0477eb1e6b93f3627993a7a36e8dead4b0ceddef875",
+        "url": "https://github.com/MojoTheApe/master-repo/blob/9257f7be9f89e10eeb7b169247db368932662d6e/delivery.json"
+      },
+      "tracker/config.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/engine.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "AGENTS.md": {
+        "git_blob": "a9ac84993f340f580fad0e271eeac61d7790de68",
+        "sha256": "25a7aa479e4223729c5c5dbd57fd4aa23f45b648787e52fdb1814b86707251cd",
+        "url": "https://github.com/MojoTheApe/master-repo/blob/9257f7be9f89e10eeb7b169247db368932662d6e/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/task-tracker",
+    "observed_at": "2026-10-17T07:56:06.387532+00:00",
+    "main_revision": "2c01481a86ee8e8af31736378574a91505c7f94f",
+    "default_branch": "main",
+    "role_proposed": "shared tool/service",
+    "task_home": "https://github.com/MojoTheApe/task-tracker/issues",
+    "disposition": "upgrade self-project separately from service; retain TT identities",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": null,
+    "completion_current": "local adopted rules; no descriptor",
+    "standard": null,
+    "engine": null,
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": null,
+    "required_checks": [],
+    "local_checks": [],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "sha": "1c3ce809af6fa082f4b75cc85bd3ce681a404192",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "b343b1520e3ece05e2e6a1d87609da689010c31b",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Legacy self-project; actual reader activation is a separate operation.",
+    "exception_summaries": [],
+    "producer": {
+      "kind": "Guarded install_events.py service installer; event service schedules reconciliation; no consumer runtime producer",
+      "source_refs": [
+        "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/deploy/install_events.py",
+        "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/deploy/acl-tracker-events.service",
+        "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/docs/EVENT_SYNC.md"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Preserve current local reviewed source/publication controls; no new runtime authority inferred",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": null,
+      "pinned_support_ref": null,
+      "wrapper_and_portable_blobs": [],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "sha": "1c3ce809af6fa082f4b75cc85bd3ce681a404192",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "b343b1520e3ece05e2e6a1d87609da689010c31b",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": "No pinned small client adopted / self-engine exception",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 1,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [
+      {
+        "number": 76,
+        "head_sha": "c1d98cd411cad393cc93bdd48548aa4e7ae2d0ae",
+        "base": "main"
+      }
+    ],
+    "ownership": {
+      "git_blob": "9739b42f6776e9c2c147a0a60cc5b79ae0baafef",
+      "sha256": "b75283736c495e27d290fc602c613e33d30ab39dd9f5d077b95e90c434572445",
+      "url": "https://github.com/MojoTheApe/task-tracker/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": false,
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 51,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": false,
+        "task_context_policy": null,
+        "stage": false,
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 0
+      },
+      "observed_at": "2026-10-17T07:58:59.361076+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": "v3.2.0",
+      "target_commitish": "2c01481a86ee8e8af31736378574a91505c7f94f",
+      "published_at": "2026-10-16T10:01:38Z",
+      "html_url": "https://github.com/MojoTheApe/task-tracker/releases/tag/v3.2.0",
+      "_error": null
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/config.json": {
+        "git_blob": "b936f038456c75df24b913c3c6db59c4cfb303d9",
+        "sha256": "b6d259780252c7d97d805597fda29f86751f382b1a035db315a3f05dc1553786",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "AGENTS.md": {
+        "git_blob": "268f95334cdc3c6e8a1141c810186019078c759a",
+        "sha256": "9e59d46e7edbdc90b6a57440079379a0f42bcf31c7c0512a675ccc2cff8f5a48",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/ai-skills",
+    "observed_at": "2026-10-17T07:56:06.409810+00:00",
+    "main_revision": "4a9ed1619002737fc8fa0ef627e2dbe1e922e8f9",
+    "default_branch": "main",
+    "role_proposed": "skill library",
+    "task_home": "https://github.com/MojoTheApe/ai-skills/issues",
+    "disposition": "onboard authored engineering and verified catalog publication",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "not onboarded / self exception",
+    "stage_current": null,
+    "completion_current": "local adopted rules; no descriptor",
+    "standard": null,
+    "engine": null,
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": null,
+    "required_checks": [],
+    "local_checks": [],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/codex-plugins.yml",
+          "sha": "122d9d4d8285b75079f328ce9c2e63af9d6031c9",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/project-skill-sync.yml",
+          "sha": "0408519b6e52a2ea342bb40c30f3764c8b2dbd8a",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Library-owned skills are original; Project Workflow is an exact read-only mirror; generated catalog is derived.",
+    "exception_summaries": [],
+    "producer": {
+      "kind": "Scheduled exact project-skill sync PR; catalog build/publication workflow; plugin/client installation remains separate",
+      "source_refs": [
+        "https://github.com/MojoTheApe/ai-skills/blob/4a9ed1619002737fc8fa0ef627e2dbe1e922e8f9/.github/workflows/project-skill-sync.yml",
+        "https://github.com/MojoTheApe/ai-skills/blob/4a9ed1619002737fc8fa0ef627e2dbe1e922e8f9/.github/workflows/codex-plugins.yml",
+        "https://github.com/MojoTheApe/ai-skills/blob/4a9ed1619002737fc8fa0ef627e2dbe1e922e8f9/scripts/build_codex_catalog.py"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Preserve current local reviewed source/publication controls; no new runtime authority inferred",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": null,
+      "pinned_support_ref": null,
+      "wrapper_and_portable_blobs": [],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/codex-plugins.yml",
+          "sha": "122d9d4d8285b75079f328ce9c2e63af9d6031c9",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/project-skill-sync.yml",
+          "sha": "0408519b6e52a2ea342bb40c30f3764c8b2dbd8a",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": "No pinned small client adopted / self-engine exception",
+      "local_cache_observation": {
+        "workspace_checkout_present": false,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "_error": "gh: No commit found for the ref tracker-state (HTTP 404)",
+      "observed_at": "2026-10-17T07:58:59.799036+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/config.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/engine.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "AGENTS.md": {
+        "git_blob": "7070324033c6d833229f43e7abc215707b4f4a14",
+        "sha256": "5a842b799de4f0db7708a4d7f99b4cab56838504823a9071d99f187afddb6062",
+        "url": "https://github.com/MojoTheApe/ai-skills/blob/4a9ed1619002737fc8fa0ef627e2dbe1e922e8f9/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/adopy-campaing-launcher",
+    "observed_at": "2026-10-17T07:56:06.336120+00:00",
+    "main_revision": "af0ade29b106129089dbabd3f208b548efa246d9",
+    "default_branch": "main",
+    "role_proposed": "application",
+    "task_home": "https://github.com/MojoTheApe/adopy-campaing-launcher/issues",
+    "disposition": "bounded early pilot, then remaining Task 13 delta after owned drain",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "execution-v3 batch",
+    "stage_current": false,
+    "completion_current": "verified-stable-package",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "a3f56106f52d0ae19986920519b2fa46a380798b",
+      "version": "1.0.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "e775c624e0323e69ed891926691c3dee6587081a"
+    },
+    "execution_policy": {
+      "schema_version": 3,
+      "implementation_limit": 5,
+      "review_limit": 5,
+      "batch_limit": 5
+    },
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": {
+      "schema_version": 1,
+      "staging": {
+        "enabled": false,
+        "branch": "stage",
+        "target": "disabled"
+      },
+      "completion": "verified-stable-package",
+      "delivery_target": "ACL stable Windows installer and update channel",
+      "required_checks": [
+        "descriptor",
+        "tracker-link",
+        "ACL verification",
+        "Installer verification"
+      ]
+    },
+    "required_checks": [
+      "descriptor",
+      "tracker-link",
+      "ACL verification",
+      "Installer verification"
+    ],
+    "local_checks": [
+      "python scripts/acl_scan_secrets.py",
+      "python scripts/acl_smoke.py",
+      "python -m pytest tests/ -q",
+      "python -m unittest discover -s packaging/windows/tests -p test_*.py -v",
+      "Windows CI on Python 3.11 and 3.13 plus packaged install/repair/uninstall; docs/runtime/STAGING.md",
+      "Pinned Master Repo scripts/standard.py validate --root . --allow-draft; scripts/acl_adoption.py audit"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "sha": "b10c87f42a873ebbc87c2fe96ce8bdf95fbc41fc",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/complete-delivery.yml",
+          "sha": "d854d66e33fe2ff61941dc0df353471865b221e6",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "23fb2a47312f5bbebda0cd6303137d47fcc96a56",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/release.yml",
+          "sha": "afb5cc85588be55e0617278447d05d12ce5329bd",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "132de756c380658bd3979fd3b798de3f54fa14b7",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/windows-installer.yml",
+          "sha": "63badd0862bce6fa162fd8136e4d559533ccbc69",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "ae953b963cfc690140eb1733a752f001f1b94234",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "b4aacd57cf569fc134c95682ab98e7521878db21",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "9ea150d31560e72cc17f66338da1c4e21acedd7e",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_receipt.py",
+          "sha": "b6df55bfe62ff568abc6de7f516d8f22adf158d3",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "a8ee47f294008f3315859f7d1af7d70992e905ab",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "aff782098feca3f17b1246b8d169a915c3e96e4b",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "66b71a8aefbc0ff58ade09cfb83754b95c481c34",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Preserve v3 5 work/5 review, batch limit 5, one integration, Stage off, ID offset/history, package/installer trust and local collector.",
+    "exception_summaries": [
+      "Unreleased standard",
+      "ACL public task identities",
+      "Legacy master update channel",
+      "Temporary pre-release direct-main integration"
+    ],
+    "producer": {
+      "kind": "Authorized frozen batch -> immutable installer release -> native completion job and target verification",
+      "source_refs": [
+        "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/.github/workflows/ci.yml",
+        "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/.github/workflows/windows-installer.yml",
+        "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/.github/workflows/release.yml",
+        "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/.github/workflows/complete-delivery.yml",
+        "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/docs/runtime/DELIVERY.md"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Standing owner policy: approving ACL integration or main merge includes verified package delivery unless the owner explicitly requests source-only/skip-release. The genuine Coordinator automatically persists batch begin --deliver for that approved task set. Development, bare pushes and unrequested machine batches grant no release authority; failures retain unfinished delivery without a routine second approval.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "e775c624e0323e69ed891926691c3dee6587081a"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "ae953b963cfc690140eb1733a752f001f1b94234",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "b4aacd57cf569fc134c95682ab98e7521878db21",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "9ea150d31560e72cc17f66338da1c4e21acedd7e",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_receipt.py",
+          "sha": "b6df55bfe62ff568abc6de7f516d8f22adf158d3",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "a8ee47f294008f3315859f7d1af7d70992e905ab",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "aff782098feca3f17b1246b8d169a915c3e96e4b",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "66b71a8aefbc0ff58ade09cfb83754b95c481c34",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "sha": "b10c87f42a873ebbc87c2fe96ce8bdf95fbc41fc",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/complete-delivery.yml",
+          "sha": "d854d66e33fe2ff61941dc0df353471865b221e6",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "23fb2a47312f5bbebda0cd6303137d47fcc96a56",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/release.yml",
+          "sha": "afb5cc85588be55e0617278447d05d12ce5329bd",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "132de756c380658bd3979fd3b798de3f54fa14b7",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/windows-installer.yml",
+          "sha": "63badd0862bce6fa162fd8136e4d559533ccbc69",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": false,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 67,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [
+      {
+        "number": 967,
+        "head_sha": "bcc388a5ee8326d0cdef8b6e138c56d55384631b",
+        "base": "main"
+      },
+      {
+        "number": 966,
+        "head_sha": "6bc2e1c453693db622d57b7fbae8db0257426eeb",
+        "base": "main"
+      },
+      {
+        "number": 965,
+        "head_sha": "472ab52eeca6a12ecfde45e8655839c63178cd78",
+        "base": "main"
+      },
+      {
+        "number": 964,
+        "head_sha": "86b767470ab6777bb3c51e7fecc28676d92b8127",
+        "base": "main"
+      },
+      {
+        "number": 963,
+        "head_sha": "bbf18a02fa419b4aaefa45e72a4803ec97d3b741",
+        "base": "main"
+      },
+      {
+        "number": 962,
+        "head_sha": "f3e7bbf3f79102cd5afb8d01a5d6c5f6fc7eb67f",
+        "base": "main"
+      },
+      {
+        "number": 961,
+        "head_sha": "23c74400179b8ea072376c89f330ac684122bcc0",
+        "base": "main"
+      },
+      {
+        "number": 960,
+        "head_sha": "5eaa7a47211812e4931d532ab33f641933d23073",
+        "base": "main"
+      },
+      {
+        "number": 958,
+        "head_sha": "410da396a34c33a07c486fd8a68350f6074ed88d",
+        "base": "main"
+      },
+      {
+        "number": 957,
+        "head_sha": "465354a069f619f1b1564474c1a831812740b553",
+        "base": "main"
+      },
+      {
+        "number": 956,
+        "head_sha": "12c1babb0b32f3fd36cd18956693f879a5268257",
+        "base": "main"
+      },
+      {
+        "number": 955,
+        "head_sha": "2299572df191e1ec6fd1c80d80098bca5030bb3b",
+        "base": "main"
+      },
+      {
+        "number": 954,
+        "head_sha": "03660fb989b8a268ca659b0af91fe225df1d8118",
+        "base": "main"
+      },
+      {
+        "number": 953,
+        "head_sha": "3b31d397fb3ab5d0af238dccac390337cff1cb1d",
+        "base": "main"
+      },
+      {
+        "number": 952,
+        "head_sha": "21a36c3c19b7438e2fa05f5d1b8beacffa47e14c",
+        "base": "main"
+      },
+      {
+        "number": 951,
+        "head_sha": "a339c1fef11c8667196e61181ad303f34966ccdf",
+        "base": "main"
+      },
+      {
+        "number": 950,
+        "head_sha": "623e3cd68c546dd5b807eea7a7ccd4623635ce9d",
+        "base": "main"
+      },
+      {
+        "number": 949,
+        "head_sha": "33fc92192ccc6744047cf4c92637e92a337b19e8",
+        "base": "main"
+      },
+      {
+        "number": 948,
+        "head_sha": "15e175c34e39862aa907b0669eddec48839632e5",
+        "base": "main"
+      },
+      {
+        "number": 947,
+        "head_sha": "bd0f67419db30633347cbf53ed98c0bcaa3755b7",
+        "base": "main"
+      },
+      {
+        "number": 946,
+        "head_sha": "ae7281b9d91b3b0680e71f74b4e68854312d2460",
+        "base": "main"
+      },
+      {
+        "number": 943,
+        "head_sha": "d826c6179e3dea4725516321ba7982b93f052342",
+        "base": "main"
+      },
+      {
+        "number": 942,
+        "head_sha": "2c9a37ecdac1623566ae34e48e2039e0e545e2bf",
+        "base": "main"
+      },
+      {
+        "number": 939,
+        "head_sha": "b2cadfb2dcc03a546e1bcb2e989961eb24261d6d",
+        "base": "main"
+      },
+      {
+        "number": 937,
+        "head_sha": "6c1bc222e52262c6c621172b7953020bb0536fc1",
+        "base": "main"
+      },
+      {
+        "number": 936,
+        "head_sha": "62e6c3b2d4053697423eb019b136df8990cbe191",
+        "base": "main"
+      },
+      {
+        "number": 935,
+        "head_sha": "69ed84e596554aa521d6393c04618c1fc1630ecc",
+        "base": "main"
+      },
+      {
+        "number": 934,
+        "head_sha": "b0e69ec46c26e28db07b290bc907d712191bb130",
+        "base": "work/acl-1920-search-refused"
+      },
+      {
+        "number": 932,
+        "head_sha": "437d17074af11f2e9b1dc0ae132a05bf6bb6d23f",
+        "base": "main"
+      },
+      {
+        "number": 930,
+        "head_sha": "83de9e592dfb69ae70efab045fc588864d00e5ff",
+        "base": "main"
+      },
+      {
+        "number": 929,
+        "head_sha": "bcaec12086dee428304fd54cabc9a04d246ae4d1",
+        "base": "main"
+      },
+      {
+        "number": 927,
+        "head_sha": "0cb5e7fb2568b04fbb71670e2582a66cb68ca862",
+        "base": "main"
+      },
+      {
+        "number": 921,
+        "head_sha": "2142a9c4181dc833ecf32d612e27ea2db58da740",
+        "base": "main"
+      },
+      {
+        "number": 909,
+        "head_sha": "433838ef12818ffcec6b828c0667c872ca9dea85",
+        "base": "main"
+      },
+      {
+        "number": 908,
+        "head_sha": "fe9a0be7bc09a01a8359285b28eab3c6b87a5f5d",
+        "base": "main"
+      },
+      {
+        "number": 906,
+        "head_sha": "678397ecfe205fb297f0f2adcdb88ec6d097c2d1",
+        "base": "main"
+      },
+      {
+        "number": 904,
+        "head_sha": "971bb3bf77088937eb5dee632c002bbb1ebe80c3",
+        "base": "main"
+      },
+      {
+        "number": 900,
+        "head_sha": "6743292c1e2093fd9deed315ff38559f6db1f75c",
+        "base": "main"
+      },
+      {
+        "number": 890,
+        "head_sha": "33b0a2b2e2849616b6aa25bee61c864251723841",
+        "base": "stage"
+      },
+      {
+        "number": 887,
+        "head_sha": "a484aaa11d201a04a9871205aac83fe2f9e0cc4d",
+        "base": "main"
+      },
+      {
+        "number": 873,
+        "head_sha": "3033cd668b4a530437f2c77e2e2944a364eefa93",
+        "base": "main"
+      },
+      {
+        "number": 870,
+        "head_sha": "4bdb12ec309fbaa80286bef703541a13f6996133",
+        "base": "main"
+      },
+      {
+        "number": 869,
+        "head_sha": "edcdb67024bbe24043d7751eab96da3dec9c1920",
+        "base": "main"
+      },
+      {
+        "number": 866,
+        "head_sha": "b8a039ab88e0f53ac6e1c394b5222278ac7cfbc6",
+        "base": "stage"
+      },
+      {
+        "number": 863,
+        "head_sha": "914a5b05170d6c28f6aed6d7979199d70c2131c3",
+        "base": "main"
+      },
+      {
+        "number": 850,
+        "head_sha": "15916cc240845bbe90e774b4a47d29929b25b39f",
+        "base": "main"
+      },
+      {
+        "number": 849,
+        "head_sha": "efebcc756f104e3c2db2e003840cc91595f7b685",
+        "base": "main"
+      },
+      {
+        "number": 848,
+        "head_sha": "b5f85d02fa3cfc69ea8d8966d1bedce8b679e0b0",
+        "base": "main"
+      },
+      {
+        "number": 846,
+        "head_sha": "fe58cef0c357488c3ca2696b4e4b89b03f0f8d9d",
+        "base": "main"
+      },
+      {
+        "number": 843,
+        "head_sha": "c1cbbd4ff857be7e38a986f2222e61d9cf02ed39",
+        "base": "main"
+      },
+      {
+        "number": 842,
+        "head_sha": "ecfdfa51a214c787cb2f0b7251c5f66501da09fe",
+        "base": "main"
+      },
+      {
+        "number": 837,
+        "head_sha": "d0d4b87305a4e1d25c045c67103da1637fe8c3d7",
+        "base": "main"
+      },
+      {
+        "number": 835,
+        "head_sha": "1adea353c6894de08e3284095d25edca50e68b4f",
+        "base": "stage"
+      },
+      {
+        "number": 834,
+        "head_sha": "c419ab68a64f84646ceca6395dbddf28dea37399",
+        "base": "main"
+      },
+      {
+        "number": 833,
+        "head_sha": "227f78c6cd3f6310f24b81a7626f424b2777bc25",
+        "base": "main"
+      },
+      {
+        "number": 832,
+        "head_sha": "ffd8b3079e005b6371f31cef37e49031409314d7",
+        "base": "main"
+      },
+      {
+        "number": 831,
+        "head_sha": "cd1da59b660a8978f2a956e06da5dee0827bdb72",
+        "base": "main"
+      },
+      {
+        "number": 830,
+        "head_sha": "ecd525f20432a18b7d8f164e9d449f36ae2c9f88",
+        "base": "main"
+      },
+      {
+        "number": 829,
+        "head_sha": "662abff0610d5be18b15c4bcd2265332a31cb2a2",
+        "base": "main"
+      },
+      {
+        "number": 823,
+        "head_sha": "601e5ef0c06c1d3cb7099e337fe0c7b509d522de",
+        "base": "main"
+      },
+      {
+        "number": 820,
+        "head_sha": "76b5accba12fc67f2349310555592316d033784a",
+        "base": "main"
+      },
+      {
+        "number": 740,
+        "head_sha": "681100a32792b57ef8adf7a66e5c06751e3215d5",
+        "base": "main"
+      },
+      {
+        "number": 711,
+        "head_sha": "27b62a2b054eaa38e7d0905bcfb4492df38f0043",
+        "base": "stage"
+      },
+      {
+        "number": 530,
+        "head_sha": "bcbe152e5b1bcbb595f23760f5334d7b89058e36",
+        "base": "main"
+      },
+      {
+        "number": 366,
+        "head_sha": "569d77cd85386402a5fbd222840495c0db4dac39",
+        "base": "stage"
+      },
+      {
+        "number": 339,
+        "head_sha": "a74e1132197086635f18ac0ff6dffeb25fd53658",
+        "base": "stage"
+      },
+      {
+        "number": 312,
+        "head_sha": "e95ef60f164a7ece2fc14a5632e5f1cddd6cfef5",
+        "base": "stage"
+      }
+    ],
+    "ownership": {
+      "git_blob": "d9451d0112ea66954230d56efd35cbf40dba3feb",
+      "sha256": "68a5b9fd9d5d0ddc805f599a6273a8ded7a64764d4854d2e27abcc6dc0d48a41",
+      "url": "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 2,
+        "legacy_active": false,
+        "execution_policy": {
+          "schema_version": 3,
+          "implementation_limit": 5,
+          "review_limit": 5,
+          "batch_limit": 5
+        },
+        "work_claim_count": 2,
+        "work_claims": [
+          {
+            "issue": 959,
+            "state": "implementing"
+          },
+          {
+            "issue": 681,
+            "state": "implementing"
+          }
+        ],
+        "source_review_count": 5,
+        "source_reviews": [
+          {
+            "pr": 863,
+            "state": "reviewing",
+            "issues": [
+              853
+            ]
+          },
+          {
+            "pr": 954,
+            "state": "reviewing",
+            "issues": [
+              29
+            ]
+          },
+          {
+            "pr": 951,
+            "state": "reviewing",
+            "issues": [
+              73
+            ]
+          },
+          {
+            "pr": 952,
+            "state": "reviewing",
+            "issues": [
+              708
+            ]
+          },
+          {
+            "pr": 956,
+            "state": "reviewing",
+            "issues": [
+              787
+            ]
+          }
+        ],
+        "legacy_review": false,
+        "integration": {
+          "pr": null,
+          "state": "assembling",
+          "issues": [
+            776,
+            899,
+            902,
+            886
+          ],
+          "member_count": 4
+        },
+        "review_queue_count": 33,
+        "batches": {
+          "3b8ca0b6359c400c90e4bb3e78a40247": {
+            "pr": 763,
+            "state": "merged",
+            "issues": [
+              728,
+              756
+            ],
+            "member_count": 2
+          },
+          "2eaa69c20cbf4d399cee65a6fa070f9c": {
+            "pr": 835,
+            "state": "cancelled",
+            "issues": [
+              760
+            ],
+            "member_count": 1
+          },
+          "6b33b0c808d045a89e4d5f771f95483b": {
+            "pr": 847,
+            "state": "merged",
+            "issues": [
+              824
+            ],
+            "member_count": 1
+          },
+          "12ef727feaa74224a7230f0bffe17dca": {
+            "pr": null,
+            "state": "cancelled",
+            "issues": [
+              838
+            ],
+            "member_count": 1
+          },
+          "67923a8e08d34c538623be512c739a1a": {
+            "pr": 877,
+            "state": "merged",
+            "issues": [
+              875
+            ],
+            "member_count": 1
+          },
+          "24551548a5084a13a4d81bb957a084f1": {
+            "pr": 884,
+            "state": "merged",
+            "issues": [
+              651,
+              865,
+              879
+            ],
+            "member_count": 3
+          },
+          "2bbd7b7e22c44323bab273af8002ee47": {
+            "pr": 890,
+            "state": "cancelled",
+            "issues": [
+              529
+            ],
+            "member_count": 1
+          },
+          "07aa28148c8c4544b3c0077f47d58503": {
+            "pr": 894,
+            "state": "merged",
+            "issues": [
+              892
+            ],
+            "member_count": 1
+          },
+          "e2b8b7079a31457bb2cc23294dabdd46": {
+            "pr": 901,
+            "state": "merged",
+            "issues": [
+              781,
+              782,
+              783,
+              786,
+              806
+            ],
+            "member_count": 5
+          },
+          "0c5aecbdf4f44c7f8e4a97272dced8d6": {
+            "pr": 911,
+            "state": "merged",
+            "issues": [
+              760
+            ],
+            "member_count": 1
+          },
+          "65c0be2f589f497ca3b5fe5a96e08cda": {
+            "pr": 913,
+            "state": "merged",
+            "issues": [
+              761
+            ],
+            "member_count": 1
+          },
+          "d527fe66b25c479c82a5f939a0104240": {
+            "pr": null,
+            "state": "cancelled",
+            "issues": [
+              798,
+              766,
+              778,
+              775
+            ],
+            "member_count": 4
+          },
+          "c8d57f23a0064de995e094f874416007": {
+            "pr": null,
+            "state": "cancelled",
+            "issues": [
+              798,
+              766,
+              778,
+              775,
+              769
+            ],
+            "member_count": 5
+          },
+          "152fbc7b7e4e45b8b9a01b3b79c30bf3": {
+            "pr": 915,
+            "state": "merged",
+            "issues": [
+              798,
+              766,
+              778,
+              769
+            ],
+            "member_count": 4
+          },
+          "f15e647d4a364706a0fc7d5538d41f35": {
+            "pr": null,
+            "state": "cancelled",
+            "issues": [
+              800,
+              775,
+              797
+            ],
+            "member_count": 3
+          },
+          "e76699eff67645bd910712ebbcde5107": {
+            "pr": 917,
+            "state": "merged",
+            "issues": [
+              800,
+              797
+            ],
+            "member_count": 2
+          },
+          "e677f638b7ad4190887362ffb391ec98": {
+            "pr": 919,
+            "state": "merged",
+            "issues": [
+              812,
+              826,
+              775,
+              815
+            ],
+            "member_count": 4
+          },
+          "b2772e6f3da0420895f57066ce4339ff": {
+            "pr": 926,
+            "state": "merged",
+            "issues": [
+              819,
+              799,
+              814
+            ],
+            "member_count": 3
+          },
+          "3bc5972db83a4bbeaf5f66bc508adadd": {
+            "pr": 931,
+            "state": "merged",
+            "issues": [
+              924
+            ],
+            "member_count": 1
+          }
+        },
+        "execution_intake": {
+          "state": "running",
+          "issues": [
+            776,
+            899,
+            902,
+            886
+          ]
+        },
+        "intake_record_count": 37,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": true,
+        "task_context_policy": null,
+        "stage": {
+          "pr": 931,
+          "state": "promoted",
+          "issues": [
+            924
+          ]
+        },
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 159
+      },
+      "observed_at": "2026-10-17T07:59:01.471207+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "3165cfb74f2cf441f8b1c6fd38d6727ac23e6449",
+        "sha256": "56e8f07df597f172fc3d1aedbcd63e27b90f0e2776e9a91242aa5f45d7fc6961",
+        "url": "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "3fb12c40d4ac81d37ad036ff74b30e8f4e4463ad",
+        "sha256": "4e64e0edff343ef3651981622de45267bfb5c66fc8cfecd25067b2521b392a0d",
+        "url": "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "633e0f4ef86fad61920a54a99de12197ddecd68f",
+        "sha256": "0d5fbb5b2fa177ce6fabefb46a3f791ad29c9dceed3afbaa61c568e43e7668ef",
+        "url": "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "ee27a4029f6211bc083427f4dd7270dd2641221e",
+        "sha256": "73ec4cda9425fd360ef3a7af01d59e68776eb02915d6f1119a4943a049d0d718",
+        "url": "https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/react-forge",
+    "observed_at": "2026-10-17T07:56:12.987462+00:00",
+    "main_revision": "96c5dd8dd0b55626512773484b11d59e69612e87",
+    "default_branch": "main",
+    "role_proposed": "application",
+    "task_home": "https://github.com/MojoTheApe/react-forge/issues",
+    "disposition": "upgrade with existing status aliases, local updater and admission retained",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": null,
+    "completion_current": "verified-production",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "34cb94542a5c3781b681fe060702675b542c242e",
+      "version": "0.1.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "adb2ce04fff017d1059031f4298effc020d0e2e5"
+    },
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": null,
+    "required_checks": [],
+    "local_checks": [
+      "npm run ci:static (exact-head clean-clone-proof satisfies this; no duplicate local full run required)",
+      "npm run preflight (exact-head clean-clone-proof satisfies this; no duplicate local full run required)",
+      "Six latest successful exact-commit GitHub checks and independent exact-head review; docs/TRACKER_AGENT_WORKFLOW.md"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "972bbb110cbfae8a82c2c80ad099dc1aec058570",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/phase1.yml",
+          "sha": "d78dfbb8228b1cb8cec6a87fc173c935160d3675",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/release-artifacts.yml",
+          "sha": "1f7a74b73741b3b986f423848ffd4a8b9a2e8285",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/system-update.yml",
+          "sha": "92038987911eb09ef808d1f2afddaeb59d68899a",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-events.yml",
+          "sha": "dbb747236dfd1d48db083f4fa6f49b756688ae1c",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "481d911620506019f0ac1f0470a25fae6cd06673",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "cfbf96c0a1bb4970b9beb2039f2a476e273cc885",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "VPS completion; retired installer remains retired; preserve accepted history.",
+    "exception_summaries": [
+      "First automatic new-version delivery verification pending",
+      "Published standard revision and ready adoption",
+      "RF-94 unused-test forward-only update policy"
+    ],
+    "producer": {
+      "kind": "system-update workflow invokes fixed SHA-only controller for eligible independently admitted main; source integration alone grants no VPS operation",
+      "source_refs": [
+        "https://github.com/MojoTheApe/react-forge/blob/96c5dd8dd0b55626512773484b11d59e69612e87/.github/workflows/system-update.yml",
+        "https://github.com/MojoTheApe/react-forge/blob/96c5dd8dd0b55626512773484b11d59e69612e87/.github/workflows/release-artifacts.yml",
+        "https://github.com/MojoTheApe/react-forge/blob/96c5dd8dd0b55626512773484b11d59e69612e87/docs/operations/SYSTEM-RELEASES.md"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Repository owner; repository integration does not authorize VPS operations.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory",
+      "current_dispatch_note": "Exact baseline docs/operations/SYSTEM-RELEASES.md records dispatch set false on 2026-10-08 for the build-only transition; historical RF-84 onboarding is not current runtime activation proof."
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "adb2ce04fff017d1059031f4298effc020d0e2e5"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "cfbf96c0a1bb4970b9beb2039f2a476e273cc885",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "972bbb110cbfae8a82c2c80ad099dc1aec058570",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/phase1.yml",
+          "sha": "d78dfbb8228b1cb8cec6a87fc173c935160d3675",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/release-artifacts.yml",
+          "sha": "1f7a74b73741b3b986f423848ffd4a8b9a2e8285",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/system-update.yml",
+          "sha": "92038987911eb09ef808d1f2afddaeb59d68899a",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-events.yml",
+          "sha": "dbb747236dfd1d48db083f4fa6f49b756688ae1c",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "481d911620506019f0ac1f0470a25fae6cd06673",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": false,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 13,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [
+      {
+        "number": 147,
+        "head_sha": "a606ca4e8b2c66f2203ee53351d510f27470eb81",
+        "base": "main"
+      },
+      {
+        "number": 146,
+        "head_sha": "999c3929e41bf9dcc1e3c756542495b0c04cee58",
+        "base": "main"
+      },
+      {
+        "number": 41,
+        "head_sha": "5a085dfc1b38848865aa7b8a85fb07f2771a2eda",
+        "base": "main"
+      },
+      {
+        "number": 40,
+        "head_sha": "6e5cc1bc634d28f682898ca34f9b1eafc830c98e",
+        "base": "main"
+      },
+      {
+        "number": 39,
+        "head_sha": "4838f5aeb57b8ce47473022c1699eb93168bd1f5",
+        "base": "main"
+      },
+      {
+        "number": 38,
+        "head_sha": "15c12e623fdfea851dc551577702b46317870603",
+        "base": "main"
+      },
+      {
+        "number": 37,
+        "head_sha": "a5e927b8f806b822d175a14f9158bfa6570a10fd",
+        "base": "main"
+      },
+      {
+        "number": 28,
+        "head_sha": "27ab9ab89be07c51d9fed6094bc3b9a77e6de4f9",
+        "base": "codex/renderer-archive-capacity"
+      },
+      {
+        "number": 15,
+        "head_sha": "bec9da900a247535067a821c91cc7e43d4e7f557",
+        "base": "codex/qa-empty-sandbox-directories"
+      },
+      {
+        "number": 13,
+        "head_sha": "d920a987c1890f7e84cca9f5e4c218db07bc7919",
+        "base": "codex/builder-build-contract"
+      },
+      {
+        "number": 9,
+        "head_sha": "d2235152e4d7e2a9b308cc175c7e39e848c75878",
+        "base": "codex/phase-8-readiness-remediation"
+      },
+      {
+        "number": 3,
+        "head_sha": "087a9513bbd6936a418a08399fa87fd4826fda18",
+        "base": "codex/phase-1-reproducible-renderer"
+      },
+      {
+        "number": 2,
+        "head_sha": "af98bcbe0b90c7761351707f3c7e3b2337a02547",
+        "base": "phase/0-foundation"
+      }
+    ],
+    "ownership": {
+      "git_blob": "1f5324910b3b6f8eab10b8a5659a7af9a76a61e7",
+      "sha256": "ccd10601326aaf2c4d4de3028338adee2c495ee7d5d7a25c8ac123d1677ab1d8",
+      "url": "https://github.com/MojoTheApe/react-forge/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": false,
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 27,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": false,
+        "task_context_policy": null,
+        "stage": false,
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 0
+      },
+      "observed_at": "2026-10-17T07:59:02.207270+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "46844ff2a3c8e0beed1aeafe0735dd9da3d7a522",
+        "sha256": "306ae08a73e8b0d1c117ea1897121248689dba4362034288ff418b1fab05860c",
+        "url": "https://github.com/MojoTheApe/react-forge/blob/96c5dd8dd0b55626512773484b11d59e69612e87/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "63ca78a92c4ae85d0f587b3a3234cc556754a28e",
+        "sha256": "9a8932bee8e1d706df6707568f92a8224c9143c538c6bbb7a9e2485735a6b1f7",
+        "url": "https://github.com/MojoTheApe/react-forge/blob/96c5dd8dd0b55626512773484b11d59e69612e87/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "1752b1ff60962568210d84e6bef79cdbff26fa78",
+        "sha256": "2b8f90cc165d85e0489bc2c818a71e44ace38f5b4aaf301109bcce3d3113e81e",
+        "url": "https://github.com/MojoTheApe/react-forge/blob/96c5dd8dd0b55626512773484b11d59e69612e87/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "d10f4b160d888d17b9fcce08e42b8fdffdaef08d",
+        "sha256": "1485d9a3286b4a589a8724e62e512a8ebf4ec312bdaadf5956214061cc15d640",
+        "url": "https://github.com/MojoTheApe/react-forge/blob/96c5dd8dd0b55626512773484b11d59e69612e87/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/tg-bot",
+    "observed_at": "2026-10-17T07:56:13.523680+00:00",
+    "main_revision": "1d03d83c7fcd6d0f9c25213aa959cbc2c0957dd2",
+    "default_branch": "main",
+    "role_proposed": "application",
+    "task_home": "https://github.com/MojoTheApe/tg-bot/issues",
+    "disposition": "upgrade workflow; preserve production delivery",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": false,
+    "completion_current": "verified-production",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "eca8a857d9f7f81160bf248f9f9e3109a21ade49",
+      "version": "1.0.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+    },
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": {
+      "schema_version": 1,
+      "staging": {
+        "enabled": false,
+        "branch": "stage",
+        "target": "disabled"
+      },
+      "completion": "verified-production",
+      "delivery_target": "Independent Docker/Codex bot at /opt/potuzhniy-ai-bot on the documented VPS",
+      "required_checks": [
+        "descriptor",
+        "tracker-link",
+        "tests"
+      ]
+    },
+    "required_checks": [
+      "descriptor",
+      "tracker-link",
+      "tests"
+    ],
+    "local_checks": [
+      "npm ci --ignore-scripts && npm test (offline mocked Node tests)",
+      "node --check src/bot.js; syntax-check changed JS/CJS/MJS files",
+      "Pinned Master descriptor and local Markdown link validation",
+      "Production-only: documented preflight and sanitized Docker/polling health, only within authorized runtime delivery"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "8b14e6b7d9280540081d1f5e4ef49feb2862b015",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tests.yml",
+          "sha": "eee23db898fc0d49631d3f5904498d862d22057e",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "No second poller; scoped state, container/bot readiness and Telegram authority remain project-owned.",
+    "exception_summaries": [
+      "TG-6 initial repository-only bootstrap",
+      "Stage environment",
+      "Readiness and native controls"
+    ],
+    "producer": {
+      "kind": "Project-owned manual non-polling preflight/build/single-container recreation and readiness procedure; delivery-check is admission, not deployment",
+      "source_refs": [
+        "https://github.com/MojoTheApe/tg-bot/blob/1d03d83c7fcd6d0f9c25213aa959cbc2c0957dd2/docs/INDEPENDENT_RUNTIME.md",
+        "https://github.com/MojoTheApe/tg-bot/blob/1d03d83c7fcd6d0f9c25213aa959cbc2c0957dd2/.github/workflows/delivery-check.yml"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "The current request authorizes repository workflow adoption. Runtime publication/restart, live Telegram interactions and private instruction changes require their existing explicit authorization.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "8b14e6b7d9280540081d1f5e4ef49feb2862b015",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tests.yml",
+          "sha": "eee23db898fc0d49631d3f5904498d862d22057e",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "git_blob": "3a0063d243e38039a0f55dc5323b9fcb810ecee8",
+      "sha256": "6f4e0e20f30d0397da100c49b7df1fff9404e7a8444bd46ed8aa89275e8c52e3",
+      "url": "https://github.com/MojoTheApe/tg-bot/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": false,
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 0,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": false,
+        "task_context_policy": null,
+        "stage": false,
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 1
+      },
+      "observed_at": "2026-10-17T07:59:02.668860+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "329426828ace5953c94aa97dc44b140cefaed3ac",
+        "sha256": "c8467b625dc7701975608215497650710aeba11b3eb1d4be3e6b97dff599f226",
+        "url": "https://github.com/MojoTheApe/tg-bot/blob/1d03d83c7fcd6d0f9c25213aa959cbc2c0957dd2/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "50e5d3598cb5056207718d93179b0ff8caec7be0",
+        "sha256": "affd92989e142c5c95d80271296109a3504f4a397ff9d76fe73e96bde93daffc",
+        "url": "https://github.com/MojoTheApe/tg-bot/blob/1d03d83c7fcd6d0f9c25213aa959cbc2c0957dd2/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "5067fc7fda63fe2693cc99b7fe3361a8ccb091e3",
+        "sha256": "fed9402096e29b95dd856e5608698c80a277e8b35d01456811e84532c5968103",
+        "url": "https://github.com/MojoTheApe/tg-bot/blob/1d03d83c7fcd6d0f9c25213aa959cbc2c0957dd2/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "290af607536ed8f525b220efa17769eefe766918",
+        "sha256": "98126e1e6bf56bed91bf42f4126699caf244abcd0018975f9c66ea8943f111b0",
+        "url": "https://github.com/MojoTheApe/tg-bot/blob/1d03d83c7fcd6d0f9c25213aa959cbc2c0957dd2/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/facebook-lead-automation",
+    "observed_at": "2026-10-17T07:56:13.539684+00:00",
+    "main_revision": "a24a6c3c1dff5f36bee088f2913fe7bf728327b3",
+    "default_branch": "main",
+    "role_proposed": "application",
+    "task_home": "https://github.com/MojoTheApe/facebook-lead-automation/issues",
+    "disposition": "upgrade and reconcile existing registration work",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": false,
+    "completion_current": "verified-production",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "eca8a857d9f7f81160bf248f9f9e3109a21ade49",
+      "version": "1.0.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+    },
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": {
+      "schema_version": 1,
+      "staging": {
+        "enabled": false,
+        "branch": "stage",
+        "target": "disabled"
+      },
+      "completion": "verified-production",
+      "delivery_target": "hostinger-fla-prod",
+      "required_checks": [
+        "descriptor",
+        "tracker-link",
+        "test",
+        "container"
+      ]
+    },
+    "required_checks": [
+      "descriptor",
+      "tracker-link",
+      "test",
+      "container"
+    ],
+    "local_checks": [
+      "python3 -m json.tool delivery.json >/dev/null",
+      "python3 -m json.tool tracker/config.json >/dev/null",
+      "npm run check",
+      "npm test",
+      "npm run verify:commissioning",
+      "npm run verify:container-package"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "caf62d5b598f1ec55d0cc9946e9f859c3fe24ba3",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/export-offline-image.yml",
+          "sha": "b8aab5378713e3cbf21506b61eee9b8c68c75fd1",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/publish-images.yml",
+          "sha": "63cf651a57c41ddd1a87d7b2472787de48841e83",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/test.yml",
+          "sha": "45136d0ca92b45a0848ac289fdfa6b7a02ccebf8",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Preserve hostinger-fla-prod, commissioning and runtime controls; no duplicate registration.",
+    "exception_summaries": [],
+    "producer": {
+      "kind": "Image publication workflow plus separately authorized project deployment/commissioning procedure; image publication is not runtime acceptance",
+      "source_refs": [
+        "https://github.com/MojoTheApe/facebook-lead-automation/blob/a24a6c3c1dff5f36bee088f2913fe7bf728327b3/docs/runtime/DEPLOYMENT.md",
+        "https://github.com/MojoTheApe/facebook-lead-automation/blob/a24a6c3c1dff5f36bee088f2913fe7bf728327b3/.github/workflows/publish-images.yml",
+        "https://github.com/MojoTheApe/facebook-lead-automation/blob/a24a6c3c1dff5f36bee088f2913fe7bf728327b3/.github/workflows/delivery-check.yml"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Deployment and capability activation require separate explicit approvals.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "caf62d5b598f1ec55d0cc9946e9f859c3fe24ba3",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/export-offline-image.yml",
+          "sha": "b8aab5378713e3cbf21506b61eee9b8c68c75fd1",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/publish-images.yml",
+          "sha": "63cf651a57c41ddd1a87d7b2472787de48841e83",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/test.yml",
+          "sha": "45136d0ca92b45a0848ac289fdfa6b7a02ccebf8",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 1,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [
+      {
+        "number": 20,
+        "head_sha": "d32aec8e6067fb49179f313ecd0657d022a480a0",
+        "base": "main"
+      }
+    ],
+    "ownership": {
+      "git_blob": "45ce522a2ef4fbc925d11854b4d6aef7e5ecdd2f",
+      "sha256": "38a7013f14400e194da3e815ce178266c9489f023e8f016b7706598bafa3ae2f",
+      "url": "https://github.com/MojoTheApe/facebook-lead-automation/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": false,
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 11,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": false,
+        "task_context_policy": null,
+        "stage": false,
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 10
+      },
+      "observed_at": "2026-10-17T07:59:03.103538+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "0d72c4bc99642c08002e546b35ef8cf20b108e81",
+        "sha256": "5e5f6f260fef51c27434092b8f8afcc05061d495c2591b7e8aca40fe4cd478ce",
+        "url": "https://github.com/MojoTheApe/facebook-lead-automation/blob/a24a6c3c1dff5f36bee088f2913fe7bf728327b3/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "d4a148cb81a7ea8348e5274073cf7dd952bde5c1",
+        "sha256": "671ea87b7137a999ae37d0095ba72140d6c07629d2c607ac7c8b352a15898422",
+        "url": "https://github.com/MojoTheApe/facebook-lead-automation/blob/a24a6c3c1dff5f36bee088f2913fe7bf728327b3/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "5067fc7fda63fe2693cc99b7fe3361a8ccb091e3",
+        "sha256": "fed9402096e29b95dd856e5608698c80a277e8b35d01456811e84532c5968103",
+        "url": "https://github.com/MojoTheApe/facebook-lead-automation/blob/a24a6c3c1dff5f36bee088f2913fe7bf728327b3/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "290af607536ed8f525b220efa17769eefe766918",
+        "sha256": "98126e1e6bf56bed91bf42f4126699caf244abcd0018975f9c66ea8943f111b0",
+        "url": "https://github.com/MojoTheApe/facebook-lead-automation/blob/a24a6c3c1dff5f36bee088f2913fe7bf728327b3/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/n8n-jira-tgbot",
+    "observed_at": "2026-10-17T07:56:15.108798+00:00",
+    "main_revision": "2e90da1c523db3b2094cabc9811a5ab5b6efea79",
+    "default_branch": "main",
+    "role_proposed": "source-only automation",
+    "task_home": "https://github.com/MojoTheApe/n8n-jira-tgbot/issues",
+    "disposition": "upgrade source workflow with existing Git Stage",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": true,
+    "completion_current": "reviewed-merge",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "eca8a857d9f7f81160bf248f9f9e3109a21ade49",
+      "version": "1.0.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+    },
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": {
+      "schema_version": 1,
+      "staging": {
+        "enabled": true,
+        "branch": "stage",
+        "target": "https://github.com/MojoTheApe/n8n-jira-tgbot/tree/stage"
+      },
+      "completion": "reviewed-merge",
+      "delivery_target": "https://github.com/MojoTheApe/n8n-jira-tgbot:main",
+      "required_checks": [
+        "descriptor",
+        "tracker-link",
+        "workflow-checks"
+      ]
+    },
+    "required_checks": [
+      "descriptor",
+      "tracker-link",
+      "workflow-checks"
+    ],
+    "local_checks": [
+      "npm test",
+      "npm run build:dev && git diff --exit-code -- workflows/dev",
+      "npm run validate:dev",
+      "npm run audit:dev-notifications",
+      "npm run audit:production-isolation",
+      "python3 scripts/tracker_pr_check.py --pr PR_NUMBER",
+      "git diff --check"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "95c504adfcd9597def8e754e6fd53fadf2213b2b",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/workflow-checks.yml",
+          "sha": "64cb8442aab6971f36da40957db8591609c07fd4",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Reviewed-merge completion; source-only scope grants no n8n runtime operations.",
+    "exception_summaries": [
+      "Unreleased standard and external board verification",
+      "Historical completed tasks",
+      "Production instructions"
+    ],
+    "producer": {
+      "kind": "Exact Git Stage/main checks and reviewed source promotion; no n8n publication producer in this source-only scope",
+      "source_refs": [
+        "https://github.com/MojoTheApe/n8n-jira-tgbot/blob/2e90da1c523db3b2094cabc9811a5ab5b6efea79/.github/workflows/workflow-checks.yml",
+        "https://github.com/MojoTheApe/n8n-jira-tgbot/blob/2e90da1c523db3b2094cabc9811a5ab5b6efea79/.github/workflows/delivery-check.yml",
+        "https://github.com/MojoTheApe/n8n-jira-tgbot/blob/2e90da1c523db3b2094cabc9811a5ab5b6efea79/docs/repository/DELIVERY.md"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Owner authorized Git-only process migration in JTG-12. No n8n access, import, publication, execution, credential, schedule or business-data change is included.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "95c504adfcd9597def8e754e6fd53fadf2213b2b",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/workflow-checks.yml",
+          "sha": "64cb8442aab6971f36da40957db8591609c07fd4",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "git_blob": "d843d9c0ff5ca6ccee8bb76043ea40c5485f468b",
+      "sha256": "84f532eb118443e7f4ca47a623feb84036a950daae9e13cc698a72bce5beb585",
+      "url": "https://github.com/MojoTheApe/n8n-jira-tgbot/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": false,
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 15,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": false,
+        "task_context_policy": null,
+        "stage": {
+          "pr": 59,
+          "state": "promoted",
+          "issues": [
+            58
+          ]
+        },
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 15
+      },
+      "observed_at": "2026-10-17T07:59:03.721271+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "a09503255e62b1aeb284d4b8d175e13e9a97cd8f",
+        "sha256": "d6a65bd042b764c4f06f4b2b6e88c9f47be7e5b1bcd7eb1ea2574e2620b046a4",
+        "url": "https://github.com/MojoTheApe/n8n-jira-tgbot/blob/2e90da1c523db3b2094cabc9811a5ab5b6efea79/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "52e155618af4c68c63fea7c1657e441e9f97b54a",
+        "sha256": "c7e7f1a77cc291d090e70008a50df7c8b0d330ab740f4cc20b03a0385f61d15c",
+        "url": "https://github.com/MojoTheApe/n8n-jira-tgbot/blob/2e90da1c523db3b2094cabc9811a5ab5b6efea79/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "5067fc7fda63fe2693cc99b7fe3361a8ccb091e3",
+        "sha256": "fed9402096e29b95dd856e5608698c80a277e8b35d01456811e84532c5968103",
+        "url": "https://github.com/MojoTheApe/n8n-jira-tgbot/blob/2e90da1c523db3b2094cabc9811a5ab5b6efea79/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "86c2dd95eef5d1e8cf14cd5b2f07f22eab964e33",
+        "sha256": "6f4568bb25ba1b0cfce4e59a127f1e1696cc87e08c8931a86c4c0c901300cbce",
+        "url": "https://github.com/MojoTheApe/n8n-jira-tgbot/blob/2e90da1c523db3b2094cabc9811a5ab5b6efea79/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/n8n-jcloud-automation",
+    "observed_at": "2026-10-17T07:56:20.568546+00:00",
+    "main_revision": "49f343d688fcc58f52914bcf39d216ba47b4974c",
+    "default_branch": "main",
+    "role_proposed": "source-only automation",
+    "task_home": "https://github.com/MojoTheApe/n8n-jcloud-automation/issues",
+    "disposition": "upgrade source workflow with existing Git Stage",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": true,
+    "completion_current": "reviewed-merge",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "eca8a857d9f7f81160bf248f9f9e3109a21ade49",
+      "version": "1.0.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+    },
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": {
+      "schema_version": 1,
+      "staging": {
+        "enabled": true,
+        "branch": "stage",
+        "target": "https://github.com/MojoTheApe/n8n-jcloud-automation/tree/stage"
+      },
+      "completion": "reviewed-merge",
+      "delivery_target": "https://github.com/MojoTheApe/n8n-jcloud-automation:main",
+      "required_checks": [
+        "descriptor",
+        "tracker-link",
+        "workflow-checks"
+      ]
+    },
+    "required_checks": [
+      "descriptor",
+      "tracker-link",
+      "workflow-checks"
+    ],
+    "local_checks": [
+      "python3 -m unittest discover -s tests -v",
+      "python3 scripts/validate_workflows.py",
+      "python3 scripts/tracker_pr_check.py --pr PR_NUMBER",
+      "git diff --check"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "95c504adfcd9597def8e754e6fd53fadf2213b2b",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/workflow-checks.yml",
+          "sha": "2cbf7b6e995d279dd086327b33f31913bbe044c8",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Preserve workflow checks, source-only delivery and local LIVE_FIRST boundary.",
+    "exception_summaries": [
+      "Unreleased standard and external board verification",
+      "Historical completed tasks",
+      "Production instructions"
+    ],
+    "producer": {
+      "kind": "Exact Git Stage/main checks and reviewed source promotion; runtime transfer is separate",
+      "source_refs": [
+        "https://github.com/MojoTheApe/n8n-jcloud-automation/blob/49f343d688fcc58f52914bcf39d216ba47b4974c/.github/workflows/workflow-checks.yml",
+        "https://github.com/MojoTheApe/n8n-jcloud-automation/blob/49f343d688fcc58f52914bcf39d216ba47b4974c/.github/workflows/delivery-check.yml",
+        "https://github.com/MojoTheApe/n8n-jcloud-automation/blob/49f343d688fcc58f52914bcf39d216ba47b4974c/docs/repository/DELIVERY.md"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Owner authorized Git-only process migration in JC-9. No n8n access, import, publication, execution, credential, schedule or business-data change is included.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "95c504adfcd9597def8e754e6fd53fadf2213b2b",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/workflow-checks.yml",
+          "sha": "2cbf7b6e995d279dd086327b33f31913bbe044c8",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "git_blob": "3ef374b8880d9685724724817907f4c7576e3c5f",
+      "sha256": "3d3be88baedf9de59070522cdbf5a9fd187a4b2510b42af30a6606bcf066517a",
+      "url": "https://github.com/MojoTheApe/n8n-jcloud-automation/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": false,
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 10,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": false,
+        "task_context_policy": null,
+        "stage": {
+          "pr": 38,
+          "state": "promoted",
+          "issues": [
+            37
+          ]
+        },
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 14
+      },
+      "observed_at": "2026-10-17T07:59:04.238806+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "5a7cf674c9ebd24963c0229c251b4cfad22a4512",
+        "sha256": "3fe8de71d523477e23dedd05212ebc93371a9a2d56a4a1ca81aaf2c84609e115",
+        "url": "https://github.com/MojoTheApe/n8n-jcloud-automation/blob/49f343d688fcc58f52914bcf39d216ba47b4974c/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "009bfceec97abf40d7f9336bf674caefb984c1b7",
+        "sha256": "d8b151bcc03ca1a27d6ed57e06956d74b4c750e1dd08d198e756acdb0bebee01",
+        "url": "https://github.com/MojoTheApe/n8n-jcloud-automation/blob/49f343d688fcc58f52914bcf39d216ba47b4974c/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "5067fc7fda63fe2693cc99b7fe3361a8ccb091e3",
+        "sha256": "fed9402096e29b95dd856e5608698c80a277e8b35d01456811e84532c5968103",
+        "url": "https://github.com/MojoTheApe/n8n-jcloud-automation/blob/49f343d688fcc58f52914bcf39d216ba47b4974c/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "86c2dd95eef5d1e8cf14cd5b2f07f22eab964e33",
+        "sha256": "6f4568bb25ba1b0cfce4e59a127f1e1696cc87e08c8931a86c4c0c901300cbce",
+        "url": "https://github.com/MojoTheApe/n8n-jcloud-automation/blob/49f343d688fcc58f52914bcf39d216ba47b4974c/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/n8n-namari-automation",
+    "observed_at": "2026-10-17T07:56:20.704697+00:00",
+    "main_revision": "ff4d06f2002941e7a29b8793f043fc863970f5f5",
+    "default_branch": "main",
+    "role_proposed": "source-only automation",
+    "task_home": "https://github.com/MojoTheApe/n8n-namari-automation/issues",
+    "disposition": "upgrade source workflow with existing Git Stage",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": true,
+    "completion_current": "reviewed-merge",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "eca8a857d9f7f81160bf248f9f9e3109a21ade49",
+      "version": "1.0.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+    },
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": {
+      "schema_version": 1,
+      "staging": {
+        "enabled": true,
+        "branch": "stage",
+        "target": "https://github.com/MojoTheApe/n8n-namari-automation/tree/stage"
+      },
+      "completion": "reviewed-merge",
+      "delivery_target": "https://github.com/MojoTheApe/n8n-namari-automation:main",
+      "required_checks": [
+        "descriptor",
+        "tracker-link",
+        "workflow-checks"
+      ]
+    },
+    "required_checks": [
+      "descriptor",
+      "tracker-link",
+      "workflow-checks"
+    ],
+    "local_checks": [
+      "python3 -m unittest discover -s tests -v",
+      "python3 scripts/validate_workflows.py",
+      "python3 scripts/tracker_pr_check.py --pr PR_NUMBER",
+      "git diff --check"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "95c504adfcd9597def8e754e6fd53fadf2213b2b",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/workflow-checks.yml",
+          "sha": "2cbf7b6e995d279dd086327b33f31913bbe044c8",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Preserve workflow checks and source-only completion.",
+    "exception_summaries": [
+      "Unreleased standard and external board verification",
+      "Historical completed tasks",
+      "Production instructions"
+    ],
+    "producer": {
+      "kind": "Exact Git Stage/main checks and reviewed source promotion; runtime transfer is separate",
+      "source_refs": [
+        "https://github.com/MojoTheApe/n8n-namari-automation/blob/ff4d06f2002941e7a29b8793f043fc863970f5f5/.github/workflows/workflow-checks.yml",
+        "https://github.com/MojoTheApe/n8n-namari-automation/blob/ff4d06f2002941e7a29b8793f043fc863970f5f5/.github/workflows/delivery-check.yml",
+        "https://github.com/MojoTheApe/n8n-namari-automation/blob/ff4d06f2002941e7a29b8793f043fc863970f5f5/docs/repository/DELIVERY.md"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Owner authorized Git-only process migration in NAM-9. No n8n access, import, publication, execution, credential, schedule or business-data change is included.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "95c504adfcd9597def8e754e6fd53fadf2213b2b",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/workflow-checks.yml",
+          "sha": "2cbf7b6e995d279dd086327b33f31913bbe044c8",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "git_blob": "6e2a0d0e32cdc5cbcab3bbe9a597ee5bdeb8ae4e",
+      "sha256": "b14c7d19ecf26930340dd957ae57f8da266305d4c1a9b20d3a3048ff2b9f4d21",
+      "url": "https://github.com/MojoTheApe/n8n-namari-automation/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": false,
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 6,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": false,
+        "task_context_policy": null,
+        "stage": {
+          "pr": 16,
+          "state": "promoted",
+          "issues": [
+            15
+          ]
+        },
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 7
+      },
+      "observed_at": "2026-10-17T07:59:04.675769+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "251ca0e68b1dcac3459974d1bb42bb1d995a010b",
+        "sha256": "d8fca702ba13c07d107ab59d90bd41a2fdef320ea5fbac83fbf883b391cf7431",
+        "url": "https://github.com/MojoTheApe/n8n-namari-automation/blob/ff4d06f2002941e7a29b8793f043fc863970f5f5/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "db1f9c69d7832e48ef5af7b9fa3bc8d95814b9ee",
+        "sha256": "fbd6e73f3cc149819cf293a22026c3c0eb07bd92db74177ceb4baffd0b74b413",
+        "url": "https://github.com/MojoTheApe/n8n-namari-automation/blob/ff4d06f2002941e7a29b8793f043fc863970f5f5/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "5067fc7fda63fe2693cc99b7fe3361a8ccb091e3",
+        "sha256": "fed9402096e29b95dd856e5608698c80a277e8b35d01456811e84532c5968103",
+        "url": "https://github.com/MojoTheApe/n8n-namari-automation/blob/ff4d06f2002941e7a29b8793f043fc863970f5f5/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "86c2dd95eef5d1e8cf14cd5b2f07f22eab964e33",
+        "sha256": "6f4568bb25ba1b0cfce4e59a127f1e1696cc87e08c8931a86c4c0c901300cbce",
+        "url": "https://github.com/MojoTheApe/n8n-namari-automation/blob/ff4d06f2002941e7a29b8793f043fc863970f5f5/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/n8n-keitaro-ftd-notifications",
+    "observed_at": "2026-10-17T07:56:21.108695+00:00",
+    "main_revision": "9b24fd1b899f2d8314d3fe0d7eed20f8e8ba3f28",
+    "default_branch": "main",
+    "role_proposed": "runtime automation",
+    "task_home": "https://github.com/MojoTheApe/n8n-keitaro-ftd-notifications/issues",
+    "disposition": "upgrade after current owner completes or explicitly revalidates work",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": false,
+    "completion_current": "verified-production",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "546e6718d350410597876053a4fe0115fbbc1d6e",
+      "version": "1.0.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "ea969826398a808925bbd907ca8719445177ab59"
+    },
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": {
+      "schema_version": 1,
+      "staging": {
+        "enabled": false,
+        "branch": "stage",
+        "target": "disabled"
+      },
+      "completion": "verified-production",
+      "delivery_target": "Maragents Cloud n8n personal project",
+      "required_checks": [
+        "descriptor",
+        "tracker-link",
+        "workflow-tests",
+        "external/n8n-sdk-validation"
+      ]
+    },
+    "required_checks": [
+      "descriptor",
+      "tracker-link",
+      "workflow-tests",
+      "external/n8n-sdk-validation"
+    ],
+    "local_checks": [
+      "python3 -m json.tool delivery.json",
+      "python3 -m json.tool tracker/config.json",
+      "npm run validate",
+      "Exact-head external/n8n-sdk-validation commit status from the n8n integration"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "a171ae0dea776c9e5d6761496a027c08ceb73486",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "4290925758e9fc3222212d36f06ba79e3493d3cd",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "dd62bcd0e1a2b894aa6cf0a4172a2162e0d0b50a",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Preserve exact workflow/version/active-state readback; no fake FTD or test Telegram message.",
+    "exception_summaries": [
+      "staging"
+    ],
+    "producer": {
+      "kind": "Maintained n8n integration transfers accepted main, preserves credential bindings and verifies exact published active workflow by readback; no automatic publish workflow",
+      "source_refs": [
+        "https://github.com/MojoTheApe/n8n-keitaro-ftd-notifications/blob/9b24fd1b899f2d8314d3fe0d7eed20f8e8ba3f28/docs/runtime/DELIVERY.md",
+        "https://github.com/MojoTheApe/n8n-keitaro-ftd-notifications/blob/9b24fd1b899f2d8314d3fe0d7eed20f8e8ba3f28/.github/workflows/delivery-check.yml"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "The owner explicitly authorized direct production delivery in the 2026-09-21 request; no DEV workflow or test Telegram delivery is authorized.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "ea969826398a808925bbd907ca8719445177ab59"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "4290925758e9fc3222212d36f06ba79e3493d3cd",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "dd62bcd0e1a2b894aa6cf0a4172a2162e0d0b50a",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "a171ae0dea776c9e5d6761496a027c08ceb73486",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 1,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [
+      {
+        "number": 41,
+        "head_sha": "4d86f38e0a42b7e58e627c680341a70961038c66",
+        "base": "main"
+      }
+    ],
+    "ownership": {
+      "git_blob": "07df5d8c64754938ef06886283e3909841f9d2a0",
+      "sha256": "5b9299d96d93f491a22ac6ea79727710732540e11334b13123b56447a6673ca7",
+      "url": "https://github.com/MojoTheApe/n8n-keitaro-ftd-notifications/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": {
+          "issue": 40
+        },
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 20,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": true,
+        "task_context_policy": null,
+        "stage": false,
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 19
+      },
+      "observed_at": "2026-10-17T07:59:05.212663+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "70fe4c5214533fefa3878e83108e99a7e77fc038",
+        "sha256": "089b1cf22168ae00cd3cc139483193b761ebc0b18b959f1d7d57a78d882ca315",
+        "url": "https://github.com/MojoTheApe/n8n-keitaro-ftd-notifications/blob/9b24fd1b899f2d8314d3fe0d7eed20f8e8ba3f28/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "217c6a59030d5bab0955ad7e0144cdd397518113",
+        "sha256": "280636cf28f3548b90a49d436c7da933a3590a8b9faf9d47778d6610c3b64773",
+        "url": "https://github.com/MojoTheApe/n8n-keitaro-ftd-notifications/blob/9b24fd1b899f2d8314d3fe0d7eed20f8e8ba3f28/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "b958b6b45f80148736d35aefe67d117a7a5e6c29",
+        "sha256": "507fc0bd6178524e8ce227ca9e304680faa206d58a8a44233af4d8fe6e7c2b88",
+        "url": "https://github.com/MojoTheApe/n8n-keitaro-ftd-notifications/blob/9b24fd1b899f2d8314d3fe0d7eed20f8e8ba3f28/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "f6f27c8afce60ce348823ae1ec113758aebb4aaa",
+        "sha256": "48fb09aa999e31b3cd894110cef5bec9400839a425406a6da017b94250ede675",
+        "url": "https://github.com/MojoTheApe/n8n-keitaro-ftd-notifications/blob/9b24fd1b899f2d8314d3fe0d7eed20f8e8ba3f28/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/make-facebook-rpc-poc",
+    "observed_at": "2026-10-17T07:56:22.197112+00:00",
+    "main_revision": "1506e4f7cc49078594349f207287fde435c2d0a9",
+    "default_branch": "main",
+    "role_proposed": "tooling/research",
+    "task_home": "https://github.com/MojoTheApe/make-facebook-rpc-poc/issues",
+    "disposition": "adopt modern simple reviewed route when released",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "legacy single slot",
+    "stage_current": false,
+    "completion_current": "reviewed-merge",
+    "standard": {
+      "repository": "https://github.com/MojoTheApe/master-repo",
+      "revision": "eca8a857d9f7f81160bf248f9f9e3109a21ade49",
+      "version": "1.0.0"
+    },
+    "engine": {
+      "repository": "MojoTheApe/task-tracker",
+      "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+    },
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": {
+      "schema_version": 1,
+      "staging": {
+        "enabled": false,
+        "branch": "stage",
+        "target": "disabled"
+      },
+      "completion": "reviewed-merge",
+      "delivery_target": "https://github.com/MojoTheApe/make-facebook-rpc-poc:main",
+      "required_checks": [
+        "descriptor",
+        "tracker-link"
+      ]
+    },
+    "required_checks": [
+      "descriptor",
+      "tracker-link"
+    ],
+    "local_checks": [
+      "bash -n scripts/collect-readonly-evidence.sh scripts/make-mcp-call.sh",
+      "python3 scripts/check-no-secrets.py"
+    ],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "8b14e6b7d9280540081d1f5e4ef49feb2862b015",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ]
+    },
+    "local_controls": "Keep existing useful checks and reviewed-merge completion; Stage remains off unless selected.",
+    "exception_summaries": [],
+    "producer": {
+      "kind": "Reviewed main integration of sanitized tooling/evidence; no runtime target or producer",
+      "source_refs": [
+        "https://github.com/MojoTheApe/make-facebook-rpc-poc/blob/1506e4f7cc49078594349f207287fde435c2d0a9/docs/repository/DELIVERY.md",
+        "https://github.com/MojoTheApe/make-facebook-rpc-poc/blob/1506e4f7cc49078594349f207287fde435c2d0a9/.github/workflows/delivery-check.yml"
+      ],
+      "parent_resource_producer": null,
+      "authorization": "Within the authorized implementation request.",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": {
+        "repository": "MojoTheApe/task-tracker",
+        "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725"
+      },
+      "pinned_support_ref": "pinned-engine-capabilities.json",
+      "wrapper_and_portable_blobs": [
+        {
+          "path": ".workflow/tools/task_tracker.py",
+          "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_batch_policy.py",
+          "sha": "f4953ed5e7b9a8487c82de51cf5b5e98a3c25a2a",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_ci_evidence.py",
+          "sha": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_delivery_policy.py",
+          "sha": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_pr_check.py",
+          "sha": "86323f34bb429e5c1fdb671d0f2fce6f8abff980",
+          "mode": "100644"
+        },
+        {
+          "path": ".workflow/tools/tracker_process_instructions.py",
+          "sha": "7ba87d7916fae8bf8362e3711480c6acbb4d1fc8",
+          "mode": "100644"
+        },
+        {
+          "path": "scripts/task_tracker.py",
+          "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+          "mode": "100644"
+        }
+      ],
+      "ci_workflow_refs": [
+        {
+          "path": ".github/workflows/delivery-check.yml",
+          "sha": "8b14e6b7d9280540081d1f5e4ef49feb2862b015",
+          "mode": "100644"
+        },
+        {
+          "path": ".github/workflows/tracker-link.yml",
+          "sha": "2c7ecb0c509ba2e7a2d287c99eca232ba894ce1d",
+          "mode": "100644"
+        }
+      ],
+      "client_resolution": ".tracker-runtime/<exact engine revision>, or TASK_TRACKER_HOME; verify exact HEAD and clean tracked files before execution",
+      "local_cache_observation": {
+        "workspace_checkout_present": true,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "git_blob": "e80bb7b56176b760e81a9aecd76575930522046c",
+      "sha256": "ab8eddeaee9a61903d3b1705c005e1c54ffee1d23e5d23610548e8435581ec58",
+      "url": "https://github.com/MojoTheApe/make-facebook-rpc-poc/blob/tracker-state/.tracker-state.json",
+      "summary": {
+        "schema_version": 1,
+        "legacy_active": false,
+        "execution_policy": null,
+        "work_claim_count": 0,
+        "work_claims": [],
+        "source_review_count": 0,
+        "source_reviews": [],
+        "legacy_review": false,
+        "integration": false,
+        "review_queue_count": 0,
+        "batches": {},
+        "execution_intake": false,
+        "intake_record_count": 1,
+        "creating_intake_count": 0,
+        "maintenance_held": false,
+        "maintenance_protocol_busy": false,
+        "task_context_policy": null,
+        "stage": false,
+        "stage_held": false,
+        "pending_paths": [],
+        "delivery_record_count": 1
+      },
+      "observed_at": "2026-10-17T07:59:05.635867+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "git_blob": "e19b528c00eda851b6b7ebcf3393d864af6e1c77",
+        "sha256": "5af4e4ecb121c56d42249ec92373aa976c5cb3f261ef7598c7d9ebeaf8899b14",
+        "url": "https://github.com/MojoTheApe/make-facebook-rpc-poc/blob/1506e4f7cc49078594349f207287fde435c2d0a9/delivery.json"
+      },
+      "tracker/config.json": {
+        "git_blob": "8ecab1a980b28413e043637f9181e8007996a3a8",
+        "sha256": "22f48a7fa7a730243ae1f68ab111159236c89e97ac556b2e662d6dadeee4f94d",
+        "url": "https://github.com/MojoTheApe/make-facebook-rpc-poc/blob/1506e4f7cc49078594349f207287fde435c2d0a9/tracker/config.json"
+      },
+      "tracker/engine.json": {
+        "git_blob": "5067fc7fda63fe2693cc99b7fe3361a8ccb091e3",
+        "sha256": "fed9402096e29b95dd856e5608698c80a277e8b35d01456811e84532c5968103",
+        "url": "https://github.com/MojoTheApe/make-facebook-rpc-poc/blob/1506e4f7cc49078594349f207287fde435c2d0a9/tracker/engine.json"
+      },
+      "AGENTS.md": {
+        "git_blob": "290af607536ed8f525b220efa17769eefe766918",
+        "sha256": "98126e1e6bf56bed91bf42f4126699caf244abcd0018975f9c66ea8943f111b0",
+        "url": "https://github.com/MojoTheApe/make-facebook-rpc-poc/blob/1506e4f7cc49078594349f207287fde435c2d0a9/AGENTS.md"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/the-source",
+    "observed_at": "2026-10-17T07:56:27.305172+00:00",
+    "main_revision": "346003637f066b1da9198d044406723065949fd1",
+    "default_branch": "main",
+    "role_proposed": "knowledge",
+    "task_home": "https://github.com/MojoTheApe/the-source/issues",
+    "disposition": "onboard governance engineering and live board",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "not onboarded / self exception",
+    "stage_current": null,
+    "completion_current": "local adopted rules; no descriptor",
+    "standard": null,
+    "engine": null,
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": null,
+    "required_checks": [],
+    "local_checks": [],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": []
+    },
+    "local_controls": "Routine notes have no per-note Issue; rules/automation changes require tracked reviewed work; product truth stays local.",
+    "exception_summaries": [],
+    "producer": {
+      "kind": "No standard publication/delivery producer declared; engineering onboarding and verification plan required in Task 13",
+      "source_refs": [],
+      "parent_resource_producer": null,
+      "authorization": "Preserve current local reviewed source/publication controls; no new runtime authority inferred",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": null,
+      "pinned_support_ref": null,
+      "wrapper_and_portable_blobs": [],
+      "ci_workflow_refs": [],
+      "client_resolution": "No pinned small client adopted / self-engine exception",
+      "local_cache_observation": {
+        "workspace_checkout_present": false,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "_error": "gh: No commit found for the ref tracker-state (HTTP 404)",
+      "observed_at": "2026-10-17T07:59:06.021080+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/config.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/engine.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "AGENTS.md": {
+        "_error": "gh: Not Found (HTTP 404)"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/acl-lib",
+    "observed_at": "2026-10-17T07:56:27.668852+00:00",
+    "main_revision": "f02d642c96ed2e7ff1428a5111e90c579b7a7d65",
+    "default_branch": "main",
+    "role_proposed": "application-data resource",
+    "task_home": "https://github.com/MojoTheApe/acl-lib/issues",
+    "disposition": "resource-only; link to ACL in Task 11",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "not onboarded / self exception",
+    "stage_current": null,
+    "completion_current": "local adopted rules; no descriptor",
+    "standard": null,
+    "engine": null,
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": null,
+    "required_checks": [],
+    "local_checks": [],
+    "portable_and_ci_files": {
+      "complete": true,
+      "files": []
+    },
+    "local_controls": "No independent board/PR per ordinary save; preserve data and conflict controls.",
+    "exception_summaries": [],
+    "producer": {
+      "kind": "ACL application operational data save/conflict path; not a task delivery producer",
+      "source_refs": [],
+      "parent_resource_producer": "MojoTheApe/adopy-campaing-launcher@af0ade29b106129089dbabd3f208b548efa246d9:.github/workflows/release.yml",
+      "authorization": "Preserve current local reviewed source/publication controls; no new runtime authority inferred",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": null,
+      "pinned_support_ref": null,
+      "wrapper_and_portable_blobs": [],
+      "ci_workflow_refs": [],
+      "client_resolution": "No pinned small client adopted / self-engine exception",
+      "local_cache_observation": {
+        "workspace_checkout_present": false,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "_error": "gh: No commit found for the ref tracker-state (HTTP 404)",
+      "observed_at": "2026-10-17T07:59:06.427756+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": null,
+      "target_commitish": null,
+      "published_at": null,
+      "html_url": null,
+      "_error": "gh: Not Found (HTTP 404)"
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/config.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/engine.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "AGENTS.md": {
+        "_error": "gh: Not Found (HTTP 404)"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  },
+  {
+    "repository": "MojoTheApe/acl-releases",
+    "observed_at": "2026-10-17T07:56:28.045435+00:00",
+    "main_revision": "c9c4351bfe946c0e40ac65a3fde94a7b5a5f12df",
+    "default_branch": "main",
+    "role_proposed": "release-storage resource",
+    "task_home": "https://github.com/MojoTheApe/acl-releases/issues",
+    "disposition": "resource-only; link to ACL in Task 11",
+    "disposition_status": "proposed; not activated",
+    "integration_route_current": "not onboarded / self exception",
+    "stage_current": null,
+    "completion_current": "local adopted rules; no descriptor",
+    "standard": null,
+    "engine": null,
+    "execution_policy": null,
+    "task_context_policy": null,
+    "ci_evidence_policy": null,
+    "delivery_policy": null,
+    "required_checks": [],
+    "local_checks": [],
+    "portable_and_ci_files": {
+      "complete": false,
+      "files": []
+    },
+    "local_controls": "Preserve releases-only layout and real installer/manifest publication on the original ACL task.",
+    "exception_summaries": [],
+    "producer": {
+      "kind": "ACL parent release.yml/windows-installer/complete-delivery publish and verify installer/manifests; resource has no independent producer workflow",
+      "source_refs": [],
+      "parent_resource_producer": "MojoTheApe/adopy-campaing-launcher@af0ade29b106129089dbabd3f208b548efa246d9:.github/workflows/release.yml",
+      "authorization": "Preserve current local reviewed source/publication controls; no new runtime authority inferred",
+      "actual_runtime_acceptance": "not newly exercised by this read-only inventory"
+    },
+    "writer_inventory": {
+      "pinned_engine": null,
+      "pinned_support_ref": null,
+      "wrapper_and_portable_blobs": [],
+      "ci_workflow_refs": [],
+      "client_resolution": "No pinned small client adopted / self-engine exception",
+      "local_cache_observation": {
+        "workspace_checkout_present": false,
+        "runtime_cache_present": false,
+        "scope": "This workspace only; old checkouts have stale Git pointers. Source archives do not establish employee cache installation."
+      },
+      "activation": "task-context requires matching descriptor/config schema 1, exact compatible export, owned idle task-context adopt and durable outer state 4; pre-context pins reject outer 4. CI evidence is a separate matching policy opt-in; protocol 2 requires a supporting reader/validator. Task 02 completion fence is not yet implemented and its version must not be invented.",
+      "cutover_blocker": "Enumerate all actual service, CLI, portable receipt and CI writers at the affected target; replace with exact compatible versions or prove refusal before activation. Unobserved employee overrides remain unknown."
+    },
+    "open_pr_count": 0,
+    "open_pr_inventory_complete": true,
+    "open_pr_refs": [],
+    "ownership": {
+      "_error": "gh: No commit found for the ref tracker-state (HTTP 404)",
+      "observed_at": "2026-10-17T07:59:06.802055+00:00"
+    },
+    "native_protection": {
+      "branch_protected": false,
+      "required_checks": null,
+      "strict": null,
+      "enforce_admins": null,
+      "native_approval_count": null,
+      "bypass_allowances": null,
+      "protection_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)",
+      "rulesets": {
+        "_error": "gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)"
+      },
+      "account_admin": true
+    },
+    "latest_release": {
+      "tag_name": "acl-release-2026-10-15.940",
+      "target_commitish": "main",
+      "published_at": "2026-10-15T22:38:46Z",
+      "html_url": "https://github.com/MojoTheApe/acl-releases/releases/tag/acl-release-2026-10-15.940",
+      "_error": null
+    },
+    "file_provenance": {
+      "delivery.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/config.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "tracker/engine.json": {
+        "_error": "gh: Not Found (HTTP 404)"
+      },
+      "AGENTS.md": {
+        "_error": "gh: Not Found (HTTP 404)"
+      }
+    },
+    "activation_order": [
+      "refresh this row and actual owners",
+      "review exact compatible source pair/export",
+      "publish immutable support",
+      "verify actual reader",
+      "owned drain only where protocol requires it",
+      "review conservative local upgrade",
+      "activate matching config/state/writers",
+      "read back board/native outcome"
+    ],
+    "recovery": "Keep compatible prior reader/config/export and state backup; rehearse isolated restore. Never restore an incompatible reader over newer accepted state."
+  }
+]

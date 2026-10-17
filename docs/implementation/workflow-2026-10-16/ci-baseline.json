@@ -1,0 +1,55 @@
+{
+  "kind": "read-only inventory; incomplete period accounting, no billing/savings inference",
+  "reported_total_runs": 5791,
+  "sample_count": 20,
+  "sample_created_from": "2026-10-16T15:05:30Z",
+  "sample_created_to": "2026-10-17T07:24:12Z",
+  "sample_run_ids": [
+    39013496971,
+    39013489920,
+    39013431148,
+    39013423783,
+    39013195361,
+    39013123218,
+    39013117666,
+    39013096320,
+    39013088871,
+    39010707591,
+    39010573532,
+    39010397482,
+    39010295501,
+    39010273260,
+    39009806078,
+    39009776686,
+    38964829404,
+    38964751655,
+    38964716501,
+    38921087722
+  ],
+  "carried_forward_fixture": {
+    "conclusion": "success",
+    "created_at": "2026-10-15T08:44:37Z",
+    "head_sha": "d8bdcecfbd2311d00fc56a0dacb767f62f8a63e3",
+    "html_url": "https://github.com/MojoTheApe/adopy-campaing-launcher/actions/runs/38707841668",
+    "id": 38707841668,
+    "name": "CI",
+    "run_attempt": 2,
+    "status": "completed",
+    "updated_at": "2026-10-15T09:15:44Z"
+  },
+  "billing_status": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/billing/usage#get-billing-usage-report-for-a-user",
+    "status": "404"
+  },
+  "historical_estimates": {
+    "attributed_to": "16 October independent audit",
+    "rounded_interval_estimates": [
+      212,
+      112
+    ],
+    "independently_reconciled_now": false,
+    "invoice": false
+  },
+  "next_action": "Task 05 must retrieve original per-attempt native jobs, partition capped windows and handle creation/execution period differences"
+}
