@@ -83,7 +83,7 @@ def inspect(root, expected_revision=None):
     config = read_descriptor(root)
     if not isinstance(config, dict):
         return [("error", "delivery must be an object")]
-    if config.get("schema_version") == 2:
+    if config.get("schema_version") in (2, 3):
         import project
         return project.inspect(root, expected_revision)
     findings = []
@@ -237,7 +237,13 @@ def main(argv=None):
     init.add_argument("--name", required=True)
     init.add_argument("--id-prefix", required=True)
     init.add_argument("--workspace-id", required=True)
-    init.add_argument("--no-staging", action="store_true")
+    stage = init.add_mutually_exclusive_group()
+    stage.add_argument('--staging', dest='staging', action='store_true', default=None)
+    stage.add_argument('--no-staging', dest='staging', action='store_false')
+    init.add_argument('--role', help='Explicit descriptor3 repository role; requires a compatible canonical route provider')
+    init.add_argument('--route', choices=('direct', 'batch'), help='Explicit descriptor3 integration choice')
+    init.add_argument('--completion', help='Explicit descriptor3 required completion; must retain the delivery profile obligation')
+    init.add_argument('--preset', choices=('simple', 'application'), help='Conservative descriptor3 choices; explicit options override the preset')
     init.add_argument("--process-instructions", action="store_true",
                       help="Explicitly permit reviewed instruction-only PRs directly into main")
     init.add_argument("--process-check", action="append", default=[], metavar="NAME",
@@ -251,7 +257,10 @@ def main(argv=None):
     init.add_argument('--task-context', action='store_true', help='Explicit task readiness, requirements journal and source compatibility; requires batch execution')
     init.add_argument('--legacy-execution', action='store_true', help='Select original explicit execution choices instead of new-project batch/task-context defaults; never used by upgrade')
     init.add_argument('--ci-evidence-policy', type=Path, help='Explicit reviewed native CI policy JSON; unsupported coverage stays fresh')
-    for cmd in (init, commands.add_parser("upgrade")):
+    init.add_argument('--knowledge-capture-policy', type=Path, help='Explicit reviewed mandate/roots JSON; requires modern choices and separate owned adoption')
+    upgrade = commands.add_parser("upgrade")
+    upgrade.add_argument('--project-choices', type=Path, help='Explicit descriptor3 role/route/Stage/capacity/guard choices JSON; preserves current profile, targets and identity')
+    for cmd in (init, upgrade):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
         cmd.add_argument('--completion-policy', action='store_true', help='Explicit accepted-scope completion checking; requires supporting published reader/writers and separate durable activation')
         cmd.add_argument('--ci-retry-policy', type=Path, help='Explicit reviewed retry policy JSON; compatible reader/writers and owned durable activation are separate')
@@ -272,29 +281,49 @@ def main(argv=None):
                 project.export_contract.structural_retry_policy({'ci_retry_policy': retry_policy})
             if args.command == "init":
                 inputs = {"profile": args.profile, "repository": args.repository, "name": args.name,
-                          "prefix": args.id_prefix, "workspace_id": args.workspace_id, "staging": not args.no_staging}
+                          "prefix": args.id_prefix, "workspace_id": args.workspace_id}
+                modern = any(getattr(args, key) is not None for key in ('role', 'route', 'completion', 'preset'))
+                if modern and args.legacy_execution:
+                    raise ValueError('Explicit descriptor3 choices cannot be combined with --legacy-execution')
+                if args.staging is not None or not modern:
+                    inputs['staging'] = True if args.staging is None else args.staging
+                if modern:
+                    for key in ('role', 'route', 'completion', 'preset'):
+                        if getattr(args, key) is not None:
+                            inputs[key] = getattr(args, key)
                 if args.implementation_limit is not None: inputs["implementation_limit"] = args.implementation_limit
                 if args.batch_limit is not None: inputs["batch_limit"] = args.batch_limit
                 if args.review_limit is not None: inputs["review_limit"] = args.review_limit
-                if args.task_context: inputs['task_context'] = {'schema_version': 1}
+                if args.task_context: inputs['task_context'] = {'schema_version': 2 if modern else 1}
                 if args.completion_policy: inputs['completion_policy'] = {'schema_version': 1}
                 if args.ci_retry_policy is not None: inputs['ci_retry'] = retry_policy
-                if not args.legacy_execution:
+                if not args.legacy_execution and not modern:
                     inputs.setdefault('implementation_limit', 5)
                     inputs.setdefault('batch_limit', 5)
                     inputs.setdefault('task_context', {'schema_version': 1})
                 if args.ci_evidence_policy:
-                    inputs['ci_evidence'] = json.loads(args.ci_evidence_policy.read_text(encoding='utf-8'))
+                    inputs['ci_evidence'] = json.loads(args.ci_evidence_policy.read_text(encoding='utf-8'), object_pairs_hook=project.export_contract.unique)
+                if args.knowledge_capture_policy:
+                    inputs['knowledge_capture'] = json.loads(args.knowledge_capture_policy.read_text(encoding='utf-8'), object_pairs_hook=project.export_contract.unique)
                 if args.process_check and not args.process_instructions:
                     raise ValueError('--process-check requires explicit --process-instructions')
                 if args.process_instructions:
                     inputs['process_instructions'] = {'schema_version': 1,
                         'required_checks': ['descriptor', 'tracker-link', *args.process_check]}
+                if modern:
+                    inputs = project.project_choices(inputs)
                 result = project.init(args.root, inputs, revision, args.tracker_root, args.python, args.apply)
             else:
+                choices = None
+                if args.project_choices is not None:
+                    choices = json.loads(args.project_choices.read_text(encoding='utf-8'), object_pairs_hook=project.export_contract.unique)
+                    if not isinstance(choices, dict):
+                        raise ValueError('Project choices must be an explicit JSON object')
+                    if args.completion_policy:
+                        choices['completion_policy'] = {'schema_version': 1}
                 result = project.upgrade(args.root, revision, args.tracker_root, args.python, args.apply,
                                          completion_policy={'schema_version': 1} if args.completion_policy else None,
-                                         ci_retry_policy=retry_policy)
+                                         ci_retry_policy=retry_policy, choices=choices)
             print(json.dumps(result, indent=2))
             return 1 if result.get("conflicts") else 0
         findings = inspect(args.root, args.expected_revision)

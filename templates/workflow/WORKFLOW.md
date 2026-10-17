@@ -16,12 +16,7 @@ __PROCESS_GUIDANCE__
 
 ## Work and independent review
 
-Create a real Issue before implementation. Ideas remain Idea; requested tasks
-start Backlog. Planning does not claim code capacity. When development is
-requested, read the entire Description and Specifications and use the pinned
-Tracker's `work` command to claim the actual available slot and verify In Progress.
-Follow its supported branch/actor/session rules and any host-required prefix.
-An older task needs current readiness assessment, not routine owner reapproval.
+__SOURCE_GUIDANCE__
 
 The Coordinator checks dependencies, overlap and actual ownership, and delegates
 independent eligible work to Workers in isolated branches/worktrees through
@@ -31,9 +26,7 @@ actor/session identities. Do not create new user-owned chats without an explicit
 request. If delegation is unavailable, record serial implementation; independent
 review still cannot be replaced by self-review.
 
-Prepare a linked PR after implementation and self-checks. Preserve the exact
-machine-readable `Tracker issues:` field and source-versus-integration identity
-from this project's PR template. No automatic Issue-closing keywords. Update
+__PR_REFERENCE_GUIDANCE__ Update
 current system knowledge and meaningful history in the same PR, or explain the
 specific no-impact result. Preserve original specifications and local safeguards.
 

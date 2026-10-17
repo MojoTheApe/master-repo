@@ -1,5 +1,28 @@
 # Repository process history
 
+## 2026-10-17 — MR-40 explicit choices / source1.5.0
+
+Construct descriptor3 choices independently and retain actual Stage/capacities,
+profile/completion and optional absence during an explicitly selected modern
+upgrade. Keep the pristine old template as the merge ancestor. Add the fixed
+hash-verified canonical route-validator boundary and mechanical snapshot support.
+Render direct, batch and explicitly selected capture navigation without inventing
+Issue aliases, batch identity or a second state algorithm. Update the common
+supported-combination table and canonical skill together. TT-157 owns the actual
+engine/state/lifecycle companion. Pin its actual published3.7.0 merge
+`0b317d99997a4d3ef35b637bd6d19244630539f9`; final Master native pair,
+independent full-scope admission and coordinated publication remain required. This
+candidate changes no consumer policy, mandate, capacity, state or service.
+
+Extend mechanical refresh/provenance and the existing portable/final-pair runners
+to consume Tracker's exact modern direct fixture closure when supported. Keep
+canonical saved lifecycle replay separate from actual Master-rendered choices,
+guide/provider validation and the coordinator's generated-config lifecycle proof.
+Missing or changed fixture/provider artifacts fail closed. The maintained refresh
+copies the complete canonical52-file closure from that released engine, including
+the12/24 helper inventory, route snapshot and exact direct data/runner provenance.
+Task08's explicit verified-publication authority remains separate future work.
+
 ## 2026-10-17 — MR-51 / TT-144 truthful capacity
 
 Document durable project-wide occupancy for existing legacy/v1/v2/v3 modes,

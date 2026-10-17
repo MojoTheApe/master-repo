@@ -38,16 +38,18 @@ def source_inputs(args):
     return sources
 
 
-def changed_engine_contract(args, scratch, *, retry=False):
+def changed_engine_contract(args, scratch, *, retry=False, direct=False):
     """Actual committed rule drift must fail even with freshly matching pin metadata."""
-    engine = scratch/('changed-retry-engine' if retry else 'changed-engine')
+    label = 'route' if direct else 'retry' if retry else 'ci'
+    engine = scratch/('changed-'+label+'-engine')
     subprocess.run(['git', 'clone', '--quiet', '--no-hardlinks', str(args.tracker), str(engine)], check=True)
     subprocess.run(['git', '-C', str(engine), 'remote', 'set-url', 'origin',
                     'https://github.com/MojoTheApe/task-tracker.git'], check=True)
-    source_name = 'tracker/ci_retry.py' if retry else 'tracker/ci_evidence.py'
+    source_name = 'tracker/direct_policy.py' if direct else 'tracker/ci_retry.py' if retry else 'tracker/ci_evidence.py'
     source = engine/source_name
     before = source.read_bytes()
-    old, new = ((b"value['max_executions'] not in (1, 2)", b"value['max_executions'] not in (1, 2, 3)") if retry else
+    old, new = ((b"integer(value.get('review_limit'), 1, 5)", b"integer(value.get('review_limit'), 1, 6)") if direct else
+                (b"value['max_executions'] not in (1, 2)", b"value['max_executions'] not in (1, 2, 3)") if retry else
                 (b"p['max_age_seconds'] <= 30 * 86400", b"p['max_age_seconds'] <= 31 * 86400"))
     assert before.count(old) == 1, 'Update the real contract-drift mutation for this engine'
     source.write_bytes(before.replace(old, new))
@@ -56,7 +58,7 @@ def changed_engine_contract(args, scratch, *, retry=False):
                     '-c', 'user.email=fixture@example.invalid', 'commit', '--quiet',
                     '-m', 'Fixture only: change the actual canonical contract rule'], check=True)
     revision = git(engine, 'rev-parse', 'HEAD')
-    master = scratch/('stale-master-retry-contract' if retry else 'stale-master-contract')
+    master = scratch/('stale-master-'+label+'-contract')
     shutil.copytree(args.master, master, ignore=shutil.ignore_patterns('.git', '__pycache__', '.venv', '.pytest_cache'))
     # Refresh identity alone, deliberately retaining the old technical rules and
     # hashes. A manually wrong SHA or a dirty checkout is not this negative case.
@@ -103,8 +105,9 @@ def selected_instructions(root, exported, config, inputs, tracker):
         assert '(repository/' + name + ')' in exported['docs/' + name]
     assert exported['docs/repository/WORKFLOW_REFERENCE.md'] == instructions.render_reference()
     version = config.get('execution_policy', {}).get('schema_version')
-    for other in (1, 2, 3):
-        assert (f'execution schema {other}' in guide) == (version == other)
+    for other in (1, 2, 3, 4):
+        heading = 'execution schema4' if other == 4 else f'execution schema {other}'
+        assert (heading in guide) == (version == other)
     assert ('Selected route: legacy ownership' in guide) == (version is None)
     for key, heading in (('task_context_policy', 'Selected task context'),
                          ('completion_policy', 'Selected accepted-scope completion'),
@@ -132,6 +135,47 @@ def selected_instructions(root, exported, config, inputs, tracker):
             'relative_markdown_links_checked': links}
 
 
+def modern_outputs(args, scratch, project, revision):
+    """Actual Master outputs; canonical saved lifecycle replay is separate."""
+    from portable_contract_fixture import isolated_consumer
+    rows = []
+    cases = [('tooling', 'shared-tooling-library', 'direct', False, False),
+             ('tooling', 'research', 'direct', True, False),
+             ('n8n-source', 'research', 'direct', True, False),
+             ('package', 'shared-tooling-library', 'direct', True, False),
+             ('vps', 'application', 'direct', False, False),
+             ('local', 'application', 'batch', False, False),
+             ('local', 'application', 'batch', True, False),
+             ('tooling', 'knowledge', 'direct', False, True),
+             ('tooling', 'knowledge', 'direct', True, True)]
+    for index, (profile, role, route, staged, capture) in enumerate(cases):
+        inputs = dict(name='Modern synthetic consumer', repository='owner/example', prefix='EX', workspace_id='example',
+            profile=profile, role=role, route=route, completion=project.PROFILES[profile], staging=staged,
+            implementation_limit=2, review_limit=2, task_context={'schema_version': 2}, completion_policy={'schema_version': 1})
+        if route == 'batch': inputs['batch_limit'] = 2
+        if capture:
+            inputs['knowledge_capture'] = dict(schema_version=1, roots=['notes/'], scope='Ordinary project-approved observations; no governance or automation.')
+        files = project.render(inputs, revision, args.tracker, sys.executable)
+        root = scratch/('modern-'+str(index)); root.mkdir()
+        for name, content in files.items():
+            path = root/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(content)
+        errors = [message for kind, message in project.inspect(root) if kind == 'error']
+        assert not errors, (inputs, errors)
+        config = json.loads(files['tracker/config.json']); descriptor = json.loads(files['delivery.json'])
+        assert descriptor['schema_version'] == 3 and descriptor['role'] == role
+        assert descriptor['completion'] == project.PROFILES[profile]
+        assert config['execution_policy'] == descriptor['workflow']['execution']
+        assert config['task_context_policy'] == {'schema_version': 2} and config['completion_policy'] == {'schema_version': 1}
+        assert ('approved' in config['workflow']) == (route == 'batch')
+        assert config.get('knowledge_capture_policy') == inputs.get('knowledge_capture')
+        rows.append(dict(profile=profile, role=role, route=route, stage=staged, capture=capture,
+            generated_config_sha256=hashlib.sha256(files['tracker/config.json'].encode()).hexdigest(),
+            portable_runtime=isolated_consumer(root, args.python39),
+            instructions=selected_instructions(root, files, config, inputs, args.tracker),
+            saved_canonical_lifecycle_replay_is_separate=True))
+    return rows
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--master', type=Path, required=True)
@@ -145,10 +189,13 @@ def main():
     parser.add_argument('--bounded', action='store_true', help='Six representative actual outputs plus four genuine old-source upgrades')
     parser.add_argument('--portable-contract', action='store_true', help='Require exact trusted artifacts, engine-free native fixtures and real contract-drift refusal')
     parser.add_argument('--retry-contract', action='store_true', help='Exercise explicit retry selection/preservation, actual accounting CLI and retry-rule drift')
+    parser.add_argument('--direct-contract', action='store_true', help='Exercise actual modern Master outputs and canonical direct admission/receipt fixtures')
     parser.add_argument('--require-pinned', action='store_true', help='Reject a dirty Master or an engine override')
     args = parser.parse_args()
     if args.retry_contract and not args.portable_contract:
         parser.error('--retry-contract requires --portable-contract')
+    if args.direct_contract and not args.portable_contract:
+        parser.error('--direct-contract requires --portable-contract')
     for name in ('master', 'tracker', 'old_master', 'old_tracker', 'output'):
         setattr(args, name, getattr(args, name).resolve())
     sources = source_inputs(args)
@@ -166,6 +213,8 @@ def main():
               'consumer_activation': False, 'selected_instructions': args.selected_instructions}
     result.update(bounded=args.bounded, portable_contract=args.portable_contract,
                   retry_contract=args.retry_contract,
+                  direct_contract=args.direct_contract,
+                  upgrades_only=args.upgrades_only,
                   publication_verified_by_this_command=False, source_inputs=sources)
     if result['tracker_dirty']:
         raise ValueError('The actual Tracker candidate must be clean and immutable')
@@ -292,6 +341,11 @@ print('isolated portable assessment/import passed')
                       'installer.sh': 'Unique local installer.\n'}
             for name, content in custom.items():
                 (root / name).write_text(content)
+            modern_root = None
+            if args.direct_contract:
+                modern_root = scratch/('upgrade-modern-'+mode)
+                shutil.copytree(root, modern_root)
+                (modern_root/'installer.sh').chmod(0o750)
             before = {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob('*') if p.is_file()}
             retry_options = ({'ci_retry_policy': {'schema_version': 1, 'max_executions': 1 if mode=='legacy' else 2}}
                              if args.retry_contract and mode!='v1' else {})
@@ -314,11 +368,47 @@ print('isolated portable assessment/import passed')
                                        'preview_no_writes': True, 'local_knowledge_preserved': True,
                                        'ci_retry': retry_options.get('ci_retry_policy'),
                                        'idempotent': True})
-        if args.portable_contract:
+            if modern_root is not None:
+                explicit = dict(schema_version=3, role='research', route='batch' if mode in ('v2','v3') else 'direct',
+                    completion='reviewed-merge', staging=inputs['staging'],
+                    implementation_limit=choices.get('implementation_limit', 1),
+                    review_limit=choices.get('review_limit', 1),
+                    task_context={'schema_version': 2}, completion_policy={'schema_version': 1})
+                if explicit['route'] == 'batch': explicit['batch_limit'] = choices['batch_limit']
+                def snapshot():
+                    return {p.relative_to(modern_root).as_posix(): (p.read_bytes(), p.stat().st_mtime_ns, p.stat().st_mode)
+                            for p in modern_root.rglob('*') if p.is_file()}
+                original = snapshot()
+                preview = project.upgrade(modern_root, master_revision, args.tracker, sys.executable,
+                                          choices=explicit, **retry_options)
+                assert not preview['applied'] and not preview['conflicts'], preview
+                assert snapshot() == original
+                applied = project.upgrade(modern_root, master_revision, args.tracker, sys.executable,
+                                          apply=True, choices=explicit, **retry_options)
+                assert applied['applied'] and not applied['conflicts'], applied
+                assert not [message for kind, message in project.inspect(modern_root) if kind == 'error']
+                for name, content in custom.items(): assert (modern_root/name).read_text() == content
+                assert (modern_root/'installer.sh').stat().st_mode & 0o777 == 0o750
+                descriptor = json.loads((modern_root/'delivery.json').read_bytes())
+                assert descriptor['schema_version'] == 3 and descriptor['workflow']['execution']['schema_version'] == 4
+                assert descriptor['workflow']['execution']['route'] == explicit['route']
+                assert 'knowledge_capture' not in descriptor['workflow']
+                once = snapshot()
+                assert project.upgrade(modern_root, master_revision, args.tracker, sys.executable, apply=True)['changed'] == []
+                assert snapshot() == once
+                result.setdefault('direct_upgrades', []).append(dict(old_execution=mode, route=explicit['route'],
+                    genuine_old_master=old_revision, old_tracker=git(args.old_tracker,'rev-parse','HEAD'),
+                    preview_no_writes=True, local_bytes_modes_preserved=True, optional_capture_absent=True,
+                    idempotent_bytes_mtimes_modes=True))
+        if args.portable_contract and not args.upgrades_only:
             assert result['matrix'] and all(row.get('portable_runtime') for row in result['matrix']), \
                 'Missing engine-free runtime fixture proof; finish the portable gate before acceptance'
             from portable_contract_fixture import exercise_all
             result['native_portable_contexts'] = exercise_all(args.python39, args.tracker)
+            if args.direct_contract:
+                assert len(result['native_portable_contexts']['direct']) == 8, 'Missing actual canonical direct runtime cases'
+                result['direct_matrix'] = modern_outputs(args, scratch, project, master_revision)
+                result['changed_route_contract'] = changed_engine_contract(args, scratch, direct=True)
             result['changed_engine_contract'] = changed_engine_contract(args, scratch)
             if args.retry_contract:
                 result['changed_retry_contract'] = changed_engine_contract(args, scratch, retry=True)

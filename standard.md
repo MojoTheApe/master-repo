@@ -20,6 +20,30 @@ project fast/full checks and the [on-demand report](docs/ci-accounting.md) for
 reproducible execution estimates and separately sourced billing. Preserve existing
 collector support and all full admission/delivery requirements.
 
+## Explicit project choices
+
+Use the [supported combinations and presets](docs/project-choices.md) for explicit
+descriptor3 choices: descriptive role, integration route, Stage, actual capacity,
+delivery profile and required completion are independent. Modern execution4 uses
+the exact canonical Tracker validator with task-context2 and completion-policy1.
+Ordinary upgrade preserves older descriptors and choices; new source/skill files
+never activate a consumer or create an ordinary-note mandate.
+
+Direct work keeps a real engineering Issue, author, independent source Reviewer
+and all applicable checks. Stage off goes source -> main; Stage on goes the same
+source -> verified Stage -> main. There is no Approved waiting pool or synthetic
+batch. The source Reviewer retains its lane and the single integration reservation
+through durable accepted-scope/main receipt, reconciled task status and release.
+Batch-selected work keeps its frozen members and separate integration Reviewer.
+Both routes serialize against actual current ownership and maintenance.
+
+Only an explicitly adopted, unchanged knowledge-capture mandate permits ordinary
+notes without an Issue. Full immutable-diff classification and real independent
+semantic attestation distinguish notes from governance, rules, structure,
+configuration, automation and mixed work. Capture has its real operation identity,
+normal pools/checks/Stage and exact recovery; it creates no task or release member.
+The selected Tracker guide owns every exact command and machine-readable PR field.
+
 ## Ticket lifecycle
 
 Use the [shared lifecycle and task-context contract](docs/task-context.md) for the
@@ -40,7 +64,8 @@ activation do not change the selected delivery target or existing Archive rules.
 | Owner selects work | Owner directs agent | To Do; prioritization is not permission to implement |
 | Owner requests development | Implementer | In Progress; claim Tracker implementation slot, linked working branch |
 | Implementation and self-check ready | Implementer | Review; ready PR, two-way ticket links, applicable checks |
-| Execution-v2/v3 source independently approved | Reviewer | Approved; current review/source checks recorded, review lane released |
+| Execution-v2/v3 or v4-batch source independently approved | Reviewer | Approved; current review/source checks recorded, review lane released |
+| Execution-v4 direct source independently approved | Source Reviewer | Review; hold its source lane and genuine single integration reservation through the ordered main finalization |
 | Review requests fixes | Implementer | In Progress while editing the same branch; then Review again |
 | Reviewed source PR enters stage | Agent/explicit automation | Stage; exact candidate recorded, when enabled |
 | Stage passes and promotion merges | Agent/explicit automation | Merged; verified main integration |
@@ -54,8 +79,9 @@ or delivery records the reason and next action without declaring completion.
 An abandoned unmerged PR returns its ticket to planning or explicit cancellation.
 Partial implementation stays unfinished, including a partly delivered parent task.
 Legacy projects may cover several tasks in one PR; evaluate each task's full scope
-separately. All opted-in execution versions require exactly one task per source PR.
-Execution v2/v3 additionally supports a separately reviewed integration PR carrying
+separately. All opted-in engineering sources require exactly one task per source PR.
+Explicitly adopted ordinary capture uses its genuine operation rather than an
+Issue. Execution v2/v3 and v4-batch additionally support an integration PR carrying
 the exact frozen batch members.
 
 Task bodies use Tracker's Description and Specifications structure. Read the whole
@@ -87,6 +113,8 @@ Execution v2/v3 retains individual source PRs and their authors/reviews. Integra
 and promotion PRs list every frozen batch member in the same explicit Tracker line;
 their composition is bound to recorded source revisions and current main. They
 cannot substitute one implementer identity for multiple real Workers.
+Modern direct task/capture and v4-batch fields follow the exact selected Tracker
+template. Never put a fake Issue alias or batch identity on a capture or direct PR.
 
 ## Optional instruction-only route
 
@@ -310,6 +338,10 @@ ready PRs wait for it. Delegated Workers hand off to the Coordinator instead of
 launching their own reviews. Without that policy, keep the project's adopted slot rules.
 Under execution v2/v3, reserve a source review lane, release it through the verified
 Approved transition, and independently review a frozen Coordinator-owned batch.
+Execution4 follows the [explicit route](docs/project-choices.md): direct retains
+the actual source Reviewer through its single reservation/finalizer; batch keeps
+the distinct combined review. Main advancement needs independent semantic
+compatibility assessment; conflicts return to a genuinely claimed author.
 
 A skill file or PR creation does not launch a model on GitHub. Automatic review
 here means the running agent invokes its available subagent mechanism. The
@@ -335,8 +367,9 @@ fully reviewed instruction scope completes there without a Stage or runtime rece
 Legacy projects retain their existing slot and independent review attestation;
 execution lane commands apply only to explicitly adopted execution policies.
 
-For other work, execution v2/v3 uses the frozen batch procedure above. The single-source sequence
-below describes legacy and execution-v1 staging.
+For other work, execution v2/v3 and v4-batch use the frozen batch procedure above.
+Execution4 direct uses its owned single-source procedure and exact current-scope
+compatibility. The sequence below describes preserved legacy/execution-v1 staging.
 
 Staging defaults to enabled. Permanent branches are `stage` and `main`:
 

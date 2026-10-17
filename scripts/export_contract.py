@@ -9,6 +9,7 @@ SOURCE = Path(__file__).resolve().parents[1]
 RECORD = 'scripts/vendor/tracker-export-contract.json'
 SNAPSHOT = 'scripts/vendor/tracker_ci_evidence.py'
 RETRY_SNAPSHOT = 'scripts/vendor/tracker_ci_retry.py'
+ROUTE_SNAPSHOT = 'scripts/vendor/tracker_direct_policy.py'
 MANIFEST = 'tracker/export-contract.json'
 SHA = re.compile(r'[a-f0-9]{40}\Z')
 DIGEST = re.compile(r'[a-f0-9]{64}\Z')
@@ -102,6 +103,30 @@ def structural_retry_policy(config):
     return module.policy(config)
 
 
+def route_validator():
+    """Load only the hash-verified canonical modern module owned by this action."""
+    _, record, _ = trusted()
+    validator = record.get('route_validator', {})
+    if (not isinstance(validator, dict) or set(validator) != {'source', 'sha256'}
+            or validator.get('source') != 'tracker/direct_policy.py'):
+        raise ValueError('Pinned Tracker lacks the canonical route validator; select a compatible released standard')
+    snapshot = safe_file(SOURCE, ROUTE_SNAPSHOT).read_bytes()
+    if hashlib.sha256(snapshot).hexdigest() != validator.get('sha256'):
+        raise ValueError('Trusted route validator differs from the reviewed Tracker snapshot')
+    module = types.ModuleType('_master_trusted_tracker_direct_policy')
+    module.__file__ = str(SOURCE / ROUTE_SNAPSHOT)
+    exec(compile(snapshot, module.__file__, 'exec'), module.__dict__)
+    return module
+
+
+def structural_route_policy(config):
+    return route_validator().bundle(config)
+
+
+def structural_execution_policy(config):
+    return route_validator().execution_policy(config)
+
+
 def check_manifest(raw, trusted_raw):
     parse(raw)
     if raw != trusted_raw:
@@ -113,7 +138,8 @@ def selected(record, descriptor):
     choices = {'delivery_policy': 1}
     for name, contract in (('execution', 'execution_policy'), ('task_context', 'task_context_policy'),
                            ('completion_policy', 'completion_policy'), ('process_instructions', 'process_instructions'),
-                           ('ci_evidence', 'ci_evidence_policy'), ('ci_retry', 'ci_retry_policy')):
+                           ('ci_evidence', 'ci_evidence_policy'), ('ci_retry', 'ci_retry_policy'),
+                           ('knowledge_capture', 'knowledge_capture_policy')):
         if name in workflow:
             if not isinstance(workflow[name], dict):
                 raise ValueError('Selected ' + contract + ' needs an explicit versioned object')

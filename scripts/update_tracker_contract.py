@@ -71,6 +71,16 @@ def plan(engine, revision, python):
                         or hashlib.sha256(retry).hexdigest() != retry_validator.get('sha256')):
                     raise ValueError('Retry snapshot is not the actual canonical source module')
                 planned['scripts/vendor/tracker_ci_retry.py'] = retry
+                if 'route_validator' in record:
+                    route = (output/'scripts/tracker_direct_policy.py').read_bytes()
+                    canonical_route = git(engine, 'show', revision+':tracker/direct_policy.py')
+                    route_validator = record['route_validator']
+                    if (route != canonical_route or not isinstance(route_validator, dict)
+                            or set(route_validator) != {'source', 'sha256'}
+                            or route_validator.get('source') != 'tracker/direct_policy.py'
+                            or hashlib.sha256(route).hexdigest() != route_validator.get('sha256')):
+                        raise ValueError('Route snapshot is not the actual canonical source module')
+                    planned['scripts/vendor/tracker_direct_policy.py'] = route
     if manifests[0] != manifests[1]:
         raise ValueError('Tracker layouts exported different static capability manifests')
     planned['scripts/vendor/tracker-export-contract.json'] = manifests[0]
@@ -81,6 +91,10 @@ def plan(engine, revision, python):
         'native.json': 'tests/fixtures/portable_native.json',
         'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json',
     }
+    if 4 in record.get('contracts', {}).get('execution_policy', []):
+        if 'scripts/vendor/tracker_direct_policy.py' not in planned:
+            raise ValueError('Modern fixtures require the actual canonical route validator')
+        fixture_sources['direct.json'] = 'tests/fixtures/portable_direct.json'
     provenance = {'schema_version': 1, 'synthetic': True,
         'engine': {'repository': 'MojoTheApe/task-tracker', 'revision': revision}, 'files': {}}
     for destination, source in fixture_sources.items():

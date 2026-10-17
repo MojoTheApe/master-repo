@@ -1,5 +1,27 @@
 # Master Repo system
 
+MR-40's candidate adds [explicit project choices](../project-choices.md):
+descriptor3 role, route, Stage, capacities, profile and required completion remain
+independent. Master constructs choices, preserves actual choices during explicit
+three-way upgrades, and delegates modern policy validation to one fixed
+hash-verified canonical Tracker module. Selected common navigation distinguishes
+direct ownership/finalization, genuine batches and explicit ordinary capture.
+Legacy descriptors and optional absence remain unchanged. The exact compatible
+source is published Tracker3.7.0 at `0b317d99997a4d3ef35b637bd6d19244630539f9`.
+Its canonical helper/fixture/validator closure is refreshed mechanically; final
+Master source review, paired/native evidence and standard publication remain
+separate required outcomes. No consumer state, capture mandate or delivery
+permission is activated by this candidate.
+
+The refresh tool also consumes the engine-owned modern direct fixture data and
+runner when the exact selected manifest supplies execution4. The paired gate's
+explicit `--direct-contract` checks actual Master-generated configurations and
+their selected guides separately from canonical saved admission/receipt replay.
+The selected closure has12 raw/24 separated helpers and four canonical direct
+task/capture Stage-on/off cases. Their eight layout replays remain separate from
+the actual Master output matrix and genuine old-source upgrades. A refreshed
+trusted snapshot does not claim the final published compatible pair.
+
 MR-51 documents [actual capacity](../capacity.md) for the existing legacy and
 execution1/2/3 topologies. Tracker owns the reservation projection and UI; Master
 explains held versus active work, pool limits, separate review waiting/batch
@@ -63,7 +85,8 @@ review, optional staging, main integration and verified delivery. It owns the
 canonical agent skill. Task Tracker owns the shared task application and commands;
 Issues remain in each consumer repository.
 
-`scripts/standard.py` validates schema 1 and 2 without running descriptor commands.
+`scripts/standard.py` validates schema 1/2 and checks explicit schema3 against the
+actual trusted canonical provider, without running descriptor commands.
 Its initializer exports a small client from the exact compatible Tracker commit
 and writes the project docs/settings/CI plus a template baseline. `scripts/project.py`
 implements rendering and three-way upgrades. `scripts/onboard.py` prepares branches,

@@ -1,4 +1,5 @@
-"""Version 2 project scaffolding and conservative three-way template upgrades."""
+"""Project choices, pinned scaffolding and conservative three-way upgrades."""
+import copy
 import json
 from pathlib import Path
 import re
@@ -13,6 +14,17 @@ import export_contract
 SOURCE = Path(__file__).resolve().parents[1]
 PROFILES = {'vps': 'verified-production', 'n8n': 'verified-production', 'n8n-source': 'reviewed-merge', 'local': 'reviewed-merge',
             'package': 'verified-stable-package', 'tooling': 'reviewed-merge'}
+ROLES = ('application', 'shared-tooling-library', 'application-data',
+         'release-storage', 'knowledge', 'research')
+CHOICE_PRESETS = {
+    'simple': {'route': 'direct', 'staging': False, 'implementation_limit': 1, 'review_limit': 1},
+    'application': {'route': 'batch', 'staging': True, 'implementation_limit': 2,
+                    'review_limit': 1, 'batch_limit': 2},
+}
+INPUT_FIELDS = {'name', 'repository', 'prefix', 'workspace_id', 'profile', 'staging',
+                'implementation_limit', 'review_limit', 'batch_limit', 'task_context',
+                'completion_policy', 'process_instructions', 'ci_evidence', 'ci_retry', 'knowledge_capture'}
+CHOICE_FIELDS = {'schema_version', 'role', 'route', 'completion', 'preset'}
 PHASES = ['idea', 'backlog', 'todo', 'in_progress', 'review', 'stage', 'merged']
 BASELINE = '.workflow/template-base.json'
 LAYOUT = '.workflow/layout.json'
@@ -96,6 +108,8 @@ def delivery_policy(data):
 
 def validate_execution_policy(value):
     """An explicit opt-in; absence must retain the pinned legacy workflow."""
+    if isinstance(value, dict) and type(value.get('schema_version')) is int and value['schema_version'] == 4:
+        return export_contract.structural_execution_policy({'execution_policy': value})
     if not isinstance(value, dict) or type(value.get('schema_version')) is not int or value['schema_version'] not in (1, 2, 3):
         raise ValueError('Execution policy schema_version must be 1, 2 or 3')
     keys = {'schema_version', 'implementation_limit', 'review_limit'}
@@ -125,7 +139,8 @@ def validate_process_instructions(value):
 
 def phases(staging, execution=None):
     result = [p for p in PHASES if p != 'stage' or staging]
-    if execution and execution['schema_version'] in (2, 3):
+    if execution and (execution['schema_version'] in (2, 3)
+                      or execution['schema_version'] == 4 and execution.get('route') == 'batch'):
         result.insert(result.index('stage' if staging else 'merged'), 'approved')
     return result
 
@@ -144,22 +159,123 @@ def validate_completion_policy(value):
         raise ValueError('Completion policy requires exactly schema_version 1')
 
 
+def modern_inputs(inputs):
+    """New choice fields select descriptor3; old recorded inputs remain schema2."""
+    if not isinstance(inputs, dict):
+        raise ValueError('Project inputs must be an object')
+    if 'schema_version' in inputs:
+        version = inputs['schema_version']
+        if type(version) is not int or version not in (2, 3):
+            raise ValueError('Project input schema_version must be 2 or 3')
+        if version == 2 and (CHOICE_FIELDS - {'schema_version'}) & inputs.keys():
+            raise ValueError('Explicit project choices require descriptor schema3')
+    return inputs.get('schema_version') == 3 or bool((CHOICE_FIELDS - {'schema_version'}) & inputs.keys())
+
+
+def project_choices(inputs):
+    """Construct proposed Master choices, not a canonical engine policy validator.
+
+    Presets fill only omitted choices. Role/profile/completion stay explicit, and
+    this pure construction cannot grant export, admission or state activation.
+    """
+    if not isinstance(inputs, dict) or set(inputs) - (INPUT_FIELDS | CHOICE_FIELDS):
+        raise ValueError('Unknown or invalid project choice inputs')
+    if not modern_inputs(inputs):
+        raise ValueError('Explicit project choices require descriptor schema3')
+    selected = {}
+    if 'preset' in inputs:
+        if not isinstance(inputs['preset'], str) or inputs['preset'] not in CHOICE_PRESETS:
+            raise ValueError('Use the simple or application project preset')
+        selected.update(copy.deepcopy(CHOICE_PRESETS[inputs['preset']]))
+        selected.update(task_context={'schema_version': 2}, completion_policy={'schema_version': 1})
+        if inputs.get('route') == 'direct':
+            selected.pop('batch_limit', None)
+    selected.update(copy.deepcopy(inputs))
+    required = {'role', 'profile', 'completion', 'route', 'staging',
+                'implementation_limit', 'review_limit', 'task_context', 'completion_policy'}
+    missing = required - selected.keys()
+    if missing:
+        raise ValueError('Descriptor3 needs explicit choices: ' + ', '.join(sorted(missing)))
+    if not isinstance(selected['role'], str) or selected['role'] not in ROLES:
+        raise ValueError('Unknown project role')
+    profile, completion = selected['profile'], selected['completion']
+    if not isinstance(profile, str) or profile not in PROFILES:
+        raise ValueError('Unknown delivery profile')
+    if not isinstance(completion, str) or completion != PROFILES[profile]:
+        raise ValueError('Unsupported profile/completion combination; preserve the profile delivery obligation')
+    if type(selected['staging']) is not bool:
+        raise ValueError('Stage must be an explicit boolean choice')
+    if not isinstance(selected['route'], str) or selected['route'] not in ('direct', 'batch'):
+        raise ValueError('Integration route must be direct or batch')
+    for key, maximum in (('implementation_limit', 16), ('review_limit', 5)):
+        if type(selected[key]) is not int or not 1 <= selected[key] <= maximum:
+            raise ValueError(key + ' must be a true integer from 1 to ' + str(maximum))
+    if selected['route'] == 'direct' and 'batch_limit' in selected:
+        raise ValueError('Direct integration must not select batch_limit')
+    if selected['route'] == 'batch' and (type(selected.get('batch_limit')) is not int
+                                      or not 1 <= selected['batch_limit'] <= 5):
+        raise ValueError('Batch integration needs a true integer batch_limit from 1 to 5')
+    context = selected['task_context']
+    if (not isinstance(context, dict) or set(context) != {'schema_version'}
+            or type(context['schema_version']) is not int or context['schema_version'] != 2):
+        raise ValueError('Modern choices require explicit task_context schema2')
+    validate_completion_policy(selected['completion_policy'])
+    selected['schema_version'] = 3
+    return selected
+
+
+def require_engine_choices(data):
+    """Validate modern choices through the exact canonical provider, never a fallback."""
+    if data.get('schema_version') == 3:
+        _, record, _ = export_contract.trusted()
+        try:
+            export_contract.selected(record, data)
+        except ValueError as error:
+            raise ValueError('Descriptor3 requires a released canonical route companion: ' + str(error)) from None
+        bundle = export_contract.structural_route_policy(route_config(data))
+        if bundle is None:
+            raise ValueError('Descriptor3 requires the explicit canonical modern route bundle')
+        return bundle
+
+
+def route_config(data):
+    workflow = data['workflow']
+    config = {'delivery_policy': delivery_policy(data)}
+    for name, field in (('execution', 'execution_policy'), ('task_context', 'task_context_policy'),
+                        ('completion_policy', 'completion_policy'), ('knowledge_capture', 'knowledge_capture_policy')):
+        if name in workflow:
+            config[field] = workflow[name]
+    return config
+
+
 def descriptor(inputs, revision):
-    c = compatibility(); profile = inputs['profile']; repo = inputs['repository']
-    if (profile not in PROFILES or not re.fullmatch(r'[\w.-]+/[\w.-]+', repo)
-            or not re.fullmatch(r'[A-Z][A-Z0-9]+', inputs['prefix'])
-            or not re.fullmatch(r'[a-z][a-z0-9-]*', inputs['workspace_id'])
-            or type(inputs['staging']) is not bool or not inputs['name'].strip()):
+    modern = modern_inputs(inputs)
+    if modern:
+        inputs = project_choices(inputs)
+    c = compatibility(); profile = inputs.get('profile'); repo = inputs.get('repository')
+    if (not isinstance(profile, str) or profile not in PROFILES
+            or not isinstance(repo, str) or not re.fullmatch(r'[\w.-]+/[\w.-]+', repo)
+            or not isinstance(inputs.get('prefix'), str) or not re.fullmatch(r'[A-Z][A-Z0-9]+', inputs['prefix'])
+            or not isinstance(inputs.get('workspace_id'), str) or not re.fullmatch(r'[a-z][a-z0-9-]*', inputs['workspace_id'])
+            or type(inputs.get('staging')) is not bool
+            or not isinstance(inputs.get('name'), str) or not inputs['name'].strip()):
         raise ValueError('Invalid project identity, profile, prefix or stage choice')
     env = {}
     if inputs['staging']: env['stage'] = {'target': '__STAGE_TARGET__', 'verify': '__STAGE_CHECKS__'}
-    if PROFILES[profile] != 'reviewed-merge': env['production'] = {'target': '__PRODUCTION_TARGET__', 'verify': '__PRODUCTION_CHECKS__'}
+    completion = inputs['completion'] if modern else PROFILES[profile]
+    if completion != 'reviewed-merge': env['production'] = {'target': '__PRODUCTION_TARGET__', 'verify': '__PRODUCTION_CHECKS__'}
     workflow = {'staging': inputs['staging'], 'main_branch': 'main', 'stage_branch': 'stage',
                 'required_checks': ['descriptor', 'tracker-link']}
     if 'process_instructions' in inputs:
         validate_process_instructions(inputs['process_instructions'])
         workflow['process_instructions'] = inputs['process_instructions']
-    if 'implementation_limit' in inputs:
+    if modern:
+        workflow['execution'] = {'schema_version': 4, 'route': inputs['route'],
+                                 'implementation_limit': inputs['implementation_limit'],
+                                 'review_limit': inputs['review_limit']}
+        if inputs['route'] == 'batch':
+            workflow['execution']['batch_limit'] = inputs['batch_limit']
+    elif 'implementation_limit' in inputs:
         execution = {'schema_version': 1, 'implementation_limit': inputs['implementation_limit'], 'review_limit': 1}
         if 'batch_limit' in inputs:
             execution.update(schema_version=2, batch_limit=inputs['batch_limit'])
@@ -173,11 +289,16 @@ def descriptor(inputs, revision):
     elif 'batch_limit' in inputs or 'review_limit' in inputs:
         raise ValueError('Batch integration and parallel reviews require an explicit implementation limit')
     if 'task_context' in inputs:
-        validate_task_context(inputs['task_context'], workflow.get('execution'))
-        workflow['task_context'] = inputs['task_context']
+        if not modern:
+            validate_task_context(inputs['task_context'], workflow.get('execution'))
+        workflow['task_context'] = copy.deepcopy(inputs['task_context'])
     if 'completion_policy' in inputs:
         validate_completion_policy(inputs['completion_policy'])
         workflow['completion_policy'] = inputs['completion_policy']
+    if 'knowledge_capture' in inputs:
+        if not modern:
+            raise ValueError('Knowledge capture requires explicit descriptor3 modern choices')
+        workflow['knowledge_capture'] = copy.deepcopy(inputs['knowledge_capture'])
     if 'ci_evidence' in inputs:
         if inputs['ci_evidence'] is None:
             raise ValueError('CI evidence policy must be explicit and non-null')
@@ -188,7 +309,7 @@ def descriptor(inputs, revision):
             raise ValueError('CI retry policy must be explicit and non-null')
         export_contract.structural_retry_policy({'ci_retry_policy': inputs['ci_retry']})
         workflow['ci_retry'] = inputs['ci_retry']
-    return {'schema_version': 2, 'project': {'name': inputs['name'], 'repository': 'https://github.com/' + repo},
+    result = {'schema_version': 3 if modern else 2, 'project': {'name': inputs['name'], 'repository': 'https://github.com/' + repo},
             'standard': {'repository': standard.REPOSITORY, 'revision': revision, 'version': (SOURCE/'VERSION').read_text().strip()},
             'profile': profile, 'adoption': 'draft',
             'workflow': workflow,
@@ -199,12 +320,17 @@ def descriptor(inputs, revision):
                          'authorization': '__EXISTING_AUTHORIZATION__' if env else 'Within the authorized implementation request.',
                          'rollback': '__RECOVERY_PROCEDURE__' if env else 'Review and revert through a linked PR.',
                          'backup': '__DATA_PROTECTION__' if env else 'No runtime data managed by this workflow.'},
-            'completion': PROFILES[profile], 'exceptions': []}
+            'completion': completion, 'exceptions': []}
+    if modern:
+        result['role'] = inputs['role']
+    return result
 
 
 def render(inputs, revision, tracker_root, python=sys.executable):
     if not standard.SHA.fullmatch(revision): raise ValueError('Use an immutable standard revision')
-    data = descriptor(inputs, revision); engine = tracker_checkout(tracker_root, data['tracker']['revision'])
+    data = descriptor(inputs, revision)
+    require_engine_choices(data)
+    engine = tracker_checkout(tracker_root, data['tracker']['revision'])
     with tempfile.TemporaryDirectory(prefix='master-template-') as scratch:
         scratch = Path(scratch); policy = scratch/'policy.json'; policy.write_text(dumps(delivery_policy(data)))
         target = scratch/'project'
@@ -231,6 +357,9 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         if 'ci_retry' in data['workflow']:
             retry = scratch/'ci-retry.json'; retry.write_text(dumps(data['workflow']['ci_retry']))
             command.extend(['--ci-retry-policy', str(retry)])
+        if 'knowledge_capture' in data['workflow']:
+            capture = scratch/'knowledge-capture.json'; capture.write_text(dumps(data['workflow']['knowledge_capture']))
+            command.extend(['--knowledge-capture-policy', str(capture)])
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
         files = {p.relative_to(target).as_posix(): p.read_bytes().decode('utf-8') for p in target.rglob('*') if p.is_file()}
@@ -242,14 +371,19 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export engine lock differs from the trusted compatible pin')
         exported_config = json.loads(files['tracker/config.json'], object_pairs_hook=export_contract.unique)
         export_contract.structural_retry_policy(exported_config)
+        if data['schema_version'] == 3:
+            export_contract.structural_route_policy(exported_config)
+            if 'docs/DIRECT_WORKFLOW.md' not in files:
+                raise ValueError('Pinned Tracker export lacks its exact modern route runbook')
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
             raise ValueError('Tracker export execution policy differs from the explicit project choice')
-        if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
+        if data['workflow'].get('execution', {}).get('schema_version') in (2, 3, 4):
             exported_phases = [v if isinstance(v, str) else v['phase'] for v in exported_config.get('workflow', [])]
             if (exported_config.get('delivery_policy') != delivery_policy(data)
                     or exported_phases != phases(inputs['staging'], data['workflow']['execution'])):
-                raise ValueError('Tracker export batch route differs from the explicit staging/delivery choice')
+                route = data['workflow']['execution'].get('route', 'batch')
+                raise ValueError('Tracker export ' + route + ' route differs from the explicit staging/delivery choice')
         if (('process_instructions' in exported_config) != ('process_instructions' in data['workflow'])
                 or exported_config.get('process_instructions') != data['workflow'].get('process_instructions')):
             raise ValueError('Tracker export process instructions differ from the explicit project choice')
@@ -273,6 +407,9 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export CI retry policy differs from the explicit project choice')
         if 'ci_retry' in data['workflow'] and 'docs/CI_RETRY.md' not in files:
             raise ValueError('Pinned Tracker export lacks the exact CI retry guide')
+        if (('knowledge_capture_policy' in exported_config) != ('knowledge_capture' in data['workflow'])
+                or exported_config.get('knowledge_capture_policy') != data['workflow'].get('knowledge_capture')):
+            raise ValueError('Tracker export knowledge capture differs from the explicit project choice')
     files = separate_export(files)
     export_contract.validate_rendered(files, data)
     files.update(layout_files())
@@ -318,6 +455,8 @@ def write_plan(root, planned, before):
 
 
 def init(root, inputs, revision, tracker_root, python=sys.executable, apply=False):
+    if isinstance(inputs, dict) and inputs.get('role') in ('application-data', 'release-storage'):
+        raise ValueError('Independent resource-board initialization needs its actual producer/registration contract; the descriptive role grants no engineering board')
     files = render(inputs, revision, tracker_root, python)
     files[BASELINE] = baseline(inputs, revision, files.copy())
     collisions = [n for n in files if standard.safe_path(root, n).exists()]
@@ -356,7 +495,56 @@ def merge_file(name, old, new, local):
         return result.stdout
 
 
-def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None, ci_retry_policy=None):
+def upgrade_inputs(recorded, local, selection=None):
+    """Select an explicitly requested modern template without resetting local choices.
+
+    The recorded old template remains the merge ancestor. These are new-template
+    inputs only; genuine old/new/local merging still resolves project exceptions.
+    """
+    if selection is None:
+        return copy.deepcopy(recorded)
+    allowed = {'schema_version', 'role', 'route', 'completion', 'preset', 'staging',
+               'implementation_limit', 'review_limit', 'batch_limit', 'task_context',
+               'completion_policy', 'knowledge_capture'}
+    if not isinstance(selection, dict) or set(selection) - allowed:
+        raise ValueError('Project choices must contain only explicit role/route/Stage/capacity/guard choices; identity and profile are preserved')
+    if 'schema_version' in selection and (type(selection['schema_version']) is not int or selection['schema_version'] != 3):
+        raise ValueError('Explicit upgrade choices require schema_version3')
+    if not isinstance(local, dict) or type(local.get('schema_version')) is not int or local['schema_version'] not in (2, 3):
+        raise ValueError('Audit legacy delivery adoption before selecting modern choices')
+    workflow = local.get('workflow')
+    if not isinstance(workflow, dict) or type(workflow.get('staging')) is not bool:
+        raise ValueError('Preserve an explicit actual local Stage choice')
+    value = copy.deepcopy(recorded)
+    value.update(schema_version=3, profile=local['profile'], completion=local['completion'], staging=workflow['staging'])
+    value.pop('preset', None)
+    execution = workflow.get('execution')
+    if execution is not None:
+        validate_execution_policy(execution)
+        value.update(implementation_limit=execution['implementation_limit'], review_limit=execution['review_limit'])
+        value['route'] = execution['route'] if execution['schema_version'] == 4 else ('direct' if execution['schema_version'] == 1 else 'batch')
+        if 'batch_limit' in execution:
+            value['batch_limit'] = execution['batch_limit']
+    if 'role' in local:
+        value['role'] = local['role']
+    # Preserve actual adopted optional selections, including genuine absence.
+    for field in ('process_instructions', 'ci_evidence', 'ci_retry', 'knowledge_capture', 'completion_policy'):
+        value.pop(field, None)
+        if field in workflow:
+            value[field] = copy.deepcopy(workflow[field])
+    value.pop('task_context', None)
+    if isinstance(workflow.get('task_context'), dict) and workflow['task_context'].get('schema_version') == 2:
+        value['task_context'] = copy.deepcopy(workflow['task_context'])
+    value.update(copy.deepcopy(selection))
+    if value.get('route') == 'direct' and 'batch_limit' not in selection:
+        value.pop('batch_limit', None)
+    # Optional fields are read from the actual local selection on every pass.
+    # Stable new-input order prevents an identical second upgrade from rewriting
+    # only its recorded baseline. The genuine old files/ancestor are untouched.
+    return dict(sorted(project_choices(value).items()))
+
+
+def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None, ci_retry_policy=None, choices=None):
     path = standard.safe_path(root, BASELINE)
     if not path.is_file(): raise ValueError('No recorded template base; audit and adopt manually without inventing a baseline')
     raw = path.read_text(); base = json.loads(raw, object_pairs_hook=export_contract.unique)
@@ -372,26 +560,66 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
         local_descriptor = standard.read_descriptor(root)
         if not isinstance(local_descriptor, dict):
             raise ValueError('Local delivery.json must be an object')
+        version = local_descriptor.get('schema_version')
+        if type(version) is not int or version not in (1, 2, 3):
+            raise ValueError('Local descriptor schema_version must be a supported true integer')
+        require_engine_choices(local_descriptor)
         local_workflow = local_descriptor.get('workflow', {})
         if not isinstance(local_workflow, dict):
             raise ValueError('Local workflow must be an object')
+        if version in (2, 3) and type(local_workflow.get('staging')) is not bool:
+            raise ValueError('Local workflow staging must remain an explicit boolean')
+        if version == 3 and (not isinstance(local_descriptor.get('role'), str) or local_descriptor['role'] not in ROLES):
+            raise ValueError('Unknown local project role')
+        if 'execution' in local_workflow:
+            validate_execution_policy(local_workflow['execution'])
+        if 'task_context' in local_workflow and local_descriptor.get('schema_version') != 3:
+            validate_task_context(local_workflow['task_context'], local_workflow.get('execution'))
+        if 'completion_policy' in local_workflow:
+            validate_completion_policy(local_workflow['completion_policy'])
         if 'ci_retry' in local_workflow:
             export_contract.structural_retry_policy({'ci_retry_policy': local_workflow['ci_retry']})
         local_config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(),
                                   object_pairs_hook=export_contract.unique)
         if not isinstance(local_config, dict):
             raise ValueError('Local Tracker config must be an object')
+        if local_descriptor.get('schema_version') == 3:
+            # Validate every selected guard before Python's three-way equality
+            # can treat a malformed 2.0 as the old integer2 and normalize it.
+            if export_contract.structural_route_policy(local_config) is None:
+                raise ValueError('Modern local Tracker config requires its explicit route bundle')
+        if 'execution_policy' in local_config:
+            validate_execution_policy(local_config['execution_policy'])
+        if 'task_context_policy' in local_config and local_descriptor.get('schema_version') != 3:
+            validate_task_context(local_config['task_context_policy'], local_config.get('execution_policy'))
+        if 'completion_policy' in local_config:
+            validate_completion_policy(local_config['completion_policy'])
         export_contract.structural_retry_policy(local_config)
     except (KeyError, OSError, TypeError, ValueError) as error:
         return {'applied': False, 'conflicts': ['configuration validation'], 'changed': [], 'errors': [str(error)]}
-    new_inputs = dict(base['inputs'])
+    selection = copy.deepcopy(choices)
+    if isinstance(selection, dict) and completion_policy is not None:
+        if 'completion_policy' in selection and dumps(selection['completion_policy']) != dumps(completion_policy):
+            raise ValueError('Conflicting explicit completion selections')
+        selection['completion_policy'] = completion_policy
+    try:
+        new_inputs = upgrade_inputs(base['inputs'], local_descriptor, selection)
+    except (KeyError, TypeError, ValueError) as error:
+        if choices is None:
+            raise
+        return {'applied': False, 'conflicts': ['explicit project choices'], 'changed': [], 'errors': [str(error)]}
     if completion_policy is not None:
         validate_completion_policy(completion_policy)
         new_inputs['completion_policy'] = completion_policy
     if ci_retry_policy is not None:
         export_contract.structural_retry_policy({'ci_retry_policy': ci_retry_policy})
         new_inputs['ci_retry'] = ci_retry_policy
-    new = render(new_inputs, revision, tracker_root, python)
+    try:
+        new = render(new_inputs, revision, tracker_root, python)
+    except (KeyError, TypeError, ValueError) as error:
+        if choices is None:
+            raise
+        return {'applied': False, 'conflicts': ['explicit project choices'], 'changed': [], 'errors': [str(error)]}
     planned, before, conflicts = {}, {}, []
     for name in sorted(old.keys() | new.keys()):
         path = standard.safe_path(root, name)
@@ -409,6 +637,24 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
     if planned[BASELINE] == raw: planned.pop(BASELINE)
     with tempfile.TemporaryDirectory(prefix='master-validate-') as scratch:
         candidate = dict(before, **planned)
+        if choices is not None:
+            try:
+                selected = json.loads(candidate['delivery.json'], object_pairs_hook=export_contract.unique)
+                intended = json.loads(new['delivery.json'], object_pairs_hook=export_contract.unique)
+                # Canonical JSON ignores dictionary insertion order but retains
+                # bool/int/float distinctions. Local target/check exceptions merge
+                # normally; selected choices must stay type-exact.
+                selected_choices = {key: selected[key] for key in ('schema_version', 'role', 'profile', 'completion')}
+                intended_choices = {key: intended[key] for key in selected_choices}
+                fields = ('staging', 'execution', 'task_context', 'completion_policy', 'knowledge_capture')
+                selected_choices['workflow'] = {key: selected['workflow'][key] for key in fields if key in selected['workflow']}
+                intended_choices['workflow'] = {key: intended['workflow'][key] for key in fields if key in intended['workflow']}
+                if (json.dumps(selected_choices, sort_keys=True, allow_nan=False)
+                        != json.dumps(intended_choices, sort_keys=True, allow_nan=False)):
+                    raise ValueError('Local selections differ from the explicit requested modern choices')
+            except (KeyError, TypeError, ValueError) as error:
+                return {'applied': False, 'conflicts': ['explicit project choices'], 'changed': [], 'errors': [str(error)],
+                        'next': 'Reconcile actual choices in both project files explicitly; nothing was overwritten.'}
         if ci_retry_policy is not None:
             try:
                 selected_descriptor = json.loads(candidate['delivery.json'], object_pairs_hook=export_contract.unique)['workflow']['ci_retry']
@@ -433,10 +679,17 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
 
 def inspect(root, expected_revision=None):
     findings = []; data = standard.read_descriptor(root)
-    keys = standard.TOP | {'workflow'}
+    if isinstance(data, dict) and data.get('schema_version') == 3:
+        try:
+            require_engine_choices(data)
+        except (KeyError, TypeError, ValueError, OSError) as error:
+            return [('error', str(error))]
+    modern = isinstance(data, dict) and type(data.get('schema_version')) is int and data['schema_version'] == 3
+    keys = standard.TOP | {'workflow'} | ({'role'} if modern else set())
     if not standard.object_keys(data, keys, 'delivery', findings): return findings
     try:
-        if type(data['schema_version']) is not int or data['schema_version'] != 2: raise ValueError('Expected schema 2')
+        if type(data['schema_version']) is not int or data['schema_version'] not in (2, 3): raise ValueError('Expected schema 2 or 3')
+        if modern and (not isinstance(data['role'], str) or data['role'] not in ROLES): raise ValueError('Unknown project role')
         if data['profile'] not in PROFILES or data['completion'] != PROFILES[data['profile']]: raise ValueError('Profile/completion mismatch')
         for name, fields in (('project', {'name','repository'}), ('standard', {'repository','revision','version'}),
                              ('tracker', {'repository','revision','workspace_id','registration','verification'}),
@@ -450,10 +703,16 @@ def inspect(root, expected_revision=None):
         if isinstance(wf, dict) and 'completion_policy' in wf: workflow_keys.add('completion_policy')
         if isinstance(wf, dict) and 'ci_evidence' in wf: workflow_keys.add('ci_evidence')
         if isinstance(wf, dict) and 'ci_retry' in wf: workflow_keys.add('ci_retry')
+        if modern and isinstance(wf, dict) and 'knowledge_capture' in wf: workflow_keys.add('knowledge_capture')
         if not standard.object_keys(wf, workflow_keys, 'workflow', findings): return findings
+        if modern:
+            if not isinstance(wf.get('execution'), dict) or type(wf['execution'].get('schema_version')) is not int or wf['execution']['schema_version'] != 4:
+                raise ValueError('Descriptor3 requires explicit execution4')
+        elif isinstance(wf.get('execution'), dict) and wf['execution'].get('schema_version') == 4:
+            raise ValueError('Execution4 requires descriptor3 with an explicit role')
         if 'execution' in wf: validate_execution_policy(wf['execution'])
         if 'process_instructions' in wf: validate_process_instructions(wf['process_instructions'])
-        if 'task_context' in wf: validate_task_context(wf['task_context'], wf.get('execution'))
+        if 'task_context' in wf and not modern: validate_task_context(wf['task_context'], wf.get('execution'))
         if 'completion_policy' in wf: validate_completion_policy(wf['completion_policy'])
         if 'ci_evidence' in wf:
             if wf['ci_evidence'] is None: raise ValueError('CI evidence policy must be explicit and non-null')
@@ -474,6 +733,8 @@ def inspect(root, expected_revision=None):
         if data['tracker']['repository'] != compat['tracker_repository'] or data['tracker']['revision'] != compat['tracker_revision']: raise ValueError('Tracker pin is incompatible with this standard')
         config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(), object_pairs_hook=export_contract.unique)
         export_contract.structural_retry_policy(config)
+        if modern:
+            export_contract.structural_route_policy(config)
         lock = json.loads(standard.safe_path(root, 'tracker/engine.json').read_text(), object_pairs_hook=export_contract.unique)
         if lock != {'repository': compat['tracker_repository'], 'revision': compat['tracker_revision']}: raise ValueError('Tracker client pin differs from descriptor')
         export_contract.validate_root(root, data)
@@ -499,6 +760,9 @@ def inspect(root, expected_revision=None):
         if (('ci_retry_policy' in config) != ('ci_retry' in wf)
                 or config.get('ci_retry_policy') != wf.get('ci_retry')):
             raise ValueError('Tracker CI retry policy differs from delivery.json; synchronize both in this PR')
+        if (('knowledge_capture_policy' in config) != ('knowledge_capture' in wf)
+                or config.get('knowledge_capture_policy') != wf.get('knowledge_capture')):
+            raise ValueError('Tracker knowledge capture differs from delivery.json; synchronize both in this PR')
         actual_phases = [v if isinstance(v,str) else v['phase'] for v in config['workflow']]
         if actual_phases != phases(wf['staging'], wf.get('execution')): raise ValueError('Tracker stages differ from the adopted workflow')
         checks = wf['required_checks']
@@ -515,6 +779,8 @@ def inspect(root, expected_revision=None):
             required.add('docs/repository/CI_REUSE.md')
         if 'ci_retry' in wf:
             required.add('docs/repository/CI_RETRY.md')
+        if data['schema_version'] == 3:
+            required.add('docs/repository/DIRECT_WORKFLOW.md')
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)

@@ -23,17 +23,20 @@ facts. The project always follows its actually adopted immutable pair.
 
 The primary AGENTS file routes an agent to local repository rules, product context,
 operational safeguards and machine settings. The local Tracker guide supplies the
-selected legacy/v1/batch-v2/batch-v3 commands, actual reservation topology, optional
+selected legacy/v1/batch-v2/batch-v3 or explicit modern direct/batch commands,
+actual reservation topology, optional
 Stage and completion contract. It is generated from the exact selected engine and
 is usable without fetching a latest Master branch at runtime.
 
 Common Master instructions retain the normative guarantees and selected flow;
 they do not independently redefine every Tracker command or lane transition.
 References to another supported route are explicitly reference material, never an
-implicit policy change. New direct-route guarantees wait for Task07's actual
-versioned support; current legacy routing is not relabelled modern direct work.
+implicit policy change. Modern direct-route guarantees require Task07's actual
+versioned provider and adopted bundle; legacy routing is not relabelled modern work.
 
-A source PR under adopted execution has one task. Frozen batch integration and
+A source engineering PR under adopted execution has one task. Explicit ordinary
+capture uses one actual operation with no Issue alias, fake dependency or release
+member; only its identical already adopted mandate permits that route. Frozen batch integration and
 promotion preserve their exact complete member set and batch identity. Legacy
 multi-task support retains its existing semantics. Final admission uses the
 supported check-merge equivalent, which includes linkage; check-pr remains useful
@@ -51,6 +54,10 @@ batch-v2/v3, Stage on/off and relevant delivery profiles. Require consistent sel
 route, review limits, source identity and promotion membership, exact helper/guide
 closure, Python floors and preserved local customizations. A template string test
 alone cannot establish what a real consumer receives.
+Modern support adds direct/batch4 and explicitly selected task/capture source
+fixtures with both Stage choices, exact canonical policy mirroring and genuine
+old-source upgrade ancestry. Tracker owns the portable behavior fixture/runner;
+Master consumes it without implementing another transition or classifier.
 
 Tracker source/export support precedes the compatible Master pin. Independently
 review and publish immutable compatible increments, verify the actual reader, then

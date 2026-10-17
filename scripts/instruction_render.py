@@ -6,8 +6,12 @@ def selected(data):
     execution = workflow.get('execution')
     stage = workflow['staging']
     version = execution['schema_version'] if execution else None
-    if version not in (None, 1, 2, 3):
+    if version not in (None, 1, 2, 3, 4):
         raise ValueError('Unsupported selected instruction route')
+    direct = version == 4 and execution.get('route') == 'direct'
+    batch = version in (2, 3) or version == 4 and execution.get('route') == 'batch'
+    if version == 4 and not (direct or batch):
+        raise ValueError('Modern instructions require an explicit supported route')
 
     if version is None:
         route = ('This project retains the legacy single implementation slot and its '
@@ -21,6 +25,18 @@ def selected(data):
                  'After author handoff, acquire the genuine review lane before '
                  'starting independent review and retain it through the selected '
                  'integration and admitted main merge. Further tasks wait for its explicit release.')
+    elif direct:
+        route = (f"This project selects execution schema 4, direct integration, "
+                 f"{execution['implementation_limit']} implementation slots and "
+                 f"{execution['review_limit']} independently owned source-review slots. "
+                 'Each engineering source has one genuine task. It does not enter '
+                 'Approved or a synthetic batch. The actual independent source '
+                 'Reviewer retains its source lane and the linked single integration '
+                 'reservation through admitted main merge, exact durable accepted-scope '
+                 'receipt, task-status reconciliation and archive/release. Return, '
+                 'stop, takeover and crash recovery retain the exact source binding; '
+                 'a public subject or digest never replaces a secret ownership claim. '
+                 'Wait for current integration, intake, Stage and maintenance owners.')
     else:
         topology = ('one shared source/combined-review lane and a separate Coordinator '
                     'batch reservation' if version == 2 else
@@ -39,7 +55,7 @@ def selected(data):
                  'frozen member set and batch identity. Ship-all snapshots current '
                  'Approved intake, leaving later arrivals for another intake.')
     if stage:
-        if version in (2, 3):
+        if batch:
             route += (' Stage is enabled: the reserved batch goes to permanent stage, '
                       'its exact configured target/tree is verified, then the unchanged '
                       'batch is promoted to permanent main. Ordinary sources are approval-only.')
@@ -50,16 +66,17 @@ def selected(data):
     else:
         route += (' Stage is disabled: the reserved independently reviewed batch is '
                   'admitted to main using the pinned batch direction; ordinary sources '
-                  'remain approval-only.' if version in (2, 3) else
+                  'remain approval-only.' if batch else
                   ' Stage is disabled: reviewed working branch -> main. There is no Stage column.')
 
     context = ''
     if 'task_context' in workflow:
+        current_source = 'reviewed source' if version == 4 else 'Approved source'
         context = ('## Adopted task context\n\n'
                    'Use the exact [local task-context guide](TASK_CONTEXT.md) before '
                    'start/resume and for the strict terminal journal. Assess current '
-                   'requirements, main and semantic readiness. An unchanged Approved '
-                   'source may retain approval after main advances only through the '
+                   'requirements, main and semantic readiness. An unchanged ' + current_source +
+                   ' may retain approval after main advances only through the '
                    'adopted owned independent compatibility review. New scope or actual '
                    'conflicts return to a claimed author; disjoint paths alone prove '
                    'no semantic compatibility.')
@@ -106,7 +123,7 @@ def selected(data):
                    'must be labelled as such rather than runtime acceptance.')
     else:
         target += ' Stage is explicitly disabled and does not require a Stage receipt.'
-    if version in (2, 3) and completion != 'reviewed-merge':
+    if batch and completion != 'reviewed-merge':
         target += (' An authorized eligible runtime/package integration uses the '
                    'pinned batch delivery continuation by default, unless explicitly '
                    'deferred. Source approval alone authorizes no delivery.')
@@ -121,6 +138,11 @@ def selected(data):
                   'unfinished, unknown old scope stays unverified, and explicit historical '
                   'acceptance never invents current delivery. Follow the exact separate '
                   'selection/activation order when task context is also new.')
+        if version == 4:
+            scoped += (' Modern execution/context selection requires owned idle '
+                       'outer7 adoption over the actual known completion5 or retry6 '
+                       'base. Preserve retry anchors, budgets and unresolved intents; '
+                       'never strip a state fence or clear another owner for an upgrade.')
     retry = ''
     if 'ci_retry' in workflow:
         retry = ('## Adopted CI retry policy\n\n'
@@ -134,9 +156,35 @@ def selected(data):
                  'it. An uncertain POST remains held until supported reconciliation; '
                  'elapsed time never authorizes another request. Read-only CI '
                  'gates gain no write permission or release authority.')
+    source = ('Create a real Issue before implementation. Ideas remain Idea; requested tasks\n'
+              'start Backlog. Planning does not claim code capacity. When development is\n'
+              'requested, read the entire Description and Specifications and use the pinned\n'
+              "Tracker's `work` command to claim the actual available slot and verify In Progress.\n"
+              'Follow its supported branch/actor/session rules and any host-required prefix.\n'
+              'An older task needs current readiness assessment, not routine owner reapproval.')
+    pr_reference = ('Prepare a linked PR after implementation and self-checks. Preserve the exact\n'
+                    'machine-readable `Tracker issues:` field and source-versus-integration identity\n'
+                    "from this project's PR template. No automatic Issue-closing keywords.")
+    if 'knowledge_capture' in workflow:
+        source += ('\n\nOnly ordinary capture under the identical already adopted explicit '
+                   'knowledge policy and real approved mandate uses a genuine capture '
+                   'operation instead of an Issue. It consumes normal Worker/review/integration '
+                   'capacity, complete immutable-diff classification and independent semantic '
+                   'attestation. Eligible regular UTF-8 .md/.txt notes cannot alter governance, '
+                   'structure, rules, configuration or automation. Mixed, unsafe, unknown or '
+                   'outside-mandate changes use a real engineering task. Notes cannot introduce '
+                   'or broaden their own mandate. Keep the exact operation, owner and recovery '
+                   'history; never create a fake task, dependency or release member.')
+        pr_reference = ('Prepare the actual source PR after self-checks. Preserve the exact '
+                        'task, capture or frozen-batch identity from the pinned selected PR '
+                        'template. Capture uses its genuine operation field without an Issue '
+                        'alias; ordinary engineering keeps its real task. No automatic '
+                        'Issue-closing keywords. A capture receipt grants no package, runtime '
+                        'or publication proof. The selected Stage choice and full checks remain.')
     return {'__SELECTED_WORKFLOW__': route, '__TASK_CONTEXT_GUIDANCE__': context,
             '__PROCESS_GUIDANCE__': process, '__SELECTED_DELIVERY__': target,
-            '__COMPLETION_GUIDANCE__': scoped, '__CI_RETRY_GUIDANCE__': retry}
+            '__COMPLETION_GUIDANCE__': scoped, '__CI_RETRY_GUIDANCE__': retry,
+            '__SOURCE_GUIDANCE__': source, '__PR_REFERENCE_GUIDANCE__': pr_reference}
 
 
 def render(text, data):
