@@ -88,10 +88,12 @@ Send once with transport retries disabled. Accepted but not yet visible work and
 lost response/crash/ambiguous CAS or POST remain held. A restart uses GET-only
 reconciliation; one empty response, timeout or elapsed age cannot free budget.
 An unattributed external attempt cannot automatically prove whether an uncertain
-own request also took effect. Only a supported proven outcome or explicit
-recorded resolution can settle it. A method-specific definitive no-side-effect
-rejection still retains any applicable permission/account blocker and reconciles
-outside execution; it is not permission to retry blindly.
+own request also took effect. Only an attributable native outcome or a
+method-specific proven no-side-effect outcome with fresh native reconciliation
+can settle it. Human instructions, permission and resolution text cannot clear
+an uncertain dispatch. A definitive no-side-effect rejection still retains any
+applicable permission/account blocker and reconciles outside execution; it is
+not permission to retry blindly.
 
 The native API has no documented request idempotency key for reruns. A crash
 between the winning barrier and POST can remain indistinguishable from a lost

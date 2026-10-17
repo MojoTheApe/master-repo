@@ -240,7 +240,8 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export needs a valid immutable engine lock') from error
         if exported_lock != {'repository': data['tracker']['repository'], 'revision': data['tracker']['revision']}:
             raise ValueError('Tracker export engine lock differs from the trusted compatible pin')
-        exported_config = json.loads(files['tracker/config.json'])
+        exported_config = json.loads(files['tracker/config.json'], object_pairs_hook=export_contract.unique)
+        export_contract.structural_retry_policy(exported_config)
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
             raise ValueError('Tracker export execution policy differs from the explicit project choice')
@@ -344,7 +345,9 @@ def merge_file(name, old, new, local):
     if local == old: return new
     if new == old or local == new: return local
     if None in (old, new, local): raise ValueError('Concurrent file addition/removal')
-    if name.endswith('.json'): return dumps(merge_json(json.loads(old), json.loads(new), json.loads(local)))
+    if name.endswith('.json'):
+        values = [json.loads(value, object_pairs_hook=export_contract.unique) for value in (old, new, local)]
+        return dumps(merge_json(*values))
     with tempfile.TemporaryDirectory(prefix='master-merge-') as scratch:
         paths = [Path(scratch)/x for x in ('local', 'old', 'new')]
         for p, content in zip(paths, (local, old, new)): p.write_text(content)
@@ -356,12 +359,25 @@ def merge_file(name, old, new, local):
 def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None, ci_retry_policy=None):
     path = standard.safe_path(root, BASELINE)
     if not path.is_file(): raise ValueError('No recorded template base; audit and adopt manually without inventing a baseline')
-    raw = path.read_text(); base = json.loads(raw)
+    raw = path.read_text(); base = json.loads(raw, object_pairs_hook=export_contract.unique)
     if base.get('schema_version') != 1 or not isinstance(base.get('files'), dict): raise ValueError('Invalid template baseline')
     old = base['files']
     if LAYOUT not in old:
         return {'applied': False, 'conflicts': ['legacy mixed layout'], 'changed': [],
                 'next': 'Audit and separate repository/system/runtime documents in a project PR; nothing was overwritten.'}
+    # Validate local selection before three-way equality can mistake booleans for
+    # integers and silently replace an invalid policy. Old pins remain valid;
+    # this checks only the optional retry structure, not today's whole standard.
+    try:
+        local_descriptor = standard.read_descriptor(root)
+        local_workflow = local_descriptor.get('workflow', {})
+        if 'ci_retry' in local_workflow:
+            export_contract.structural_retry_policy({'ci_retry_policy': local_workflow['ci_retry']})
+        local_config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(),
+                                  object_pairs_hook=export_contract.unique)
+        export_contract.structural_retry_policy(local_config)
+    except (KeyError, TypeError, ValueError) as error:
+        return {'applied': False, 'conflicts': ['configuration validation'], 'changed': [], 'errors': [str(error)]}
     new_inputs = dict(base['inputs'])
     if completion_policy is not None:
         validate_completion_policy(completion_policy)
@@ -389,8 +405,10 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
         candidate = dict(before, **planned)
         if ci_retry_policy is not None:
             try:
-                selected_descriptor = json.loads(candidate['delivery.json'])['workflow']['ci_retry']
-                selected_config = json.loads(candidate['tracker/config.json'])['ci_retry_policy']
+                selected_descriptor = json.loads(candidate['delivery.json'], object_pairs_hook=export_contract.unique)['workflow']['ci_retry']
+                selected_config = json.loads(candidate['tracker/config.json'], object_pairs_hook=export_contract.unique)['ci_retry_policy']
+                export_contract.structural_retry_policy({'ci_retry_policy': selected_descriptor})
+                export_contract.structural_retry_policy({'ci_retry_policy': selected_config})
                 selection_matches = selected_descriptor == selected_config == ci_retry_policy
             except (KeyError, TypeError, ValueError):
                 selection_matches = False
@@ -448,8 +466,9 @@ def inspect(root, expected_revision=None):
                 or not re.fullmatch(r'\d+\.\d+\.\d+', data['standard']['version'])): raise ValueError('Invalid standard pin')
         if expected_revision and (expected_revision != revision or data['standard']['version'] != (SOURCE/'VERSION').read_text().strip()): raise ValueError('Running standard differs from descriptor pin/version')
         if data['tracker']['repository'] != compat['tracker_repository'] or data['tracker']['revision'] != compat['tracker_revision']: raise ValueError('Tracker pin is incompatible with this standard')
-        config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text())
-        lock = json.loads(standard.safe_path(root, 'tracker/engine.json').read_text())
+        config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(), object_pairs_hook=export_contract.unique)
+        export_contract.structural_retry_policy(config)
+        lock = json.loads(standard.safe_path(root, 'tracker/engine.json').read_text(), object_pairs_hook=export_contract.unique)
         if lock != {'repository': compat['tracker_repository'], 'revision': compat['tracker_revision']}: raise ValueError('Tracker client pin differs from descriptor')
         export_contract.validate_root(root, data)
         if not re.fullmatch(r'[A-Z][A-Z0-9]+', config['project'].get('id_prefix', '')): raise ValueError('Tracker prefix is invalid')

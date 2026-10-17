@@ -8,6 +8,7 @@ import re
 import subprocess
 import sys
 from urllib.parse import urlparse
+import export_contract
 
 SOURCE = Path(__file__).resolve().parents[1]
 REPOSITORY = "https://github.com/MojoTheApe/master-repo"
@@ -74,7 +75,7 @@ def read_descriptor(root):
     path = safe_path(root, "delivery.json")
     if path.stat().st_size > 1024 * 1024:
         raise ValueError("delivery.json exceeds the 1 MiB size limit")
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=export_contract.unique)
 
 
 def inspect(root, expected_revision=None):

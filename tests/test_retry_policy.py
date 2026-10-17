@@ -102,6 +102,52 @@ class RetrySelection(unittest.TestCase):
                     project.init(self.root, dict(INPUTS, ci_retry=value), OLD, 'unused', apply=True)
                 self.assertFalse(self.root.exists())
 
+    def test_malformed_installed_mirror_is_rejected_before_upgrade_can_replace_it(self):
+        original_only = {'schema_version': 1, 'max_executions': 1}
+        with mock.patch.object(project, 'render', side_effect=files):
+            project.init(self.root, dict(INPUTS, ci_retry=original_only), OLD, 'unused', apply=True)
+            valid = self.read('tracker/config.json')
+            for field, value in (('schema_version', True), ('schema_version', 1.0),
+                                 ('max_executions', True), ('max_executions', 1.0)):
+                with self.subTest(field=field, value=value):
+                    config = dict(valid, ci_retry_policy=dict(original_only, **{field:value}))
+                    (self.root/'tracker/config.json').write_text(project.dumps(config))
+                    self.assertTrue(any('CI retry policy needs' in m for k,m in project.inspect(self.root) if k=='error'))
+                    before = self.snapshot()
+                    for selected in (None, original_only):
+                        result = project.upgrade(self.root, NEW, 'unused', apply=True, ci_retry_policy=selected)
+                        self.assertFalse(result['applied']); self.assertEqual(before, self.snapshot())
+
+    def test_duplicate_local_policy_keys_block_inspection_and_upgrade_without_writes(self):
+        with mock.patch.object(project, 'render', side_effect=files):
+            project.init(self.root, dict(INPUTS, ci_retry=POLICY), OLD, 'unused', apply=True)
+            for name in ('tracker/config.json', 'delivery.json'):
+                path = self.root/name; original = path.read_text()
+                path.write_text(original.replace('"max_executions": 2', '"max_executions": 1, "max_executions": 2'))
+                before = self.snapshot()
+                if name == 'delivery.json':
+                    with self.assertRaisesRegex(ValueError, 'Duplicate'):
+                        project.inspect(self.root)
+                else:
+                    self.assertTrue(any('Duplicate' in m for k,m in project.inspect(self.root) if k=='error'))
+                result = project.upgrade(self.root, NEW, 'unused', apply=True, ci_retry_policy=POLICY)
+                self.assertFalse(result['applied']); self.assertEqual(before, self.snapshot())
+                path.write_text(original)
+
+    def test_malformed_new_mirror_cannot_pass_explicit_upgrade_postcondition(self):
+        original_only = {'schema_version': 1, 'max_executions': 1}
+        with mock.patch.object(project, 'render', side_effect=files):
+            project.init(self.root, dict(INPUTS, ci_retry=original_only), OLD, 'unused', apply=True)
+        def malformed(*args):
+            rendered = files(*args)
+            rendered['tracker/config.json'] = rendered['tracker/config.json'].replace('"max_executions": 1', '"max_executions": true')
+            return rendered
+        before = self.snapshot()
+        with mock.patch.object(project, 'render', side_effect=malformed):
+            result = project.upgrade(self.root, NEW, 'unused', apply=True, ci_retry_policy=original_only)
+        self.assertFalse(result['applied']); self.assertIn('explicit CI retry policy selection', result['conflicts'])
+        self.assertEqual(before, self.snapshot())
+
     def test_cli_file_selection_is_explicit_and_bad_json_never_starts_work(self):
         selected = self.root.parent/'retry.json'; selected.write_text(json.dumps(POLICY))
         init = ['init', '--root', str(self.root), '--profile', 'local', '--repository', 'owner/example',
@@ -126,25 +172,30 @@ class RetrySelection(unittest.TestCase):
 
     def test_real_renderer_refuses_dropped_inherited_or_missing_guide_exports(self):
         engine = self.root.parent/'engine'; engine.mkdir()
-        selected = dict(INPUTS, ci_retry=POLICY)
-        for failure in ('dropped', 'inherited', 'missing-guide', 'changed-limit'):
+        selected = dict(INPUTS, ci_retry={'schema_version':1, 'max_executions':1})
+        for failure in ('dropped', 'inherited', 'missing-guide', 'changed-limit', 'boolean', 'float', 'duplicate'):
             def exporter(command, **kwargs):
                 target = Path(command[command.index('--output')+1])
                 self.assertEqual('--ci-retry-policy' in command, failure!='inherited')
-                config = {} if failure=='dropped' else {'ci_retry_policy': dict(POLICY)}
-                if failure=='changed-limit': config['ci_retry_policy']['max_executions'] = 1
+                config = {} if failure=='dropped' else {'ci_retry_policy': dict(selected['ci_retry'])}
+                if failure=='changed-limit': config['ci_retry_policy']['max_executions'] = 2
+                if failure=='boolean': config['ci_retry_policy']['max_executions'] = True
+                if failure=='float': config['ci_retry_policy']['schema_version'] = 1.0
                 exported = portable_files()
                 exported.update({'tracker/config.json':project.dumps(config),
                     'docs/TRACKER_AGENT_WORKFLOW.md':'Exact guide\n',
                     '.github/pull_request_template.md':'Tracker issues: EX-12\n'})
+                if failure=='duplicate':
+                    exported['tracker/config.json'] = exported['tracker/config.json'].replace('"max_executions": 1', '"max_executions": 2, "max_executions": 1')
                 if failure!='missing-guide': exported['docs/CI_RETRY.md'] = 'Exact retry guide\n'
                 for name, text in exported.items():
                     path=target/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(text.encode())
                 return mock.Mock(returncode=0,stdout='',stderr='')
             with self.subTest(failure=failure), mock.patch.object(project,'tracker_checkout',return_value=engine), \
                     mock.patch.object(project.subprocess,'run',side_effect=exporter):
-                with self.assertRaisesRegex(ValueError,'CI retry policy differs|exact CI retry guide'):
-                    REAL_RENDER(INPUTS if failure=='inherited' else selected, NEW, engine)
+                with self.assertRaisesRegex(ValueError,'CI retry policy differs|exact CI retry guide|CI retry policy needs|Duplicate'):
+                    project.init(self.root, INPUTS if failure=='inherited' else selected, NEW, engine, apply=True)
+                self.assertFalse(self.root.exists())
 
 
 if __name__ == '__main__': unittest.main()
