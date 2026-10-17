@@ -1,5 +1,12 @@
 # Master Repo system
 
+MR-51 documents [actual capacity](../capacity.md) for the existing legacy and
+execution1/2/3 topologies. Tracker owns the reservation projection and UI; Master
+explains held versus active work, pool limits, separate review waiting/batch
+members, scoped admission and unknown freshness. Its canonical navigation keeps
+that distinction without adding another counter or permission engine. The modern
+direct-route extension remains Task07 work; this slice changes no project choices.
+
 MR-38 / TT-152 add explicit `workflow.ci_retry` selection and exact mirroring,
 using Tracker's hash-verified canonical retry structural snapshot. The
 [bounded retry contract](../ci-retry.md) keeps durable budgets, attested diagnosis

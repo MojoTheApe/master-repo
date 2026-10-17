@@ -17,6 +17,17 @@ the real review lane through direct main completion, including in package
 projects, without stage or package delivery. Stage/delivery requirements in this
 guide apply to other work.
 
+## Read actual capacity
+
+Legacy retains one shared slot; it does not acquire the parallel pools from this
+guide. Execution v1 counts real Worker claims and its one shared review/integration
+lane. Pending handoff, returning, fixing and uncertain writes retain their actual
+reservations until supported release. Activity, task labels and filtered views do
+not create or release slots. A held fixing lane is not necessarily actively
+reviewing. Show review waiting separately; an observed free number never replaces
+fresh dependency, policy, ownership and CAS admission. Missing or stale authority
+means current capacity is unknown, even when a last saved count remains visible.
+
 ## Coordinate several requested tasks
 
 1. Remain the Coordinator in the current conversation. Read each complete task,

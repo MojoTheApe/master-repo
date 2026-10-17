@@ -1,5 +1,16 @@
 # Repository process history
 
+## 2026-10-17 — MR-51 / TT-144 truthful capacity
+
+Document durable project-wide occupancy for existing legacy/v1/v2/v3 modes,
+including retained fixing/pending claims, v2 shared review and v3 separate source
+review/integration. Keep queue length and batch member count separate. Explain
+that numeric free capacity is an observation and actual operation-specific
+admission/freshness remains authoritative. Update canonical skill navigation in
+the same change. The Tracker implementation, compatible exact pin/publication
+and service observation are separate verified steps; no limit or state migration
+is performed by this standard change. Task07 later adds its actual direct topology.
+
 ## 2026-10-17 — MR-38 / TT-152 bounded retry and CI accounting
 
 Select CI retry only through an explicit mirrored version1 policy and the exact

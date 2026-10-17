@@ -1,5 +1,17 @@
 # Versioning and safe upgrades
 
+## Existing-topology capacity slice
+
+Master1.4.0 adds the [capacity contract](capacity.md) and canonical operational
+navigation for Tracker3.6.0 current-topology projection. These are source versions
+until the exact reviewed merges, actual-main checks, stable releases and compatible
+pair are verified. Select the actual published engine through the maintained
+contract refresh; never substitute an overridden or dirty preparation for the
+clean final pair. Publish Tracker first, then the checked exact Master pin and
+canonical skill mirror. Installed reader/live reservation comparison remains a
+separate Task09 outcome, and its later modern-direct extension remains Task07.
+Consumer settings, capacities, state, Stage and delivery targets are preserved.
+
 ## Portable baseline and retry/accounting publication
 
 Master 1.2.0 and Tracker 3.4.0 are published portable-contract releases at
