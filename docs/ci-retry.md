@@ -45,10 +45,22 @@ timeouts, platform/installer requirements and current admission. Public portable
 CI gates retain their own-repository read token and gain no dispatch permission.
 
 Unresolved account/infrastructure/configuration causes persist across unrelated
-heads, policy edits or successes in a different affected environment. A verified
-relevant fix or an explicitly authorized recorded resolution may clear the
-blocker; keep its original evidence and history. A successful execution does not
-replenish the unchanged episode's budget. Unknown cause/history stays conservative.
+heads, policy edits or successes in a different affected environment. Resolve a
+cause only through the maintained relevant-change or attributable native-success
+procedure, preserving its original evidence and history. A successful execution
+does not replenish the unchanged episode's budget. Unknown cause/history stays
+conservative.
+
+A separately operator-attested specific human instruction can grant one supported
+verification rerun within the remaining budget. Bind its actual source, time,
+message/decision digests and exact action to the repository, episode, current
+strict native identity and named unresolved cause. The authenticated attestor
+records the instruction; this does not machine-certify a human decision. A general
+commission or permission to continue working is insufficient. Consume the grant
+once, retain the unresolved cause and never refill budget, clear an uncertain
+dispatch or authorize product operations. Keep raw instruction/diagnosis text and
+private source references outside Git: durable state can be publicly readable, so
+persist only the allowed redacted facts and digests.
 
 ## Two identities and one durable budget
 
@@ -94,6 +106,12 @@ can settle it. Human instructions, permission and resolution text cannot clear
 an uncertain dispatch. A definitive no-side-effect rejection still retains any
 applicable permission/account blocker and reconciles outside execution; it is
 not permission to retry blindly.
+
+The current native POST adapter treats every exception, including a received403,
+as unknown; HTTP status alone supplies no proven no-effect outcome. Its supported
+cancellation is limited to a stopped actual owner's reservation before the
+dispatch barrier, with fresh native reconciliation. Crossing an ambiguous barrier
+remains held.
 
 The native API has no documented request idempotency key for reruns. A crash
 between the winning barrier and POST can remain indistinguishable from a lost
