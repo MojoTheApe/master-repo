@@ -14,6 +14,9 @@ existing behavior; missing or malformed fields do not acquire defaults. Master
 uses Tracker's exact structural snapshot rather than maintaining another schema.
 Use `init|upgrade --ci-retry-policy FILE` for explicit selection. Exporting or
 installing files neither activates state nor starts a retry.
+An ordinary upgrade preserves local choices. If three-way merging would retain a
+different local policy from the explicitly requested file, the upgrade stops
+without writes; reconcile descriptor and Tracker configuration in the project PR.
 
 Read the exact pinned engine's generated CI_RETRY.md for maintained commands,
 policy/state adoption, diagnosis, reconciliation and recovery. Supporting readers

@@ -73,6 +73,26 @@ class RetrySelection(unittest.TestCase):
             (self.root/'docs/repository/CI_RETRY.md').unlink()
             self.assertTrue(any('Missing docs/repository/CI_RETRY.md' in m for k,m in project.inspect(self.root) if k=='error'))
 
+    def test_explicit_selection_cannot_be_silently_ignored_by_retained_local_policy(self):
+        original_only = {'schema_version': 1, 'max_executions': 1}
+        with mock.patch.object(project, 'render', side_effect=files):
+            project.init(self.root, dict(INPUTS, ci_retry=POLICY), OLD, 'unused', apply=True)
+            descriptor = self.read('delivery.json'); descriptor['workflow']['ci_retry'] = original_only
+            config = self.read('tracker/config.json'); config['ci_retry_policy'] = original_only
+            (self.root/'delivery.json').write_text(project.dumps(descriptor))
+            (self.root/'tracker/config.json').write_text(project.dumps(config))
+            before = self.snapshot()
+            selected = project.upgrade(self.root, NEW, 'unused', apply=True, ci_retry_policy=POLICY)
+            self.assertFalse(selected['applied']); self.assertIn('explicit CI retry policy selection', selected['conflicts'])
+            self.assertEqual(before, self.snapshot())
+            ordinary = project.upgrade(self.root, NEW, 'unused', apply=True)
+            self.assertTrue(ordinary['applied'], ordinary)
+            self.assertEqual(self.read('delivery.json')['workflow']['ci_retry'], original_only)
+            self.assertEqual(self.read('tracker/config.json')['ci_retry_policy'], original_only)
+            matched = project.upgrade(self.root, NEW, 'unused', apply=True, ci_retry_policy=original_only)
+            self.assertTrue(matched['applied'], matched)
+            self.assertEqual(self.read(project.BASELINE)['inputs']['ci_retry'], original_only)
+
     def test_invalid_selection_fails_before_export_or_consumer_write(self):
         for value in (None, {}, {'schema_version': 1, 'max_executions': 3},
                       {'schema_version': True, 'max_executions': 2}):

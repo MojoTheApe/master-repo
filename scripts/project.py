@@ -387,6 +387,16 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
     if planned[BASELINE] == raw: planned.pop(BASELINE)
     with tempfile.TemporaryDirectory(prefix='master-validate-') as scratch:
         candidate = dict(before, **planned)
+        if ci_retry_policy is not None:
+            try:
+                selected_descriptor = json.loads(candidate['delivery.json'])['workflow']['ci_retry']
+                selected_config = json.loads(candidate['tracker/config.json'])['ci_retry_policy']
+                selection_matches = selected_descriptor == selected_config == ci_retry_policy
+            except (KeyError, TypeError, ValueError):
+                selection_matches = False
+            if not selection_matches:
+                return {'applied': False, 'conflicts': ['explicit CI retry policy selection'], 'changed': [],
+                        'next': 'Requested retry policy differs from retained local settings; reconcile both files explicitly in this project PR. Nothing was overwritten.'}
         for name, text in candidate.items():
             if text is not None:
                 path = standard.safe_path(scratch, name); path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode('utf-8'))
