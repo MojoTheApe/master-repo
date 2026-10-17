@@ -294,15 +294,22 @@ class UpgradeChoices(unittest.TestCase):
         invalid = [('task_context_policy', {'schema_version': 2.0}),
                    ('task_context_policy', {'schema_version': True}),
                    ('task_context_policy', None),
+                   ('task_context_policy', project.MISSING),
                    ('completion_policy', {'schema_version': 1.0}),
                    ('completion_policy', None),
+                   ('completion_policy', project.MISSING),
+                   ('execution_policy', project.MISSING),
                    ('knowledge_capture_policy', None)]
         for field, value in invalid:
             with self.subTest(field=field, value=value), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 data = project.descriptor(choices(), OLD)
                 project.require_engine_choices(data)
-                config = project.route_config(data); config[field] = value
+                config = project.route_config(data)
+                if value is project.MISSING:
+                    config.pop(field, None)
+                else:
+                    config[field] = value
                 # Negative configuration only. No simulated modern export/helper
                 # or positive consumer/lifecycle claim is made by this fixture.
                 for name, text in {'delivery.json': project.dumps(data),

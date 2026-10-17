@@ -232,7 +232,10 @@ def require_engine_choices(data):
             export_contract.selected(record, data)
         except ValueError as error:
             raise ValueError('Descriptor3 requires a released canonical route companion: ' + str(error)) from None
-        return export_contract.structural_route_policy(route_config(data))
+        bundle = export_contract.structural_route_policy(route_config(data))
+        if bundle is None:
+            raise ValueError('Descriptor3 requires the explicit canonical modern route bundle')
+        return bundle
 
 
 def route_config(data):
@@ -571,7 +574,8 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
         if local_descriptor.get('schema_version') == 3:
             # Validate every selected guard before Python's three-way equality
             # can treat a malformed 2.0 as the old integer2 and normalize it.
-            export_contract.structural_route_policy(local_config)
+            if export_contract.structural_route_policy(local_config) is None:
+                raise ValueError('Modern local Tracker config requires its explicit route bundle')
         if 'execution_policy' in local_config:
             validate_execution_policy(local_config['execution_policy'])
         if 'task_context_policy' in local_config and local_descriptor.get('schema_version') != 3:
