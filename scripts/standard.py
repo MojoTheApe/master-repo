@@ -240,7 +240,7 @@ def main(argv=None):
     stage = init.add_mutually_exclusive_group()
     stage.add_argument('--staging', dest='staging', action='store_true', default=None)
     stage.add_argument('--no-staging', dest='staging', action='store_false')
-    init.add_argument('--role', help='Explicit descriptor3 repository role; requires the canonical route companion before export')
+    init.add_argument('--role', help='Explicit descriptor3 repository role; requires a compatible canonical route provider')
     init.add_argument('--route', choices=('direct', 'batch'), help='Explicit descriptor3 integration choice')
     init.add_argument('--completion', help='Explicit descriptor3 required completion; must retain the delivery profile obligation')
     init.add_argument('--preset', choices=('simple', 'application'), help='Conservative descriptor3 choices; explicit options override the preset')
@@ -257,7 +257,10 @@ def main(argv=None):
     init.add_argument('--task-context', action='store_true', help='Explicit task readiness, requirements journal and source compatibility; requires batch execution')
     init.add_argument('--legacy-execution', action='store_true', help='Select original explicit execution choices instead of new-project batch/task-context defaults; never used by upgrade')
     init.add_argument('--ci-evidence-policy', type=Path, help='Explicit reviewed native CI policy JSON; unsupported coverage stays fresh')
-    for cmd in (init, commands.add_parser("upgrade")):
+    init.add_argument('--knowledge-capture-policy', type=Path, help='Explicit reviewed mandate/roots JSON; requires modern choices and separate owned adoption')
+    upgrade = commands.add_parser("upgrade")
+    upgrade.add_argument('--project-choices', type=Path, help='Explicit descriptor3 role/route/Stage/capacity/guard choices JSON; preserves current profile, targets and identity')
+    for cmd in (init, upgrade):
         if cmd is not init: cmd.add_argument("--root", type=Path, required=True)
         cmd.add_argument('--completion-policy', action='store_true', help='Explicit accepted-scope completion checking; requires supporting published reader/writers and separate durable activation')
         cmd.add_argument('--ci-retry-policy', type=Path, help='Explicit reviewed retry policy JSON; compatible reader/writers and owned durable activation are separate')
@@ -299,7 +302,9 @@ def main(argv=None):
                     inputs.setdefault('batch_limit', 5)
                     inputs.setdefault('task_context', {'schema_version': 1})
                 if args.ci_evidence_policy:
-                    inputs['ci_evidence'] = json.loads(args.ci_evidence_policy.read_text(encoding='utf-8'))
+                    inputs['ci_evidence'] = json.loads(args.ci_evidence_policy.read_text(encoding='utf-8'), object_pairs_hook=project.export_contract.unique)
+                if args.knowledge_capture_policy:
+                    inputs['knowledge_capture'] = json.loads(args.knowledge_capture_policy.read_text(encoding='utf-8'), object_pairs_hook=project.export_contract.unique)
                 if args.process_check and not args.process_instructions:
                     raise ValueError('--process-check requires explicit --process-instructions')
                 if args.process_instructions:
@@ -309,9 +314,16 @@ def main(argv=None):
                     inputs = project.project_choices(inputs)
                 result = project.init(args.root, inputs, revision, args.tracker_root, args.python, args.apply)
             else:
+                choices = None
+                if args.project_choices is not None:
+                    choices = json.loads(args.project_choices.read_text(encoding='utf-8'), object_pairs_hook=project.export_contract.unique)
+                    if not isinstance(choices, dict):
+                        raise ValueError('Project choices must be an explicit JSON object')
+                    if args.completion_policy:
+                        choices['completion_policy'] = {'schema_version': 1}
                 result = project.upgrade(args.root, revision, args.tracker_root, args.python, args.apply,
                                          completion_policy={'schema_version': 1} if args.completion_policy else None,
-                                         ci_retry_policy=retry_policy)
+                                         ci_retry_policy=retry_policy, choices=choices)
             print(json.dumps(result, indent=2))
             return 1 if result.get("conflicts") else 0
         findings = inspect(args.root, args.expected_revision)

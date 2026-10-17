@@ -6,8 +6,10 @@ The running agent performs the whole onboarding within the new-project request.
 Use a reviewed published standard revision. If only a selected candidate exists,
 state that fact and keep the result draft. Never invent a tag or deployment target.
 
-1. Create/inspect the authorized project repository; choose its profile, prefix,
-   shared workspace ID and real environment/check procedures. Staging defaults on.
+1. Create/inspect the authorized project repository; choose its role, profile,
+   required completion, explicit direct/batch route, Stage, capacities, prefix,
+   shared workspace ID and real environment/check procedures. Use the
+   [supported combinations and conservative presets](project-choices.md).
 2. Obtain clean official checkouts at the selected standard commit and the exact
    Tracker commit in `compatibility.json`. The scaffold refuses a dirty or different
    engine. Python 3.11+ runs the Tracker exporter; Master validation supports 3.9+.
@@ -16,15 +18,21 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    ```sh
    python3 scripts/standard.py init --root /path/to/new-project --profile local \
      --repository owner/new-project --name "New Project" --id-prefix NP \
-     --workspace-id new-project --tracker-root /path/to/pinned-tracker
+     --workspace-id new-project --tracker-root /path/to/pinned-tracker \
+     --role application --completion reviewed-merge --preset application
    ```
 
-   Add `--apply` to create files; add `--no-staging` for an explicitly disabled stage.
-   New CLI initialization defaults to execution v2, five implementation slots,
-   one source-review lane, batches up to five, and task-context schema 1. This
-   selects the common current workflow; actual ownership still requires compatible
-   published writers and the exact guide's initial migration. Existing upgrades
-   retain their original policy and capacity. Override the limits explicitly.
+   Add `--apply` only after reviewing the complete preview. `application` fills
+   omitted batch/Stage-on/2 Workers/1 source reviewer/2 members and modern guards.
+   `simple` fills direct/Stage-off/1 Worker/1 source reviewer. Role, profile and
+   completion remain explicit; flags override preset omissions. `--staging` or
+   `--no-staging` chooses Stage independently. New resource-board registration
+   remains unsupported until its actual producer contract exists.
+   The compatibility CLI without modern choice flags retains its old schema2
+   defaults (execution2, five Workers/one source reviewer/batch5/context1).
+   This preserved interface is not the new-project recommendation. Actual
+   ownership still requires compatible published writers and owned activation.
+   Existing upgrades retain original policy/capacity; presets never reset them.
    `--legacy-execution` keeps original explicit policy selection: omission means
    legacy, implementation-limit alone selects v1, and adding batch-limit selects v2.
    Add `--no-staging` for an explicitly disabled stage with the same frozen batches.
@@ -38,7 +46,7 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    maintained adapter are available without silently enabling reuse.
    `--python /path/to/python3.12` selects the export runtime if necessary. Profiles:
    `vps`, `n8n`, `n8n-source` (explicit Git-only scope), `local` (manual pull),
-   `package`, `tooling`.
+    `package`, `tooling`.
 4. Preserve the supplied specs, describe the actual system, adapt modules, check
    commands, required CI jobs and environment procedures. Synchronize the
    descriptor's policy and Tracker config; validation rejects disagreement. Draft
@@ -70,6 +78,34 @@ for future three-way comparisons. Commit it; do not rewrite it to disguise local
 changes. The small Tracker client/config live in the project; the entire Tracker
 app does not. A failure in registration/publication leaves the project visibly
 pending and resumable, with no fabricated completion.
+
+## Explicit modern upgrade choices
+
+Ordinary `upgrade` retains descriptor1/2 or3, actual route/Stage/capacity and
+optional absence. To request a reviewed modern transition from an audited
+schema2/3 template base, provide `upgrade --project-choices FILE`. The JSON object
+may select role, route, preset, Stage, capacities, task_context2, completion_policy1
+and an explicitly approved knowledge_capture policy. It cannot rename project
+identity, change the delivery profile or weaken required completion. For example:
+
+```json
+{"role":"shared-tooling-library","route":"direct","preset":"simple"}
+```
+
+The new template starts from actual local Stage, capacities, profile/completion
+and adopted optional choices; preset omissions do not replace them. An explicit
+direct switch removes an inherited batch limit. The recorded pristine old base
+remains untouched as the merge ancestor. Overlapping edits or a mismatched final
+selection stop the entire preview/apply before writes. System/runtime knowledge,
+targets and unique controls remain local. First audit schema1/legacy mixed
+adoption; changing its schema number is not a migration.
+
+`init --knowledge-capture-policy FILE` and the explicit upgrade object may select
+only a real reviewed mandate. No role, preset or file extension enables it.
+Configuration publication still requires compatible actual readers/writers and
+owned idle outer7 adoption over the known completion5/retry6 base. Preserve retry
+history, budget and uncertain effects. Use exact pinned activation/recovery
+commands; never clear other owners, strip a fence or restore a preprotocol state.
 
 ## Enabling parallel implementation
 

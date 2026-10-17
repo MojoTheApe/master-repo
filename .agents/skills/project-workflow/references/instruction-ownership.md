@@ -8,7 +8,8 @@ skill never selects them.
 Master owns the common lifecycle, profile guarantees, templates and this skill.
 Tracker owns executable policy, commands, parser fields, ownership claims and
 portable helper/reference closure. Consume its exact compatible output. Ordinary
-opted-in sources contain one task; reserved integration and promotion retain the
+opted-in engineering sources contain one task; explicitly adopted ordinary
+capture has its genuine operation without an Issue alias. Reserved integration and promotion retain the
 complete frozen member set and identity. Use final check-merge once, including
 linkage, while retaining independent review and all required coverage.
 

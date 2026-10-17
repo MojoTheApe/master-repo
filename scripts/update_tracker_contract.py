@@ -71,6 +71,16 @@ def plan(engine, revision, python):
                         or hashlib.sha256(retry).hexdigest() != retry_validator.get('sha256')):
                     raise ValueError('Retry snapshot is not the actual canonical source module')
                 planned['scripts/vendor/tracker_ci_retry.py'] = retry
+                if 'route_validator' in record:
+                    route = (output/'scripts/tracker_direct_policy.py').read_bytes()
+                    canonical_route = git(engine, 'show', revision+':tracker/direct_policy.py')
+                    route_validator = record['route_validator']
+                    if (route != canonical_route or not isinstance(route_validator, dict)
+                            or set(route_validator) != {'source', 'sha256'}
+                            or route_validator.get('source') != 'tracker/direct_policy.py'
+                            or hashlib.sha256(route).hexdigest() != route_validator.get('sha256')):
+                        raise ValueError('Route snapshot is not the actual canonical source module')
+                    planned['scripts/vendor/tracker_direct_policy.py'] = route
     if manifests[0] != manifests[1]:
         raise ValueError('Tracker layouts exported different static capability manifests')
     planned['scripts/vendor/tracker-export-contract.json'] = manifests[0]

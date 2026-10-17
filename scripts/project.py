@@ -23,7 +23,7 @@ CHOICE_PRESETS = {
 }
 INPUT_FIELDS = {'name', 'repository', 'prefix', 'workspace_id', 'profile', 'staging',
                 'implementation_limit', 'review_limit', 'batch_limit', 'task_context',
-                'completion_policy', 'process_instructions', 'ci_evidence', 'ci_retry'}
+                'completion_policy', 'process_instructions', 'ci_evidence', 'ci_retry', 'knowledge_capture'}
 CHOICE_FIELDS = {'schema_version', 'role', 'route', 'completion', 'preset'}
 PHASES = ['idea', 'backlog', 'todo', 'in_progress', 'review', 'stage', 'merged']
 BASELINE = '.workflow/template-base.json'
@@ -108,6 +108,8 @@ def delivery_policy(data):
 
 def validate_execution_policy(value):
     """An explicit opt-in; absence must retain the pinned legacy workflow."""
+    if isinstance(value, dict) and type(value.get('schema_version')) is int and value['schema_version'] == 4:
+        return export_contract.structural_execution_policy({'execution_policy': value})
     if not isinstance(value, dict) or type(value.get('schema_version')) is not int or value['schema_version'] not in (1, 2, 3):
         raise ValueError('Execution policy schema_version must be 1, 2 or 3')
     keys = {'schema_version', 'implementation_limit', 'review_limit'}
@@ -223,16 +225,24 @@ def project_choices(inputs):
 
 
 def require_engine_choices(data):
-    """Never treat proposed descriptor3 construction as supported engine export."""
+    """Validate modern choices through the exact canonical provider, never a fallback."""
     if data.get('schema_version') == 3:
         _, record, _ = export_contract.trusted()
         try:
             export_contract.selected(record, data)
         except ValueError as error:
             raise ValueError('Descriptor3 requires a released canonical route companion: ' + str(error)) from None
-        # Capability metadata alone cannot replace the not-yet-integrated
-        # canonical route validator. A later reviewed companion supplies it.
-        raise ValueError('Descriptor3 requires the canonical route validator integration before use')
+        return export_contract.structural_route_policy(route_config(data))
+
+
+def route_config(data):
+    workflow = data['workflow']
+    config = {'delivery_policy': delivery_policy(data)}
+    for name, field in (('execution', 'execution_policy'), ('task_context', 'task_context_policy'),
+                        ('completion_policy', 'completion_policy'), ('knowledge_capture', 'knowledge_capture_policy')):
+        if name in workflow:
+            config[field] = workflow[name]
+    return config
 
 
 def descriptor(inputs, revision):
@@ -282,6 +292,10 @@ def descriptor(inputs, revision):
     if 'completion_policy' in inputs:
         validate_completion_policy(inputs['completion_policy'])
         workflow['completion_policy'] = inputs['completion_policy']
+    if 'knowledge_capture' in inputs:
+        if not modern:
+            raise ValueError('Knowledge capture requires explicit descriptor3 modern choices')
+        workflow['knowledge_capture'] = copy.deepcopy(inputs['knowledge_capture'])
     if 'ci_evidence' in inputs:
         if inputs['ci_evidence'] is None:
             raise ValueError('CI evidence policy must be explicit and non-null')
@@ -340,6 +354,9 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         if 'ci_retry' in data['workflow']:
             retry = scratch/'ci-retry.json'; retry.write_text(dumps(data['workflow']['ci_retry']))
             command.extend(['--ci-retry-policy', str(retry)])
+        if 'knowledge_capture' in data['workflow']:
+            capture = scratch/'knowledge-capture.json'; capture.write_text(dumps(data['workflow']['knowledge_capture']))
+            command.extend(['--knowledge-capture-policy', str(capture)])
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
         files = {p.relative_to(target).as_posix(): p.read_bytes().decode('utf-8') for p in target.rglob('*') if p.is_file()}
@@ -351,14 +368,17 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export engine lock differs from the trusted compatible pin')
         exported_config = json.loads(files['tracker/config.json'], object_pairs_hook=export_contract.unique)
         export_contract.structural_retry_policy(exported_config)
+        if data['schema_version'] == 3:
+            export_contract.structural_route_policy(exported_config)
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
             raise ValueError('Tracker export execution policy differs from the explicit project choice')
-        if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
+        if data['workflow'].get('execution', {}).get('schema_version') in (2, 3, 4):
             exported_phases = [v if isinstance(v, str) else v['phase'] for v in exported_config.get('workflow', [])]
             if (exported_config.get('delivery_policy') != delivery_policy(data)
                     or exported_phases != phases(inputs['staging'], data['workflow']['execution'])):
-                raise ValueError('Tracker export batch route differs from the explicit staging/delivery choice')
+                route = data['workflow']['execution'].get('route', 'batch')
+                raise ValueError('Tracker export ' + route + ' route differs from the explicit staging/delivery choice')
         if (('process_instructions' in exported_config) != ('process_instructions' in data['workflow'])
                 or exported_config.get('process_instructions') != data['workflow'].get('process_instructions')):
             raise ValueError('Tracker export process instructions differ from the explicit project choice')
@@ -382,6 +402,9 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export CI retry policy differs from the explicit project choice')
         if 'ci_retry' in data['workflow'] and 'docs/CI_RETRY.md' not in files:
             raise ValueError('Pinned Tracker export lacks the exact CI retry guide')
+        if (('knowledge_capture_policy' in exported_config) != ('knowledge_capture' in data['workflow'])
+                or exported_config.get('knowledge_capture_policy') != data['workflow'].get('knowledge_capture')):
+            raise ValueError('Tracker export knowledge capture differs from the explicit project choice')
     files = separate_export(files)
     export_contract.validate_rendered(files, data)
     files.update(layout_files())
@@ -427,6 +450,8 @@ def write_plan(root, planned, before):
 
 
 def init(root, inputs, revision, tracker_root, python=sys.executable, apply=False):
+    if isinstance(inputs, dict) and inputs.get('role') in ('application-data', 'release-storage'):
+        raise ValueError('Independent resource-board initialization needs its actual producer/registration contract; the descriptive role grants no engineering board')
     files = render(inputs, revision, tracker_root, python)
     files[BASELINE] = baseline(inputs, revision, files.copy())
     collisions = [n for n in files if standard.safe_path(root, n).exists()]
@@ -465,7 +490,53 @@ def merge_file(name, old, new, local):
         return result.stdout
 
 
-def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None, ci_retry_policy=None):
+def upgrade_inputs(recorded, local, selection=None):
+    """Select an explicitly requested modern template without resetting local choices.
+
+    The recorded old template remains the merge ancestor. These are new-template
+    inputs only; genuine old/new/local merging still resolves project exceptions.
+    """
+    if selection is None:
+        return copy.deepcopy(recorded)
+    allowed = {'schema_version', 'role', 'route', 'completion', 'preset', 'staging',
+               'implementation_limit', 'review_limit', 'batch_limit', 'task_context',
+               'completion_policy', 'knowledge_capture'}
+    if not isinstance(selection, dict) or set(selection) - allowed:
+        raise ValueError('Project choices must contain only explicit role/route/Stage/capacity/guard choices; identity and profile are preserved')
+    if 'schema_version' in selection and (type(selection['schema_version']) is not int or selection['schema_version'] != 3):
+        raise ValueError('Explicit upgrade choices require schema_version3')
+    if not isinstance(local, dict) or type(local.get('schema_version')) is not int or local['schema_version'] not in (2, 3):
+        raise ValueError('Audit legacy delivery adoption before selecting modern choices')
+    workflow = local.get('workflow')
+    if not isinstance(workflow, dict) or type(workflow.get('staging')) is not bool:
+        raise ValueError('Preserve an explicit actual local Stage choice')
+    value = copy.deepcopy(recorded)
+    value.update(schema_version=3, profile=local['profile'], completion=local['completion'], staging=workflow['staging'])
+    value.pop('preset', None)
+    execution = workflow.get('execution')
+    if execution is not None:
+        validate_execution_policy(execution)
+        value.update(implementation_limit=execution['implementation_limit'], review_limit=execution['review_limit'])
+        value['route'] = execution['route'] if execution['schema_version'] == 4 else ('direct' if execution['schema_version'] == 1 else 'batch')
+        if 'batch_limit' in execution:
+            value['batch_limit'] = execution['batch_limit']
+    if 'role' in local:
+        value['role'] = local['role']
+    # Preserve actual adopted optional selections, including genuine absence.
+    for field in ('process_instructions', 'ci_evidence', 'ci_retry', 'knowledge_capture', 'completion_policy'):
+        value.pop(field, None)
+        if field in workflow:
+            value[field] = copy.deepcopy(workflow[field])
+    value.pop('task_context', None)
+    if isinstance(workflow.get('task_context'), dict) and workflow['task_context'].get('schema_version') == 2:
+        value['task_context'] = copy.deepcopy(workflow['task_context'])
+    value.update(copy.deepcopy(selection))
+    if value.get('route') == 'direct' and 'batch_limit' not in selection:
+        value.pop('batch_limit', None)
+    return project_choices(value)
+
+
+def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None, ci_retry_policy=None, choices=None):
     path = standard.safe_path(root, BASELINE)
     if not path.is_file(): raise ValueError('No recorded template base; audit and adopt manually without inventing a baseline')
     raw = path.read_text(); base = json.loads(raw, object_pairs_hook=export_contract.unique)
@@ -494,14 +565,29 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
         export_contract.structural_retry_policy(local_config)
     except (KeyError, OSError, TypeError, ValueError) as error:
         return {'applied': False, 'conflicts': ['configuration validation'], 'changed': [], 'errors': [str(error)]}
-    new_inputs = dict(base['inputs'])
+    selection = copy.deepcopy(choices)
+    if isinstance(selection, dict) and completion_policy is not None:
+        if 'completion_policy' in selection and dumps(selection['completion_policy']) != dumps(completion_policy):
+            raise ValueError('Conflicting explicit completion selections')
+        selection['completion_policy'] = completion_policy
+    try:
+        new_inputs = upgrade_inputs(base['inputs'], local_descriptor, selection)
+    except (KeyError, TypeError, ValueError) as error:
+        if choices is None:
+            raise
+        return {'applied': False, 'conflicts': ['explicit project choices'], 'changed': [], 'errors': [str(error)]}
     if completion_policy is not None:
         validate_completion_policy(completion_policy)
         new_inputs['completion_policy'] = completion_policy
     if ci_retry_policy is not None:
         export_contract.structural_retry_policy({'ci_retry_policy': ci_retry_policy})
         new_inputs['ci_retry'] = ci_retry_policy
-    new = render(new_inputs, revision, tracker_root, python)
+    try:
+        new = render(new_inputs, revision, tracker_root, python)
+    except (KeyError, TypeError, ValueError) as error:
+        if choices is None:
+            raise
+        return {'applied': False, 'conflicts': ['explicit project choices'], 'changed': [], 'errors': [str(error)]}
     planned, before, conflicts = {}, {}, []
     for name in sorted(old.keys() | new.keys()):
         path = standard.safe_path(root, name)
@@ -519,6 +605,22 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
     if planned[BASELINE] == raw: planned.pop(BASELINE)
     with tempfile.TemporaryDirectory(prefix='master-validate-') as scratch:
         candidate = dict(before, **planned)
+        if choices is not None:
+            try:
+                selected = json.loads(candidate['delivery.json'], object_pairs_hook=export_contract.unique)
+                intended = json.loads(new['delivery.json'], object_pairs_hook=export_contract.unique)
+                # JSON bytes distinguish booleans from integers. Local target/check
+                # exceptions still merge normally; selected choices must stay exact.
+                selected_choices = {key: selected[key] for key in ('schema_version', 'role', 'profile', 'completion')}
+                intended_choices = {key: intended[key] for key in selected_choices}
+                fields = ('staging', 'execution', 'task_context', 'completion_policy', 'knowledge_capture')
+                selected_choices['workflow'] = {key: selected['workflow'][key] for key in fields if key in selected['workflow']}
+                intended_choices['workflow'] = {key: intended['workflow'][key] for key in fields if key in intended['workflow']}
+                if dumps(selected_choices) != dumps(intended_choices):
+                    raise ValueError('Local selections differ from the explicit requested modern choices')
+            except (KeyError, TypeError, ValueError) as error:
+                return {'applied': False, 'conflicts': ['explicit project choices'], 'changed': [], 'errors': [str(error)],
+                        'next': 'Reconcile actual choices in both project files explicitly; nothing was overwritten.'}
         if ci_retry_policy is not None:
             try:
                 selected_descriptor = json.loads(candidate['delivery.json'], object_pairs_hook=export_contract.unique)['workflow']['ci_retry']
@@ -548,10 +650,12 @@ def inspect(root, expected_revision=None):
             require_engine_choices(data)
         except (KeyError, TypeError, ValueError, OSError) as error:
             return [('error', str(error))]
-    keys = standard.TOP | {'workflow'}
+    modern = isinstance(data, dict) and type(data.get('schema_version')) is int and data['schema_version'] == 3
+    keys = standard.TOP | {'workflow'} | ({'role'} if modern else set())
     if not standard.object_keys(data, keys, 'delivery', findings): return findings
     try:
-        if type(data['schema_version']) is not int or data['schema_version'] != 2: raise ValueError('Expected schema 2')
+        if type(data['schema_version']) is not int or data['schema_version'] not in (2, 3): raise ValueError('Expected schema 2 or 3')
+        if modern and (not isinstance(data['role'], str) or data['role'] not in ROLES): raise ValueError('Unknown project role')
         if data['profile'] not in PROFILES or data['completion'] != PROFILES[data['profile']]: raise ValueError('Profile/completion mismatch')
         for name, fields in (('project', {'name','repository'}), ('standard', {'repository','revision','version'}),
                              ('tracker', {'repository','revision','workspace_id','registration','verification'}),
@@ -565,10 +669,16 @@ def inspect(root, expected_revision=None):
         if isinstance(wf, dict) and 'completion_policy' in wf: workflow_keys.add('completion_policy')
         if isinstance(wf, dict) and 'ci_evidence' in wf: workflow_keys.add('ci_evidence')
         if isinstance(wf, dict) and 'ci_retry' in wf: workflow_keys.add('ci_retry')
+        if modern and isinstance(wf, dict) and 'knowledge_capture' in wf: workflow_keys.add('knowledge_capture')
         if not standard.object_keys(wf, workflow_keys, 'workflow', findings): return findings
+        if modern:
+            if not isinstance(wf.get('execution'), dict) or type(wf['execution'].get('schema_version')) is not int or wf['execution']['schema_version'] != 4:
+                raise ValueError('Descriptor3 requires explicit execution4')
+        elif isinstance(wf.get('execution'), dict) and wf['execution'].get('schema_version') == 4:
+            raise ValueError('Execution4 requires descriptor3 with an explicit role')
         if 'execution' in wf: validate_execution_policy(wf['execution'])
         if 'process_instructions' in wf: validate_process_instructions(wf['process_instructions'])
-        if 'task_context' in wf: validate_task_context(wf['task_context'], wf.get('execution'))
+        if 'task_context' in wf and not modern: validate_task_context(wf['task_context'], wf.get('execution'))
         if 'completion_policy' in wf: validate_completion_policy(wf['completion_policy'])
         if 'ci_evidence' in wf:
             if wf['ci_evidence'] is None: raise ValueError('CI evidence policy must be explicit and non-null')
@@ -589,6 +699,8 @@ def inspect(root, expected_revision=None):
         if data['tracker']['repository'] != compat['tracker_repository'] or data['tracker']['revision'] != compat['tracker_revision']: raise ValueError('Tracker pin is incompatible with this standard')
         config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(), object_pairs_hook=export_contract.unique)
         export_contract.structural_retry_policy(config)
+        if modern:
+            export_contract.structural_route_policy(config)
         lock = json.loads(standard.safe_path(root, 'tracker/engine.json').read_text(), object_pairs_hook=export_contract.unique)
         if lock != {'repository': compat['tracker_repository'], 'revision': compat['tracker_revision']}: raise ValueError('Tracker client pin differs from descriptor')
         export_contract.validate_root(root, data)
@@ -614,6 +726,9 @@ def inspect(root, expected_revision=None):
         if (('ci_retry_policy' in config) != ('ci_retry' in wf)
                 or config.get('ci_retry_policy') != wf.get('ci_retry')):
             raise ValueError('Tracker CI retry policy differs from delivery.json; synchronize both in this PR')
+        if (('knowledge_capture_policy' in config) != ('knowledge_capture' in wf)
+                or config.get('knowledge_capture_policy') != wf.get('knowledge_capture')):
+            raise ValueError('Tracker knowledge capture differs from delivery.json; synchronize both in this PR')
         actual_phases = [v if isinstance(v,str) else v['phase'] for v in config['workflow']]
         if actual_phases != phases(wf['staging'], wf.get('execution')): raise ValueError('Tracker stages differ from the adopted workflow')
         checks = wf['required_checks']

@@ -39,6 +39,19 @@ honestly; repeated human confirmation is not protection.
 
 ## Explicit compatible policy
 
+For explicitly selected descriptor3/execution4, task-context2 extends current
+readiness, requirements/journal and independent forward-main compatibility to
+both direct Stage-on/off and batch. It requires completion-policy1 and the exact
+canonical route validator. Direct has no Approved waiting state; its actual
+source Reviewer and linked integration reservation retain authority through the
+ordered main receipt, task status and release. Conflicts return to a claimed
+author. Ordinary capture uses its genuine complete-diff/mandate assessment,
+never a fake task context. See [project choices](project-choices.md) and the exact
+engine's selected guide. Compatible publication and owned idle outer7 adoption
+are separate from configuration; retained retry6 remains inside that fence.
+
+The original task-context1 contract remains unchanged for older projects:
+
 Mirror `workflow.task_context: {"schema_version": 1}` in delivery.json with
 `task_context_policy: {"schema_version": 1}` in tracker/config.json. V1 requires
 execution schema 2 or 3 and a compatible pinned engine. Initializer flag

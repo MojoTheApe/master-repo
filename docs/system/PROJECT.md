@@ -1,5 +1,17 @@
 # Master Repo system
 
+MR-40's candidate adds [explicit project choices](../project-choices.md):
+descriptor3 role, route, Stage, capacities, profile and required completion remain
+independent. Master constructs choices, preserves actual choices during explicit
+three-way upgrades, and delegates modern policy validation to one fixed
+hash-verified canonical Tracker module. Selected common navigation distinguishes
+direct ownership/finalization, genuine batches and explicit ordinary capture.
+Legacy descriptors and optional absence remain unchanged. The current released
+compatibility pin still lacks this new route; it refuses modern export before
+consumer writes. The actual complete reviewed engine, final compatible pin,
+paired/native evidence and coordinated publication remain pending. No consumer
+state, capture mandate or delivery permission is activated by this candidate.
+
 MR-51 documents [actual capacity](../capacity.md) for the existing legacy and
 execution1/2/3 topologies. Tracker owns the reservation projection and UI; Master
 explains held versus active work, pool limits, separate review waiting/batch
@@ -63,7 +75,8 @@ review, optional staging, main integration and verified delivery. It owns the
 canonical agent skill. Task Tracker owns the shared task application and commands;
 Issues remain in each consumer repository.
 
-`scripts/standard.py` validates schema 1 and 2 without running descriptor commands.
+`scripts/standard.py` validates schema 1/2 and checks explicit schema3 against the
+actual trusted canonical provider, without running descriptor commands.
 Its initializer exports a small client from the exact compatible Tracker commit
 and writes the project docs/settings/CI plus a template baseline. `scripts/project.py`
 implements rendering and three-way upgrades. `scripts/onboard.py` prepares branches,

@@ -1,4 +1,4 @@
-"""Pure proposed descriptor3 choices; no simulated execution4 engine/export."""
+"""Master-owned choices and incumbent-provider refusal; no simulated v4 export."""
 import contextlib
 import copy
 import io
@@ -91,7 +91,7 @@ class ProjectChoices(unittest.TestCase):
             value = choices(); value.pop(key)
             with self.subTest(missing=key), self.assertRaisesRegex(ValueError, 'explicit choices'):
                 project.descriptor(value, OLD)
-        for key in ('roel', 'integration', 'knowledge_capture', 'unknown'):
+        for key in ('roel', 'integration', 'unknown'):
             with self.subTest(unknown=key), self.assertRaisesRegex(ValueError, 'Unknown'):
                 project.descriptor(choices(**{key: 'unselected'}), OLD)
         with self.assertRaisesRegex(ValueError, 'explicit choices'):
@@ -150,7 +150,7 @@ class ProjectChoices(unittest.TestCase):
 
     def test_pure_construction_is_not_canonical_execution4_support(self):
         data = project.descriptor(choices(), OLD)
-        with self.assertRaisesRegex(ValueError, 'must be 1, 2 or 3'):
+        with self.assertRaisesRegex(ValueError, 'lacks the canonical route validator'):
             project.validate_execution_policy(data['workflow']['execution'])
         for apply in (False, True):
             with tempfile.TemporaryDirectory() as directory:
@@ -178,6 +178,92 @@ class ProjectChoices(unittest.TestCase):
                     render.assert_not_called()
                 self.assertFalse(result['applied'])
                 self.assertEqual(result['conflicts'], ['configuration validation'])
+                self.assertEqual(snapshot(root), before)
+
+    def test_descriptive_resource_role_cannot_initialize_an_invented_board(self):
+        for role in ('application-data', 'release-storage'):
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)/'consumer'
+                with mock.patch.object(project, 'render') as render:
+                    with self.assertRaisesRegex(ValueError, 'actual producer/registration contract'):
+                        project.init(root, choices(role=role), OLD, 'unused', apply=True)
+                    render.assert_not_called()
+                self.assertFalse(root.exists())
+
+
+class UpgradeChoices(unittest.TestCase):
+    def local(self, **extra):
+        return project.descriptor(dict(INPUTS, staging=False, implementation_limit=5,
+                                       review_limit=5, batch_limit=5, **extra), OLD)
+
+    def selection(self, **extra):
+        return dict(role='application', preset='application', **extra)
+
+    def test_no_selection_keeps_recorded_legacy_choices_and_absence(self):
+        for recorded in (INPUTS, dict(INPUTS, implementation_limit=5, review_limit=5, batch_limit=5)):
+            before = copy.deepcopy(recorded)
+            selected = project.upgrade_inputs(recorded, self.local())
+            self.assertEqual(selected, before)
+            selected['name'] = 'changed copy'
+            self.assertEqual(recorded, before)
+
+    def test_upgrade_preset_preserves_actual_limits_stage_completion_and_optional_absence(self):
+        local = self.local()
+        before = copy.deepcopy(local)
+        value = project.upgrade_inputs(INPUTS, local, self.selection())
+        self.assertEqual((value['route'], value['staging'], value['implementation_limit'],
+                          value['review_limit'], value['batch_limit']), ('batch', False, 5, 5, 5))
+        self.assertEqual((value['profile'], value['completion']), ('local', 'reviewed-merge'))
+        self.assertEqual(value['task_context'], {'schema_version': 2})
+        self.assertEqual(value['completion_policy'], {'schema_version': 1})
+        for key in ('ci_evidence', 'ci_retry', 'knowledge_capture', 'process_instructions'):
+            self.assertNotIn(key, value)
+        self.assertEqual(local, before)
+
+    def test_direct_switch_removes_inherited_batch_only_and_does_not_reset_actual_capacity(self):
+        value = project.upgrade_inputs(INPUTS, self.local(), self.selection(route='direct'))
+        self.assertEqual((value['route'], value['implementation_limit'], value['review_limit']), ('direct', 5, 5))
+        self.assertNotIn('batch_limit', value)
+        with self.assertRaisesRegex(ValueError, 'must not select batch_limit'):
+            project.upgrade_inputs(INPUTS, self.local(), self.selection(route='direct', batch_limit=5))
+
+    def test_upgrade_requires_explicit_new_guards_and_preserves_local_retry_policy(self):
+        local = self.local(ci_retry={'schema_version': 1, 'max_executions': 2})
+        selected = project.upgrade_inputs(INPUTS, local, self.selection())
+        self.assertEqual(selected['ci_retry'], local['workflow']['ci_retry'])
+        for selection in ({'role': 'research'}, {'role': 'research', 'task_context': {'schema_version': 1}}):
+            with self.subTest(selection=selection), self.assertRaises(ValueError):
+                project.upgrade_inputs(INPUTS, local, selection)
+
+    def test_invalid_upgrade_choices_never_coerce_types_rename_identity_or_weaken_completion(self):
+        invalid = [None, [], {'schema_version': True}, {'schema_version': 2},
+                   {'name': 'new name'}, {'repository': 'other/repo'}, {'profile': 'package'},
+                   self.selection(staging=0), self.selection(implementation_limit=True),
+                   self.selection(route='automatic'), self.selection(completion='verified-production')]
+        for selection in invalid[1:]:
+            with self.subTest(selection=selection), self.assertRaises(ValueError):
+                project.upgrade_inputs(INPUTS, self.local(), selection)
+        local = self.local()
+        local['workflow']['execution']['review_limit'] = True
+        with self.assertRaises(ValueError):
+            project.upgrade_inputs(INPUTS, local, self.selection())
+        with self.assertRaisesRegex(ValueError, 'legacy delivery adoption'):
+            project.upgrade_inputs(INPUTS, {'schema_version': 1}, self.selection())
+
+    def test_real_old_fixture_upgrade_with_requested_modern_choices_refuses_before_export_or_any_write(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)/'consumer'
+            with mock.patch.object(project, 'render', side_effect=old_files):
+                project.init(root, INPUTS, OLD, 'unused', apply=True)
+            before = snapshot(root)
+            for apply in (False, True):
+                with mock.patch.object(project, 'tracker_checkout') as checkout, \
+                        mock.patch.object(project.subprocess, 'run') as exporter:
+                    result = project.upgrade(root, NEW, 'unused', apply=apply, choices=self.selection())
+                    checkout.assert_not_called(); exporter.assert_not_called()
+                self.assertFalse(result['applied'])
+                self.assertEqual(result['conflicts'], ['explicit project choices'])
+                self.assertIn('released canonical route companion', result['errors'][0])
                 self.assertEqual(snapshot(root), before)
 
 
@@ -246,6 +332,27 @@ class ChoicesCLI(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Duplicate'):
                 standard.inspect(root)
             self.assertEqual(snapshot(root), before)
+
+    def test_upgrade_choice_file_is_explicit_and_duplicate_unknown_or_null_inputs_refuse(self):
+        with tempfile.TemporaryDirectory() as directory, \
+                mock.patch.object(standard, 'source_revision', return_value=NEW), \
+                contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            root = Path(directory)/'consumer'
+            choice_file = Path(directory)/'choices.json'
+            args = ['upgrade', '--root', str(root), '--tracker-root', 'unused', '--project-choices', str(choice_file)]
+            for raw in ('null', '[]', '{"role":"research","role":"application"}'):
+                choice_file.write_text(raw)
+                with mock.patch.object(project, 'upgrade') as upgrade:
+                    self.assertEqual(standard.main(args), 2)
+                    upgrade.assert_not_called()
+            selected = {'role': 'research', 'preset': 'simple'}
+            choice_file.write_text(json.dumps(selected))
+            with mock.patch.object(project, 'upgrade', return_value={}) as upgrade:
+                self.assertEqual(standard.main(args), 0)
+                self.assertEqual(upgrade.call_args.kwargs['choices'], selected)
+                self.assertEqual(standard.main(args + ['--completion-policy']), 0)
+                self.assertEqual(upgrade.call_args.kwargs['choices']['completion_policy'], {'schema_version': 1})
+            self.assertFalse(root.exists())
 
 
 if __name__ == '__main__':

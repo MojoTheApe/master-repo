@@ -12,8 +12,8 @@ Separated projects keep Git/Tracker rules in `docs/repository/`, product knowled
 in `docs/system/` and operational safeguards in `docs/runtime/`. Earlier pins may
 use forwarding or legacy paths; follow their own checked-in contract. Master source: `https://github.com/MojoTheApe/master-repo`.
 Use a clean checkout at the descriptor's exact commit and read `standard.md` plus
-the relevant profile. For schema 1, follow that pinned version's semantics. Never
-silently apply newer schema 2 rules to an old project.
+the relevant profile. For schema 1/2, follow that pinned version's semantics. Never
+silently apply newer descriptor3 or execution4 rules to an old project.
 
 This skill is installed once per agent environment. Its canonical copy lives at
 `.agents/skills/project-workflow/SKILL.md` in Master Repo. Project AGENTS files are
@@ -38,16 +38,19 @@ environments, check commands or live registration proof.
 
 - **Ordinary work:** follow current project pins, Tracker and local deployment
   controls. No standard migration or unrelated refactor.
-- **New project:** read the pinned `docs/adoption.md`. Choose profile, public ID
-  prefix, workspace ID and actual targets. Stage defaults on; local means manual
+- **New project:** read the pinned `docs/adoption.md`. Where supported, choose role,
+  route, Stage, actual capacities, profile and required completion independently;
+  read [explicit choices](references/project-choices.md). Select a conservative
+  preset by actual work and inspect its final values. Older pins retain their
+  actual defaults. Choose public ID prefix, workspace ID and actual targets. Local means manual
   pull, package is separate. Preview/apply the initializer with a clean compatible
   Tracker checkout. Preserve supplied specs, configure the draft, publish initial
   main, run onboarding for branches/labels/registry, complete the maintained
   registry publication and verify the fresh live project board. Record actual
   onboarding proof and validate before marking ready. A local scaffold is not a
   connected project. Keep the application in Task Tracker, only its client locally.
-  When the released pin supplies new batch/task-context defaults, use them for
-  new projects; legacy selection and actual migration follow that exact guide.
+  Resource boards need their actual producer/registration contract; a descriptive
+  role cannot invent it. Legacy selection and actual migration follow that exact guide.
   Select CI evidence only from reviewed actual jobs/inputs, never guessed generic
   environments. Existing consumer upgrades retain their adopted choices.
 - **Existing adoption:** audit IDs/history, modules, open PRs, release state,
@@ -97,7 +100,7 @@ Check for matching explicit `workflow.task_context` and Tracker
 [task context](references/task-context.md) and its exact command guide before
 starting or resuming work. It binds semantic readiness to current requirements
 and main, separates an explicit terminal journal, and permits owned independent
-compatibility review of unchanged Approved sources. Older pins retain their
+compatibility review of unchanged sources in its supported route. Older pins retain their
 actual commands and whole-body evidence; this skill never opts them in.
 
 Check whether matching descriptor `workflow.process_instructions` and Tracker
@@ -114,6 +117,27 @@ and Tracker `execution_policy`. For schema 1, read
 [parallel execution](references/parallel-execution.md) for claims, delegation and
 the single review/integration lane. If absent, preserve the pinned legacy slot
 behavior; installing this skill does not opt the project in.
+
+For explicitly selected descriptor3/execution4, read
+[project choices and single-source work](references/project-choices.md) before
+using the exact local guide. Modern context2/completion1, compatible actual
+readers/writers and owned outer7 activation are required. Direct retains the real
+source Reviewer and single integration reservation through main receipt,
+reconciled task status and release; it creates no Approved pool or synthetic
+batch. Batch retains real frozen members and its separate integration Reviewer.
+Return, stop, takeover, main advancement and ambiguous writes use the exact
+maintained owner/CAS procedure. Preserve retry6 history, budgets and unknown
+effects inside the fence. Old choices and absent policies remain unchanged.
+
+Ordinary capture has no Issue only under an identical already adopted explicit
+`workflow.knowledge_capture` / `knowledge_capture_policy` and real approved
+mandate. Complete immutable-diff classification and independent semantic
+attestation are mandatory. Notes cannot authorize themselves; role, extension,
+SKILL.md or a newer skill never exempts governance, mixed or unsafe work. Capture
+uses a real operation, normal pools, applicable checks, selected Stage and exact
+recovery without a fake Issue/dependency/release member. It grants no runtime,
+package or publication completion. Keep the existing adopted process-only route
+separate. No new mandate or consumer adoption is introduced by this reference.
 
 For matching execution schema 2 or 3, read
 [batch integration](references/batch-integration.md) for approval and
@@ -143,11 +167,13 @@ On explicit development, read the full Issue, claim the Tracker slot with its
 host/user prefix policy. Legacy projects use `codex/<public-id-lowercase>-<short-name>`;
 opted-in execution also accepts neutral `work/<public-id-lowercase>-<short-name>`. Preserve
 classification, dependencies and existing queue semantics. All opted-in execution versions
-use exactly one task per ordinary source PR: `[RF-67] Summary`, one `Tracker issues: RF-67`
+use exactly one task per ordinary engineering source PR: `[RF-67] Summary`, one `Tracker issues: RF-67`
 line and a link back from that Issue. Frozen integration and promotion PRs carry their complete original batch member
 set; several related IDs in an ordinary source PR are supported only under legacy
 execution. PR numbers are different from Issue IDs. Avoid automatic closing keywords
 in both PR text and commits. Keep partial tasks and abandoned PRs unfinished.
+Explicit modern capture follows its exact selected operation field/template and
+has no Issue alias. Task categories and assignees never grant a route or claim.
 
 Implement and self-check, update affected system docs/history or explain no impact,
 create a ready PR and set Review. Automatically invoke a different subagent for
@@ -181,7 +207,8 @@ a package release/install or a Stage receipt for it. Legacy consumers retain the
 own execution slot and independent review attestation; execution lane commands
 apply only when the pinned project has adopted that execution policy.
 
-For other work, if enabled: working branch -> permanent stage -> permanent main. Preserve the same
+For preserved legacy/execution-v1 work, if enabled: working branch -> permanent
+stage -> permanent main. Preserve the same
 single task in execution v1 (a related task set is legacy-only), one active stage
 candidate and exact approved content. Keep the working branch for
 fixes after its first PR; new fix PRs use that branch. Do not delete permanent
@@ -198,6 +225,8 @@ Approved, source checks and independent combined review, and use the reserved
 `batch` main direction. Ordinary sources remain approval-only.
 After source approval, use its separate Coordinator batch claim; do not acquire a
 v1 review/integration lane for multiple tasks or infer v2 return-command syntax.
+Execution4 instead follows its explicitly selected direct/batch reference above;
+the legacy/v1 sequence is not a substitute for its owned modern finalizer.
 
 Record Merged only for fully implemented ticket scope actually included in main.
 Instruction-only and local manual-pull/tooling work completes after admitted merge.

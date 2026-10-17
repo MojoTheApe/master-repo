@@ -128,6 +128,44 @@ class TrustedExport(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'reviewed Tracker snapshot'):
             contract.structural_retry_policy({})
 
+    def route_trust(self):
+        # A deliberately tiny trust-boundary fixture, not a canonical policy or
+        # simulated modern export. Actual semantics use the real paired source.
+        raw = b'def bundle(config):\n    return config\ndef execution_policy(config):\n    return config["execution_policy"]\n'
+        self.write(self.source, contract.ROUTE_SNAPSHOT, raw)
+        self.record['route_validator'] = {'source': 'tracker/direct_policy.py', 'sha256': hashlib.sha256(raw).hexdigest()}
+        self.set_trust(self.record)
+        return raw
+
+    def test_route_calls_only_verified_source_owned_bytes_without_consumer_import_or_write(self):
+        self.route_trust()
+        poison = b'raise AssertionError("Consumer route code executed")\n'
+        self.write(self.root, 'tracker_direct_policy.py', poison)
+        cached = types.ModuleType('_master_trusted_tracker_direct_policy')
+        cached.bundle = mock.Mock(side_effect=AssertionError('Cached route executed'))
+        before = {p:p.read_bytes() for p in self.source.parent.rglob('*') if p.is_file()}
+        with mock.patch.dict(sys.modules, {'_master_trusted_tracker_direct_policy': cached}), \
+                mock.patch('subprocess.run', side_effect=AssertionError('Unexpected process')), \
+                mock.patch('socket.socket', side_effect=AssertionError('Unexpected network')):
+            self.assertEqual(contract.structural_route_policy({'proof': 'fixed verified bytes'}), {'proof': 'fixed verified bytes'})
+            self.assertEqual(contract.structural_execution_policy({'execution_policy': 'boundary'}), 'boundary')
+        cached.bundle.assert_not_called()
+        self.assertEqual(before, {p:p.read_bytes() for p in self.source.parent.rglob('*') if p.is_file()})
+
+    def test_missing_redirected_or_changed_route_provider_is_actionably_refused(self):
+        with self.assertRaisesRegex(ValueError, 'lacks the canonical route validator'):
+            contract.structural_route_policy({})
+        raw = self.route_trust()
+        self.write(self.source, contract.ROUTE_SNAPSHOT, b'raise AssertionError("Changed route executed")\n')
+        with self.assertRaisesRegex(ValueError, 'reviewed Tracker snapshot'):
+            contract.structural_route_policy({})
+        self.write(self.source, contract.ROUTE_SNAPSHOT, raw)
+        for validator in ({'source': 'consumer/direct_policy.py', 'sha256': hashlib.sha256(raw).hexdigest()},
+                          {'source': 'tracker/direct_policy.py', 'sha256': hashlib.sha256(raw).hexdigest(), 'extra': True}):
+            self.record['route_validator'] = validator; self.set_trust(self.record)
+            with self.assertRaisesRegex(ValueError, 'lacks the canonical route validator'):
+                contract.structural_route_policy({})
+
     def test_missing_linked_and_unsafe_helpers_are_rejected(self):
         helper = self.root/self.helper; helper.unlink()
         with self.assertRaisesRegex(ValueError, 'Missing export contract file'):

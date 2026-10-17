@@ -25,6 +25,15 @@ source-owned `scripts/vendor/tracker_ci_retry.py`; structural retry selection
 calls only that verified module's `policy()`. Generic accounting is a separate
 self-contained exported helper with no retry/state activation dependency.
 
+Modern descriptor3 uses one additional fixed `route_validator` slot binding the
+actual canonical `tracker/direct_policy.py` to the mechanically copied
+`scripts/vendor/tracker_direct_policy.py`. Master verifies its bytes and delegates
+execution/context/capture cross-validation to that module; it never imports a
+consumer validator or keeps another state algorithm. A missing provider,
+unsupported selected contract, redirected source or changed snapshot fails before
+export/target writes. The actual pinned manifest owns the helper inventory;
+adding source support is not a published pin, state activation or lifecycle proof.
+
 Python 3.11+ remains required for the author engine/exporter; portable helpers and
 Master validation support Python 3.9+. Public CI uses exported files, stdlib and
 the consumer's own read token. It needs no private Tracker credential or checkout.

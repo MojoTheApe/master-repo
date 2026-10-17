@@ -94,3 +94,46 @@ class SelectedInstructions(unittest.TestCase):
         self.assertIn('repository/WORKFLOW_REFERENCE.md', exported['docs/WORKFLOW_REFERENCE.md'])
         self.assertIn('[Config](../../tracker/config.json)', exported['docs/repository/TRACKER.md'])
         self.assertIn('[task](../../tracker/task-template.md)', exported['docs/repository/TRACKER.md'])
+
+    def test_modern_navigation_uses_explicit_route_stage_and_delivery_without_fake_batch(self):
+        # Master-owned pure descriptor/navigation tests. No simulated engine
+        # export, lifecycle, durable activation or source approval is involved.
+        from test_project_choices import choices
+        template = (project.SOURCE/'templates/workflow/WORKFLOW.md').read_text()
+        delivery = (project.SOURCE/'templates/workflow/DELIVERY.md').read_text()
+        for route in ('direct', 'batch'):
+            for stage in (False, True):
+                for profile, completion in project.PROFILES.items():
+                    value = dict(profile=profile, completion=completion, route=route, staging=stage)
+                    if route == 'batch': value['batch_limit'] = 2
+                    data = project.descriptor(choices(**value), NEW)
+                    with self.subTest(route=route, stage=stage, profile=profile):
+                        text = instruction_render.render(template, data)
+                        target = instruction_render.render(delivery, data)
+                        self.assertNotIn('__', text)
+                        self.assertIn('Stage is enabled' if stage else 'Stage is disabled', text)
+                        self.assertIn('outer7', target)
+                        if route == 'direct':
+                            self.assertIn('does not enter Approved or a synthetic batch', text)
+                            self.assertIn('task-status reconciliation and archive/release', text)
+                            self.assertNotIn('ordinary sources remain approval-only', text)
+                        else:
+                            self.assertIn('one separate integration Reviewer', text)
+                            self.assertIn('complete frozen member set', text)
+                        self.assertNotIn('unchanged Approved source', text)
+                        self.assertEqual('stable release' in target, completion == 'verified-stable-package')
+                        self.assertEqual('verifies production delivery' in target, completion == 'verified-production')
+
+    def test_capture_guidance_is_only_selected_and_never_role_inferred(self):
+        from test_project_choices import choices
+        template = (project.SOURCE/'templates/workflow/WORKFLOW.md').read_text()
+        value = choices(role='knowledge')
+        text = instruction_render.render(template, project.descriptor(value, NEW))
+        self.assertNotIn('genuine capture operation', text)
+        value['knowledge_capture'] = {'schema_version': 1, 'roots': ['notes/'], 'scope': 'Approved ordinary notes'}
+        text = instruction_render.render(template, project.descriptor(value, NEW))
+        for bound in ('already adopted explicit knowledge policy', 'real approved mandate',
+                      'complete immutable-diff', 'independent semantic attestation',
+                      '.md/.txt', 'without an Issue alias', 'full checks remain'):
+            self.assertIn(bound, text)
+        self.assertIn('outside-mandate changes use a real engineering task', text)

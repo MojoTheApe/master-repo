@@ -1,5 +1,19 @@
 # Repository process history
 
+## 2026-10-17 — MR-40 explicit choices candidate
+
+Construct descriptor3 choices independently and retain actual Stage/capacities,
+profile/completion and optional absence during an explicitly selected modern
+upgrade. Keep the pristine old template as the merge ancestor. Add the fixed
+hash-verified canonical route-validator boundary and mechanical snapshot support;
+the released current pin still refuses unsupported modern exports before writes.
+Render direct, batch and explicitly selected capture navigation without inventing
+Issue aliases, batch identity or a second state algorithm. Update the common
+supported-combination table and canonical skill together. TT-157 owns the actual
+engine/state/lifecycle companion; its completion, compatible publication/final
+pin, native pair and independent full-scope admission are still required. This
+candidate changes no consumer policy, mandate, capacity, state or service.
+
 ## 2026-10-17 — MR-51 / TT-144 truthful capacity
 
 Document durable project-wide occupancy for existing legacy/v1/v2/v3 modes,
