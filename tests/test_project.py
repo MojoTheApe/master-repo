@@ -17,69 +17,70 @@ NEW='b'*40
 INPUTS={'name':'Example','repository':'owner/example','prefix':'EX','workspace_id':'example','profile':'local','staging':True}
 
 
-class OptionalProducerExport(unittest.TestCase):
-    def exported(self):
-        return {'docs/TRACKER_AGENT_WORKFLOW.md': 'Read the pinned guide.\n',
-                'scripts/task_tracker.py': 'root = Path(__file__).resolve().parents[1]\n',
-                'scripts/tracker_pr_check.py': 'root = Path(__file__).resolve().parents[1]\n',
-                'scripts/tracker_delivery_policy.py': '# existing policy\n'}
+def portable_files():
+    root = project.SOURCE/'tests/fixtures/portable-contract/separated'
+    return {p.relative_to(root).as_posix(): p.read_bytes().decode('utf-8')
+            for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
 
-    def test_separated_producer_retains_exact_code_and_root_relative_configuration(self):
-        producer = ('from pathlib import Path\n'
-                    'import json\n'
-                    'if __name__ == "__main__":\n'
-                    '    print(json.loads(Path("tracker/config.json").read_text())["project"]["repository"])\n')
-        exported = self.exported()
-        exported['scripts/tracker_ci_evidence.py'] = producer
-        project.separate_export(exported)
-        self.assertEqual(exported['.workflow/tools/tracker_ci_evidence.py'], producer)
-        with tempfile.TemporaryDirectory() as scratch:
-            root = Path(scratch)
-            for name, content in exported.items():
-                path = root/name
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(content)
-            (root/'tracker').mkdir()
-            (root/'tracker/config.json').write_text('{"project":{"repository":"owner/example"}}')
-            for name in ('scripts/tracker_ci_evidence.py', '.workflow/tools/tracker_ci_evidence.py'):
-                result = subprocess.run([sys.executable, name], cwd=root, capture_output=True, text=True)
-                self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertEqual(result.stdout.strip(), 'owner/example')
 
-    def test_older_export_does_not_invent_ci_producer_or_opt_in(self):
-        exported = self.exported()
-        project.separate_export(exported)
-        self.assertFalse(any('ci_evidence' in path for path in exported))
+class ExportedHelperConsumption(unittest.TestCase):
+    def test_init_rejects_missing_or_changed_exported_engine_before_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)/'consumer'
+            engine = Path(directory)/'engine'; engine.mkdir()
+            def exporter(command, **kwargs):
+                target = Path(command[command.index('--output')+1])
+                exported = portable_files()
+                exported.update({'tracker/config.json': files()['tracker/config.json'],
+                    'docs/TRACKER_AGENT_WORKFLOW.md': 'Pinned guide\n',
+                    '.github/pull_request_template.md': 'Tracker issues: EX-12\n'})
+                if lock is None: exported.pop('tracker/engine.json')
+                else: exported['tracker/engine.json'] = lock
+                for name, text in exported.items():
+                    path=target/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode())
+                return mock.Mock(returncode=0, stderr='', stdout='')
+            locks = (None, '{"repository":"MojoTheApe/task-tracker","revision":"'+'f'*40+'"}',
+                     '{"repository":"foreign/repo","revision":"'+'f'*40+'"}', 'not json')
+            for lock in locks:
+                with self.subTest(lock=lock), mock.patch.object(project, 'tracker_checkout', return_value=engine), \
+                        mock.patch.object(project.subprocess, 'run', side_effect=exporter):
+                    with self.assertRaisesRegex(ValueError, 'engine lock'):
+                        project.init(root, INPUTS, OLD, engine, apply=True)
+                    self.assertFalse(root.exists())
 
-    def test_receipt_recorder_keeps_bytes_portable_import_and_both_entry_points(self):
-        producer = ('try:\n    from . import delivery_policy as rules\n'
-                    'except ImportError:\n    import tracker_delivery_policy as rules\n'
-                    'def github(path):\n    return "github:" + path\n'
-                    'def verification_job(*args):\n    return (rules.VALUE, 2)\n'
-                    'if __name__ == "__main__":\n    print(rules.VALUE)\n')
-        exported = self.exported()
-        exported['scripts/tracker_delivery_policy.py'] = 'VALUE = 42\n'
-        exported['scripts/tracker_delivery_receipt.py'] = producer
+    def test_document_relocation_preserves_all_exact_exported_helpers(self):
+        exported = portable_files()
+        before = exported.copy()
+        exported.update({'docs/TRACKER_AGENT_WORKFLOW.md': 'Read [reuse](../docs/CI_REUSE.md).\n',
+                         'docs/CI_REUSE.md': '# Exact reference body\n'})
         project.separate_export(exported)
-        self.assertEqual(exported['.workflow/tools/tracker_delivery_receipt.py'], producer)
-        with tempfile.TemporaryDirectory() as scratch:
-            root = Path(scratch)
-            for name, content in exported.items():
-                path = root/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(content)
-            for name in ('scripts/tracker_delivery_receipt.py', '.workflow/tools/tracker_delivery_receipt.py'):
-                result = subprocess.run([sys.executable, name], cwd=root, capture_output=True, text=True)
-                self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertEqual(result.stdout.strip(), '42')
-            imported = subprocess.run([sys.executable, '-c',
-                'from scripts.tracker_delivery_receipt import github, verification_job; '
-                'assert github("synthetic") == "github:synthetic"; '
-                'assert verification_job() == (42, 2)'], cwd=root, capture_output=True, text=True)
-            self.assertEqual(imported.returncode, 0, imported.stderr)
+        self.assertEqual(before, {name:exported[name] for name in before})
+        self.assertEqual(exported['docs/repository/CI_REUSE.md'], '# Exact reference body\n')
+        self.assertIn('(CI_REUSE.md)', exported['docs/repository/TRACKER.md'])
 
-    def test_older_export_does_not_require_or_invent_receipt_recorder(self):
-        exported = self.exported()
+    def test_document_relocation_never_authors_or_rewrites_raw_helpers(self):
+        exported = {'docs/TRACKER_AGENT_WORKFLOW.md': 'Guide\n',
+                    'scripts/task_tracker.py': 'old opaque helper bytes\n'}
         project.separate_export(exported)
-        self.assertFalse(any('delivery_receipt' in path for path in exported))
+        self.assertEqual(exported['scripts/task_tracker.py'], 'old opaque helper bytes\n')
+        self.assertNotIn('.workflow/tools/task_tracker.py', exported)
+
+    def test_real_portable_producer_receipt_and_gate_paths_need_no_engine(self):
+        import os
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name, text in portable_files().items():
+                path = root/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode())
+            env = dict(os.environ)
+            for key in ('PYTHONPATH', 'TASK_TRACKER_HOME'):
+                env.pop(key, None)
+            env.update(PATH='', PYTHONNOUSERSITE='1')
+            for name in ('tracker_ci_evidence.py', 'tracker_delivery_receipt.py', 'tracker_ci_gate.py'):
+                for parent in ('scripts/', '.workflow/tools/'):
+                    result = subprocess.run([sys.executable, '-B', parent+name, '--help'], cwd=root,
+                                            env=env, capture_output=True, text=True)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertIn('usage:', result.stdout)
 
 
 def files(inputs=INPUTS, revision=OLD, *_args):
@@ -94,25 +95,14 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     if 'ci_evidence' in data['workflow']: config['ci_evidence_policy']=data['workflow']['ci_evidence']
     if 'process_instructions' in data['workflow']:
         config['process_instructions']=data['workflow']['process_instructions']
-    out={'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
+    out=portable_files()
+    out.update({'delivery.json':project.dumps(data),'tracker/config.json':project.dumps(config),
          '.github/pull_request_template.md': 'Tracker issues: EX-12\n\nPinned selected Tracker PR guidance.\n',
          'tracker/engine.json':project.dumps({'repository':data['tracker']['repository'],'revision':data['tracker']['revision']}),
-         'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n', 'scripts/task_tracker.py':'root = Path(__file__).resolve().parents[1]\n',
-         'scripts/tracker_pr_check.py':'root = Path(__file__).resolve().parents[1]\n','scripts/tracker_delivery_policy.py':'# policy check\n'}
-    out['scripts/tracker_process_instructions.py'] = '# instruction route check\n'
-    out['scripts/tracker_task_context.py'] = '# portable task context\n'
-    out['docs/TASK_CONTEXT.md'] = '# Exact task context guide\n'
+         'docs/TRACKER_AGENT_WORKFLOW.md':'Read the pinned guide.\n',
+         'docs/TASK_CONTEXT.md':'# Exact task context guide\n', 'docs/CI_REUSE.md':'# Exact CI reuse guide\n'})
     if 'completion_policy' in data['workflow']:
         out['docs/COMPLETION_POLICY.md'] = '# Exact completion policy guide\n'
-    out['scripts/tracker_ci_evidence.py'] = '# portable native CI proof\n'
-    out['scripts/tracker_ci_gate.py'] = (project.SOURCE/'templates/workflow/ci_gate.py').read_text()
-    out['docs/CI_REUSE.md'] = '# Exact CI reuse guide\n'
-    out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
-    out['scripts/tracker_delivery_receipt.py'] = '# portable receipt recorder\n'
-    if data['workflow'].get('execution', {}).get('schema_version') in (2, 3):
-        out['scripts/tracker_batch_policy.py'] = '# batch policy check\n'
-        if data['completion'] != 'reviewed-merge':
-            out['scripts/tracker_delivery_receipt.py'] = '# portable receipt recorder\n'
     project.separate_export(out)
     out.update(project.layout_files())
     for source,destination in project.FILES.items():
@@ -472,8 +462,8 @@ class Projects(unittest.TestCase):
             (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
             (target/'.github').mkdir(); (target/'.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             (target/'scripts').mkdir()
-            for name in project.HELPERS:
-                (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
+            for name, text in portable_files().items():
+                path=target/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode())
             return mock.Mock(returncode=0,stderr='',stdout='')
         self.create();config=self.json('tracker/config.json');config['refresh_seconds']=120;self.put('tracker/config.json',config)
         with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=exporter):
@@ -494,8 +484,8 @@ class Projects(unittest.TestCase):
             (target/'docs').mkdir();(target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
             (target/'.github').mkdir(); (target/'.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             (target/'scripts').mkdir()
-            for name in project.HELPERS:
-                (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
+            for name, text in portable_files().items():
+                path=target/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode())
             return mock.Mock(returncode=0,stderr='',stdout='')
         with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=exporter):
             result=REAL_RENDER(dict(INPUTS,implementation_limit=2),NEW,engine)
@@ -547,8 +537,8 @@ class Projects(unittest.TestCase):
             (target/'docs').mkdir(); (target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text('Pinned guide')
             (target/'.github').mkdir(); (target/'.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             (target/'scripts').mkdir()
-            for name in (*project.HELPERS, 'tracker_batch_policy.py', 'tracker_delivery_receipt.py'):
-                (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
+            for name, text in portable_files().items():
+                path=target/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode())
             return mock.Mock(returncode=0, stderr='', stdout='')
         inputs = dict(INPUTS, staging=False, profile='package', implementation_limit=5, batch_limit=5, review_limit=5)
         with mock.patch.object(project, 'tracker_checkout', return_value=engine), mock.patch.object(project.subprocess, 'run', side_effect=exporter):
@@ -564,7 +554,7 @@ class Projects(unittest.TestCase):
             (target/'scripts/tracker_delivery_receipt.py').unlink()
             return result
         with mock.patch.object(project, 'tracker_checkout', return_value=engine), mock.patch.object(project.subprocess, 'run', side_effect=incomplete):
-            with self.assertRaisesRegex(ValueError, 'lacks the delivery receipt helper'):
+            with self.assertRaisesRegex(ValueError, r'tracker_delivery_receipt\.py'):
                 REAL_RENDER(inputs, NEW, engine)
         for drift in ('workflow', 'delivery_policy'):
             def stale_export(command, **kwargs):
@@ -654,9 +644,8 @@ class Projects(unittest.TestCase):
                 (target/'docs/TRACKER_AGENT_WORKFLOW.md').write_text(
                     '[Process instructions](../docs/PROCESS_INSTRUCTIONS.md). Read `docs/PROCESS_INSTRUCTIONS.md`.\n')
             (target/'scripts').mkdir()
-            for name in project.HELPERS:
-                (target/'scripts'/name).write_text('root = Path(__file__).resolve().parents[1]\n')
-            (target/'scripts/tracker_process_instructions.py').write_text('VALUE = 42\n')
+            for name, text in portable_files().items():
+                path=target/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode())
             return mock.Mock(returncode=0,stderr='',stdout='')
         with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=exporter):
             result=REAL_RENDER(dict(INPUTS,process_instructions=process),NEW,engine)
@@ -677,7 +666,7 @@ class Projects(unittest.TestCase):
             result=exporter(command,**kwargs);target=Path(command[command.index('--output')+1])
             (target/'scripts/tracker_process_instructions.py').unlink();return result
         with mock.patch.object(project,'tracker_checkout',return_value=engine),mock.patch.object(project.subprocess,'run',side_effect=incomplete):
-            with self.assertRaisesRegex(ValueError,'lacks the process'):REAL_RENDER(dict(INPUTS,process_instructions=process),NEW,engine)
+            with self.assertRaisesRegex(ValueError,r'tracker_process_instructions\.py'):REAL_RENDER(dict(INPUTS,process_instructions=process),NEW,engine)
     def test_project_knowledge_is_never_refreshed_even_if_untouched(self):
         self.create()
         incoming=files(INPUTS,NEW)
@@ -720,23 +709,22 @@ class Projects(unittest.TestCase):
         self.put(project.LAYOUT,project.LAYOUT_DATA)
         (self.root/'docs/repository/WORKFLOW.md').unlink()
         self.assertTrue(any('WORKFLOW.md' in e for e in self.errors()))
-    def test_wrappers_preserve_cli_imports_and_project_root(self):
-        import subprocess
+    def test_exported_author_and_checker_wrappers_keep_the_project_root(self):
+        self.create()
         import runpy
-        source={'docs/TRACKER_AGENT_WORKFLOW.md':'Guide'}
-        for name in project.HELPERS:
-            source['scripts/'+name]=("from pathlib import Path\nROOT = Path(__file__).resolve().parents[1]\n"
-                "VALUE = 42\nif __name__ == '__main__': print(ROOT)\n") if name != 'tracker_delivery_policy.py' else 'VALUE = 42\n'
-        project.separate_export(source)
-        for name,content in source.items():
-            p=self.root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(content)
-        for name in project.HELPERS:
-            self.assertEqual(runpy.run_path(str(self.root/'scripts'/name))['VALUE'],42)
-            if name != 'tracker_delivery_policy.py':
-                result=subprocess.check_output([sys.executable,str(self.root/'scripts'/name)],cwd=self.tmp.name,text=True)
-                self.assertEqual(result.strip(),str(self.root.resolve()))
-        source={'docs/TRACKER_AGENT_WORKFLOW.md':'Guide','scripts/task_tracker.py':'unexpected export'}
-        with self.assertRaisesRegex(ValueError,'layout changed'):project.separate_export(source)
+        with mock.patch('subprocess.run') as process, mock.patch('subprocess.check_output') as output:
+            client = runpy.run_path(str(self.root/'scripts/task_tracker.py'))
+            self.assertTrue(callable(client['main']))
+            process.assert_not_called(); output.assert_not_called()
+        client_source = (self.root/'.workflow/tools/task_tracker.py').read_text()
+        checker_source = (self.root/'.workflow/tools/tracker_pr_check.py').read_text()
+        self.assertIn('Path(__file__).resolve().parents[2]', client_source)
+        self.assertIn('Path(__file__).resolve().parents[2]', checker_source)
+        # Authentic complete bytes are bound to the engine record, including
+        # both wrappers; a root lookup edit must fail before any execution.
+        path = self.root/'.workflow/tools/task_tracker.py'
+        path.write_text(client_source.replace('parents[2]', 'parents[1]'))
+        self.assertTrue(any('task_tracker.py' in error for error in self.errors()))
     def test_onboarding_preview_and_apply_do_not_claim_publication(self):
         self.create();calls=[]
         def request(path,payload=None,optional=False):

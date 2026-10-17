@@ -129,7 +129,7 @@ class CompletionPolicy(unittest.TestCase):
         self.assertEqual(exported['docs/repository/COMPLETION_POLICY.md'], exact)
         self.assertIn('docs/repository/COMPLETION_POLICY.md', exported['docs/repository/TRACKER.md'])
         self.assertIn('(repository/COMPLETION_POLICY.md)', exported['docs/COMPLETION_POLICY.md'])
-        self.assertEqual(exported['.workflow/tools/tracker_delivery_policy.py'], '# unchanged portable assessment\n')
+        self.assertEqual(exported['scripts/tracker_delivery_policy.py'], '# unchanged portable assessment\n')
 
     def test_missing_transitive_portable_helper_blocks_upgrade_without_writes(self):
         self.create(completion_policy={'schema_version': 1})
@@ -160,9 +160,9 @@ class CompletionPolicy(unittest.TestCase):
             (target / '.github/pull_request_template.md').write_text('Tracker issues: EX-12\nPinned Tracker PR guidance.\n')
             if selected:
                 (target / 'docs/COMPLETION_POLICY.md').write_text('Exact guide\n')
-            (target / 'scripts').mkdir()
-            for name in set(project.HELPERS + project.COMPLETION_HELPERS):
-                (target / 'scripts' / name).write_text('root = Path(__file__).resolve().parents[1]\n')
+            from test_project import portable_files
+            for name, text in portable_files().items():
+                path = target/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode())
             return mock.Mock(returncode=0, stdout='', stderr='')
 
         with mock.patch.object(project, 'tracker_checkout', return_value=engine):
@@ -184,5 +184,5 @@ class CompletionPolicy(unittest.TestCase):
                     return result
                 inputs = INPUTS if failure == 'inherited' else dict(INPUTS, completion_policy={'schema_version': 1})
                 with self.subTest(failure=failure), mock.patch.object(project.subprocess, 'run', side_effect=bad_export):
-                    with self.assertRaisesRegex(ValueError, 'completion policy differs|exact guide'):
+                    with self.assertRaisesRegex(ValueError, 'completion policy differs|exact completion policy guide|helper bytes differ'):
                         REAL_RENDER(inputs, NEW, engine)

@@ -1,5 +1,13 @@
 # Master Repo system
 
+MR-48 / TT-143 add the [portable contract](../portable-contract.md). Tracker emits
+all raw/separated helper bytes and the static versioned capability/hash record.
+Master consumes that output unchanged, uses its own hash-verified canonical
+structural snapshot, and retains descriptor/profile and documentation ownership.
+Generic source-owned native fixtures allow actual engine-free Python3.9 public
+CI; one clean final source-pair harness proves the released engine/standard pair.
+No consumer policy, state, capacity, target or activation changes implicitly.
+
 MR-45 adds explicit `workflow.completion_policy` intent, exact Tracker export/config
 mirroring and conservative init/three-way upgrade selection. Its engine-owned
 local completion guide and portable assessment are preserved through the separated

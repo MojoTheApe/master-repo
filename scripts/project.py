@@ -8,6 +8,7 @@ import tempfile
 import standard
 import ci_policy
 import instruction_render
+import export_contract
 
 SOURCE = Path(__file__).resolve().parents[1]
 PROFILES = {'vps': 'verified-production', 'n8n': 'verified-production', 'n8n-source': 'reviewed-merge', 'local': 'reviewed-merge',
@@ -16,8 +17,6 @@ PHASES = ['idea', 'backlog', 'todo', 'in_progress', 'review', 'stage', 'merged']
 BASELINE = '.workflow/template-base.json'
 LAYOUT = '.workflow/layout.json'
 PROJECT_AREAS = ('docs/system/', 'docs/runtime/')
-HELPERS = ('task_tracker.py', 'tracker_pr_check.py', 'tracker_delivery_policy.py')
-COMPLETION_HELPERS = ('tracker_delivery_policy.py', 'tracker_task_context.py', 'tracker_delivery_receipt.py')
 FILES = {'AGENTS.md': 'AGENTS.md', 'WORKFLOW.md': 'docs/repository/WORKFLOW.md',
          'VERIFICATION.md': 'docs/repository/VERIFICATION.md',
          'DELIVERY_CONTINUATION.md': 'docs/repository/DELIVERY_CONTINUATION.md',
@@ -36,7 +35,7 @@ LAYOUT_DATA = {'schema_version': 1, 'repository': 'docs/repository/',
 
 
 def separate_export(files):
-    """Separate shared guidance and tools; preserve the pinned engine contract."""
+    """Relocate document navigation; consume Tracker's helper layouts verbatim."""
     guide = files.pop('docs/TRACKER_AGENT_WORKFLOW.md')
     # Move the entire exported reference closure together. Sibling Markdown
     # links remain valid and the pinned reference bodies stay byte-for-byte.
@@ -52,24 +51,6 @@ def separate_export(files):
         guide = guide.replace(old, 'docs/repository/' + name)
     guide = guide.replace('](../tracker/', '](../../tracker/')
     files['docs/repository/TRACKER.md'] = guide
-    helpers = (*HELPERS, *(name for name in ('tracker_batch_policy.py', 'tracker_process_instructions.py',
-                                           'tracker_ci_evidence.py', 'tracker_ci_gate.py', 'tracker_delivery_receipt.py', 'tracker_task_context.py')
-                          if 'scripts/' + name in files))
-    for name in helpers:
-        source = files.pop('scripts/' + name)
-        if name in ('task_tracker.py', 'tracker_pr_check.py'):
-            old = 'Path(__file__).resolve().parents[1]'
-            if source.count(old) != 1:
-                raise ValueError('Pinned Tracker helper layout changed: ' + name)
-            source = source.replace(old, 'Path(__file__).resolve().parents[2]')
-        files['.workflow/tools/' + name] = source
-        # Preserve both command-line execution and imports from the old path.
-        files['scripts/' + name] = ("#!/usr/bin/env python3\n"
-            '"""Compatibility entry point; shared implementation is in .workflow/tools."""\n'
-            "from pathlib import Path\nimport runpy\nimport sys\n"
-            "_tools = Path(__file__).resolve().parents[1] / '.workflow/tools'\n"
-            "sys.path.insert(0, str(_tools))\n"
-            "globals().update(runpy.run_path(str(_tools / '" + name + "'), run_name=__name__))\n")
     return files
 
 
@@ -225,7 +206,7 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         code = 'import sys; sys.path.insert(0,sys.argv.pop(1)); from tracker.cli import main; raise SystemExit(main())'
         command = [python, '-c', code, str(engine), '--config', str(engine/'tracker/config.json'), 'export-template', '--output', str(target), '--repository', inputs['repository'],
                    '--name', inputs['name'], '--base', 'main', '--id-prefix', inputs['prefix'], '--engine-revision', data['tracker']['revision'],
-                   '--delivery-policy', str(policy)]
+                   '--delivery-policy', str(policy), '--helper-layout', 'separated']
         if 'execution' in data['workflow']:
             execution = scratch/'execution.json'; execution.write_text(dumps(data['workflow']['execution']))
             command.extend(['--execution-policy', str(execution)])
@@ -244,7 +225,13 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             command.extend(['--ci-evidence-policy', str(evidence)])
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
-        files = {p.relative_to(target).as_posix(): p.read_text() for p in target.rglob('*') if p.is_file()}
+        files = {p.relative_to(target).as_posix(): p.read_bytes().decode('utf-8') for p in target.rglob('*') if p.is_file()}
+        try:
+            exported_lock = json.loads(files['tracker/engine.json'], object_pairs_hook=export_contract.unique)
+        except (KeyError, ValueError) as error:
+            raise ValueError('Tracker export needs a valid immutable engine lock') from error
+        if exported_lock != {'repository': data['tracker']['repository'], 'revision': data['tracker']['revision']}:
+            raise ValueError('Tracker export engine lock differs from the trusted compatible pin')
         exported_config = json.loads(files['tracker/config.json'])
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
@@ -254,33 +241,26 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             if (exported_config.get('delivery_policy') != delivery_policy(data)
                     or exported_phases != phases(inputs['staging'], data['workflow']['execution'])):
                 raise ValueError('Tracker export batch route differs from the explicit staging/delivery choice')
-            if data['completion'] != 'reviewed-merge' and 'scripts/tracker_delivery_receipt.py' not in files:
-                raise ValueError('Pinned Tracker export lacks the delivery receipt helper')
         if (('process_instructions' in exported_config) != ('process_instructions' in data['workflow'])
                 or exported_config.get('process_instructions') != data['workflow'].get('process_instructions')):
             raise ValueError('Tracker export process instructions differ from the explicit project choice')
-        if ('process_instructions' in data['workflow']
-                and 'scripts/tracker_process_instructions.py' not in files):
-            raise ValueError('Pinned Tracker export lacks the process instructions helper')
         if (('task_context_policy' in exported_config) != ('task_context' in data['workflow'])
                 or exported_config.get('task_context_policy') != data['workflow'].get('task_context')):
             raise ValueError('Tracker export task context differs from the explicit project choice')
-        if 'task_context' in data['workflow'] and not {'scripts/tracker_task_context.py', 'docs/TASK_CONTEXT.md'} <= files.keys():
-            raise ValueError('Pinned Tracker export lacks the task context helper or exact guide')
+        if 'task_context' in data['workflow'] and 'docs/TASK_CONTEXT.md' not in files:
+            raise ValueError('Pinned Tracker export lacks the exact task context guide')
         if (('completion_policy' in exported_config) != ('completion_policy' in data['workflow'])
                 or exported_config.get('completion_policy') != data['workflow'].get('completion_policy')):
             raise ValueError('Tracker export completion policy differs from the explicit project choice')
-        if ('completion_policy' in data['workflow']
-                and not ({'scripts/' + name for name in COMPLETION_HELPERS}
-                         | {'docs/COMPLETION_POLICY.md'}) <= files.keys()):
-            raise ValueError('Pinned Tracker export lacks the completion assessment helper or exact guide')
+        if 'completion_policy' in data['workflow'] and 'docs/COMPLETION_POLICY.md' not in files:
+            raise ValueError('Pinned Tracker export lacks the exact completion policy guide')
         if (('ci_evidence_policy' in exported_config) != ('ci_evidence' in data['workflow'])
                 or exported_config.get('ci_evidence_policy') != data['workflow'].get('ci_evidence')):
             raise ValueError('Tracker export CI evidence differs from the explicit project choice')
-        if 'ci_evidence' in data['workflow'] and not {'scripts/tracker_ci_evidence.py', 'docs/CI_REUSE.md'} <= files.keys():
-            raise ValueError('Pinned Tracker export lacks the CI evidence helper or exact guide')
-    files['scripts/tracker_ci_gate.py'] = (SOURCE/'templates/workflow/ci_gate.py').read_text()
+        if 'ci_evidence' in data['workflow'] and 'docs/CI_REUSE.md' not in files:
+            raise ValueError('Pinned Tracker export lacks the exact CI evidence guide')
     files = separate_export(files)
+    export_contract.validate_rendered(files, data)
     files.update(layout_files())
     files['delivery.json'] = dumps(data)
     pr_template = '.github/pull_request_template.md'
@@ -302,7 +282,7 @@ def write_plan(root, planned, before):
     # Preflight every path before writing anything. Never traverse project symlinks.
     for name in planned:
         path = standard.safe_path(root, name)
-        current = path.read_text() if path.is_file() else None
+        current = path.read_bytes().decode('utf-8') if path.is_file() else None
         if current != before[name]: raise ValueError('Project changed while planning: ' + name)
         if path.exists() and not path.is_file(): raise ValueError('Expected a regular file: ' + name)
         for parent in path.parents:
@@ -314,12 +294,12 @@ def write_plan(root, planned, before):
             path = standard.safe_path(root, name); path.parent.mkdir(parents=True, exist_ok=True)
             written.append(name)
             if text is None: path.unlink()
-            else: path.write_text(text, encoding='utf-8')
+            else: path.write_bytes(text.encode('utf-8'))
     except OSError:
         for name in reversed(written):
             path = standard.safe_path(root, name)
             if before[name] is None: path.unlink(missing_ok=True)
-            else: path.write_text(before[name], encoding='utf-8')
+            else: path.write_bytes(before[name].encode('utf-8'))
         raise
 
 
@@ -377,7 +357,7 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
     planned, before, conflicts = {}, {}, []
     for name in sorted(old.keys() | new.keys()):
         path = standard.safe_path(root, name)
-        before[name] = path.read_text() if path.is_file() else None
+        before[name] = path.read_bytes().decode('utf-8') if path.is_file() else None
         if name.startswith(PROJECT_AREAS):
             # Project ownership begins at creation, not at the first local edit.
             planned[name] = before[name]
@@ -393,7 +373,7 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
         candidate = dict(before, **planned)
         for name, text in candidate.items():
             if text is not None:
-                path = standard.safe_path(scratch, name); path.parent.mkdir(parents=True, exist_ok=True); path.write_text(text)
+                path = standard.safe_path(scratch, name); path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode('utf-8'))
         errors = [message for kind, message in inspect(scratch) if kind == 'error']
         if errors:
             return {'applied': False, 'conflicts': ['configuration validation'], 'changed': [], 'errors': errors}
@@ -441,6 +421,7 @@ def inspect(root, expected_revision=None):
         config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text())
         lock = json.loads(standard.safe_path(root, 'tracker/engine.json').read_text())
         if lock != {'repository': compat['tracker_repository'], 'revision': compat['tracker_revision']}: raise ValueError('Tracker client pin differs from descriptor')
+        export_contract.validate_root(root, data)
         if not re.fullmatch(r'[A-Z][A-Z0-9]+', config['project'].get('id_prefix', '')): raise ValueError('Tracker prefix is invalid')
         if not re.fullmatch(r'[a-z][a-z0-9-]*', data['tracker']['workspace_id']): raise ValueError('Workspace ID is invalid')
         if config['project']['repository'] != data['project']['repository'].split('github.com/')[1] or config['project']['base_branch'] != wf['main_branch']: raise ValueError('Tracker project identity differs')
@@ -468,24 +449,12 @@ def inspect(root, expected_revision=None):
         layout = json.loads(standard.safe_path(root, LAYOUT).read_text())
         if layout != LAYOUT_DATA: raise ValueError('Use the separated repository/system/runtime layout')
         required = set(FILES.values()) | set(FORWARDS) | {'docs/repository/TRACKER.md', '.github/pull_request_template.md'}
-        required.update('.workflow/tools/' + name for name in HELPERS)
-        required.update('scripts/' + name for name in HELPERS)
-        if wf.get('execution', {}).get('schema_version') in (2, 3):
-            required.update({'.workflow/tools/tracker_batch_policy.py', 'scripts/tracker_batch_policy.py'})
-            if data['completion'] != 'reviewed-merge':
-                required.update({'.workflow/tools/tracker_delivery_receipt.py', 'scripts/tracker_delivery_receipt.py'})
-        if 'process_instructions' in wf:
-            required.update({'.workflow/tools/tracker_process_instructions.py', 'scripts/tracker_process_instructions.py'})
         if 'task_context' in wf:
-            required.update({'.workflow/tools/tracker_task_context.py', 'scripts/tracker_task_context.py', 'docs/repository/TASK_CONTEXT.md'})
+            required.add('docs/repository/TASK_CONTEXT.md')
         if 'completion_policy' in wf:
             required.add('docs/repository/COMPLETION_POLICY.md')
-            for helper in COMPLETION_HELPERS:
-                required.update({'.workflow/tools/' + helper, 'scripts/' + helper})
         if 'ci_evidence' in wf:
-            required.update({'.workflow/tools/tracker_ci_evidence.py', 'scripts/tracker_ci_evidence.py', '.workflow/tools/tracker_ci_gate.py', 'scripts/tracker_ci_gate.py', 'docs/repository/CI_REUSE.md'})
-            for helper in ('tracker_delivery_receipt.py', 'tracker_batch_policy.py', 'tracker_task_context.py', 'tracker_process_instructions.py'):
-                required.update({'.workflow/tools/'+helper, 'scripts/'+helper})
+            required.add('docs/repository/CI_REUSE.md')
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)

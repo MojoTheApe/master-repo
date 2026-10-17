@@ -67,8 +67,8 @@ class SelectedInstructions(unittest.TestCase):
                 target = Path(command[command.index('--output') + 1])
                 exported = {'tracker/config.json': '{}', 'docs/TRACKER_AGENT_WORKFLOW.md': 'Exact guide.\n',
                             '.github/pull_request_template.md': template}
-                for name in project.HELPERS:
-                    exported['scripts/'+name] = 'root = Path(__file__).resolve().parents[1]\n'
+                from test_project import portable_files
+                exported.update(portable_files())
                 for name, content in exported.items():
                     path = target/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(content)
                 return mock.Mock(returncode=0, stdout='', stderr='')
@@ -85,8 +85,8 @@ class SelectedInstructions(unittest.TestCase):
         exported = {'docs/TRACKER_AGENT_WORKFLOW.md': 'Read docs/WORKFLOW_REFERENCE.md and [reference](WORKFLOW_REFERENCE.md).\n'
                 '[Config](../tracker/config.json), [task](../tracker/task-template.md).\n',
                     'docs/WORKFLOW_REFERENCE.md': original}
-        for name in project.HELPERS:
-            exported['scripts/'+name] = 'root = Path(__file__).resolve().parents[1]\n'
+        from test_project import portable_files
+        exported.update(portable_files())
         project.separate_export(exported)
         self.assertEqual(exported['docs/repository/WORKFLOW_REFERENCE.md'], original)
         self.assertIn('docs/repository/WORKFLOW_REFERENCE.md', exported['docs/repository/TRACKER.md'])

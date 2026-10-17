@@ -1,21 +1,20 @@
 # Versioning and safe upgrades
 
-## Current published pair and selected-instruction candidate
+## Current published pair and portable-contract candidate
 
-Master 1.1.0 and Tracker 3.3.0 are published immutable completion releases at
-`8c0b9b44801d42c3706999bccae5bc47191d8b5d` and
-`95079e71d454c8a6e2216b76ae86c0f87d522897`. Their successful actual-main checks and
+Master 1.1.1 and Tracker 3.3.1 are published immutable instruction releases at
+`c396e64222cb334780096a2f9e283a78c92b3829` and
+`6859f7b15e3bde361beba5f07a24b90492ee1f27`. Their successful actual-main checks and
 real paired export/upgrade evidence precede publication. Source publication is
 separate from installed readers, owned consumer activation and live outcome proof.
 
-Master 1.1.1 proposes selected primary instructions and complete local reference
-navigation with Tracker 3.3.1 source at the independently reviewed actual merge
-`6859f7b15e3bde361beba5f07a24b90492ee1f27`. It changes no state protocol,
-execution limits, target or default. Independently review the final supporting
-engine, pin its actual merge, validate the real output pair and publish only after
-successful actual-main checks. Follow [completion policy](completion-policy.md)
-for separate reader/writer and owned activation boundaries. Existing projects
-retain selected policies and targets until reviewed adoption.
+Master 1.2.0 proposes the [portable contract](portable-contract.md) with Tracker
+3.4.0: Tracker-owned raw/separated helpers, an exact generated capability/hash
+record and a trusted whole-module structural validator snapshot. Publish the
+reviewed checked Tracker merge first, then refresh Master from that exact released
+revision and run the single clean final source-pair gate before Master publication.
+The provisional source pin is not published-pair acceptance. Existing projects
+retain selected policies, execution limits, targets and state until reviewed adoption.
 
 `VERSION` is a proposed source version, not proof of a published release. Version
 1.0.0 introduces the complete workflow and descriptor schema 2. Schema 1 validation

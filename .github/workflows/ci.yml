@@ -20,3 +20,15 @@ jobs:
       - run: python3 -m unittest discover -s tests -v
       - uses: ./
       - run: python3 scripts/check_links.py
+  portable-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.9'
+      - name: Exercise canonical portable native fixtures without the engine
+        run: python tests/portable_contract_fixture.py
