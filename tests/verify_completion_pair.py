@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import shutil
 from urllib.parse import unquote
 import subprocess
 import sys
@@ -13,6 +14,53 @@ from unittest import mock
 
 def git(root, *args):
     return subprocess.check_output(['git', '-C', str(root), *args], text=True).strip()
+
+
+def changed_engine_contract(args, scratch):
+    """Actual committed rule drift must fail even with freshly matching pin metadata."""
+    engine = scratch/'changed-engine'
+    subprocess.run(['git', 'clone', '--quiet', '--no-hardlinks', str(args.tracker), str(engine)], check=True)
+    subprocess.run(['git', '-C', str(engine), 'remote', 'set-url', 'origin',
+                    'https://github.com/MojoTheApe/task-tracker.git'], check=True)
+    source = engine/'tracker/ci_evidence.py'
+    before = source.read_bytes()
+    old, new = b"p['max_age_seconds'] <= 30 * 86400", b"p['max_age_seconds'] <= 31 * 86400"
+    assert before.count(old) == 1, 'Update the real contract-drift mutation for this engine'
+    source.write_bytes(before.replace(old, new))
+    subprocess.run(['git', '-C', str(engine), 'add', 'tracker/ci_evidence.py'], check=True)
+    subprocess.run(['git', '-C', str(engine), '-c', 'user.name=Isolated contract fixture',
+                    '-c', 'user.email=fixture@example.invalid', 'commit', '--quiet',
+                    '-m', 'Fixture only: change the actual maximum evidence age rule'], check=True)
+    revision = git(engine, 'rev-parse', 'HEAD')
+    master = scratch/'stale-master-contract'
+    shutil.copytree(args.master, master, ignore=shutil.ignore_patterns('.git', '__pycache__', '.venv', '.pytest_cache'))
+    # Refresh identity alone, deliberately retaining the old technical rules and
+    # hashes. A manually wrong SHA or a dirty checkout is not this negative case.
+    record_path = master/'scripts/vendor/tracker-export-contract.json'
+    record = json.loads(record_path.read_bytes()); record['engine']['revision'] = revision
+    raw = (json.dumps(record, indent=2, sort_keys=True)+'\n').encode()
+    record_path.write_bytes(raw)
+    compat_path = master/'compatibility.json'; compat = json.loads(compat_path.read_bytes())
+    compat.update(tracker_revision=revision, export_contract_sha256=hashlib.sha256(raw).hexdigest())
+    compat_path.write_text(json.dumps(compat))
+    inputs = dict(name='Isolated changed contract', repository='example/portable', prefix='EX',
+                  workspace_id='portable', profile='tooling', staging=False)
+    probe = '''import json,sys
+from pathlib import Path
+sys.path.insert(0,sys.argv[1]); import project
+try: project.render(json.loads(sys.argv[2]),sys.argv[3],Path(sys.argv[4]),sys.executable)
+except ValueError as error:
+ assert 'export manifest differs from the trusted compatible source record' in str(error),str(error)
+ print('actual changed canonical rule refused with matching metadata and stale contract')
+else: raise AssertionError('Changed engine rules passed a stale trusted contract')
+'''
+    checked = subprocess.run([sys.executable, '-I', '-c', probe, str(master/'scripts'),
+                              json.dumps(inputs), git(args.master, 'rev-parse', 'HEAD'), str(engine)],
+                             cwd=scratch, capture_output=True, text=True)
+    assert checked.returncode == 0, (checked.stdout, checked.stderr)
+    return dict(actual_canonical_rule_changed=True, local_committed_engine=revision,
+                official_origin_preserved=True, clean_engine=True, matching_pin_metadata=True,
+                stale_trusted_rule_and_helper_record_rejected=True, live_mutations=0)
 
 
 def selected_instructions(root, exported, config, inputs, tracker):
@@ -68,6 +116,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--upgrades-only', action='store_true')
     parser.add_argument('--selected-instructions', action='store_true', help='Check the complete final selected guide/reference/PR closure; synthetic explicit CI policy tests navigation only')
+    parser.add_argument('--bounded', action='store_true', help='Six representative actual outputs plus four genuine old-source upgrades')
+    parser.add_argument('--portable-contract', action='store_true', help='Require exact trusted artifacts, engine-free native fixtures and real contract-drift refusal')
     parser.add_argument('--require-pinned', action='store_true', help='Reject a dirty Master or an engine override')
     args = parser.parse_args()
     for name in ('master', 'tracker', 'old_master', 'old_tracker', 'output'):
@@ -84,6 +134,8 @@ def main():
               'candidate_pair_override': original_compatibility != candidate,
               'matrix': [], 'upgrades': [], 'python39': args.python39,
               'consumer_activation': False, 'selected_instructions': args.selected_instructions}
+    result.update(bounded=args.bounded, portable_contract=args.portable_contract,
+                  publication_verified_by_this_command=False)
     if result['tracker_dirty']:
         raise ValueError('The actual Tracker candidate must be clean and immutable')
     if args.require_pinned and (result['master_dirty'] or result['candidate_pair_override']):
@@ -130,6 +182,11 @@ print('isolated portable assessment/import passed')
                         if context:
                             inputs['task_context'] = {'schema_version': 1}
                         for selected in (False, True):
+                            if args.bounded and (profile, staging, mode, context, selected) not in {
+                                    ('tooling', False, 'legacy', False, False), ('vps', True, 'v1', False, True),
+                                    ('package', True, 'v2', True, True), ('vps', False, 'v3', True, True),
+                                    ('n8n-source', True, 'v2', False, False), ('local', False, 'legacy', False, True)}:
+                                continue
                             actual = dict(inputs)
                             if selected:
                                 actual['completion_policy'] = {'schema_version': 1}
@@ -145,7 +202,7 @@ print('isolated portable assessment/import passed')
                             for name, content in exported.items():
                                 path = root / name
                                 path.parent.mkdir(parents=True, exist_ok=True)
-                                path.write_text(content)
+                                path.write_bytes(content.encode('utf-8'))
                             errors = [message for kind, message in project.inspect(root) if kind == 'error']
                             assert not errors, (actual, errors)
                             config = json.loads(exported['tracker/config.json'])
@@ -155,6 +212,9 @@ print('isolated portable assessment/import passed')
                             assert descriptor['completion'] == project.PROFILES[profile]
                             assert descriptor['workflow']['staging'] == staging
                             row = dict(profile=profile, stage=staging, execution=mode, task_context=context, selected=selected)
+                            if args.portable_contract:
+                                from portable_contract_fixture import isolated_consumer
+                                row['portable_runtime'] = isolated_consumer(root, args.python39)
                             if args.selected_instructions:
                                 row['instructions'] = selected_instructions(root, exported, config, actual, args.tracker)
                             if selected:
@@ -170,7 +230,6 @@ print('isolated portable assessment/import passed')
                                 assert checked.returncode == 0, (row, checked.stdout, checked.stderr)
                                 row['isolated_python39_portable_assessment'] = True
                             result['matrix'].append(row)
-                            import shutil
                             shutil.rmtree(root)
         if not args.upgrades_only:
             result['exports_passed'] = True
@@ -211,6 +270,12 @@ print('isolated portable assessment/import passed')
                                        'old_tracker': git(args.old_tracker, 'rev-parse', 'HEAD'),
                                        'preview_no_writes': True, 'local_knowledge_preserved': True,
                                        'idempotent': True})
+        if args.portable_contract:
+            assert result['matrix'] and all(row.get('portable_runtime') for row in result['matrix']), \
+                'Missing engine-free runtime fixture proof; finish the portable gate before acceptance'
+            from portable_contract_fixture import exercise_all
+            result['native_portable_contexts'] = exercise_all(args.python39, args.tracker)
+            result['changed_engine_contract'] = changed_engine_contract(args, scratch)
     result['passed'] = True
     args.output.write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({'passed': True, 'exports': len(result['matrix']), 'real_upgrades': len(result['upgrades']),

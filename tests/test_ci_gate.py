@@ -21,7 +21,7 @@ class PortableGate(unittest.TestCase):
         modules={'tracker_ci_evidence':self.ci,'tracker_delivery_policy':self.rules,
                  'tracker_delivery_receipt':SimpleNamespace(github=mock.Mock())}
         with mock.patch.dict('sys.modules',modules):
-            spec=importlib.util.spec_from_file_location('portable',SOURCE/'templates/workflow/ci_gate.py')
+            spec=importlib.util.spec_from_file_location('portable',SOURCE/'tests/fixtures/portable-contract/separated/.workflow/tools/tracker_ci_gate.py')
             self.tool=importlib.util.module_from_spec(spec);spec.loader.exec_module(self.tool)
         self.root='repos/owner/project';self.sha='a'*40
         self.ref={'ref':'refs/heads/tracker-state','object':{'type':'commit','sha':self.sha}}

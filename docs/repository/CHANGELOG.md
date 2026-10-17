@@ -1,5 +1,23 @@
 # Repository process history
 
+## 2026-10-17 — MR-48 / TT-143 portable contract
+
+Consume Tracker-owned raw/separated helper artifacts without Master-authored
+helper transformations or a second CI-policy validator. Bind the official exact
+engine, format, canonical structural snapshot and every shipped helper to a
+source-owned capability/hash record; reject rehashed consumer tampering before
+transport. Mechanically refresh complete generic offline proof artifacts with
+immutable provenance. Public Python3.9 CI executes both layouts and all four
+native contexts without private-engine access; the one final paired harness adds
+six representative outputs, four genuine upgrades and actual canonical-rule drift.
+LF attributes preserve actual bytes across checkout; ordinary three-way upgrades
+retain local controls and stop without writes on conflicts. Source review, actual
+checks, immutable pair publication and consumer activation remain separate.
+The canonical skill navigates this ownership/verification boundary. Task Tracker
+companion TT-143 supplies the exporter, manifest, source conformance and final
+native pair gate; final pinning follows its reviewed checked release.
+
+
 ## 2026-10-17 — MR-37 selected primary instructions
 
 Define authored ownership across common Master policy, executable Tracker

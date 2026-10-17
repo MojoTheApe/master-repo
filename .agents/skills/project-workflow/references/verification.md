@@ -1,5 +1,15 @@
 # Verification and coordinated upgrades
 
+When the adopted pin supplies `docs/portable-contract.md`, follow its exact
+generated contract and source-pair gate. Tracker authors the portable frontend,
+fixed layout helpers and canonical CI-policy validator; Master consumes their
+verified bytes and its own trusted structural snapshot. Do not hand-edit generated
+copies, trust a rehashed consumer manifest or introduce a second technical policy.
+Public CI uses the exported closure and its own repository read token; author
+operations still use the exact private engine in an authorized environment.
+Refreshing source artifacts, passing a provisional peer check and publishing a
+clean final pair are distinct facts. Consumer adoption remains separately scoped.
+
 Where the pin supplies CI_REUSE.md and matching `workflow.ci_evidence` /
 `ci_evidence_policy`, use its maintained plan/missing-job/final-gate recipe.
 Explicit protocol 2 supports retained exact merged-main proof; old protocols keep

@@ -227,7 +227,10 @@ follow them; generated `docs/repository/VERIFICATION.md` is the project reading 
 Read [efficient verification](references/verification.md) when selecting checks,
 reusing CI proof or coordinating a cutover. Older pins retain actual required
 checks and supported commands. A newer skill cannot activate a maintenance gate
-or collector the exact pinned engine lacks. When the adopted pin supplies the
+or collector the exact pinned engine lacks. Pins supplying `docs/portable-contract.md`
+use the Tracker-owned generated helper closure and the trusted Master structural
+snapshot; follow the verification reference before refreshing or publishing a pair.
+When the adopted pin supplies the
 TT-107 companion, read its exact `docs/MAINTENANCE_AND_CI_EVIDENCE.md` before using
 owned maintenance or explicit native CI coverage. Exported support alone enables
 neither policy nor live reservation and grants no consumer deployment permission.

@@ -1,0 +1,18 @@
+{
+  "engine": {
+    "repository": "MojoTheApe/task-tracker",
+    "revision": "54b518252a95a3fa3fd6c236d64cad34ce875d22"
+  },
+  "files": {
+    "native.json": {
+      "sha256": "44a099f5401d499d92575a8952dafb4698438b00c818a5aff716e3a395874115",
+      "source": "tests/fixtures/portable_native.json"
+    },
+    "runner.py": {
+      "sha256": "a93c7bfa7bfbcb42d38b2d450061048942c30cbff59874e5e17ecba9dee6417e",
+      "source": "tests/portable_fixture.py"
+    }
+  },
+  "schema_version": 1,
+  "synthetic": true
+}
