@@ -632,14 +632,16 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
             try:
                 selected = json.loads(candidate['delivery.json'], object_pairs_hook=export_contract.unique)
                 intended = json.loads(new['delivery.json'], object_pairs_hook=export_contract.unique)
-                # JSON bytes distinguish booleans from integers. Local target/check
-                # exceptions still merge normally; selected choices must stay exact.
+                # Canonical JSON ignores dictionary insertion order but retains
+                # bool/int/float distinctions. Local target/check exceptions merge
+                # normally; selected choices must stay type-exact.
                 selected_choices = {key: selected[key] for key in ('schema_version', 'role', 'profile', 'completion')}
                 intended_choices = {key: intended[key] for key in selected_choices}
                 fields = ('staging', 'execution', 'task_context', 'completion_policy', 'knowledge_capture')
                 selected_choices['workflow'] = {key: selected['workflow'][key] for key in fields if key in selected['workflow']}
                 intended_choices['workflow'] = {key: intended['workflow'][key] for key in fields if key in intended['workflow']}
-                if dumps(selected_choices) != dumps(intended_choices):
+                if (json.dumps(selected_choices, sort_keys=True, allow_nan=False)
+                        != json.dumps(intended_choices, sort_keys=True, allow_nan=False)):
                     raise ValueError('Local selections differ from the explicit requested modern choices')
             except (KeyError, TypeError, ValueError) as error:
                 return {'applied': False, 'conflicts': ['explicit project choices'], 'changed': [], 'errors': [str(error)],
