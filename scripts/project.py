@@ -556,12 +556,24 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
         local_workflow = local_descriptor.get('workflow', {})
         if not isinstance(local_workflow, dict):
             raise ValueError('Local workflow must be an object')
+        if 'execution' in local_workflow:
+            validate_execution_policy(local_workflow['execution'])
+        if 'task_context' in local_workflow and local_descriptor.get('schema_version') != 3:
+            validate_task_context(local_workflow['task_context'], local_workflow.get('execution'))
+        if 'completion_policy' in local_workflow:
+            validate_completion_policy(local_workflow['completion_policy'])
         if 'ci_retry' in local_workflow:
             export_contract.structural_retry_policy({'ci_retry_policy': local_workflow['ci_retry']})
         local_config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(),
                                   object_pairs_hook=export_contract.unique)
         if not isinstance(local_config, dict):
             raise ValueError('Local Tracker config must be an object')
+        if 'execution_policy' in local_config:
+            validate_execution_policy(local_config['execution_policy'])
+        if 'task_context_policy' in local_config and local_descriptor.get('schema_version') != 3:
+            validate_task_context(local_config['task_context_policy'], local_config.get('execution_policy'))
+        if 'completion_policy' in local_config:
+            validate_completion_policy(local_config['completion_policy'])
         export_contract.structural_retry_policy(local_config)
     except (KeyError, OSError, TypeError, ValueError) as error:
         return {'applied': False, 'conflicts': ['configuration validation'], 'changed': [], 'errors': [str(error)]}

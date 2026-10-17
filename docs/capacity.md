@@ -13,6 +13,7 @@ claim; its compatible engine owns the executable projection and admission rules.
 | Execution v1 | Actual Worker claims against the configured work limit. | One shared source-review/integration lane. | Included in that shared lane. |
 | Execution v2 | Actual Worker claims against the configured work limit. | One shared lane, occupied by either a source Reviewer or the current batch Reviewer. | One separate frozen-batch reservation. |
 | Execution v3 | Actual Worker claims against the configured work limit. | Source-review claims against the configured source-review limit. | One separate frozen-batch reservation; its integration Reviewer is a subrole, not an extra source-review slot. |
+| Explicit execution v4 | Actual task/capture Worker claims against the selected work limit. | Actual independent source-review claims against the selected review limit. | One tagged direct or real batch reservation. Direct retains its genuine source Reviewer; batch has its distinct integration Reviewer subrole. |
 
 Show occupied/limit and arithmetic free capacity visibly for each actual pool.
 A review queue is waiting work, with a separate count and no invented capacity
@@ -29,6 +30,16 @@ activity aliases, labels or elapsed timers as extra reservations. A status name
 inside a retained current reservation does not release it. Only the supported
 owned transition releases actual capacity; apparent inactivity does not establish
 abandonment.
+
+Execution4 is available only through its actual compatible selected/adopted
+contract; the released3.6 projection alone does not enable it. Direct can hold
+one source-review reservation and its linked integration reservation at the same
+time, under the same real Reviewer. Count those actual pools, not people. The
+batch integration Reviewer still does not consume a source-review slot. Capture
+is a real typed operation, not a synthetic Issue or batch member. Retained source
+association history protects ownership but does not create extra current claims.
+Use the canonical projection's safe subject/PR references; never expose its
+private tokens, paths or report bodies or manufacture a task link for a capture.
 
 ## Separate free capacity from admission
 
@@ -69,9 +80,9 @@ meanings: a held fixing lane must not falsely appear actively reviewing.
 
 ## Compatible publication
 
-This is the existing-topology part of Task09 / TT-144. The modern direct-route
-extension belongs to the actual Task07 contract when released; a proposal is not
-an enabled topology. Preserve every old descriptor, chosen limit, Stage setting,
+The existing-topology part of Task09 / TT-144 remains unchanged. The modern row
+belongs to Task07's actual compatible contract when released; a proposal is not
+an enabled topology or proof of a deployed reader. Preserve every old descriptor, chosen limit, Stage setting,
 delivery target and state protocol during this presentation change.
 
 Verify projection fixtures, normal browser regressions, numeric/mobile/keyboard

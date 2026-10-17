@@ -266,6 +266,27 @@ class UpgradeChoices(unittest.TestCase):
                 self.assertIn('released canonical route companion', result['errors'][0])
                 self.assertEqual(snapshot(root), before)
 
+    def test_old_local_policy_types_are_checked_before_three_way_equality_or_export(self):
+        for filename, field, value in (
+            ('delivery.json', 'execution', {'schema_version': 1, 'implementation_limit': True, 'review_limit': 1}),
+            ('tracker/config.json', 'execution_policy', {'schema_version': True, 'implementation_limit': 1, 'review_limit': 1}),
+            ('delivery.json', 'task_context', {'schema_version': True}),
+            ('tracker/config.json', 'completion_policy', {'schema_version': True})):
+            with self.subTest(filename=filename, field=field), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)/'consumer'
+                with mock.patch.object(project, 'render', side_effect=old_files):
+                    project.init(root, INPUTS, OLD, 'unused', apply=True)
+                path = root/filename; data = json.loads(path.read_text())
+                (data['workflow'] if filename == 'delivery.json' else data)[field] = value
+                path.write_text(project.dumps(data)); before = snapshot(root)
+                for apply in (False, True):
+                    with mock.patch.object(project, 'render') as render:
+                        result = project.upgrade(root, NEW, 'unused', apply=apply)
+                        render.assert_not_called()
+                    self.assertEqual(result['conflicts'], ['configuration validation'])
+                    self.assertFalse(result['applied'])
+                    self.assertEqual(snapshot(root), before)
+
 
 class ChoicesCLI(unittest.TestCase):
     def arguments(self, root):
