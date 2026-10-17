@@ -19,6 +19,31 @@ distinct; a fast success, skipped full job or renamed check cannot satisfy the
 full gate. Unknown, mixed or unclassified changes require full applicable coverage.
 Changing a plan name is not a new verification purpose or a fresh retry budget.
 
+## Master source plan
+
+Master's checked-in workflows provide these actual results:
+
+| Native check | Feedback and coverage |
+| --- | --- |
+| `tracker-link` | Early metadata feedback: linked local Issues exist; it does not test source behavior |
+| `skill-impact` | Early metadata feedback: the canonical skill impact assessment is present; it does not test the skill or consumers |
+| `validate` | Full source unit suite, descriptor validation and local documentation links |
+| `portable-runtime` | Canonical exported helper fixtures on Python3.9 without a private engine |
+
+The two source checks run on opened, synchronized, reopened and ready-for-review
+PRs, including drafts, and on every main push. Unknown and mixed source changes
+receive the same full coverage. Metadata edits run the separate metadata workflow
+without restarting source checks. Source cancellation is limited to the same PR;
+each main run has a distinct concurrency identity and is retained.
+
+These existing names remain the admission names. Metadata feedback cannot replace
+either full source check. A changed technical export contract additionally needs
+the maintained exact-source paired compatibility gate before publication, with
+real previous released-source upgrades; ordinary source checks alone do not
+prove that pair. Record the actual changed contract or missing proof as the reason
+for that heavier publication check. No product installer or consumer deployment
+is launched to test Master templates.
+
 Group related local corrections on the same owned task branch before submitting
 a meaningful new candidate. Preserve checkpoints and useful early hosted feedback;
 there is no fixed waiting interval. Keep one task per ordinary execution source
