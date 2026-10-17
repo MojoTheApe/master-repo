@@ -148,6 +148,23 @@ class RetrySelection(unittest.TestCase):
         self.assertFalse(result['applied']); self.assertIn('explicit CI retry policy selection', result['conflicts'])
         self.assertEqual(before, self.snapshot())
 
+    def test_local_preflight_returns_actionable_conflicts_for_missing_or_nonobject_files(self):
+        with mock.patch.object(project, 'render', side_effect=files):
+            project.init(self.root, INPUTS, OLD, 'unused', apply=True)
+        cases = [('delivery.json','null'), ('delivery.json','{"workflow":[]}'),
+                 ('tracker/config.json','[]'), ('delivery.json',None), ('tracker/config.json',None)]
+        for name, raw in cases:
+            with self.subTest(name=name, raw=raw):
+                path=self.root/name; original=path.read_bytes()
+                if raw is None: path.unlink()
+                else: path.write_text(raw)
+                before=self.snapshot()
+                with mock.patch.object(project, 'render', side_effect=AssertionError('Invalid local input invoked exporter')):
+                    result=project.upgrade(self.root, NEW, 'unused', apply=True)
+                self.assertFalse(result['applied']); self.assertIn('configuration validation', result['conflicts'])
+                self.assertTrue(result['errors']); self.assertEqual(before,self.snapshot())
+                path.write_bytes(original)
+
     def test_cli_file_selection_is_explicit_and_bad_json_never_starts_work(self):
         selected = self.root.parent/'retry.json'; selected.write_text(json.dumps(POLICY))
         init = ['init', '--root', str(self.root), '--profile', 'local', '--repository', 'owner/example',

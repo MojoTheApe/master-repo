@@ -370,13 +370,19 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
     # this checks only the optional retry structure, not today's whole standard.
     try:
         local_descriptor = standard.read_descriptor(root)
+        if not isinstance(local_descriptor, dict):
+            raise ValueError('Local delivery.json must be an object')
         local_workflow = local_descriptor.get('workflow', {})
+        if not isinstance(local_workflow, dict):
+            raise ValueError('Local workflow must be an object')
         if 'ci_retry' in local_workflow:
             export_contract.structural_retry_policy({'ci_retry_policy': local_workflow['ci_retry']})
         local_config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(),
                                   object_pairs_hook=export_contract.unique)
+        if not isinstance(local_config, dict):
+            raise ValueError('Local Tracker config must be an object')
         export_contract.structural_retry_policy(local_config)
-    except (KeyError, TypeError, ValueError) as error:
+    except (KeyError, OSError, TypeError, ValueError) as error:
         return {'applied': False, 'conflicts': ['configuration validation'], 'changed': [], 'errors': [str(error)]}
     new_inputs = dict(base['inputs'])
     if completion_policy is not None:
