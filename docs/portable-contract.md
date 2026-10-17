@@ -29,10 +29,18 @@ Python 3.11+ remains required for the author engine/exporter; portable helpers a
 Master validation support Python 3.9+. Public CI uses exported files, stdlib and
 the consumer's own read token. It needs no private Tracker credential or checkout.
 The raw direct producer and separated `.workflow/tools/tracker_ci_evidence.py`
-retain canonical bytes and their existing producer identity. The scripts paths in
+ship the same canonical module for the selected engine. The scripts paths in
 separated projects remain compatible forwarders. Helper bytes are UTF-8/LF and
 narrow `.gitattributes` rules preserve them through Windows checkout; local
 attribute conflicts follow normal three-way conflict handling without writes.
+
+A module-byte change also changes its native producer identity. In a reviewed
+consumer upgrade, refresh each actual producer copy and its `producer_files` Git
+blob pin; review the workflow blob pin when that workflow changes. This native
+Git blob identity is distinct from the export manifest's SHA256. Master preserves
+explicit policy choices; structural validation alone cannot certify an old
+producer pin against new helper bytes. Retain old receipts with their original
+identity and obtain applicable fresh native proof instead of relabelling them.
 
 ## Maintainer refresh
 
