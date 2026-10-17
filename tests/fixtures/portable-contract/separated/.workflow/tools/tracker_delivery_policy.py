@@ -154,8 +154,9 @@ def completion_adoption_order(state, config):
                          'then select task context. Do not select both unactivated policies together.')
 
 
-def completion_state(state, config):
+def completion_state(state, config, *, projected=False):
     """Reader/writer fence: selecting a config never activates private state."""
+    retry_module().state(state, config, projected=projected)
     completion_adoption_order(state, config)
     selected = completion_policy(config)
     activation = state.get('completion', {})
@@ -381,6 +382,14 @@ def read_full_state(request, repo):
     return state
 
 
+def retry_module():
+    try:
+        from . import ci_retry
+    except ImportError:
+        import tracker_ci_retry as ci_retry
+    return ci_retry
+
+
 def state_schema(state):
     """Validate the maintenance fence before exposing its retained state format.
 
@@ -389,10 +398,19 @@ def state_schema(state):
     """
     version = state.get('schema_version')
     held = state.get('maintenance')
-    if type(version) is not int or version not in (1, 2, 3, 4, 5):
+    if type(version) is not int or version not in (1, 2, 3, 4, 5, 6):
         raise ValueError('Unsupported shared state protocol')
+    # Maintenance is the outer pause, followed by retry, completion and context.
+    # These are known versioned wrappers, not interchangeable policy adoption.
+    underlying = held.get('base_schema_version') if version == 3 and isinstance(held, dict) else version
+    retry = state.get('ci_retry')
+    if underlying == 6:
+        retry_module().validate(retry)
+        underlying = retry['base_schema_version']
+    elif 'ci_retry' in state:
+        raise ValueError('CI retry requires the fenced shared state protocol')
     completion = state.get('completion')
-    completion_version = version == 5 or version == 3 and isinstance(held, dict) and held.get('base_schema_version') == 5
+    completion_version = underlying == 5
     if completion_version:
         if (not isinstance(completion, dict) or completion.get('policy') != {'schema_version': 1}
                 or type(completion['policy'].get('schema_version')) is not int
@@ -402,9 +420,9 @@ def state_schema(state):
             raise ValueError('Invalid scoped completion state protocol')
     elif completion is not None:
         raise ValueError('Completion requires the fenced shared state protocol')
-    underlying = completion['base_schema_version'] if completion_version else version
+    underlying = completion['base_schema_version'] if completion_version else underlying
     context = state.get('task_context')
-    context_version = (underlying == 4 or version == 3 and isinstance(held, dict) and held.get('base_schema_version') == 4)
+    context_version = underlying == 4
     if context_version:
         if (not isinstance(context, dict) or context.get('policy') != {'schema_version': 1}
                 or type(context['policy'].get('schema_version')) is not int
@@ -419,7 +437,7 @@ def state_schema(state):
         return 2 if underlying == 4 else underlying
     if (not isinstance(held, dict) or held.get('schema_version') != 1
             or type(held.get('schema_version')) is not int or held.get('state') != 'held'
-            or type(held.get('base_schema_version')) is not int or held['base_schema_version'] not in (1, 2, 4, 5)
+            or type(held.get('base_schema_version')) is not int or held['base_schema_version'] not in (1, 2, 4, 5, 6)
             or not isinstance(held.get('id'), str) or not re.fullmatch(r'[0-9a-f]{32}', held['id'])
             or not isinstance(held.get('actor'), str) or not re.fullmatch(r'Maintainer-[A-Za-z0-9]{4,32}', held['actor'])
             or not isinstance(held.get('session'), str) or not re.fullmatch(r'[A-Za-z0-9_-]{4,100}', held['session'])
@@ -433,7 +451,7 @@ def state_schema(state):
         datetime.datetime.fromisoformat(held['reserved_at'].replace('Z', '+00:00'))
     except ValueError:
         raise ValueError('Invalid maintenance reservation timestamp') from None
-    return (2 if underlying == 4 else underlying) if completion_version else 2 if held['base_schema_version'] == 4 else held['base_schema_version']
+    return 2 if underlying == 4 else underlying
 
 
 def admission_open(state):
@@ -454,6 +472,9 @@ def set_state_schema(state, version):
     if state.get('task_context'):
         if version != 2:
             raise ValueError('Task context retains execution schema; no implicit downgrade')
+        return
+    if state.get('ci_retry'):
+        state['ci_retry']['base_schema_version'] = version
         return
     if state.get('maintenance'):
         state['maintenance']['base_schema_version'] = version

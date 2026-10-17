@@ -93,6 +93,7 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     if 'task_context' in data['workflow']: config['task_context_policy']=data['workflow']['task_context']
     if 'completion_policy' in data['workflow']: config['completion_policy']=data['workflow']['completion_policy']
     if 'ci_evidence' in data['workflow']: config['ci_evidence_policy']=data['workflow']['ci_evidence']
+    if 'ci_retry' in data['workflow']: config['ci_retry_policy']=data['workflow']['ci_retry']
     if 'process_instructions' in data['workflow']:
         config['process_instructions']=data['workflow']['process_instructions']
     out=portable_files()
@@ -103,6 +104,8 @@ def files(inputs=INPUTS, revision=OLD, *_args):
          'docs/TASK_CONTEXT.md':'# Exact task context guide\n', 'docs/CI_REUSE.md':'# Exact CI reuse guide\n'})
     if 'completion_policy' in data['workflow']:
         out['docs/COMPLETION_POLICY.md'] = '# Exact completion policy guide\n'
+    if 'ci_retry' in data['workflow']:
+        out['docs/CI_RETRY.md'] = '# Exact retry policy guide\n'
     project.separate_export(out)
     out.update(project.layout_files())
     for source,destination in project.FILES.items():

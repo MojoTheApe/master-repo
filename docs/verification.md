@@ -9,6 +9,11 @@ This is the shared verification policy. Product commands, supported platforms an
 runtime acceptance remain project-owned. Adopt it through a reviewed standard
 upgrade; it does not change an existing project's required checks or engine pin.
 
+Use the [submission plan](verification-submission.md) for distinct project-owned
+fast feedback and full ready-candidate checks, grouped corrections, observed
+heavy-run reasons and preserved native trigger/cancellation boundaries. Fast
+feedback never substitutes for missing full admission coverage.
+
 ## Select checks by the changed risk
 
 Use the cheapest meaningful check that can detect the changed behavior. Separate

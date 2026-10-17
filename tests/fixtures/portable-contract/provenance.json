@@ -1,15 +1,19 @@
 {
   "engine": {
     "repository": "MojoTheApe/task-tracker",
-    "revision": "866baf6dec2bd82d8ca052002cc3dc6f4805e247"
+    "revision": "df0154b96410296b50bc9d7a00af7847d9a97700"
   },
   "files": {
+    "accounting.json": {
+      "sha256": "b2493a134a78d6a14bb4eefc9d93e6b6fe786c11ee37922f3246e191fff2b8a3",
+      "source": "tests/fixtures/ci_accounting_synthetic.json"
+    },
     "native.json": {
-      "sha256": "44a099f5401d499d92575a8952dafb4698438b00c818a5aff716e3a395874115",
+      "sha256": "3abbc4aa6daf0b0068b044d9c130f5a54a093c8e8653a8f39240e6cc016ae7a3",
       "source": "tests/fixtures/portable_native.json"
     },
     "runner.py": {
-      "sha256": "a93c7bfa7bfbcb42d38b2d450061048942c30cbff59874e5e17ecba9dee6417e",
+      "sha256": "d580ce3edee452b7a47138535cdd0b90b3609d89e82bf98506230257a4314826",
       "source": "tests/portable_fixture.py"
     }
   },

@@ -183,6 +183,11 @@ def descriptor(inputs, revision):
             raise ValueError('CI evidence policy must be explicit and non-null')
         ci_policy.policy({'ci_evidence_policy': inputs['ci_evidence']})
         workflow['ci_evidence'] = inputs['ci_evidence']
+    if 'ci_retry' in inputs:
+        if inputs['ci_retry'] is None:
+            raise ValueError('CI retry policy must be explicit and non-null')
+        export_contract.structural_retry_policy({'ci_retry_policy': inputs['ci_retry']})
+        workflow['ci_retry'] = inputs['ci_retry']
     return {'schema_version': 2, 'project': {'name': inputs['name'], 'repository': 'https://github.com/' + repo},
             'standard': {'repository': standard.REPOSITORY, 'revision': revision, 'version': (SOURCE/'VERSION').read_text().strip()},
             'profile': profile, 'adoption': 'draft',
@@ -223,6 +228,9 @@ def render(inputs, revision, tracker_root, python=sys.executable):
         if 'ci_evidence' in data['workflow']:
             evidence = scratch/'ci-evidence.json'; evidence.write_text(dumps(data['workflow']['ci_evidence']))
             command.extend(['--ci-evidence-policy', str(evidence)])
+        if 'ci_retry' in data['workflow']:
+            retry = scratch/'ci-retry.json'; retry.write_text(dumps(data['workflow']['ci_retry']))
+            command.extend(['--ci-retry-policy', str(retry)])
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode: raise ValueError('Tracker export failed (requires Python 3.11+): ' + result.stderr + result.stdout)
         files = {p.relative_to(target).as_posix(): p.read_bytes().decode('utf-8') for p in target.rglob('*') if p.is_file()}
@@ -232,7 +240,8 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export needs a valid immutable engine lock') from error
         if exported_lock != {'repository': data['tracker']['repository'], 'revision': data['tracker']['revision']}:
             raise ValueError('Tracker export engine lock differs from the trusted compatible pin')
-        exported_config = json.loads(files['tracker/config.json'])
+        exported_config = json.loads(files['tracker/config.json'], object_pairs_hook=export_contract.unique)
+        export_contract.structural_retry_policy(exported_config)
         if 'execution_policy' in exported_config: validate_execution_policy(exported_config['execution_policy'])
         if ('execution_policy' in exported_config) != ('execution' in data['workflow']) or exported_config.get('execution_policy') != data['workflow'].get('execution'):
             raise ValueError('Tracker export execution policy differs from the explicit project choice')
@@ -259,6 +268,11 @@ def render(inputs, revision, tracker_root, python=sys.executable):
             raise ValueError('Tracker export CI evidence differs from the explicit project choice')
         if 'ci_evidence' in data['workflow'] and 'docs/CI_REUSE.md' not in files:
             raise ValueError('Pinned Tracker export lacks the exact CI evidence guide')
+        if (('ci_retry_policy' in exported_config) != ('ci_retry' in data['workflow'])
+                or exported_config.get('ci_retry_policy') != data['workflow'].get('ci_retry')):
+            raise ValueError('Tracker export CI retry policy differs from the explicit project choice')
+        if 'ci_retry' in data['workflow'] and 'docs/CI_RETRY.md' not in files:
+            raise ValueError('Pinned Tracker export lacks the exact CI retry guide')
     files = separate_export(files)
     export_contract.validate_rendered(files, data)
     files.update(layout_files())
@@ -331,7 +345,9 @@ def merge_file(name, old, new, local):
     if local == old: return new
     if new == old or local == new: return local
     if None in (old, new, local): raise ValueError('Concurrent file addition/removal')
-    if name.endswith('.json'): return dumps(merge_json(json.loads(old), json.loads(new), json.loads(local)))
+    if name.endswith('.json'):
+        values = [json.loads(value, object_pairs_hook=export_contract.unique) for value in (old, new, local)]
+        return dumps(merge_json(*values))
     with tempfile.TemporaryDirectory(prefix='master-merge-') as scratch:
         paths = [Path(scratch)/x for x in ('local', 'old', 'new')]
         for p, content in zip(paths, (local, old, new)): p.write_text(content)
@@ -340,19 +356,41 @@ def merge_file(name, old, new, local):
         return result.stdout
 
 
-def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None):
+def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None, ci_retry_policy=None):
     path = standard.safe_path(root, BASELINE)
     if not path.is_file(): raise ValueError('No recorded template base; audit and adopt manually without inventing a baseline')
-    raw = path.read_text(); base = json.loads(raw)
+    raw = path.read_text(); base = json.loads(raw, object_pairs_hook=export_contract.unique)
     if base.get('schema_version') != 1 or not isinstance(base.get('files'), dict): raise ValueError('Invalid template baseline')
     old = base['files']
     if LAYOUT not in old:
         return {'applied': False, 'conflicts': ['legacy mixed layout'], 'changed': [],
                 'next': 'Audit and separate repository/system/runtime documents in a project PR; nothing was overwritten.'}
+    # Validate local selection before three-way equality can mistake booleans for
+    # integers and silently replace an invalid policy. Old pins remain valid;
+    # this checks only the optional retry structure, not today's whole standard.
+    try:
+        local_descriptor = standard.read_descriptor(root)
+        if not isinstance(local_descriptor, dict):
+            raise ValueError('Local delivery.json must be an object')
+        local_workflow = local_descriptor.get('workflow', {})
+        if not isinstance(local_workflow, dict):
+            raise ValueError('Local workflow must be an object')
+        if 'ci_retry' in local_workflow:
+            export_contract.structural_retry_policy({'ci_retry_policy': local_workflow['ci_retry']})
+        local_config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(),
+                                  object_pairs_hook=export_contract.unique)
+        if not isinstance(local_config, dict):
+            raise ValueError('Local Tracker config must be an object')
+        export_contract.structural_retry_policy(local_config)
+    except (KeyError, OSError, TypeError, ValueError) as error:
+        return {'applied': False, 'conflicts': ['configuration validation'], 'changed': [], 'errors': [str(error)]}
     new_inputs = dict(base['inputs'])
     if completion_policy is not None:
         validate_completion_policy(completion_policy)
         new_inputs['completion_policy'] = completion_policy
+    if ci_retry_policy is not None:
+        export_contract.structural_retry_policy({'ci_retry_policy': ci_retry_policy})
+        new_inputs['ci_retry'] = ci_retry_policy
     new = render(new_inputs, revision, tracker_root, python)
     planned, before, conflicts = {}, {}, []
     for name in sorted(old.keys() | new.keys()):
@@ -371,6 +409,18 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
     if planned[BASELINE] == raw: planned.pop(BASELINE)
     with tempfile.TemporaryDirectory(prefix='master-validate-') as scratch:
         candidate = dict(before, **planned)
+        if ci_retry_policy is not None:
+            try:
+                selected_descriptor = json.loads(candidate['delivery.json'], object_pairs_hook=export_contract.unique)['workflow']['ci_retry']
+                selected_config = json.loads(candidate['tracker/config.json'], object_pairs_hook=export_contract.unique)['ci_retry_policy']
+                export_contract.structural_retry_policy({'ci_retry_policy': selected_descriptor})
+                export_contract.structural_retry_policy({'ci_retry_policy': selected_config})
+                selection_matches = selected_descriptor == selected_config == ci_retry_policy
+            except (KeyError, TypeError, ValueError):
+                selection_matches = False
+            if not selection_matches:
+                return {'applied': False, 'conflicts': ['explicit CI retry policy selection'], 'changed': [],
+                        'next': 'Requested retry policy differs from retained local settings; reconcile both files explicitly in this project PR. Nothing was overwritten.'}
         for name, text in candidate.items():
             if text is not None:
                 path = standard.safe_path(scratch, name); path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(text.encode('utf-8'))
@@ -399,6 +449,7 @@ def inspect(root, expected_revision=None):
         if isinstance(wf, dict) and 'task_context' in wf: workflow_keys.add('task_context')
         if isinstance(wf, dict) and 'completion_policy' in wf: workflow_keys.add('completion_policy')
         if isinstance(wf, dict) and 'ci_evidence' in wf: workflow_keys.add('ci_evidence')
+        if isinstance(wf, dict) and 'ci_retry' in wf: workflow_keys.add('ci_retry')
         if not standard.object_keys(wf, workflow_keys, 'workflow', findings): return findings
         if 'execution' in wf: validate_execution_policy(wf['execution'])
         if 'process_instructions' in wf: validate_process_instructions(wf['process_instructions'])
@@ -407,6 +458,9 @@ def inspect(root, expected_revision=None):
         if 'ci_evidence' in wf:
             if wf['ci_evidence'] is None: raise ValueError('CI evidence policy must be explicit and non-null')
             ci_policy.policy({'ci_evidence_policy': wf['ci_evidence']})
+        if 'ci_retry' in wf:
+            if wf['ci_retry'] is None: raise ValueError('CI retry policy must be explicit and non-null')
+            export_contract.structural_retry_policy({'ci_retry_policy': wf['ci_retry']})
         if type(wf['staging']) is not bool or wf['main_branch'] != 'main' or wf['stage_branch'] != 'stage': raise ValueError('Version 2 uses main and stage with an explicit boolean stage option')
         expected_env = ({'stage'} if wf['staging'] else set()) | ({'production'} if data['completion'] != 'reviewed-merge' else set())
         if not standard.object_keys(data['environments'], expected_env, 'environments', findings): return findings
@@ -418,8 +472,9 @@ def inspect(root, expected_revision=None):
                 or not re.fullmatch(r'\d+\.\d+\.\d+', data['standard']['version'])): raise ValueError('Invalid standard pin')
         if expected_revision and (expected_revision != revision or data['standard']['version'] != (SOURCE/'VERSION').read_text().strip()): raise ValueError('Running standard differs from descriptor pin/version')
         if data['tracker']['repository'] != compat['tracker_repository'] or data['tracker']['revision'] != compat['tracker_revision']: raise ValueError('Tracker pin is incompatible with this standard')
-        config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text())
-        lock = json.loads(standard.safe_path(root, 'tracker/engine.json').read_text())
+        config = json.loads(standard.safe_path(root, 'tracker/config.json').read_text(), object_pairs_hook=export_contract.unique)
+        export_contract.structural_retry_policy(config)
+        lock = json.loads(standard.safe_path(root, 'tracker/engine.json').read_text(), object_pairs_hook=export_contract.unique)
         if lock != {'repository': compat['tracker_repository'], 'revision': compat['tracker_revision']}: raise ValueError('Tracker client pin differs from descriptor')
         export_contract.validate_root(root, data)
         if not re.fullmatch(r'[A-Z][A-Z0-9]+', config['project'].get('id_prefix', '')): raise ValueError('Tracker prefix is invalid')
@@ -441,6 +496,9 @@ def inspect(root, expected_revision=None):
         if (('ci_evidence_policy' in config) != ('ci_evidence' in wf)
                 or config.get('ci_evidence_policy') != wf.get('ci_evidence')):
             raise ValueError('Tracker CI evidence differs from delivery.json; synchronize both in this PR')
+        if (('ci_retry_policy' in config) != ('ci_retry' in wf)
+                or config.get('ci_retry_policy') != wf.get('ci_retry')):
+            raise ValueError('Tracker CI retry policy differs from delivery.json; synchronize both in this PR')
         actual_phases = [v if isinstance(v,str) else v['phase'] for v in config['workflow']]
         if actual_phases != phases(wf['staging'], wf.get('execution')): raise ValueError('Tracker stages differ from the adopted workflow')
         checks = wf['required_checks']
@@ -455,6 +513,8 @@ def inspect(root, expected_revision=None):
             required.add('docs/repository/COMPLETION_POLICY.md')
         if 'ci_evidence' in wf:
             required.add('docs/repository/CI_REUSE.md')
+        if 'ci_retry' in wf:
+            required.add('docs/repository/CI_RETRY.md')
         for name in sorted(required):
             path = standard.safe_path(root,name)
             if not path.is_file() or not path.read_text().strip(): raise ValueError('Missing '+name)

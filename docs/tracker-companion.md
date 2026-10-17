@@ -1,5 +1,12 @@
 # Optional maintenance and CI evidence support
 
+The explicit [retry companion](ci-retry.md) mirrors `workflow.ci_retry` with
+Tracker `ci_retry_policy`. The exact pinned CI_RETRY.md owns commands, wire6 and
+owned activation; published reader/all-writer support precedes incompatible
+state. Master consumes its hash-verified canonical structural validator and exact
+portable helper bytes. The separate [accounting helper](ci-accounting.md) is
+read-only and requires no retry-policy selection or workflow-state migration.
+
 MR-30 / TT-136 additionally define explicit [task context](task-context.md).
 Matching `workflow.task_context` / `task_context_policy` schema 1 selects readiness,
 versioned requirements scope and independent source compatibility for execution

@@ -1,5 +1,18 @@
 # Repository process history
 
+## 2026-10-17 — MR-38 / TT-152 bounded retry and CI accounting
+
+Select CI retry only through an explicit mirrored version1 policy and the exact
+canonical Tracker structural snapshot. Preserve absent selections through init
+and genuine three-way upgrades; selected exports retain the exact engine guide
+and capability/hash closure. Operator-attested diagnosis, durable equivalent
+episodes, held uncertain dispatch and full applicable proof remain distinct.
+Publish common fast/full submission and on-demand accounting guidance, preserving
+project commands, current collectors, native trigger boundaries and unknown
+billing. Update the canonical navigation skill in the same change. Tracker owns
+the shared retry/state/command and single generic accounting implementation;
+published readers and owned activation remain separate from these source changes.
+
 ## 2026-10-17 — MR-48 / TT-143 portable contract
 
 Consume Tracker-owned raw/separated helper artifacts without Master-authored

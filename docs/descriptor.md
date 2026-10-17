@@ -1,5 +1,14 @@
 # Delivery descriptor
 
+Optional `workflow.ci_retry` mirrors Tracker `ci_retry_policy` exactly, for example
+`{"schema_version": 1, "max_executions": 2}`. Explicit
+`init|upgrade --ci-retry-policy FILE` selects the reviewed object; an ordinary
+upgrade retains absence. Structural rules come only from the hash-verified
+canonical Tracker snapshot, with the supported version in the export manifest.
+Selection does not activate state, launch retries or change required checks.
+Compatible service/all writers and owned durable activation precede live use.
+See [bounded CI retry](ci-retry.md) and the exact exported CI_RETRY.md.
+
 Optional `workflow.completion_policy` is exactly `{"schema_version": 1}` and mirrors
 Tracker `completion_policy`. It selects accepted-scope completion independently of
 the top-level completion target, execution route and Stage. Init/upgrade select it

@@ -25,13 +25,16 @@ class TrustedExport(unittest.TestCase):
         self.helper = '.workflow/tools/tracker_ci_gate.py'
         self.raw_helper = b'# Synthetic hash-boundary fixture; never a real export proof.\n'
         self.snapshot = (SOURCE/'scripts/vendor/tracker_ci_evidence.py').read_bytes()
+        self.retry_snapshot = (SOURCE/'scripts/vendor/tracker_ci_retry.py').read_bytes()
         self.record = {'format_version': 1,
             'engine': {'repository': 'MojoTheApe/task-tracker', 'revision': 'a'*40},
             'runtime': {'engine_min_python': '3.11', 'portable_min_python': '3.9'},
             'validator': {'source': 'tracker/ci_evidence.py', 'sha256': hashlib.sha256(self.snapshot).hexdigest()},
-            'contracts': {'delivery_policy': [1], 'execution_policy': [1,2,3], 'ci_evidence_policy': [1,2]},
+            'retry_validator': {'source': 'tracker/ci_retry.py', 'sha256': hashlib.sha256(self.retry_snapshot).hexdigest()},
+            'contracts': {'delivery_policy': [1], 'execution_policy': [1,2,3], 'ci_evidence_policy': [1,2], 'ci_retry_policy': [1]},
             'layouts': {'separated': {self.helper: hashlib.sha256(self.raw_helper).hexdigest()}}}
         self.write(self.source, contract.SNAPSHOT, self.snapshot)
+        self.write(self.source, contract.RETRY_SNAPSHOT, self.retry_snapshot)
         self.set_trust(self.record)
         self.write(self.root, self.helper, self.raw_helper)
         self.descriptor = {'workflow': {'execution': {'schema_version': 3}}}
@@ -93,6 +96,37 @@ class TrustedExport(unittest.TestCase):
         self.write(self.source, contract.SNAPSHOT, b'raise AssertionError("Changed snapshot executed")\n')
         with self.assertRaisesRegex(ValueError, 'reviewed Tracker snapshot'):
             contract.structural_policy({})
+
+    def test_retry_uses_verified_fixed_snapshot_without_consumer_import_or_side_effect(self):
+        poison = b'raise AssertionError("Consumer retry validator executed")\n'
+        for path in ('tracker_ci_retry.py', 'scripts/vendor/tracker_ci_retry.py'):
+            self.write(self.root, path, poison)
+        cached = types.ModuleType('_master_trusted_tracker_ci_retry')
+        cached.policy = mock.Mock(side_effect=AssertionError('Cached retry validator executed'))
+        before = {p:p.read_bytes() for p in self.source.parent.rglob('*') if p.is_file()}
+        with mock.patch.dict(sys.modules, {'_master_trusted_tracker_ci_retry': cached}), \
+                mock.patch('subprocess.run', side_effect=AssertionError('Unexpected process')), \
+                mock.patch('subprocess.check_output', side_effect=AssertionError('Unexpected process')), \
+                mock.patch('socket.socket', side_effect=AssertionError('Unexpected network')):
+            self.assertIsNone(contract.structural_retry_policy({}))
+            for limit in (1, 2):
+                policy = {'schema_version': 1, 'max_executions': limit}
+                self.assertEqual(contract.structural_retry_policy({'ci_retry_policy': policy}), policy)
+            with self.assertRaises(ValueError):
+                contract.structural_retry_policy({'ci_retry_policy': {'schema_version': True, 'max_executions': 2}})
+        self.assertFalse(cached.policy.called)
+        self.assertEqual(before, {p:p.read_bytes() for p in self.source.parent.rglob('*') if p.is_file()})
+
+    def test_changed_or_redirected_retry_snapshot_fails_before_execution(self):
+        self.write(self.source, contract.RETRY_SNAPSHOT, b'raise AssertionError("Changed retry source executed")\n')
+        with self.assertRaisesRegex(ValueError, 'reviewed Tracker snapshot'):
+            contract.structural_retry_policy({})
+        self.write(self.source, contract.RETRY_SNAPSHOT, self.retry_snapshot)
+        forged = copy.deepcopy(self.record)
+        forged['retry_validator']['source'] = 'consumer/validator.py'
+        self.set_trust(forged)
+        with self.assertRaisesRegex(ValueError, 'reviewed Tracker snapshot'):
+            contract.structural_retry_policy({})
 
     def test_missing_linked_and_unsafe_helpers_are_rejected(self):
         helper = self.root/self.helper; helper.unlink()

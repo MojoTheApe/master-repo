@@ -1,5 +1,15 @@
 # Master Repo system
 
+MR-38 / TT-152 add explicit `workflow.ci_retry` selection and exact mirroring,
+using Tracker's hash-verified canonical retry structural snapshot. The
+[bounded retry contract](../ci-retry.md) keeps durable budgets, attested diagnosis
+and conservative uncertain dispatch separate from full native proof and delivery.
+[Submission](../verification-submission.md) and [accounting](../ci-accounting.md)
+keep project fast/full commands, original intervals, estimates and sourced billing
+distinct. The portable helper inventory is refreshed mechanically from the
+compatible Tracker source. Selection/export/publication do not activate live state;
+reader support and owned consumer adoption remain separate.
+
 MR-48 / TT-143 add the [portable contract](../portable-contract.md). Tracker emits
 all raw/separated helper bytes and the static versioned capability/hash record.
 Master consumes that output unchanged, uses its own hash-verified canonical

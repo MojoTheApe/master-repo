@@ -1,0 +1,646 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "description": "Wholly synthetic two-attempt accounting: twenty observations, twelve original execution intervals, eight carried aliases; rounded212 naive row sum versus112 counted intervals, never billing.",
+  "parameters": {
+    "repo": "Example/accounting",
+    "first": "2026-10-15",
+    "last": "2026-10-15",
+    "grouping": "created",
+    "lookback_days": 30,
+    "include_storage": false
+  },
+  "responses": {
+    "repos/Example/accounting/actions/runs?created=2026-10-15T00:00:00Z..2026-10-15T23:59:59Z&per_page=100&page=1": {
+      "value": {
+        "total_count": 1,
+        "workflow_runs": [
+          {
+            "id": 1,
+            "name": "Synthetic verification",
+            "path": ".github/workflows/verification.yml",
+            "created_at": "2026-10-15T07:59:00Z",
+            "event": "pull_request",
+            "run_attempt": 2,
+            "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "pull_requests": []
+          }
+        ]
+      }
+    },
+    "repos/Example/accounting/actions/runs/1/jobs?filter=all&per_page=100&page=1": {
+      "value": {
+        "total_count": 20,
+        "jobs": [
+          {
+            "id": 1,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 1",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:14:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 1,
+            "runner_name": "synthetic-linux-1",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/1",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/1",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:14:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 2",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:14:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 2,
+            "runner_name": "synthetic-linux-2",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/2",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/2",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:14:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 3",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:14:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 3,
+            "runner_name": "synthetic-linux-3",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/3",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/3",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:14:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 4",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:14:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 4,
+            "runner_name": "synthetic-linux-4",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/4",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/4",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:14:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 5",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:09:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 5,
+            "runner_name": "synthetic-linux-5",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/5",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/5",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:09:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 6",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:09:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 6,
+            "runner_name": "synthetic-linux-6",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/6",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/6",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:09:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 7",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:09:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 7,
+            "runner_name": "synthetic-linux-7",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/7",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/7",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:09:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 8",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:09:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 8,
+            "runner_name": "synthetic-windows-8",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Windows",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/8",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/8",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:09:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 9",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:02:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 9,
+            "runner_name": "synthetic-linux-9",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "failure",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/9",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/9",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:02:50Z",
+                "conclusion": "failure"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "run_id": 1,
+            "run_attempt": 1,
+            "name": "Verification cell 10",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:02:50Z",
+            "created_at": "2026-10-15T08:00:00Z",
+            "runner_id": 10,
+            "runner_name": "synthetic-linux-10",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "failure",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/10",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/10",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:02:50Z",
+                "conclusion": "failure"
+              }
+            ]
+          },
+          {
+            "id": 101,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 1",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:14:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 1,
+            "runner_name": "synthetic-linux-1",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/101",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/1",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:14:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 102,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 2",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:14:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 2,
+            "runner_name": "synthetic-linux-2",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/102",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/2",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:14:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 103,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 3",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:14:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 3,
+            "runner_name": "synthetic-linux-3",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/103",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/3",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:14:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 104,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 4",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:14:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 4,
+            "runner_name": "synthetic-linux-4",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/104",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/4",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:14:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 105,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 5",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:09:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 5,
+            "runner_name": "synthetic-linux-5",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/105",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/5",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:09:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 106,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 6",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:09:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 6,
+            "runner_name": "synthetic-linux-6",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/106",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/6",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:09:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 107,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 7",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:09:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 7,
+            "runner_name": "synthetic-linux-7",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/107",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/7",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:09:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 108,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 8",
+            "started_at": "2026-10-15T08:00:00Z",
+            "completed_at": "2026-10-15T08:09:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 8,
+            "runner_name": "synthetic-windows-8",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Windows",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/108",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/8",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:00:00Z",
+                "completed_at": "2026-10-15T08:09:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 109,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 9",
+            "started_at": "2026-10-15T08:20:00Z",
+            "completed_at": "2026-10-15T08:22:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 9,
+            "runner_name": "synthetic-linux-9",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/109",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/109",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:20:00Z",
+                "completed_at": "2026-10-15T08:22:50Z",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 110,
+            "run_id": 1,
+            "run_attempt": 2,
+            "name": "Verification cell 10",
+            "started_at": "2026-10-15T08:20:00Z",
+            "completed_at": "2026-10-15T08:22:50Z",
+            "created_at": "2026-10-15T08:20:00Z",
+            "runner_id": 10,
+            "runner_name": "synthetic-linux-10",
+            "runner_group_id": 0,
+            "runner_group_name": null,
+            "labels": [
+              "Linux",
+              "X64"
+            ],
+            "status": "completed",
+            "conclusion": "success",
+            "check_run_url": "https://api.github.com/repos/Example/accounting/check-runs/110",
+            "html_url": "https://github.com/Example/accounting/actions/runs/1/job/110",
+            "steps": [
+              {
+                "name": "Synthetic verification",
+                "number": 1,
+                "started_at": "2026-10-15T08:20:00Z",
+                "completed_at": "2026-10-15T08:22:50Z",
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "expected": {
+    "native_job_rows": 20,
+    "carried_forward_rows": 8,
+    "counted_intervals": 12,
+    "rounded_interval_minutes_estimate": 112,
+    "naive_rounded_row_estimate": 212
+  }
+}
