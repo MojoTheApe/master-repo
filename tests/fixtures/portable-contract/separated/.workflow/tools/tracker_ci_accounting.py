@@ -195,7 +195,7 @@ def list_runs(api, repo, first, last, until=None):
 
 
 def pages(api, endpoint, key):
-    rows, seen, gaps = [], set(), []
+    rows, seen, gaps, conflicted = [], {}, [], set()
     for page in range(1, 1001):
         try:
             response = api(endpoint + f"&page={page}")
@@ -210,11 +210,15 @@ def pages(api, endpoint, key):
                 gaps.append("invalid_native_row")
                 continue
             identifier = row.get("id")
-            if identifier is None:
+            if type(identifier) is not int or identifier < 1:
                 gaps.append("missing_native_id")
-            elif identifier in seen:
                 continue
-            seen.add(identifier)
+            elif identifier in seen:
+                if seen[identifier] != row:
+                    gaps.append("native_row_changed_during_collection")
+                    conflicted.add(identifier)
+                continue
+            seen[identifier] = row
             rows.append(row)
         if len(batch) < 100:
             if type(response.get("total_count")) is not int or response["total_count"] != len(rows):
@@ -222,7 +226,9 @@ def pages(api, endpoint, key):
             break
     else:
         gaps.append("page_limit")
-    return rows, {"complete": not gaps, "gaps": gaps}
+    # Neither version of a changing ID establishes one actual interval/size.
+    # Keep both raw GET pages in SnapshotAPI; do not resurrect it on page three.
+    return [row for row in rows if row['id'] not in conflicted], {"complete": not gaps, "gaps": gaps}
 
 
 def _step_digest(job):
@@ -237,7 +243,7 @@ def _identity(job):
     runner.append(sorted(job.get("labels") or []))
     if job_seconds(job) is None or not _step_digest(job) or not any(runner[:2]):
         return None
-    return json.dumps([job.get("name"), job.get("started_at"), job.get("completed_at"),
+    return json.dumps([job.get("name"), job.get("matrix"), job.get("started_at"), job.get("completed_at"),
                        runner, job.get("conclusion"), _step_digest(job)], sort_keys=True)
 
 
