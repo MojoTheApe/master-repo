@@ -9,6 +9,14 @@ label. A privileged authenticated principal does not prove the human owner
 personally reviewed the evidence. Unknown, product, permanent configuration and
 billing/access/quota causes do not automatically retry.
 
+If the pin supports a specific-human-instruction grant, follow its separate
+operator-attestation procedure and bind the actual message/source/time/action to
+the current native identity, episode and named cause. General permission to
+continue working is insufficient. Such a grant is single-use, consumes remaining
+budget and leaves the cause unresolved; it cannot clear uncertain dispatch or
+authorize product operations. State may be public: keep raw evidence and private
+instruction references outside Git and retain only allowed facts and digests.
+
 Retain consumed budget, unresolved causes and reservations across sessions, run
 IDs, empty commits and cause/plan renaming. Only the fresh dispatch-barrier CAS
 winner sends once; an ambiguous CAS/POST or crash keeps budget held for supported
