@@ -1,0 +1,14 @@
+{
+  "archive_name": "WORKFLOW_IMPLEMENTATION_HANDOFF_EN_2026-10-16.zip",
+  "original_files": {
+    "WFO_ACCEPTANCE_LEDGER_EN_2026-10-16.json": "4c12318e095f0b7f0e866cff75500e666f9b99ef978f220442ecfa13a204c5b5",
+    "README_HANDOFF_EN.txt": "d8e692e3df2fa02fe76f14a9cd0e5be5c78d50a98c404bde45e736c1bd4e8fd2",
+    "WORKFLOW_COMPLETE_IMPLEMENTATION_SPEC_EN_2026-10-16.txt": "9ecd81d9122cd092308ed039795859a2e94ab33f0dea97a7832140c19a44c080",
+    "WORKFLOW_COMPLETE_IMPLEMENTATION_SPEC_EN_2026-10-16.docx": "1f8ac53aed9196b03544ecaadb0f199e261f4ba2d9f8b698d519d672b6e40b25"
+  },
+  "original_goal_count": 29,
+  "original_criterion_count": 202,
+  "original_criteria_text_digest": "45b37d1cf8ff443b411408174926645ad902148fb12615b1cd192c98438b2425",
+  "original_audit_reused": "2026-10-16; all 15 refreshed main revisions match; ownership and open PRs refreshed separately",
+  "local_source_retained": true
+}

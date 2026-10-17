@@ -1,0 +1,219 @@
+[
+  {
+    "revision": "adb2ce04fff017d1059031f4298effc020d0e2e5",
+    "observed_at": "2026-10-17T08:02:41.896733+00:00",
+    "presence": {
+      "tracker/task_context.py": false,
+      "tracker/ci_evidence.py": false,
+      "tracker/maintenance.py": false,
+      "tracker/execution.py": false,
+      "tracker/delivery_receipt.py": false
+    },
+    "ci_plan_present": false,
+    "ci_gate_present": false,
+    "ci_policy_validator_excerpt": null,
+    "state_reader_excerpt": "def read(self, optional=False):\n        row = self.api.request(self.path + \"?ref=\" + BRANCH, optional=optional)\n        if row is None:\n            return empty(), None\n        value = json.loads(base64.b64decode(row[\"content\"]))\n        if value.get(\"schema_version\") != 1 or not isinstance(value.get(\"todo_order\"), list):\n            raise ValueError(\"Invalid shared tracker state; inspect it before continuing\")\n        return value, row[\"sha\"]\n\n    def write(self, state, sha):\n        if sha is None:\n            ref = self.api.request(self.api.root + \"/git/ref/heads/\" + BRANCH, optional=True)\n            if ref is None:\n                base = self.api.request(self.api.root + \"/git/ref/heads/\" + quote(self.base, safe=\"\"))\n                try:\n                    self.api.request(self.api.root + \"/git/refs\", \"POST\",\n                        ",
+    "client_cache_lines": [
+      "repo, revision = lock['repository'], lock['revision']",
+      "if repo != 'MojoTheApe/task-tracker' or not re.fullmatch(r'[0-9a-f]{40}', revision):",
+      "override = os.environ.get('TASK_TRACKER_HOME')",
+      "engine = Path(override).resolve() if override else root / '.tracker-runtime' / revision",
+      "subprocess.run(['gh', 'repo', 'clone', repo, str(engine), '--', '--no-checkout', '--filter=blob:none'], check=True)",
+      "subprocess.run(['git', '-C', str(engine), 'checkout', '--detach', revision], check=True)",
+      "if actual != revision:",
+      "raise ValueError('Shared tracker checkout does not match tracker/engine.json; use its exact revision')",
+      "raise ValueError('Shared tracker checkout has modified tracked files; inspect it before execution')"
+    ],
+    "evidence_kind": "immutable source inspection; consumer installation and activation are separate",
+    "source_refs": {
+      "tracker/queue.py": {
+        "blob": "ecf6c19e81201982e59a0a1f06e6e60875d7e28b",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/adb2ce04fff017d1059031f4298effc020d0e2e5/tracker/queue.py"
+      },
+      "tracker/templates/task_tracker.py": {
+        "blob": "0374065f56af80730c5916ff3e25dc90df0ff604",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/adb2ce04fff017d1059031f4298effc020d0e2e5/tracker/templates/task_tracker.py"
+      }
+    }
+  },
+  {
+    "revision": "ea969826398a808925bbd907ca8719445177ab59",
+    "observed_at": "2026-10-17T08:02:42.461219+00:00",
+    "presence": {
+      "tracker/task_context.py": false,
+      "tracker/ci_evidence.py": false,
+      "tracker/maintenance.py": false,
+      "tracker/execution.py": false,
+      "tracker/delivery_receipt.py": false
+    },
+    "ci_plan_present": false,
+    "ci_gate_present": false,
+    "ci_policy_validator_excerpt": null,
+    "state_reader_excerpt": "def read(self, optional=False):\n        row = self.api.request(self.path + \"?ref=\" + BRANCH, optional=optional)\n        if row is None:\n            return empty(), None\n        value = json.loads(base64.b64decode(row[\"content\"]))\n        if value.get(\"schema_version\") != 1 or not isinstance(value.get(\"todo_order\"), list):\n            raise ValueError(\"Invalid shared tracker state; inspect it before continuing\")\n        return value, row[\"sha\"]\n\n    def write(self, state, sha):\n        if sha is None:\n            ref = self.api.request(self.api.root + \"/git/ref/heads/\" + BRANCH, optional=True)\n            if ref is None:\n                base = self.api.request(self.api.root + \"/git/ref/heads/\" + quote(self.base, safe=\"\"))\n                try:\n                    self.api.request(self.api.root + \"/git/refs\", \"POST\",\n                        ",
+    "client_cache_lines": [
+      "repo, revision = lock['repository'], lock['revision']",
+      "if repo != 'MojoTheApe/task-tracker' or not re.fullmatch(r'[0-9a-f]{40}', revision):",
+      "override = os.environ.get('TASK_TRACKER_HOME')",
+      "engine = Path(override).resolve() if override else root / '.tracker-runtime' / revision",
+      "subprocess.run(['gh', 'repo', 'clone', repo, str(engine), '--', '--no-checkout', '--filter=blob:none'], check=True)",
+      "subprocess.run(['git', '-C', str(engine), 'checkout', '--detach', revision], check=True)",
+      "if actual != revision:",
+      "raise ValueError('Shared tracker checkout does not match tracker/engine.json; use its exact revision')",
+      "raise ValueError('Shared tracker checkout has modified tracked files; inspect it before execution')"
+    ],
+    "evidence_kind": "immutable source inspection; consumer installation and activation are separate",
+    "source_refs": {
+      "tracker/delivery_policy.py": {
+        "blob": "4290925758e9fc3222212d36f06ba79e3493d3cd",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/ea969826398a808925bbd907ca8719445177ab59/tracker/delivery_policy.py"
+      },
+      "tracker/queue.py": {
+        "blob": "cb22dcaf8c7fedd91e1d00fc1f7932142f6e5d13",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/ea969826398a808925bbd907ca8719445177ab59/tracker/queue.py"
+      },
+      "tracker/templates/task_tracker.py": {
+        "blob": "0374065f56af80730c5916ff3e25dc90df0ff604",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/ea969826398a808925bbd907ca8719445177ab59/tracker/templates/task_tracker.py"
+      }
+    }
+  },
+  {
+    "revision": "0d1fad44f5fdbef64b061324e9a1292fb77fb725",
+    "observed_at": "2026-10-17T08:02:42.941466+00:00",
+    "presence": {
+      "tracker/task_context.py": false,
+      "tracker/ci_evidence.py": true,
+      "tracker/maintenance.py": true,
+      "tracker/execution.py": true,
+      "tracker/delivery_receipt.py": false
+    },
+    "ci_plan_present": false,
+    "ci_gate_present": false,
+    "ci_policy_validator_excerpt": "def policy(config):\n    value = config.get('ci_evidence_policy')\n    if value is None:\n        return None\n    if (not isinstance(value, dict) or set(value) != {'schema_version', 'profiles'}\n            or type(value['schema_version']) is not int or value['schema_version'] != VERSION\n            or not isinstance(value['profiles'], dict) or not value['profiles']):\n        raise ValueError('Invalid ci_evidence_policy version/fields')\n    for key, p in value['profiles'].items():\n        if not re.fullmatch(r'[a-z][a-z0-9_-]{0,63}', key):\n            raise ValueError('CI profile names must be sta",
+    "state_reader_excerpt": "def state_schema(state):\n    \"\"\"Validate the maintenance fence before exposing its retained state format.\n\n    Older engines reject outer schema 3. No old writer can read a held fence and\n    obtain a fresh SHA for a write that silently ignores maintenance.\n    \"\"\"\n    version = state.get('schema_version')\n    held = state.get('maintenance')\n    if type(version) is not int or version not in (1, 2, 3):\n        raise ValueError('Unsupported shared state protocol')\n    if version != 3:\n        if held is not None:\n            raise ValueError('Maintenance requires the fenced shared state protocol')\n        return version\n    if (not isinstance(held, dict) or held.get('schema_version') != 1\n            or type(held.get('schema_version')) is not int or held.get('state') != 'held'\n            or type(held.get('base_schema_version')) is not int or held['base_schema_version'] not in (1, 2)\n            or not isinstance(held.get('id'), str) or not re.fullmatch(r'[0-9a-f]{32}', held['id'])\n            or not isinstance(held.get('actor'), str) or not re.fullmatch(r'Maintainer-[A-Za-z0-9]{4,32}', held['actor'])\n            or not isinstance(held.get('session'), str) or not re.fullmatch(r'[A-Za-z0-9_-]{4,100}', held['session'])\n            or any(not isinstance(held.get(k), str) or not held[k].strip() for k in ('reserved_at', 'report'))):\n        raise ValueError('Invalid held maintenance owner/protocol')\n    if not isinstance(state.get('maintenance_history'), list):\n        raise ValueError('Invalid maintenance history')\n    try:\n        if not re.fullmatch(r'\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d(?:Z|\\+00:00)', held['reserved_at']):\n            raise ValueError('Invalid timestamp')\n        datetime.datetime.fromisoformat(held['reserved_at'].replace('Z', '+00:00'))\n    except ValueError:\n        raise ValueError('Invalid maintenance reservation timestamp') from None\n    return held['base_schema_version']\n\n",
+    "client_cache_lines": [
+      "repo, revision = lock['repository'], lock['revision']",
+      "if repo != 'MojoTheApe/task-tracker' or not re.fullmatch(r'[0-9a-f]{40}', revision):",
+      "override = os.environ.get('TASK_TRACKER_HOME')",
+      "engine = Path(override).resolve() if override else root / '.tracker-runtime' / revision",
+      "subprocess.run(['gh', 'repo', 'clone', repo, str(engine), '--', '--no-checkout', '--filter=blob:none'], check=True)",
+      "subprocess.run(['git', '-C', str(engine), 'checkout', '--detach', revision], check=True)",
+      "if actual != revision:",
+      "raise ValueError('Shared tracker checkout does not match tracker/engine.json; use its exact revision')",
+      "raise ValueError('Shared tracker checkout has modified tracked files; inspect it before execution')"
+    ],
+    "evidence_kind": "immutable source inspection; consumer installation and activation are separate",
+    "source_refs": {
+      "tracker/delivery_policy.py": {
+        "blob": "505b02e0c67677510f2ca28aab45996a1f1cc420",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/0d1fad44f5fdbef64b061324e9a1292fb77fb725/tracker/delivery_policy.py"
+      },
+      "tracker/queue.py": {
+        "blob": "041ed3df15afe40bb98e581a895fecbf15a28562",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/0d1fad44f5fdbef64b061324e9a1292fb77fb725/tracker/queue.py"
+      },
+      "tracker/ci_evidence.py": {
+        "blob": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/0d1fad44f5fdbef64b061324e9a1292fb77fb725/tracker/ci_evidence.py"
+      },
+      "tracker/templates/task_tracker.py": {
+        "blob": "0374065f56af80730c5916ff3e25dc90df0ff604",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/0d1fad44f5fdbef64b061324e9a1292fb77fb725/tracker/templates/task_tracker.py"
+      }
+    }
+  },
+  {
+    "revision": "e775c624e0323e69ed891926691c3dee6587081a",
+    "observed_at": "2026-10-17T08:02:42.752796+00:00",
+    "presence": {
+      "tracker/task_context.py": false,
+      "tracker/ci_evidence.py": true,
+      "tracker/maintenance.py": true,
+      "tracker/execution.py": true,
+      "tracker/delivery_receipt.py": true
+    },
+    "ci_plan_present": false,
+    "ci_gate_present": false,
+    "ci_policy_validator_excerpt": "def policy(config):\n    value = config.get('ci_evidence_policy')\n    if value is None:\n        return None\n    if (not isinstance(value, dict) or set(value) != {'schema_version', 'profiles'}\n            or type(value['schema_version']) is not int or value['schema_version'] != VERSION\n            or not isinstance(value['profiles'], dict) or not value['profiles']):\n        raise ValueError('Invalid ci_evidence_policy version/fields')\n    for key, p in value['profiles'].items():\n        if not re.fullmatch(r'[a-z][a-z0-9_-]{0,63}', key):\n            raise ValueError('CI profile names must be sta",
+    "state_reader_excerpt": "def state_schema(state):\n    \"\"\"Validate the maintenance fence before exposing its retained state format.\n\n    Older engines reject outer schema 3. No old writer can read a held fence and\n    obtain a fresh SHA for a write that silently ignores maintenance.\n    \"\"\"\n    version = state.get('schema_version')\n    held = state.get('maintenance')\n    if type(version) is not int or version not in (1, 2, 3):\n        raise ValueError('Unsupported shared state protocol')\n    if version != 3:\n        if held is not None:\n            raise ValueError('Maintenance requires the fenced shared state protocol')\n        return version\n    if (not isinstance(held, dict) or held.get('schema_version') != 1\n            or type(held.get('schema_version')) is not int or held.get('state') != 'held'\n            or type(held.get('base_schema_version')) is not int or held['base_schema_version'] not in (1, 2)\n            or not isinstance(held.get('id'), str) or not re.fullmatch(r'[0-9a-f]{32}', held['id'])\n            or not isinstance(held.get('actor'), str) or not re.fullmatch(r'Maintainer-[A-Za-z0-9]{4,32}', held['actor'])\n            or not isinstance(held.get('session'), str) or not re.fullmatch(r'[A-Za-z0-9_-]{4,100}', held['session'])\n            or any(not isinstance(held.get(k), str) or not held[k].strip() for k in ('reserved_at', 'report'))):\n        raise ValueError('Invalid held maintenance owner/protocol')\n    if not isinstance(state.get('maintenance_history'), list):\n        raise ValueError('Invalid maintenance history')\n    try:\n        if not re.fullmatch(r'\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d(?:Z|\\+00:00)', held['reserved_at']):\n            raise ValueError('Invalid timestamp')\n        datetime.datetime.fromisoformat(held['reserved_at'].replace('Z', '+00:00'))\n    except ValueError:\n        raise ValueError('Invalid maintenance reservation timestamp') from None\n    return held['base_schema_version']\n\n",
+    "client_cache_lines": [
+      "repo, revision = lock['repository'], lock['revision']",
+      "if repo != 'MojoTheApe/task-tracker' or not re.fullmatch(r'[0-9a-f]{40}', revision):",
+      "override = os.environ.get('TASK_TRACKER_HOME')",
+      "engine = Path(override).resolve() if override else root / '.tracker-runtime' / revision",
+      "subprocess.run(['gh', 'repo', 'clone', repo, str(engine), '--', '--no-checkout', '--filter=blob:none'], check=True)",
+      "subprocess.run(['git', '-C', str(engine), 'checkout', '--detach', revision], check=True)",
+      "if actual != revision:",
+      "raise ValueError('Shared tracker checkout does not match tracker/engine.json; use its exact revision')",
+      "raise ValueError('Shared tracker checkout has modified tracked files; inspect it before execution')"
+    ],
+    "evidence_kind": "immutable source inspection; consumer installation and activation are separate",
+    "source_refs": {
+      "tracker/delivery_policy.py": {
+        "blob": "9ea150d31560e72cc17f66338da1c4e21acedd7e",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/e775c624e0323e69ed891926691c3dee6587081a/tracker/delivery_policy.py"
+      },
+      "tracker/queue.py": {
+        "blob": "e265793490bc4531fba26d46cc88c2576039e61a",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/e775c624e0323e69ed891926691c3dee6587081a/tracker/queue.py"
+      },
+      "tracker/ci_evidence.py": {
+        "blob": "9e6be693744b68ede3393a024c71c77b5ede8c61",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/e775c624e0323e69ed891926691c3dee6587081a/tracker/ci_evidence.py"
+      },
+      "tracker/templates/task_tracker.py": {
+        "blob": "0374065f56af80730c5916ff3e25dc90df0ff604",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/e775c624e0323e69ed891926691c3dee6587081a/tracker/templates/task_tracker.py"
+      }
+    }
+  },
+  {
+    "revision": "2c01481a86ee8e8af31736378574a91505c7f94f",
+    "observed_at": "2026-10-17T08:02:45.273058+00:00",
+    "presence": {
+      "tracker/task_context.py": true,
+      "tracker/ci_evidence.py": true,
+      "tracker/maintenance.py": true,
+      "tracker/execution.py": true,
+      "tracker/delivery_receipt.py": true
+    },
+    "ci_plan_present": true,
+    "ci_gate_present": true,
+    "ci_policy_validator_excerpt": "def policy(config):\n    value = config.get('ci_evidence_policy')\n    if value is None:\n        return None\n    if (not isinstance(value, dict) or set(value) != {'schema_version', 'profiles'}\n            or type(value['schema_version']) is not int or value['schema_version'] not in (1, 2)\n            or not isinstance(value['profiles'], dict) or not value['profiles']):\n        raise ValueError('Invalid ci_evidence_policy version/fields')\n    for key, p in value['profiles'].items():\n        if not re.fullmatch(r'[a-z][a-z0-9_-]{0,63}', key):\n            raise ValueError('CI profile names must be ",
+    "state_reader_excerpt": "def state_schema(state):\n    \"\"\"Validate the maintenance fence before exposing its retained state format.\n\n    Older engines reject outer schema 3. No old writer can read a held fence and\n    obtain a fresh SHA for a write that silently ignores maintenance.\n    \"\"\"\n    version = state.get('schema_version')\n    held = state.get('maintenance')\n    if type(version) is not int or version not in (1, 2, 3, 4):\n        raise ValueError('Unsupported shared state protocol')\n    context = state.get('task_context')\n    context_version = (version == 4 or version == 3 and isinstance(held, dict) and held.get('base_schema_version') == 4)\n    if context_version:\n        if (not isinstance(context, dict) or context.get('policy') != {'schema_version': 1}\n                or type(context['policy'].get('schema_version')) is not int\n                or type(context.get('base_schema_version')) is not int or context['base_schema_version'] != 2\n                or not isinstance(context.get('readiness'), dict) or not isinstance(context.get('history'), list)):\n            raise ValueError('Invalid task context state protocol')\n    elif context is not None:\n        raise ValueError('Task context requires the fenced shared state protocol')\n    if version != 3:\n        if held is not None:\n            raise ValueError('Maintenance requires the fenced shared state protocol')\n        return 2 if version == 4 else version\n    if (not isinstance(held, dict) or held.get('schema_version') != 1\n            or type(held.get('schema_version')) is not int or held.get('state') != 'held'\n            or type(held.get('base_schema_version')) is not int or held['base_schema_version'] not in (1, 2, 4)\n            or not isinstance(held.get('id'), str) or not re.fullmatch(r'[0-9a-f]{32}', held['id'])\n            or not isinstance(held.get('actor'), str) or not re.fullmatch(r'Maintainer-[A-Za-z0-9]{4,32}', held['actor'])\n            or not isinstance(held.get('session'), str) or not re.fullmatch(r'[A-Za-z0-9_-]{4,100}', held['session'])\n            or any(not isinstance(held.get(k), str) or not held[k].strip() for k in ('reserved_at', 'report'))):\n        raise ValueError('Invalid held maintenance owner/protoc",
+    "client_cache_lines": [
+      "repo, revision = lock['repository'], lock['revision']",
+      "if repo != 'MojoTheApe/task-tracker' or not re.fullmatch(r'[0-9a-f]{40}', revision):",
+      "override = os.environ.get('TASK_TRACKER_HOME')",
+      "engine = Path(override).resolve() if override else root / '.tracker-runtime' / revision",
+      "subprocess.run(['gh', 'repo', 'clone', repo, str(engine), '--', '--no-checkout', '--filter=blob:none'], check=True)",
+      "subprocess.run(['git', '-C', str(engine), 'checkout', '--detach', revision], check=True)",
+      "if actual != revision:",
+      "raise ValueError('Shared tracker checkout does not match tracker/engine.json; use its exact revision')",
+      "raise ValueError('Shared tracker checkout has modified tracked files; inspect it before execution')"
+    ],
+    "evidence_kind": "immutable source inspection; consumer installation and activation are separate",
+    "source_refs": {
+      "tracker/delivery_policy.py": {
+        "blob": "ae6c7f0c1c88e8e2b4589cba05674d7cafb3bc5b",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/delivery_policy.py"
+      },
+      "tracker/queue.py": {
+        "blob": "e265793490bc4531fba26d46cc88c2576039e61a",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/queue.py"
+      },
+      "tracker/ci_evidence.py": {
+        "blob": "cdb8d7ec94e84fa7a717a64da12a05d8d4cd49eb",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/ci_evidence.py"
+      },
+      "tracker/task_context.py": {
+        "blob": "834274d12b5edf70cf4473ca3997ce575e5502ac",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/task_context.py"
+      },
+      "tracker/templates/task_tracker.py": {
+        "blob": "0374065f56af80730c5916ff3e25dc90df0ff604",
+        "url": "https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/templates/task_tracker.py"
+      }
+    }
+  }
+]

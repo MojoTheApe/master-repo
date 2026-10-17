@@ -1,0 +1,1124 @@
+COMPLETE WORKFLOW IMPLEMENTATION SPECIFICATION
+
+
+
+Master Repo, Task Tracker and consumer projects
+Version 1.1 | 16 October 2026 | English handoff for the implementing agent
+
+Build a coherent shared workflow for existing and future projects. Preserve the owner’s original WFO-01 through WFO-29 goals, repair the audited correctness gaps, and complete publication, service activation and applicable consumer adoption. The final system must be understandable, evidence-driven and usable without reconstructing the design from prior chats.
+
+
+
+What this document controls
+
+This is the consolidated implementation scope. It incorporates the first Russian technical assignment as Task 02 and supersedes its exclusions only in the later tasks that explicitly add those capabilities. If Task 02 has already been implemented when work begins, verify its acceptance evidence and perform only the missing delta.
+
+The original goals remain required. Simplifications in this specification concern implementation mechanisms and dependency order. No WFO outcome may silently disappear, remain an indefinite experiment, or be marked complete merely because a design document exists. Separate risk decisions are recorded near the end.
+
+
+
+How the implementing agent should proceed
+
+- Start with Task 01, then select ready work from the prerequisite and parallel-execution tables. Task numbers organize the scope; dependencies determine readiness. Use small reviewed changes inside each task; do not build one unreviewable cross-repository PR.
+
+- Follow each repository’s actually adopted rules and preserve its local controls. When commissioned to implement, continue within the assignment’s authority; apply its existing merge and maintained-delivery authorization rules without inventing repeated routine confirmations.
+
+- Keep one implementation ledger with status, related WFO IDs, actual Issues/PRs, test evidence, source release, deployed revision and consumer activation. Task numbers here are planning IDs, not GitHub Issue numbers.
+
+- Report an external access or product decision blocker precisely and continue independent work. Do not downgrade completion requirements, fabricate receipts or hide unfinished adoption to obtain a green report.
+
+
+
+Definition of a finished system
+
+All mandatory task acceptance criteria pass; compatible Master and Tracker releases are published; the actual shared service is updated; every inventoried repository has a verified applicable disposition; new-project onboarding works; and the final end-to-end and recovery checks pass. A merged PR, published package or installed skill alone is not sufficient.
+
+The Russian owner roadmap is a separate short explanation of this same sequence. The implementation scope is contained in this document and its accompanying criterion ledger, with immutable source references for verification; previous conversations are not required.
+
+
+
+========================================================================
+
+Verified starting point
+
+========================================================================
+
+Read-only refresh: 16 October 2026, approximately 15:38 UTC. Main revisions of all 15 inventoried repositories match the audit baseline. No first-assignment implementation is present in the checked Tracker main. Recheck at Task 01 because active development continues.
+
+Component | Observed baseline | Meaning
+
+Master Repo | v1.0.0 · 9257f7be… | Published common standard; current self-repository schema 1 exception.
+
+Task Tracker source | v3.2.0 · 2c01481a… | Published engine; source availability does not imply server installation.
+
+Tracker service | 4ac9b3fa… | Event service active; ten project snapshots report OK. This is an earlier engine revision.
+
+ACL | af0ade29… | Older Master/Tracker pins; execution v3 with 5 work and 5 review slots, batch limit 5, no Stage; verified package completion.
+
+AI Skills | 4a9ed161… | Canonical Project Workflow mirror matches the audited Master source; distribution does not upgrade consumers.
+
+The deployed revision was previously checked to support task-context schema 1 and execution schema 3, but not CI evidence policy 2. Task 01 must verify actual capabilities rather than infer support from a version string. At refresh, ACL had 59 open PRs, Tracker had one older open registration PR, and Master/AI Skills had none. Open work is not blanket permission to merge, close or rewrite it.
+
+
+
+Confirmed corrections that must not be lost
+
+- Current completion and dependency readiness can remain true after a Merged Issue’s requirements change. Ordinary receipts lack accepted-scope binding; some readers compare current requirements with themselves.
+
+- All, its count and board exclude Merged tasks even when required delivery is unfinished. Historical acceptance can be labelled Delivered without current delivery proof.
+
+- Published instructions disagree about initializer defaults, v3 review lanes, multi-task batch promotion and check-pr versus check-merge. Ordinary Master CI does not continuously exercise the real compatible Tracker export.
+
+- The capacity widget counts activity/tasks rather than held reservations. Four tasks in one batch can look like four integrations.
+
+- ACL’s CI report counts some carried-forward attempt rows as new execution, misclassifies instruction-only skips as reuse, and does not handle the filtered run-search cap. Correct accounting before claiming savings.
+
+WFO-01 through WFO-08 are already published shared-source capabilities. Preserve and regression-test them; complete their applicable adoption rather than implement them again. Do not treat older consumers as already upgraded.
+
+
+
+========================================================================
+
+Target architecture and common guarantees
+
+========================================================================
+
+Owner | Final responsibility
+
+Master Repo | Normative common policy, profiles, descriptor intent, templates, conservative init/upgrade and canonical Project Workflow skill.
+
+Task Tracker | Executable contracts, claims, transitions, reviews, admission, evidence validation, portable technical export, CLI, service and read-only UI projection.
+
+Consumer project | Product requirements, source, actual check commands, selected route and completion target, local delivery mechanism and operational safeguards.
+
+AI Skills | Original library-owned skills and a verified immutable mirror of the Master-owned workflow skill.
+
+Related resources | Typed links to an owning project, optional observed resource information and delivery attribution; no duplicate task queue by default.
+
+Keep Master and Tracker separate. Keep delivery.json as project intent and tracker/config.json as its validated executable adaptation. Generate or mechanically validate their relationship from one technical contract; do not independently author the same rule in three places.
+
+
+
+Independent project choices
+
+Repository role, integration route, Stage, execution capacities, delivery profile and required completion are distinct choices. Roles cover applications, shared tools/libraries, research, knowledge, application data and release storage. Delivery retains VPS, package, n8n publication, n8n source-only, local manual-pull and tooling semantics. A role suggests defaults; it never grants a review or verification bypass.
+
+
+
+Invariants across every task
+
+- Bind readiness, review and completion to accepted requirements and exact applicable source/policy/target. A journal exemption exists only under its explicitly adopted contract. Changed requirements invalidate current completion, not immutable prior delivery history.
+
+- Preserve actual ownership, independent review, CAS state writes, pending-operation recovery and complete applicable coverage. A one-member batch is valid; never wait for an arbitrary minimum of five tasks.
+
+- Separate source review from combined-candidate verification. Disjoint paths, unchanged branch names, separate green source runs and prose assertions do not prove semantic compatibility of a combination.
+
+- Derive category/status/activity from canonical evidence. Never create another manually synchronized lifecycle. Progress observes execution; final receipts establish completion.
+
+- Archived visibility and accepted outcome are separate in the final contract. Cancellation/rejection is not success. Historical exceptions remain bounded and visible; no current-body rehash masquerades as old acceptance.
+
+- A released capability, consumer pin, explicit activation, running service and verified real outcome are separate facts. New readers precede incompatible new writers and state. Unknown support fails explicitly.
+
+Default architecture: extend the existing state, exports and maintained producer mechanisms. No new database, universal deployer, central orchestrator, retry daemon or general resource graph is required.
+
+
+
+========================================================================
+
+Implementation order and dependencies
+
+========================================================================
+
+The numbered sequence is a readable default, not a requirement to serialize all work. Prerequisites determine readiness; use the following parallel-execution plan to dispatch independent work as soon as it is ready. Every published slice uses the release procedure later in this document; publication is not deferred until Task 14.
+
+Task | Deliverable | Hard prerequisites
+
+01 | Current-state ledger and cutover plan | None
+
+02 | Trustworthy completion and unfinished-task visibility | 01
+
+03 | Consistent common instructions and templates | 01; incorporate 02 contract
+
+04 | Single technical contract and portable CI ownership | 03
+
+05 | Accurate CI accounting and bounded retries | 01, 03; 04 for exported contract changes
+
+06 | Early adoption of compatible existing capabilities | 02, 03; 05 baseline or equivalent verified native baseline; compatible reader
+
+07 | Simple owned direct route and explicit project choices | 02–04
+
+08 | Verified publication and exact mirror automation | 07
+
+09 | Capacity from actual held reservations | 01, 02; no dependency on 07/08
+
+10 | Unified categories and retention-aware archive | 02, 07; safe unknown delivery fallback
+
+11 | Related resources and real delivery progress | 08, 10; 09 can ship independently
+
+12 | Bounded matrix and per-attempt CI evidence | 04, 05; no dependency on UI tasks
+
+13 | Final consumer adoption and new-project onboarding | Relevant 02–12 capabilities released; compatible service
+
+14 | End-to-end acceptance and owner handoff | 01–13 accepted; all required dispositions resolved
+
+
+
+Continuous release work
+
+WFO-18 is maintained compatibility testing, WFO-19 is a series of immutable compatible releases, and WFO-24 is reader/service activation whenever a slice needs it. Apply all three to each affected package. Task 06 must not wait for future categories or advanced matrix support; Task 13 applies only the remaining delta.
+
+
+
+Task states in the implementation ledger
+
+Use Planned, In progress, Source verified, Published, Activated, Accepted or Blocked, with the relevant evidence and next action. Source-only tasks may have a justified non-applicable activation field. Required consumer/runtime work cannot be marked Accepted while only source changes exist.
+
+
+
+========================================================================
+
+Parallel execution and subagent coordination
+
+========================================================================
+
+Use these readiness checkpoints to select work, not as additional wave barriers. Earlier ready work never waits for unrelated tasks in the same row. Preparation may overlap a prerequisite; acceptance and incompatible writes must wait for its required result.
+
+Ready checkpoint | Candidates for concurrent work
+
+Start | Split Task 01 read-only inventory and runtime/CI evidence collection; one coordinator reconciles the baseline.
+
+01 accepted | 02 implementation plus 03 ownership/template preparation. Finalize 03 after incorporating the accepted 02 contract.
+
+02 accepted | 03 completion plus 09 for existing execution topologies, within actual repository reservations.
+
+03 accepted | 04 plus 05 reporting/non-export work. Changed exported contracts wait for 04. Start 06 when 02/03, baseline and reader prerequisites are met.
+
+02–04 accepted | 07 is ready. Independently, 12 starts after 04/05; neither waits for UI work.
+
+07 accepted | 08 plus 10; extend 09 for the new single-source topology. This extension does not block the initial 09 release.
+
+08 and 10 accepted | 11 is ready. Start 13 per repository once its relevant capabilities are released and its actual reader is compatible.
+
+All mandatory work accepted | 14 independent final acceptance. Full 13 closure still requires every required repository disposition.
+
+
+
+Dispatch and integration rules
+
+- Use one coordinator, up to two implementers and an independent reviewer as a practical four-agent arrangement. Available agent slots do not grant repository work/review capacity. Existing reservations and local rules prevail; a legacy shared slot cannot be bypassed by spawning agents.
+
+- Give each implementer an isolated worktree/branch, exact task/subtask, declared file ownership, pinned interface/base and acceptance evidence to return. The coordinator owns the ledger and resolves overlap before dispatch; a subagent report alone does not establish acceptance.
+
+- Assign one implementation owner at a time to shared schemas, completion evaluation, ownership transitions and export interfaces. Agree interfaces before dependent parallel coding. Changes to the same files or contract require coordinated integration even in separate worktrees.
+
+- Serialize integration, publication and deployment per repository or target under actual reservations. Verify the combined current candidate. The approving reviewer must not have authored those changes; do not substitute several source approvals for required combined-candidate verification.
+
+- Coordinate CI dispatch per candidate. Workers run relevant local checks; reuse hosted evidence only under the adopted proof rules. Prevent duplicate full-suite submissions by different agents, preserve mandatory checks and use the durable retry budget once available.
+
+Parallelism may shorten waiting while increasing total agent or runner work. Track elapsed cycle time and aggregate consumption separately. It is not a savings guarantee or permission to weaken review, expand capacities or skip delivery acceptance.
+
+
+
+========================================================================
+
+Task 01 Refresh the baseline and prepare execution
+
+========================================================================
+
+Owner repositories: Master coordination; all 15 repositories
+Prerequisites: None
+Original scope: WFO-09; protects WFO-01–08
+
+Required outcome: A bounded, current inventory and implementation ledger that prevent duplicate work and unsafe adoption.
+
+
+
+Implementation
+
+- Refresh remote refs, descriptors, Tracker configuration/state, engine pins, skill distribution, native protections, actual server revision and capabilities. Use the audit as the starting inventory. Do not repeat an unrestricted architecture audit.
+
+- For each repository record role, task home, integration route, Stage, completion target, limits, checks, delivery producer, local exceptions, open PRs, real claims/lanes/pending operations and proposed upgrade/no-change/resource-only disposition.
+
+- Resolve existing matching Issues and unfinished changes before creating duplicates. Record genuine completion evidence for any already implemented part of Task 02. Never mark it done from a ticket title or label alone.
+
+- Plan each cutover around actual owners. Let pre-cutover work finish under its adopted rules or explicitly revalidate it against the new contract. A descriptor edit must not reinterpret active work. Do not automatically close old PRs or release claims.
+
+- Prepare a compatibility inventory of reader, engine/CLI, portable scripts, CI workflow refs and local client caches. Record the exact mechanism by which a project activates a new contract and rejects incompatible writers.
+
+- Record protection guarantees separately from cooperative agent review. Verify availability and bypass permissions. Prepare a concrete decision only if desired native enforcement requires an account/access change; do not claim an unavailable rule is enforced.
+
+
+
+Acceptance
+
+All 15 repositories have an explicit disposition and evidence date. Every original WFO ID maps to this plan and actual implementation work. The service/source gap, existing open work and required maintenance boundaries are known. No local data, task history, product specification or project safeguard is scheduled for blanket replacement.
+
+
+
+Required evidence
+
+Commit the implementation ledger, compatibility table and rollout checklist to the appropriate planning location when implementation is commissioned. Include immutable refs, actual source links and remaining blockers; omit credentials and private session details. Refresh only affected rows before later cutovers.
+
+
+
+========================================================================
+
+Task 02 Make current completion trustworthy
+
+========================================================================
+
+Owner repositories: Task Tracker; minimal matching Master changes
+Prerequisites: 01
+Original scope: First technical assignment; parts of WFO-21/22; audit correction
+
+Required outcome: Current completion describes the accepted requirements, dependencies agree, and unfinished Merged work remains visible.
+
+
+
+Implementation
+
+- Freeze the accepted scope at genuine review/acceptance; use the batch member’s frozen scope where available. Keep Issue/repository, PR sources, revision/tree, policy and required target bindings. Never hash today’s Issue at merge and call it previously reviewed.
+
+- Use one logical completion assessment in task projection, dependency admission, release readiness and delivery recording. Distinguish current success, changed requirements, pending/failed delivery, unverified legacy scope and explicit historical acceptance.
+
+- Cover record_merge, process, non_code, manual record_delivery, native/portable delivery_receipt, policy reconciliation, legacy_delivery and full/projected summary inputs. Retries with identical sources/policy must not overwrite scope; reconciliation cleanup must not discard its only retained proof.
+
+- Dry-run old receipts. Reuse original scope or reconstruct it only from matching original review/batch evidence with provenance. Unknown scope in an activated project is unverified and cannot satisfy new dependencies. Keep history; do not backfill from current bodies or expand historical manifests to bypass proof.
+
+- Use durable per-project activation recognized equally by service and writers. Nonactivated projects retain their adopted semantics and are listed explicitly. There is no permissive missing-scope fallback for new records in an activated project.
+
+- All/list/board/count use unfinished nonarchived tasks, respecting existing filter scope. Provide a visible place for incomplete Merged tasks. Show Requirements changed separately from Awaiting delivery. Historical acceptance shows Done plus Accepted before adoption, never Delivered without actual delivery proof.
+
+
+
+Acceptance
+
+Test changed requirements after reviewed merge and verified delivery; changes between review/merge and merge/delivery; unchanged and changed-scope retries; valid v2 journal versus legacy whole-body hashes; malformed journal isolation; explicit reopen; new valid acceptance; multiple tasks/PRs; process/non_code; both delivery writers after reconciliation; old and new project contracts on one service; and legacy UI aliases/links.
+
+Test CAS conflicts, ambiguous successful writes and an Issue edit after the last read but before receipt write: retain the original scope and reject mismatch at the next fresh projection/admission. Preserve prior batch history and other owners. Do not auto-reopen Issues or roll back already started dependents.
+
+
+
+Release boundary
+
+Publish and activate a compatible reader and a bounded pilot; verify actual behavior. Preserve existing Archive semantics in this task. Task 10 deliberately introduces the final retention/outcome contract later. This task is self-contained and replaces the need to supply the earlier Russian document.
+
+
+
+========================================================================
+
+Task 03 Unify instructions and generated templates
+
+========================================================================
+
+Owner repositories: Master Repo and Task Tracker; AI Skills mirror assessment
+Prerequisites: 01; incorporate 02 where changed
+Original scope: WFO-11, 12, 13; relevant WFO-02/06 preservation
+
+Required outcome: One coherent reading path and consistent instructions in both standalone Tracker exports and Master-generated projects.
+
+
+
+Implementation
+
+- Write a short ownership map: Master owns common normative policy; Tracker owns commands, parser/schema and executable semantics; consumers own product/runtime knowledge. Keep one authored definition of each rule and mechanically checked derived copies or links.
+
+- Separate Tracker UI, branding and hosting product requirements from its shared agent guide. Make AGENTS a short route-specific reading map. Supply compatible instructions locally by pin; do not require consumers to fetch the latest Master at runtime.
+
+- Correct the known default-execution/task-context disagreement, the v3 guide’s single-review-lane text, the single-task promotion wording incorrectly applied to batches, and standalone check-pr/check-merge inconsistency. Final admission uses the actual adopted check-merge equivalent; check-pr remains early feedback.
+
+- Render only the selected route in the main consumer instructions while preserving access to legacy references. Keep Issue parser fields machine-readable and distinguish source PR identity from integration batch membership.
+
+- Preserve task freshness and readiness checks at start/resume without routine extra owner approval for old tasks. Independent compatibility review may retain unchanged Approved source after main changes; real conflicts/scope changes return to an author. Never infer semantic compatibility from paths alone.
+
+- Update the canonical workflow skill in Master if affected, then its verified AI Skills mirror. Preserve project-owned docs/system and docs/runtime, unique commands, installers and deployment controls during generation and upgrade.
+
+
+
+Acceptance
+
+Generate and read actual standalone Tracker and final Master outputs for representative legacy, direct/current, batch v2/v3, Stage on/off and delivery profiles. Every output uses consistent terminology and the correct command/lane/promotion rules. Use current supported cases now and extend fixtures when Task 07 adds the direct contract.
+
+Tests detect future drift in defaults, templates and exported instructions. Three-way upgrade preserves local customizations and rejects unresolved conflicts. An installed skill changes navigation guidance only; it does not activate a new consumer policy.
+
+
+
+Evidence
+
+Provide the ownership map, before/after examples of generated instructions, independent review, impacted exports and an explicit skill-impact result. Do not close this task after moving files without inspecting what a consumer actually receives.
+
+
+
+========================================================================
+
+Task 04 Publish one portable technical contract
+
+========================================================================
+
+Owner repositories: Task Tracker technical owner; Master consumer
+Prerequisites: 03
+Original scope: WFO-14, 15, 18
+
+Required outcome: The portable CI entry point and validation contract have one reviewed technical source and a real compatibility gate.
+
+
+
+Implementation
+
+- Move ownership of the portable CI frontend into Tracker’s released export with its complete helper dependency closure. Master consumes the exact compatible export; keep existing consumer wrapper paths working or supply tested forwarding wrappers.
+
+- Use a versioned generated snapshot/export or mechanically verified shared implementation for policy validation. Avoid another handwritten schema definition and runtime resolver. Master validation remains read-only and does not execute arbitrary consumer code.
+
+- Preserve immutable tracker-state reads, same-repository boundaries and source/integration/main/promotion evidence identities. Public consumer CI must run with its own read token and exported helpers; it must not clone a private engine or require a private-engine credential.
+
+- Publish a generated machine-readable JSON export/capability manifest: format version, exact engine pin, supported contract versions/capabilities, helper/validator hashes and runtime floors. Validate it against shipped files. Preserve Python 3.9 for Master portable consumers and Python 3.11 for the engine; verify clean-runner import closure. A runtime-floor change requires an explicit compatible migration.
+
+- Add real paired export/init/upgrade smoke tests using exact compatible Master–Tracker revisions on relevant pin/contract/template changes. Existing mocked unit tests remain useful but cannot substitute for this gate.
+
+- Gate representative source-only/direct, batch plus Stage, package delivery, opted-in evidence and legacy-preservation cases. Add new route cases as Task 07 lands. Keep ordinary checks small; expand by actual changed behavior, not every theoretical configuration combination.
+
+
+
+Acceptance
+
+A clean consumer fixture imports and executes both supported wrapper paths with no private engine checkout. Unknown/incompatible contract versions fail clearly. A deliberately changed engine contract makes the paired gate fail. Upgrades preserve local controls and accepted historical exceptions. Standalone Tracker remains usable without a circular unpinned Master dependency.
+
+
+
+Release
+
+Publish Tracker’s technical export, select and test the compatible Master pin, then publish Master and the exact skill mirror. Use a small independent release; this task need not wait for UI or advanced matrix adapters. Record actual artifacts and their immutable identities.
+
+
+
+========================================================================
+
+Task 05 Measure CI accurately and bound retries
+
+========================================================================
+
+Owner repositories: Master policy; Tracker shared implementation; ACL first adapter
+Prerequisites: 01, 03; 04 for changed exported contracts
+Original scope: WFO-25, 26, 28
+
+Required outcome: A reproducible consumption baseline and durable controls against redundant or repeated verification.
+
+
+
+Implementation in this order
+
+- Repair and generalize the existing on-demand ACL report before measuring savings. Distinguish original execution from carried-forward attempt rows; a new job ID/attempt alone is not a new execution. Distinguish proven reuse from not-applicable/instruction-only skips. Partition capped run-history queries, deduplicate IDs and report completeness.
+
+- Report repository/workflow/job/platform/matrix/run/attempt, candidate/PR/batch where actually linked, latency, execution intervals, rounded estimates, retry causes, reused/missing/unknown coverage and verification overhead. State whether a period groups run creation or actual execution; reruns of older runs can execute inside a later period. Separate estimates from actual billing. Use historical SKU/rates, runner class, rounding, included usage and discounts only where sourced; no fixed Windows multiplier for money. Report artifact/cache size and retention/lifetime separately, without deletion or retention changes. Unavailable billing is unknown, not zero; do not invent per-job net charges.
+
+- Add a versioned opt-in retry policy and durable episode ledger in existing state. Default: one original execution plus at most one automatic retry for an unchanged candidate/input/cause episode. Preserve reservations and consumed budget across chats, crashes and native run IDs. Read-only API retries are not execution attempts.
+
+- Diagnose product, transient infrastructure, configuration, billing/access/quota or unknown causes with evidence. Unknown/permanent causes do not auto-retry. Persist unresolved infrastructure/account causes across unrelated SHA changes. A real relevant product fix can create a new candidate; empty commits or relabelled causes cannot reset a budget.
+
+- Separate strict verification identity from budget-equivalence identity. Reserve a unique dispatch intent by CAS before a native rerun; only the winner dispatches. Immediately before POST, recheck candidate relevance and the native attempt; reconcile equivalent runs started outside the wrapper into the episode budget. A lost response remains dispatch-unknown with budget held until native reconciliation proves the outcome. Never retry blindly or release an uncertain reservation on timeout.
+
+- Implement a project-owned fast/full verification plan with distinct truthful check names. Keep useful early feedback and group related corrections. Unknown or mixed changes require full applicable coverage, as does ready handoff/admission; fast results never satisfy a full gate. Preserve ACL’s working metadata separation, PR cancellation, timeouts and exact-tree adapter. Record why a new heavy run is needed. Partial retry is allowed only if the adopted gate proves original jobs and dependent coverage; otherwise use a supported bounded fresh attempt or stop.
+
+
+
+Acceptance and evidence
+
+Native/saved fixtures distinguish the observed 212 versus 112 rounded interval estimates without calling either an invoice. Instruction-only skip is not reuse; capped windows and period-crossing reruns are complete or explicitly incomplete. Identical inputs reproduce the report. Capture a before snapshot of ordinary authorized work.
+
+Two concurrent sessions dispatch at most once; restart, empty commit, new run ID and cause relabelling do not reset the budget. Exercise crash before/after POST, lost response, delayed native visibility and definitive no-side-effect rejection. Genuine fixes proceed; unresolved billing/configuration still blocks. Human direct Actions access is not falsely claimed to be technically prevented.
+
+Trigger tests preserve source, integration and main evidence, cancel only superseded same-PR runs and prevent fast checks satisfying full admission. Publish human and machine-readable reports and a maintained retry command/runbook; no analytics daemon, retry service or paid demonstration runs are required.
+
+
+
+========================================================================
+
+Task 06 Adopt available improvements early
+
+========================================================================
+
+Owner repositories: Master coordination; selected consumer projects; Tracker operations
+Prerequisites: 02, 03; Task 05 baseline or equivalent verified native baseline
+Original scope: WFO-29; recurring WFO-18/19/24
+
+Required outcome: Existing useful capabilities reach a real consumer without waiting for the future interface or matrix extension.
+
+
+
+Implementation
+
+- Select the smallest compatible production-relevant pilot. ACL is an existing execution-v3 candidate for task-context, subject to actual owner/pending-operation drain. A legacy project requires its own bounded migration decision; a descriptor flag is not state adoption.
+
+- Check actual reader and writer support for each feature. The observed service already supports the original task-context version but not CI policy 2. Deploy a compatible reader for missing capabilities before changing consumers, including the completion fix from Task 02.
+
+- Adopt released freshness assessment, terminal journal and independent compatibility revalidation where applicable. Treat shared CI reuse separately: retain ACL’s bounded local collector for unsupported dynamic/host cases. Updating pins does not make its heavy matrix eligible automatically.
+
+- Preserve ACL execution v3, 5 work/5 source-review slots, one integration reservation, batch limit 5, no Stage, package/installer trust and existing delivery controls. Do not change capacities as part of optimization adoption.
+
+- Use owned maintenance and the exact migration procedure; inspect actual claims, reviews, integration, intake and pending delivery. Open PR count is not an occupied-slot count. Preserve pre-cutover PRs through supported completion or explicit revalidation; do not mass-close or require all 59 observed PRs to disappear.
+
+- Take an after snapshot with the same measurement method using ordinary work. Record which capabilities are published, pinned, activated, observed and not applicable. Pass this new baseline to Task 13 so it does not repeat the same upgrade.
+
+
+
+Acceptance
+
+On the selected project demonstrate: an old task is assessed against current requirements/main; allowed journal updates do not invalidate scope; a genuinely changed requirement does; unchanged Approved source can receive independent compatibility revalidation after main moves; a genuinely new combination still receives its checks; required delivery remains unfinished until verified.
+
+Verify actual config, state, engine/client revision, service compatibility and fresh board. Confirm old unsupported writers cannot mutate the activated contract. Demonstrate preserved history and successful recovery from the planned cutover checkpoints. Document actual measured benefit or its absence without extrapolating a fleet-wide percentage.
+
+
+
+Boundary
+
+This is an early delivery milestone, not final WFO-10 completion. It does not wait for Tasks 07–12. If a live project is busy, progress on compatible source/support work and use a selected safe cutover window; do not clear somebody else’s ownership or silently activate while they are running.
+
+
+
+========================================================================
+
+Task 07 Support explicit project choices and a simple direct route
+
+========================================================================
+
+Owner repositories: Master Repo and Task Tracker
+Prerequisites: 02–04
+Original scope: WFO-16; extends WFO-02–04 to current direct work
+
+Required outcome: Simple tooling, library, research and knowledge engineering can use a modern reviewed route without mandatory batch machinery.
+
+
+
+Implementation
+
+- Represent role, integration route, Stage, capacity, delivery profile and required completion independently in the descriptor, generator and executable adaptation. Publish a small supported-combination table and actionable rejection for unsupported combinations. Do not create a separate lifecycle for each role.
+
+- Implement a current owned single-source route after author work, independent review and applicable checks: branch to main with Stage off; branch to Stage to main with Stage on. It has no fabricated Approved waiting queue or batch. Serialize changes to main against active integration/Stage work; preserve return-to-author, stopped-owner takeover and recovery rules.
+
+- Extend task freshness, requirements/journal scope and independent approval revalidation to both forms of this single-source route using an explicitly versioned compatible contract. Current task-context is coupled to execution v2/v3; neither forcing every simple project into batches nor leaving it permanently on legacy behavior meets the target.
+
+- Keep batching for projects that select it. A single-member batch remains valid. Stage is independently configured: source-only n8n projects with Stage retain exact Git-only Stage checks; source-only completion does not authorize n8n runtime operations.
+
+- Separate routine knowledge capture within approved scope from engineering changes to rules, structure, configuration and automation. No Issue per ordinary note. Full-change classification and explicit policy determine the route; Markdown filenames, SKILL.md and repository role do not exempt executable or mixed changes.
+
+- Implement matching admission, ownership/state behavior, Master init/upgrade and route-specific skill instructions. Preserve older schemas and existing project choices. Choose conservative new-project presets by actual work, not universal five-slot defaults.
+
+
+
+Acceptance
+
+Generate and execute a modern direct source-only project with readiness assessment, review, current-scope completion and recovery; it requires no batch and does not bypass independent review. Test main advancing, stale review, actual conflicts, mixed diffs, policy changes, concurrent direct/integration ownership and a stopped reviewer.
+
+Test batch and single-source routes with Stage on/off, source-only n8n with existing Stage, package and VPS profiles. Staged single-source projects must receive the current task-context guarantees. Task categories do not grant route permission. Knowledge fixtures permit ordinary notes but route governance/automation changes through a tracked reviewed task. Upgrade previews preserve local files and reject unsafe ambiguous merges.
+
+
+
+Evidence
+
+Deliver the supported-combination table, actual protocol/descriptor changes, migration and rollback notes, generated consumer fixtures, behavioral tests and independent review. New version numbers are selected during implementation; this specification does not invent future released schemas.
+
+
+
+========================================================================
+
+Task 08 Verify publication and exact skill mirroring
+
+========================================================================
+
+Owner repositories: Master Repo, Task Tracker and AI Skills
+Prerequisites: 07
+Original scope: WFO-16 and publication part of WFO-23
+
+Required outcome: A task that requires a standard, plugin or catalog publication finishes only after the exact required publication is verified.
+
+
+
+Implementation
+
+- Add explicit versioned verified-publication completion, independent of repository role. Freeze required targets with accepted task scope/policy. Source-only maintenance can still complete at reviewed merge; a publication task cannot silently reduce its obligation to get Done.
+
+- Define receipts binding accepted scope, source revision, repository, target, release/artifact/catalog identity and content digest, trusted producer run/attempt and successful verification. Check actual accessible published content. A tag, passing source CI or installer test is not publication proof.
+
+- Use maintained release/catalog producers. Observe progress separately from final receipts. Preserve pending/failed publication and dependency blocking. Make retries resumable and idempotent; verify ambiguous publication outcomes before repeating uploads or creating releases.
+
+- Keep the canonical Project Workflow skill authored in Master. Permit a narrow automated AI Skills mirror PR for an accepted immutable source with exact complete-copy, blob/mode/path and catalog checks. Record a local idempotent sync-operation identity and source provenance; do not require a second manually authored Issue for the same copied change or pretend a foreign Issue is local.
+
+- Fail the mirror exception for mixed authored edits, changed protected paths, untrusted source/producer or nonidentical copy. Route such changes through normal local task/review. Other skills are authored and tracked in AI Skills normally. Automation does not grant consumer upgrades or arbitrary instruction-writing authority.
+
+- Resolve Master self-onboarding without circular self-pins. Prefer a prior immutable released standard for its own engineering workflow, with candidate generation/tests separate; adopt the new release afterward. If retaining a self-repository exception, document and enforce equivalent current task/review/publication guarantees. Never move release tags or embed a future self-SHA as if already released.
+
+
+
+Acceptance
+
+A source merge leaves a publication task unfinished; exact release/catalog content verification completes it. Wrong revision, wrong target, incomplete mirror, later failed attempt and unavailable publication evidence cannot produce Done. Ordinary source-only maintenance does not acquire a publication requirement by repository type alone.
+
+Demonstrate an exact automated mirror through its maintained PR/publication path without duplicate authored work, plus rejection of a one-byte change, extra file, symlink/mode mismatch and stale/untrusted source. Canonical changes and distribution are both traced; installation of the plugin does not activate other projects.
+
+
+
+Evidence
+
+Deliver real maintained producer integration, synthetic failure/recovery fixtures, actual authorized release/catalog readback and compatible reader activation. If target access is missing, report the concrete blocker; a designed receipt schema alone does not close this task.
+
+
+
+========================================================================
+
+Task 09 Display real occupied and available capacity
+
+========================================================================
+
+Owner repositories: Task Tracker; Master contract documentation
+Prerequisites: 01, 02
+Original scope: WFO-20
+
+Required outcome: The owner sees actual project-wide work, review and integration reservations and a separate queue.
+
+
+
+Implementation
+
+- Compute occupancy from authoritative held reservations, including pending transitions and lanes retained during fixes. Do not count In Progress labels, only actively reviewing states, or batch-member tasks as separate integration reservations.
+
+- Display occupied/limit and free for the actual adopted topology: legacy shared slot; v1 work with a shared review/integration lane; v2 work plus one review lane shared by source and integration reviewers, with a separate held batch reservation; v3 work pool, source-review pool and one integration reservation. A v2 integration reviewer occupies that shared lane. Add Task 07’s actual single-source topology when released. Read limits from policy/state.
+
+- Show review queue length separately from capacity. For one batch containing four tasks, show one occupied integration slot and four batch members. Do not invent five review slots for legacy consumers.
+
+- Distinguish reservation occupancy from permission to start. Maintenance, pending authorized delivery, stale data or admission constraints may pause starts even if a slot is unoccupied. Use a visible paused/unknown indicator without promising availability.
+
+- Keep figures project-wide when search, module or status filters change. Reuse safe projection fields or add only necessary sanitized fields; do not expose private actor sessions or reports.
+
+
+
+Acceptance
+
+Check no owners, held work, active review, returning/fixing lane, pending handoff, one- and multi-task batches, maintenance, pending delivery and stale snapshots under each supported execution generation, including both new single-source Stage choices after Task 07. A retained lane remains occupied until its actual release; double-counting is impossible during a pending transition.
+
+The widget shows numeric limits visibly, not only in tooltips. Keyboard, screen-reader labels, touch/mobile layout and unknown/unsupported states remain usable. Project switching and local filtering cannot carry another project’s counts or change total reserved capacity.
+
+
+
+Evidence and release
+
+Provide fixtures against existing ownership projections, browser regression results and a read-only comparison with actual live reservations after deployment. This task changes presentation, not configured capacities, and may ship before the larger category redesign.
+
+
+
+========================================================================
+
+Task 10 Unify categories and separate archive from outcome
+
+========================================================================
+
+Owner repositories: Task Tracker; Master contract and templates
+Prerequisites: 02, 07
+Original scope: WFO-21, 22; intentional Archive contract correction
+
+Required outcome: One computed model drives every view; archival preserves the actual outcome without inventing success.
+
+Category | Exact normal statuses
+
+Backlog | Idea; Backlog; To Do
+
+In Progress | In Progress
+
+Review | Ready for Review; In Review; Approved where the route actually waits
+
+Delivery | Integrating; Awaiting Delivery; Delivering; Verifying Delivery
+
+Done | Done
+
+
+
+Implementation
+
+- Use All / Backlog / In Progress / Review / Delivery / Done / Archive navigation. All and Archive are special views. Keep a finer status filter. One projection supplies category, status, indicators, completion, retention, freshness and details for lists/cards/board/drawer/counts/sort, module/activity links, batches and release views.
+
+- Ready for Review requires durable handoff/queue; In Review requires an actual reviewer; Approved exists only for real waiting. Integrating includes composition, applicable Stage and main merge. Changes Requested follows actual return-to-author handoff. Blocked applies to unfinished work; Delivery Failed retains reason/recovery and stops active appearance.
+
+- Define deterministic precedence: invalid/changed scope prevents current Done; explicit current completion wins over progress; archive controls visibility; active ownership and confirmed producer events explain unfinished position. Use a neutral unknown/requirements-changed diagnosis where evidence is insufficient; do not invent Delivering or call stale scope merely Awaiting Delivery.
+
+- Make archive retention-only under an explicit compatible migration. Preserve last status, outcome, evidence and reason. A completed archived task remains a valid dependency for its accepted scope; rejected/cancelled/unfinished archived work does not. An unfinished release item remains unresolved until its membership is explicitly changed.
+
+- Move archive metadata outside authoritative requirements. Handle current archive labels/body additions, old whole-body hashes, historical manifest digests, state_reason and restore/reopen behavior explicitly. Do not globally normalize meaningful old scope fields or rehash today’s Issue as historical proof. Classify legacy archived records by retained evidence; ambiguous outcomes remain unknown.
+
+- Unarchive restores visibility and retained outcome, not a new review or delivery. Explicit reopen is separate. Preserve active-owner archival exclusions, Issue IDs, aliases, URLs, saved filters, old tabs, focus, keyboard/mobile access and last-good snapshots. Historical Done carries visible acceptance provenance; verified delivery is evidence alongside Done, not a competing lifecycle.
+
+
+
+Acceptance
+
+Test every normal status and indicator against real canonical inputs, conflicts and missing evidence. Pending/failed/stale Merged tasks remain in All. Validate archived successful versus rejected versus unknown dependencies, unfinished release membership, archive-reason edits, unarchive and explicit reopen. Counts have documented pre/post-filter semantics. Compare old/new snapshots and all views with no lost or duplicated tasks.
+
+
+
+========================================================================
+
+Task 11 Show related repositories and actual delivery progress
+
+========================================================================
+
+Owner repositories: Task Tracker and Master; project-owned producer adapters
+Prerequisites: 08, 10
+Original scope: WFO-17, 23
+
+Required outcome: One project exposes its resources and real delivery activity without another task queue or execution service.
+
+
+
+Related resources
+
+- Add a minimal compatible relationship schema and UI projection containing owning project, role and repository link. Configure acl-lib as ACL operational data and acl-releases as ACL release storage; display both on the ACL project. Documentation-only links do not satisfy this task.
+
+- Preserve resource identity, ordinary ACL conflict-controlled data saves and the releases-only repository layout. Do not scaffold full development boards or require a PR for each advertising-text save/upload. A publication failure remains on delivery of the original ACL task; creating a task never triggers publication.
+
+- Expose supported existing release/resource information with source and freshness, never fabricate it from links. If a resource later gains independent engineering and consumers, allow explicit onboarding with its own task identity; do not alias another repository’s Issue.
+
+
+
+Delivery observation
+
+- Bind observations to repository, task/batch accepted scope, exact source revision, configured target, trusted producer, native run/attempt, phase and observation time. Reuse native jobs/runs where they express real phases; add a small maintained adapter event only for missing detail.
+
+- Support package publication/install verification, VPS deployment/health verification, n8n workflow publication/readback, and standard/plugin publication. Map technical steps under the four Delivery statuses. A running CI run alone is not a running deployment.
+
+- Handle waiting, active delivery, active verification, failure, cancellation/interruption, stale/unknown and completion with deterministic ordering, duplicate rejection and project/target isolation. An ended attempt stops looking active; an older event cannot overwrite a later attempt. Authoritative terminal receipts take precedence; events never satisfy dependencies or revoke accepted history.
+
+- Manual/unsupported producers show waiting or unknown honestly. Source-only projects omit external delivery while preserving configured Stage. An isolated successful installer test does not assert installation on every employee’s computer. Use maintained permissions and mechanisms, with no universal deployer or background execution service.
+
+
+
+Acceptance
+
+Verify ACL resource links/roles, no duplicate tasks and attribution of a failed release to the parent task. Exercise native/event fixtures for reordered/duplicate/stale events, wrong scope/revision/target, concurrent attempts, failure/recovery and a final receipt arriving before a delayed progress event.
+
+Ship working maintained adapters for the supported delivery families, not only schemas. Task 13 activates each applicable existing producer and supplies actual authorized readback. Preserve local no-message/no-fake-business-event restrictions during runtime checks. Progress integration must not gain authority to launch delivery.
+
+
+
+========================================================================
+
+Task 12 Support measured matrix and per-attempt evidence
+
+========================================================================
+
+Owner repositories: Task Tracker shared adapter; Master export; ACL validation
+Prerequisites: 04, 05
+Original scope: WFO-27; preserves WFO-05/06
+
+Required outcome: A bounded, real expensive configuration works with complete matrix coverage and trustworthy mixed-attempt provenance.
+
+
+
+Implementation
+
+- Use Task 05 measurements to select the first supported shape. Start with exactly seven ACL full-suite cells: Linux Python 3.11/3.13 × shards 1–3 and Windows Python 3.13, in the same unchanged native run/candidate across a failed-only rerun. Enumerate required cells from the reviewed producer/context, not from whichever successful jobs the API happened to return.
+
+- Record each cell’s actual original execution identity: repository/workflow revision, trigger and checkout context, task scope, actual tree/parents/composition, job/matrix/shard, toolchain/dependencies/inputs, environment/platform, native run/attempt/job/steps/logs and validity. Use a reviewed native producer to log original attempt/cell/inputs and actual execution context. Validate carried-forward aliases against original native job endpoints/logs; new IDs and timestamps alone do not prove execution. Reject pre-adoption jobs lacking this proof. Set and enforce an explicit bounded maximum proof age in the reviewed policy.
+
+- Retain an eligible successful original cell while failed cells and their required native dependents rerun. A later genuine failure/cancellation for the same required identity cannot be concealed by an older green result. Missing, expired or ambiguous cells remain missing; aggregate success requires the exact complete applicable set.
+
+- Keep planner, missing-work execution, aggregate gate and final admission consistent. Add the shared supported adapter and exported helpers; do not merely copy ACL’s existing scripts into a generic folder and claim portability. Preserve its incumbent behavior until replacement parity is proven.
+
+- Separate same-run mixed-attempt coverage from cross-run or cross-candidate caching. Extend the latter only for explicitly enumerated configurations with exact meaningful environment/input/metadata proof. Mutable latest-host names alone are not such proof. Unsupported matrices, reusable/dynamic jobs or host inputs run fresh with an explicit reason.
+
+- Keep installer/update/recovery and live runtime acceptance fresh under their actual delivery rules. Source runs never prove a newly combined tree. Integrate bounded retry budgets; a fallback cannot create an unlimited paid full-suite loop.
+
+- Inspect actual expensive test steps and shard imbalance before adding cache complexity. Collect durations during necessary work; implement a justified fixture/shard improvement where beneficial, preserving supported platform/version coverage. Report latency separately from total compute: balancing alone may not reduce job-minutes.
+
+
+
+Acceptance
+
+Test all required cells, missing/duplicate cells, changed matrix membership, original versus copied job IDs, partial rerun dependents, a later failing execution, wrong producer/tree/metadata/environment, expired proof, source versus combined context and fallback. Verify current-only attempt behavior remains correct on older policies.
+
+Demonstrate the supported adapter through native evidence from normal authorized verification, including mixed attempts. Compare its overhead and actual work avoided with the incumbent ACL behavior. The observed 100-minute accounting duplication is not a newly achieved saving. At least one selected expensive supported case must show a justified measured benefit after overhead; if none can, report the explicit D04 decision instead of silently deferring or claiming completion.
+
+
+
+Deliverables
+
+Publish the exact support envelope, native regression fixtures, portable adapter, compatibility tests, measured before/after comparison and limitations. Broad universal caching is excluded; this concrete supported capability is required.
+
+
+
+========================================================================
+
+Task 13 Complete adoption and new-project onboarding
+
+========================================================================
+
+Owner repositories: All relevant consumer repositories; Master coordination; Tracker operations
+Prerequisites: Relevant 02–12 releases and compatible service; Task 06 baseline
+Original scope: WFO-10; final WFO-08/19/24 adoption
+
+Required outcome: Every named repository has the correct working arrangement, and future projects can start from a verified released pair.
+
+
+
+Implementation
+
+- Apply the matrix in Required repository dispositions with one bounded local task/PR per actual consumer delta. Preserve original specifications, IDs, dependencies, accepted history, modules, open work, commands, credentials, runtime data and exceptions. Do not overwrite docs/system or docs/runtime with templates.
+
+- Use actual old-template/new-template/local three-way upgrade. Without a trusted old base, use an audited manual migration; do not invent a base or delete files to make generation pass. Keep descriptor/config/engine/portable CI and explicitly activated state consistent.
+
+- Onboard Master, AI Skills and The Source as engineering projects with real task homes and live workspace registration. Keep routine note capture outside per-note engineering tickets and exact automated mirror operations outside duplicate authored work. Configure Tracker’s own repository policy separately from updating the service it runs.
+
+- Finish ACL’s remaining route/completion/UI/progress/retry/evidence delta from Task 06, preserving 5/5 and no Stage. Show its two resources on the ACL board. Do not deploy other projects merely to test the common generator.
+
+- Install compatible readers before each new writer/state contract. Use owned maintenance where required and independently verify idle migration conditions. Refresh actual ownership; old PRs finish under old rules or undergo explicit revalidation. Preserve pending authorized delivery and stopped-owner recovery.
+
+- For every applicable producer, activate Task 11 observation and actual completion evidence using the maintained mechanism. Verify real target readback without forbidden business side effects. Unsupported/manual detailed progress is explicitly unknown, never fabricated active work.
+
+- Test new-project init and onboarding from immutable published versions: role/route/Stage/completion selection, preserved supplied specs, labels/branches/registry, actual live board, ready checks and first complete task. A local scaffold or plugin installation alone is not onboarding.
+
+
+
+Acceptance
+
+All 15 rows receive an actual adopted, resource-only or justified no-change disposition with exact versions, local controls, validation and activation proof. Required upgrades cannot be labelled no-change merely because they are inconvenient. An unavailable target or unresolved mandatory migration remains Blocked, with the responsible action identified.
+
+All current registered projects and the new engineering projects load correctly, preserve deep links/history and show current data. Verify single-source and batch routes with their actual reservation topology, source-only with Stage, package, VPS, n8n-runtime and standard/plugin completion using appropriate fixtures plus actual readback where applicable. Do not assert employee-wide installation or send fake production events.
+
+
+
+Deliverables
+
+Produce the completed adoption matrix, actual registration/service/consumer proofs, unchanged-control checklist and recovery record. WFO-29 is an input baseline; no migration is repeated merely to make the final phase look uniform.
+
+
+
+========================================================================
+
+Task 14 Prove the complete workflow and hand it over
+
+========================================================================
+
+Owner repositories: Master coordination; independent reviewer; relevant project owners
+Prerequisites: All mandatory previous tasks accepted and required decisions resolved
+Original scope: Final WFO-10/18/28 reconciliation and WFO-01–29 closure
+
+Required outcome: The owner receives a working foundation with a clear operating guide and no concealed unfinished requirement.
+
+
+
+Acceptance exercise
+
+- Create an isolated new consumer from the released Master–Tracker pair and run a representative task through requirements, author ownership, independent review, integration and its selected completion. Verify real board registration in a controlled onboarding case; clean up only disposable fixtures.
+
+- Upgrade an existing customized fixture and a selected real consumer through maintained procedures. Local rules/data survive; incompatible writers refuse; old tabs/links reload safely; last-good snapshots retain clear freshness.
+
+- Demonstrate changed requirements versus allowed journal, explicit reopen, legacy unknown scope, archived completed/rejected work, multi-task integration, review-return ownership, publication failure/recovery and actual dependency/release readiness. Use archived native evidence and synthetic failures where live side effects are unnecessary.
+
+- Demonstrate one supported runtime/package path, n8n source-only with Stage, n8n publication/readback, standard/plugin publication and exact skill mirroring. Evidence may combine producer fixtures and the real per-project activation proofs from Task 13; do not repeat production releases solely for screenshots.
+
+- Test recovery from CAS conflict, crash/timeout around label/state updates, uncertain CI retry dispatch, duplicate/out-of-order delivery events and service rollout failure. Prove compatible backup/restore in an isolated rehearsal; actual rollback must not discard newer accepted state.
+
+- Reconcile all original WFO goals and added audit fixes against actual implementation evidence. A support limitation is explicit; an unimplemented required outcome remains open unless the owner accepts a recorded scope change.
+
+
+
+Efficiency comparison
+
+Use the same reproducible Task 05 method for before/after ordinary-work samples. Report time to first useful feedback, end-to-end cycle, runner consumption, retries, actual reuse, overhead and storage; reconcile billing only where available. State workload differences and sample limits. Missing future workload/billing prevents a numerical savings claim, not truthful delivery of the reporting capability. No invented percentage or extra paid comparison campaign.
+
+
+
+Owner handoff
+
+Deliver a short operating guide: how to start a project/task, see blocked work and capacity, interpret Delivery/Done/Archive, change requirements, recover a failed delivery/retry, and find the authoritative rule. Include technical runbooks, exact release/capability matrix, adoption ledger and original-goal traceability.
+
+Final review must be independent of implementation. It verifies the running service and consumer evidence as well as source. Declare Fully ready only when all mandatory criteria are accepted and required blockers are resolved. Otherwise report the exact remaining outcome and avoid presenting source-only readiness as system completion.
+
+
+
+========================================================================
+
+Required repository dispositions
+
+========================================================================
+
+All repositories belong to MojoTheApe. Refresh each row before implementation. The target normally has 13 engineering project homes and two ACL resources; Task 01 validates actual registrations and prevents duplicates. No-change is an evidence-based outcome, not a reason to omit a required feature.
+
+Repository | Required final arrangement and controls to preserve
+
+master-repo | Engineering project and live board. Canonical policy/skill, verified standard publication, safe self-adoption without circular pins.
+
+task-tracker | Engineering project with compatible adopted workflow. Its repository adoption is separate from service deployment. Preserve existing TT IDs/history.
+
+ai-skills | Engineering project and live board for authored work; actual catalog/plugin publication. Exact mirror uses bounded automation provenance, no duplicate authored Issue.
+
+adopy-campaing-launcher | ACL application. Preserve package completion, v3 5 work/5 review, one integration reservation, batch limit 5, no Stage, installer trust and existing adapter until parity.
+
+react-forge | VPS project. Preserve status aliases, existing updater/local admission and accepted history. Retired large installer remains retired; do not fold installer redesign into adoption.
+
+tg-bot | VPS project. Preserve no-second-poller preflight, scoped state, container/bot readiness and actual Telegram authorization boundaries.
+
+facebook-lead-automation | VPS project. Preserve hostinger-fla-prod delivery, commissioning checks and local runtime controls. Resolve existing registration work without duplicate onboarding.
+
+n8n-jira-tgbot | Source-only n8n engineering. Preserve configured Git Stage and exact stage checks; no runtime publication implied.
+
+n8n-jcloud-automation | Source-only n8n engineering. Preserve Git Stage, project-specific checks and source-only completion.
+
+n8n-namari-automation | Source-only n8n engineering. Preserve Git Stage and existing source-only scope.
+
+n8n-keitaro-ftd-notifications | n8n runtime publication. Verify exact workflow/version/active state; no fake FTD or test Telegram message to establish completion.
+
+make-facebook-rpc-poc | Tooling/research engineering. Simple reviewed source route, no Stage unless selected; preserve existing useful project checks.
+
+the-source | Knowledge project for rules/structure/automation engineering and live board. Ordinary knowledge capture has no per-note Issue requirement. Product technical truth stays in each project repository.
+
+acl-lib | ACL operational-data resource. Preserve targets/ad-text data and ordinary application writes/conflict control; no forced PR per save or independent board.
+
+acl-releases | ACL release-storage resource. Preserve releases-only source layout and actual installer/manifest publication. Delivery belongs to the original ACL task.
+
+Adding a new production integration, changing a business delivery obligation, changing existing capacities or rebuilding an installer is not a routine standard-upgrade decision. Record it separately rather than smuggling it into a generated default.
+
+
+
+========================================================================
+
+Release and compatibility procedure for every slice
+
+========================================================================
+
+
+
+Required order
+
+1. Validate the exact candidate pair and exports. Complete independent review and relevant current repository checks. Record actual hosted check outcomes; an infrastructure-unavailable job is not a pass, and native protection must not be disabled to bypass it.
+
+2. Publish immutable Tracker support/artifacts, compatible Master release and canonical skill/mirror distribution as applicable. Bind manifests to actual revisions and hashes. Verify release/catalog contents, not merely tags. Maintain earlier supported pinned behavior.
+
+3. Before any incompatible consumer write, verify actual service-reader support. Deploy or upgrade through the maintained mechanism only if support is missing or changed; compatible slices need no redundant deployment. Before rollout, back up relevant state/config and public snapshot metadata; verify service revision and capability behavior. Preserve authentication, event-inbox recovery and per-project fault isolation.
+
+4. Activate selected consumer config, engine, portable writers and state with the documented fence/migration. All actual writers must be compatible or refused. Use maintenance/owner drain only when the specific protocol needs it. Never auto-free ownership by elapsed time.
+
+5. Verify current snapshots, old/new clients and the task’s behavior on the actual consumer. Record source release, installed service, consumer pin, explicit activation and native final outcome separately. Then mark the relevant implementation-ledger fields complete.
+
+
+
+Rollback and operations
+
+Use one current runbook with an explicit backup/restore rehearsal. Keep historical deployment instructions as history. Preserve the event service as the actual scheduler; do not restart the retired minute timer alongside it. A source rollback to an old reader that cannot parse new state is not a valid rollback. Choose a compatible reader or an explicit owned state-recovery procedure that preserves accepted history.
+
+
+
+Minimum maintained compatibility cases
+
+Area | Required examples
+
+Exact pair and exports | Real init/upgrade; standalone/final exports; wrapper paths; supported Python floors; no private engine dependency; local customization conflict.
+
+Contracts and readers | No-policy legacy; current and new policies; unknown version; mixed project activations; malformed state; incompatible old writer; public field sanitization.
+
+Ownership and review | v1/v2/v3 and direct route; held fixing lanes; durable handoff; combined review; actual owner drain; crash/timeout/CAS recovery.
+
+Completion and history | Scope/journal; process/non_code; manual/native publication; old unknown receipts; archive retention; reopen; target/policy changes.
+
+UI and observation | Old root/project snapshots, saved URLs/tabs/status aliases; all views; stale data; producer ordering/final receipt precedence; project isolation.
+
+CI | Accounting completeness and carried-forward rows; retry concurrency; matrix membership and original attempt provenance; bounded unsupported fallback.
+
+Baseline commands: Master unittest, standard validation and local link checks; Tracker pytest, JavaScript syntax validation and npm browser regressions. Use the actual updated AGENTS.md and declared runtimes. Run meaningful affected regressions per slice and the consolidated suite before final release; do not repeat expensive full checks without a new change or unresolved concern.
+
+
+
+========================================================================
+
+Original goal traceability WFO 01 through 15
+
+========================================================================
+
+The supplied plan version 10 contains 29 WFO items. All are accounted for below. WFO-01–08 are retained published capabilities, not new implementation to repeat. The task numbers refer to this specification. Completion is established by evidence, not by this planning table.
+
+WFO | Original goal | Resolution in this specification
+
+01 | Common lifecycle and verification | Preserve; Tasks 02–04 and 07–14 regression-test and adopt the shared guarantees.
+
+02 | Freshness assessment before implementation | Preserve and adopt in 06/13; extend to modern direct route in 07. Scope/main/dependency assessment, no routine age-based approval.
+
+03 | Separate requirements from work history | Preserve and adopt in 02/06/07/13; exact terminal journal, conservative older hash semantics.
+
+04 | Revalidate unchanged approval after main changes | Preserve in 03/06/07/13; independent semantic review, actual combined checks, author return for real changes.
+
+05 | Shared native CI evidence and reuse | Preserve in 04–06/12/13; exact context, missing work fresh, no implied universal matrix support.
+
+06 | Remove redundant checks | Preserve and finish applicable adoption in 03/05/06/13; full required coverage and integration review remain.
+
+07 | Profile checks and cost measurements | Retain prior evidence; maintain real-pair tests in 04 and every release; repeat relevant measurements in 05/12/14.
+
+08 | Publish compatible shared versions | Retain baseline; publish every relevant slice under release procedure; finish actual adoption in 13.
+
+09 | Inventory repositories and required changes | Task 01 and 15-row matrix; refresh affected rows before cutover, reuse existing audit.
+
+10 | Adopt in every relevant repository | Task 13, with early baseline from 06; source/service/consumer/native outcome proofs and verified no-change/resource-only cases.
+
+11 | Canonical ownership of shared rules | Task 03 ownership map, validated through 04; no separate prolonged governance program.
+
+12 | Consolidate common instructions | Task 03; separate Tracker product guidance, pinned self-contained reading paths and preserved local controls.
+
+13 | Consistent Issue and PR templates | Task 03; test standalone and final exports, parser fields, correct source versus batch membership and final admission.
+
+14 | Tracker-owned portable CI frontend | Task 04; actual export ownership move, full helper closure and both compatible wrapper paths. Included in final scope, not indefinitely deferred.
+
+15 | One machine-readable technical contract | Task 04; versioned generated/static artifact and drift checks, without another independently handwritten definition.
+
+Tasks 02, 03 and 05 also incorporate the audit’s newly demonstrated completion, generated-instruction and CI-accounting defects. These are concrete fixes supporting the original outcomes, not replacement goals.
+
+
+
+========================================================================
+
+Original goal traceability WFO 16 through 29
+
+========================================================================
+
+WFO | Original goal | Resolution in this specification
+
+16 | Roles and appropriate work routes | Tasks 07/08 and 13: orthogonal route/Stage/completion, modern direct work, ordinary notes, verified publication and exact mirror without duplicate authored Issue.
+
+17 | Related repositories as resources | Task 11 and ACL adoption in 13: schema, role/owner links and actual Tracker display; no duplicate boards or PR per operational save.
+
+18 | Continuous pair compatibility | Task 04 establishes the gate; every release extends it; Task 14 verifies the final system. No wait for all unrelated features.
+
+19 | Coordinated shared release | Recurring immutable compatible releases, including the final consolidated capabilities; canonical skill and exact distribution checked in 08/13/14.
+
+20 | Occupied and available slots | Task 09: real held reservations, all supported generations, visible limits, separate queue/batch size, freshness and admission pause.
+
+21 | Categories statuses and indicators | Task 10: exact requested categories/statuses, independent indicators, computed precedence and retention/outcome semantics.
+
+22 | Consistent navigation across the UI | Urgent All repair in 02; complete projection/UI/filters/aliases/counts/history in 10, resource/progress integration in 11.
+
+23 | Actual delivery events | Tasks 08/11/13: maintained package/VPS/n8n/standard/plugin producers, true progress, terminal proof, stale/failure recovery and honest manual fallback.
+
+24 | Compatible running Tracker service | Release procedure on each required slice, actual revision/capability readback and all-project checks; final acceptance in 14. Separate from Tracker self-adoption.
+
+25 | Bound persistent CI retries | Task 05: diagnosed durable episodes, budget, CAS intent, uncertain-response reconciliation and preserved original execution accounting.
+
+26 | Meaningful submissions and verification stages | Task 05 and adoption in 06/13: retain useful feedback, full ready coverage, reason for heavy runs and existing cancellation/event separation.
+
+27 | Measured expensive matrix/platform/attempt reuse | Task 12: concrete shared bounded adapter, original per-job provenance, complete matrix/gate, measured benefit and explicit fresh fallback. No indefinite research placeholder.
+
+28 | Consumption reporting and savings evidence | Task 05 fixes/builds on-demand reporting and baseline; 06/12/14 compare actual ordinary work with attribution/billing/storage limitations.
+
+29 | Early adoption of already available capabilities | Task 06 after actual compatibility checks; no dependency on future UI or advanced matrix support. Task 13 applies only remaining changes.
+
+
+
+Required implementation ledger columns
+
+For each WFO: mapped task/subtask, original acceptance outcome, implementation PR, tests/review, published pair, service/consumer activation where applicable, actual evidence, status and any explicit owner-accepted change. Retain original WFO IDs even when implementation tasks are combined or split.
+
+The mandatory companion WFO_ACCEPTANCE_LEDGER_EN_2026-10-16.json preserves all 202 individual acceptance criteria from original plan v10 and maps them to these tasks. Maintain it from Task 01 through final acceptance. Close each criterion with evidence or an explicit owner-accepted scope change; do not reconstruct, silently omit or mark it complete from the planning text alone.
+
+
+
+========================================================================
+
+Risk decisions and bounded alternatives
+
+========================================================================
+
+Desired outcomes remain in scope. The following list distinguishes safer implementation choices from genuine decisions that cannot be inferred. Do not treat it as blanket approval to omit work or as a reason to stop independent tasks.
+
+
+
+Simplifications selected in this specification
+
+Potentially harmful expansion | Required bounded alternative
+
+One lifecycle per repository type or broad Markdown trust | A few independent role/route/Stage/completion choices; complete-diff classification and the same core guarantees.
+
+A generic schema resolver or new shared service | One generated/static technical contract and portable helper export with mechanical drift checks.
+
+A universal resource graph or separate boards for data stores | Minimal typed owner/role/repository links and real ACL resource display. Operational data writes remain operational.
+
+Universal caching across mutable hosts or different candidates | Measured explicitly supported configurations with original native provenance; unprovable coverage runs fresh.
+
+One final mega-release after every WFO | Small compatible releases with repeated review, publication, reader activation and consumer proof.
+
+A retry counter reset by a chat, SHA or cause label | Durable equivalent-episode budget plus evidence-based resolution; meaningful product fixes remain possible.
+
+Uniform five-slot migration or blanket history rewrite | Project-specific upgrades, actual ownership drain, original evidence and explicit legacy reconciliation.
+
+
+
+Decisions that require concrete evidence or owner input
+
+D01 Native enforcement: if repository/account permissions cannot enforce the intended checks/review, prepare exact available options and impact. Do not buy a plan, change visibility or claim cooperative review is branch protection. Record an accepted limitation or leave that protection outcome open.
+
+D02 Unknown historical outcome: if retained evidence cannot establish an old completion/archive outcome, keep it unknown and present the specific affected records. New explicit acceptance is a new fact with provenance, not invented historical proof.
+
+D03 Delivery authority or changed business scope: use existing authorized maintained mechanisms. Missing credentials/target access or a requested change to what counts as delivered requires a concrete resolution; it cannot be solved by switching to source-only completion.
+
+D04 No safe useful advanced reuse case: deliver the proven correctness/support work and measurement, then show why a proposed optimization is unsafe or not beneficial and the smaller alternative. WFO-27’s remaining performance outcome stays open until implemented or explicitly revised by the owner; do not call the entire system fully ready meanwhile.
+
+These decisions do not require speculative questions before the plan can be implemented. Prepare the concrete evidence at the relevant task and ask only for the choice the agent cannot legitimately make.
+
+
+
+========================================================================
+
+Reference sources and final handoff record
+
+========================================================================
+
+This specification consolidates the owner’s English handoff dated 16 October 2026, WORKFLOW_OPTIMIZATION_PLAN_2026-10-16.json version 10, the independent audit and the first technical assignment. The task requirements above are intended to stand alone. Original planning IDs are not external ticket IDs.
+
+Master baseline and compatibility
+https://github.com/MojoTheApe/master-repo/blob/9257f7be9f89e10eeb7b169247db368932662d6e/compatibility.json
+
+Master generator and configuration relationship
+https://github.com/MojoTheApe/master-repo/blob/9257f7be9f89e10eeb7b169247db368932662d6e/scripts/project.py
+
+Master initializer and execution defaults
+https://github.com/MojoTheApe/master-repo/blob/9257f7be9f89e10eeb7b169247db368932662d6e/scripts/standard.py
+
+Master canonical workflow skill
+https://github.com/MojoTheApe/master-repo/blob/9257f7be9f89e10eeb7b169247db368932662d6e/.agents/skills/project-workflow/SKILL.md
+
+Tracker completion projection
+https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/model.py
+
+Tracker delivery policy and dependency admission
+https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/delivery_policy.py
+
+Tracker task context and journal contract
+https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/task_context.py
+
+Tracker receipt recording and native verification
+https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/delivery_receipt.py
+
+Tracker UI and current project activity
+https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/web/app.js
+
+Tracker CI evidence support envelope
+https://github.com/MojoTheApe/task-tracker/blob/2c01481a86ee8e8af31736378574a91505c7f94f/tracker/ci_evidence.py
+
+ACL current verification producer
+https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/.github/workflows/ci.yml
+
+ACL existing consumption report
+https://github.com/MojoTheApe/adopy-campaing-launcher/blob/af0ade29b106129089dbabd3f208b548efa246d9/scripts/acl_ci_minutes.py
+
+Native carried-forward attempt fixture
+https://github.com/MojoTheApe/adopy-campaing-launcher/actions/runs/38707841668
+
+GitHub workflow run API and filtered search limits
+https://docs.github.com/en/rest/actions/workflow-runs#list-workflow-runs-for-a-repository
+
+GitHub native rerun behavior
+https://docs.github.com/en/actions/how-tos/manage-workflow-runs/re-run-workflows-and-jobs
+
+GitHub billing report scope
+https://docs.github.com/en/billing/reference/billing-reports
+
+
+
+Final completion record
+
+Record: final immutable Master/Tracker/skill versions; actual installed service revision; adopted/no-change/resource disposition for each repository; all mandatory task and WFO acceptance evidence; independently reviewed exceptions; backup/recovery proof; ordinary-work measurement results and remaining data limits. Summarize the owner-visible result in plain Russian.
+
+No estimated completion date or savings percentage is asserted here. The implementing agent can estimate effort after Task 01 using the actual migration and access constraints. Source implementation, publication, activation and accepted operating behavior remain separately auditable throughout.

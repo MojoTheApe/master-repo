@@ -1,0 +1,15 @@
+{
+  "source": "task-tracker",
+  "task_context_config_accepted": {
+    "schema_version": 1
+  },
+  "execution_version": 3,
+  "outer_state_schema": 4,
+  "effective_state_schema": 2,
+  "ci_plan_available": true,
+  "ci_gate_available": true,
+  "ci_policy": {
+    "1": "accepted",
+    "2": "accepted"
+  }
+}
