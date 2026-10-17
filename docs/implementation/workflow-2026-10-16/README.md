@@ -1,6 +1,6 @@
 # Workflow implementation — commissioned 17 October 2026
 
-This is the execution record for the supplied 16 October handoff. Task numbers organize the scope; actual prerequisites and repository reservations determine dispatch. The system is not fully implemented or accepted.
+This is the execution record for the supplied 16 October handoff. Task 01 source candidate: [PR #44](https://github.com/MojoTheApe/master-repo/pull/44). Task numbers organize the scope; actual prerequisites and repository reservations determine dispatch. The system is not fully implemented or accepted.
 
 | Task | Deliverable / actual Issue | Prerequisites | State |
 | --- | --- | --- | --- |
