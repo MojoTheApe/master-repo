@@ -11,6 +11,8 @@ import re
 INTENT_STATES = ('reserved', 'dispatching', 'accepted', 'dispatch_unknown', 'observed',
                  'rejected_no_effect', 'cancelled_before_dispatch')
 CATEGORIES = ('product', 'transient-infrastructure', 'configuration', 'account', 'unknown')
+CONCLUSIONS = ('success','failure','neutral','cancelled','skipped','timed_out',
+               'action_required','stale','startup_failure')
 SHA = re.compile(r'[0-9a-f]{64}\Z')
 ID = re.compile(r'[0-9a-f]{32}\Z')
 GIT_SHA = re.compile(r'[0-9a-f]{40}\Z')
@@ -61,6 +63,15 @@ def native_key(run, attempt):
     if type(run) is not int or run < 1 or type(attempt) is not int or attempt < 1:
         raise ValueError('Invalid native execution identity')
     return str(run) + ':' + str(attempt)
+
+
+def native_metadata(status,conclusion,triggering_actor):
+    """Unknown is explicit null; malformed values never become failure/identity."""
+    if (status not in ('queued','in_progress','completed')
+            or conclusion is not None and (not isinstance(conclusion,str) or conclusion not in CONCLUSIONS)
+            or status!='completed' and conclusion is not None
+            or triggering_actor is not None and (type(triggering_actor) is not int or triggering_actor<1)):
+        raise ValueError('Invalid native outcome metadata; require supported conclusion and true positive actor ID or null')
 
 
 def _path(value):
@@ -170,6 +181,7 @@ def validate(section):
                     or observation.get('relation') not in ('equivalent-inputs','unknown-inputs-held')
                     or not _time(observation.get('observed_at'))):
                 raise ValueError('Invalid CI retry native observation')
+            native_metadata(observation['status'],observation['conclusion'],observation['triggering_actor'])
         for intent_id, intent in row['intents'].items():
             fields={'id','state','actor','session','principal','at','identity','diagnosis','run','expected_attempt','history'}
             if (not _id(intent_id) or not isinstance(intent, dict) or set(intent) not in (fields,fields|{'observation'}) or intent.get('id') != intent_id
@@ -226,7 +238,8 @@ def validate(section):
                     or instruction.get('action')!='one-full-verification-rerun' or instruction.get('episode')!=row['episode']
                     or not _time(instruction.get('time')) or instruction.get('basis')!='actual-direct-human-instruction'
                     or not isinstance(instruction.get('causes'),list) or not instruction['causes']
-                    or any(c not in section['causes'] for c in instruction['causes'])):
+                    or any(not _id(c) or c not in section['causes'] for c in instruction['causes'])
+                    or len(set(instruction['causes']))!=len(instruction['causes'])):
                 raise ValueError('Invalid bounded operator-attested specific instruction')
     for key, row in section['causes'].items():
         if (not _id(key) or not isinstance(row, dict) or set(row)!={'schema_version','id','diagnosis','category','state','relevance','history'} or row.get('id') != key

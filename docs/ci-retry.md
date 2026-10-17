@@ -54,7 +54,9 @@ conservative.
 A separately operator-attested specific human instruction can grant one supported
 verification rerun within the remaining budget. Bind its actual source, time,
 message/decision digests and exact action to the repository, episode, current
-strict native identity and named unresolved cause. The authenticated attestor
+strict native identity and explicitly named unresolved causes. A grant must
+acknowledge every current blocking cause by its retained ID and category; a
+new or omitted cause still blocks. The authenticated attestor
 records the instruction; this does not machine-certify a human decision. A general
 commission or permission to continue working is insufficient. Consume the grant
 once, retain the unresolved cause and never refill budget, clear an uncertain

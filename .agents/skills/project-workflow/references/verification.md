@@ -11,7 +11,9 @@ billing/access/quota causes do not automatically retry.
 
 If the pin supports a specific-human-instruction grant, follow its separate
 operator-attestation procedure and bind the actual message/source/time/action to
-the current native identity, episode and named cause. General permission to
+the current native identity, episode and explicitly named cause set. Follow the
+pinned guide's exact ID/category acknowledgment; omitted or new causes still
+block. General permission to
 continue working is insufficient. Such a grant is single-use, consumes remaining
 budget and leaves the cause unresolved; it cannot clear uncertain dispatch or
 authorize product operations. State may be public: keep raw evidence and private
