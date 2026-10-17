@@ -20,20 +20,31 @@
       "number": 36,
       "url": "https://github.com/MojoTheApe/master-repo/issues/36",
       "prerequisites": [],
-      "status": "In progress",
+      "status": "Accepted",
       "implementation_prs": [
         "https://github.com/MojoTheApe/master-repo/pull/44"
       ],
       "reviews": [
-        "Exact-head independent review is being retained on MR-36; source acceptance is pending."
+        "https://github.com/MojoTheApe/master-repo/issues/36"
       ],
       "tests": [
-        "verification.json"
+        "verification.json",
+        "https://github.com/MojoTheApe/master-repo/actions/runs/39018384481"
       ],
-      "published_pair": null,
-      "service_activation": null,
-      "consumer_activation": null,
-      "next_action": "Finish independent current-head review and required hosted checks; no consumer/runtime acceptance is implied."
+      "published_pair": {
+        "applicability": "not_applicable",
+        "reason": "Inventory/planning source slice; no standard artifact publication required."
+      },
+      "service_activation": {
+        "applicability": "not_applicable",
+        "reason": "Read-only inventory; no reader/writer/state change."
+      },
+      "consumer_activation": {
+        "applicability": "not_applicable",
+        "reason": "Dispositions are planned; actual adoption belongs to later tasks."
+      },
+      "next_action": "Refresh only affected rows at later cutovers; Task01 source-only inventory is accepted.",
+      "accepted_main": "0249474c265c22d386f0a1aaa915b0a345321bbd"
     },
     {
       "id": "02",
@@ -44,14 +55,48 @@
       "prerequisites": [
         "01"
       ],
-      "status": "Planned",
-      "implementation_prs": [],
-      "reviews": [],
-      "tests": [],
+      "status": "In progress",
+      "implementation_prs": [
+        "https://github.com/MojoTheApe/task-tracker/pull/149"
+      ],
+      "reviews": [
+        {
+          "repository": "MojoTheApe/task-tracker",
+          "head": "57b761120c9c8bcde73a97c14ec761335dbe80a3",
+          "base": "2c01481a86ee8e8af31736378574a91505c7f94f",
+          "tree": "676b2ce73cb2ed4c2385e1b7f18a65c027367a2c",
+          "verdict": "approved for source integration; full Task02 unfinished",
+          "evidence": "https://github.com/MojoTheApe/task-tracker/issues/142"
+        }
+      ],
+      "tests": [
+        {
+          "repository": "MojoTheApe/task-tracker",
+          "head": "57b761120c9c8bcde73a97c14ec761335dbe80a3",
+          "python_tests_passed": 1076,
+          "canonical_browser_scripts_passed": 15,
+          "native_run": "https://github.com/MojoTheApe/task-tracker/actions/runs/39019960608",
+          "latest_linkage": "https://github.com/MojoTheApe/task-tracker/actions/runs/39020308921"
+        }
+      ],
       "published_pair": null,
       "service_activation": null,
       "consumer_activation": null,
-      "next_action": "Start when actual prerequisites and repository reservation permit"
+      "next_action": "Verify actual Tracker main checks and immutable publication. Review/test/publish MR45 with its actual95079e7 compatible pin, install the compatible reader, then activate and observe bounded pilot MFP-3. Full Task02 remains unfinished.",
+      "related_issues": [
+        "https://github.com/MojoTheApe/master-repo/issues/45",
+        "https://github.com/MojoTheApe/make-facebook-rpc-poc/issues/3"
+      ],
+      "source_milestones": [
+        {
+          "repository": "MojoTheApe/task-tracker",
+          "pr": "https://github.com/MojoTheApe/task-tracker/pull/149",
+          "merge": "95079e71d454c8a6e2216b76ae86c0f87d522897",
+          "reviewed_tree_preserved": true,
+          "actual_main_check": "https://github.com/MojoTheApe/task-tracker/actions/runs/39020383001",
+          "actual_main_check_status": "pending at source authoring"
+        }
+      ]
     },
     {
       "id": "03",
@@ -63,14 +108,14 @@
         "01",
         "02 (contract)"
       ],
-      "status": "Planned",
+      "status": "In progress",
       "implementation_prs": [],
       "reviews": [],
       "tests": [],
       "published_pair": null,
       "service_activation": null,
       "consumer_activation": null,
-      "next_action": "Start when actual prerequisites and repository reservation permit"
+      "next_action": "Preparation only; finalize instructions after the accepted Task02 completion interface."
     },
     {
       "id": "04",

@@ -71,6 +71,12 @@ environments, check commands or live registration proof.
 
 ## Execute the ticket lifecycle
 
+When descriptor `workflow.completion_policy` and Tracker `completion_policy`
+explicitly match, read [accepted-scope completion](references/completion-policy.md)
+and the exact exported engine guide. Verify the actual reader/writers and durable
+owned activation; old receipts with unknown scope cannot acquire new proof from
+today's Issue body. An installed skill does not activate consumer policy.
+
 Check for matching explicit `workflow.task_context` and Tracker
 `task_context_policy`. When adopted with a compatible engine, read
 [task context](references/task-context.md) and its exact command guide before

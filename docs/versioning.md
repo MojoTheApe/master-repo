@@ -1,5 +1,16 @@
 # Versioning and safe upgrades
 
+## Scoped-completion source candidate
+
+Master 1.1.0 selects explicit scoped completion with the compatible Tracker 3.3.0
+contract. The proposed source version does not establish publication. Publish the
+independently reviewed Tracker merge with successful actual-main checks first,
+then pin that exact merge here and verify the real export/upgrade pair before
+reviewing and publishing Master. Follow [completion policy](completion-policy.md)
+for the separate installed-reader and owned consumer activation boundaries.
+Existing projects retain their selected policies and targets until reviewed
+adoption; the source releases do not activate them.
+
 `VERSION` is a proposed source version, not proof of a published release. Version
 1.0.0 introduces the complete workflow and descriptor schema 2. Schema 1 validation
 remains available for pinned existing consumers; it is not silently migrated.

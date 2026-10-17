@@ -1,5 +1,12 @@
 # Master Repo system
 
+MR-45 adds explicit `workflow.completion_policy` intent, exact Tracker export/config
+mirroring and conservative init/three-way upgrade selection. Its engine-owned
+local completion guide and portable assessment are preserved through the separated
+layout. Defaults, completion targets and existing consumers remain unchanged;
+published source, actual reader support and owned consumer activation are separate.
+See [accepted-scope completion](../completion-policy.md) and the TT-142 companion.
+
 The commissioned 17 October workflow implementation is tracked in the
 [bounded execution ledger](../implementation/workflow-2026-10-16/README.md).
 Its initial slice records current evidence and real task dependencies; it does not

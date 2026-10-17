@@ -90,6 +90,7 @@ def files(inputs=INPUTS, revision=OLD, *_args):
             'modules':[{'id':'product','name':'Product','description':'Product functionality'}]}
     if 'execution' in data['workflow']: config['execution_policy']=data['workflow']['execution']
     if 'task_context' in data['workflow']: config['task_context_policy']=data['workflow']['task_context']
+    if 'completion_policy' in data['workflow']: config['completion_policy']=data['workflow']['completion_policy']
     if 'ci_evidence' in data['workflow']: config['ci_evidence_policy']=data['workflow']['ci_evidence']
     if 'process_instructions' in data['workflow']:
         config['process_instructions']=data['workflow']['process_instructions']
@@ -100,6 +101,8 @@ def files(inputs=INPUTS, revision=OLD, *_args):
     out['scripts/tracker_process_instructions.py'] = '# instruction route check\n'
     out['scripts/tracker_task_context.py'] = '# portable task context\n'
     out['docs/TASK_CONTEXT.md'] = '# Exact task context guide\n'
+    if 'completion_policy' in data['workflow']:
+        out['docs/COMPLETION_POLICY.md'] = '# Exact completion policy guide\n'
     out['scripts/tracker_ci_evidence.py'] = '# portable native CI proof\n'
     out['scripts/tracker_ci_gate.py'] = (project.SOURCE/'templates/workflow/ci_gate.py').read_text()
     out['docs/CI_REUSE.md'] = '# Exact CI reuse guide\n'

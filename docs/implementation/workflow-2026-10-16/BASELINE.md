@@ -54,4 +54,4 @@ A current read-only Actions sample reports 5,791 retained run records and retain
 
 ## Acceptance boundary
 
-All 29 goals and all 202 original criterion IDs/texts are preserved and mapped to real Issues. WFO-09 evidence is collected for independent source review; final criterion acceptance remains pending. Source review/merge, immutable publication, service activation, consumer adoption and actual outcome stay separate. This slice changes documentation and planning only.
+All 29 goals and all 202 original criterion IDs/texts are preserved and mapped to real Issues. Task01 and its ten WFO-09 inventory criteria are accepted after independent full-scope review, merge 0249474c265c22d386f0a1aaa915b0a345321bbd and successful actual-main checks. The remaining implementation and final system outcomes remain pending. Source review/merge, immutable publication, service activation, consumer adoption and actual outcome stay separate. This slice changes documentation and planning only.

@@ -6,6 +6,12 @@ explicitly adopt task context, use the exact pinned guide for pre-start assessme
 the terminal work journal and owned independent source compatibility review.
 Other projects retain their adopted command and scope semantics.
 
+When `workflow.completion_policy` and Tracker `completion_policy` explicitly match,
+read the exact local `docs/repository/COMPLETION_POLICY.md`. Current success follows
+the genuinely accepted scope and configured delivery target; a descriptor edit or
+installed skill alone does not activate the durable contract. Preserve old proof
+and unknown historical scope through the documented owned migration.
+
 Read `delivery.json`, `docs/system/PROJECT.md`, `docs/repository/DELIVERY.md` and
 `docs/repository/TRACKER.md` before work. They define this project's adopted
 standard, system, tracker, stage option, completion rule and local exceptions.
