@@ -30,11 +30,17 @@ Master's checked-in workflows provide these actual results:
 | `validate` | Full source unit suite, descriptor validation and local documentation links |
 | `portable-runtime` | Canonical exported helper fixtures on Python3.9 without a private engine |
 
-The two source checks run on opened, synchronized, reopened and ready-for-review
-PRs, including drafts, and on every main push. Unknown and mixed source changes
+The two source checks run on opened, synchronized and reopened PRs, including
+drafts, and on every main push. Unknown and mixed source changes
 receive the same full coverage. Metadata edits run the separate metadata workflow
 without restarting source checks. Source cancellation is limited to the same PR;
 each main run has a distinct concurrency identity and is retained.
+
+Marking an unchanged draft ready runs metadata validation without submitting a
+duplicate full suite. Ready admission still requires both actual full source
+checks for the current candidate. Changed relevant inputs/composition or missing
+proof require applicable fresh verification; the draft transition cannot waive
+it. See the [native PR event contract](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request).
 
 These existing names remain the admission names. Metadata feedback cannot replace
 either full source check. A changed technical export contract additionally needs
