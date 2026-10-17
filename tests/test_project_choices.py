@@ -220,6 +220,16 @@ class UpgradeChoices(unittest.TestCase):
             self.assertNotIn(key, value)
         self.assertEqual(local, before)
 
+    def test_repeated_explicit_choice_selection_keeps_recorded_inputs_byte_stable(self):
+        # Pure input construction, not an export. Reading the same actual local
+        # policies in different insertion order must not rewrite the baseline.
+        local = self.local()
+        first = project.upgrade_inputs(INPUTS, local, self.selection())
+        repeated = project.upgrade_inputs(dict(reversed(list(first.items()))), local, self.selection())
+        self.assertEqual(project.dumps(first), project.dumps(repeated))
+        # Existing recorded inputs are byte-for-byte preserved without selection.
+        self.assertEqual(project.dumps(project.upgrade_inputs(first, local)), project.dumps(first))
+
     def test_direct_switch_removes_inherited_batch_only_and_does_not_reset_actual_capacity(self):
         value = project.upgrade_inputs(INPUTS, self.local(), self.selection(route='direct'))
         self.assertEqual((value['route'], value['implementation_limit'], value['review_limit']), ('direct', 5, 5))

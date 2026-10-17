@@ -536,7 +536,10 @@ def upgrade_inputs(recorded, local, selection=None):
     value.update(copy.deepcopy(selection))
     if value.get('route') == 'direct' and 'batch_limit' not in selection:
         value.pop('batch_limit', None)
-    return project_choices(value)
+    # Optional fields are read from the actual local selection on every pass.
+    # Stable new-input order prevents an identical second upgrade from rewriting
+    # only its recorded baseline. The genuine old files/ancestor are untouched.
+    return dict(sorted(project_choices(value).items()))
 
 
 def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *, completion_policy=None, ci_retry_policy=None, choices=None):
