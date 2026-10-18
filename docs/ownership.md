@@ -1,5 +1,10 @@
 # Workflow ownership and derived instructions
 
+The [common standard](../standard.md) gives the ordinary development process.
+GitHub owns tasks and source records; Master owns instructions; Tracker displays
+the work. The technical ownership and generation rules below apply to existing
+selected integrations, not a requirement to add those integrations to every project.
+
 This map assigns authorship and validation responsibility. A source release,
 installed skill, generated descriptor and durable consumer activation are separate
 facts. The project always follows its actually adopted immutable pair.

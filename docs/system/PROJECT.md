@@ -1,5 +1,23 @@
 # Master Repo system
 
+## Common instructions and existing technical support
+
+[MR-57](https://github.com/MojoTheApe/master-repo/issues/57) makes the
+[shared standard](../../standard.md), README and canonical Project Workflow skill
+the short entry points for ordinary work. Verification guidance uses existing
+checks and GitHub features; setup separates instructions and board connection from
+adoption of generated technical workflows. The existing specialized references
+remain available only for relevant selected mechanisms.
+
+This is an instruction change. The validators, initializer defaults, exported
+helpers, compatibility pin and VERSION are unchanged. Existing consumers keep
+their actual settings and operations. Source integration, standard publication,
+AI Skills mirror/catalog publication and installation remain separate facts.
+Task Tracker impact: no executable or data-contract change; the separately scoped
+UI update implements the owner's display requirements. No new scripts or services
+are introduced. The technical support inventory below remains accurate for those
+existing features, rather than a required checklist for ordinary development.
+
 MR-54 prepares the bounded package-selection delivery companion to Tracker's
 canonical support fix. Common upgrade/delivery and selected-policy guidance keeps
 the genuine existing authorization and complete package verification before

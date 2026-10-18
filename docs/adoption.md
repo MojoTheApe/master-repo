@@ -2,6 +2,58 @@
 
 ## New project procedure
 
+Start with instructions and the existing task display. Use a reviewed standard
+revision and record its link in the project's short reading map.
+
+1. Create or inspect the authorized repository. Keep the supplied requirements and
+   product files. Describe what the project does and where important data lives.
+2. Add a short `AGENTS.md`: the common standard reference, local workflow/product
+   documents, actual run/check commands and delivery instructions. Reuse existing
+   files rather than creating empty copies of every template.
+3. State what completes a task: checked source merge, a working service, a verified
+   package or the requested publication. Name real checks and targets, not guessed
+   commands or environments.
+4. Use the project's GitHub Issues and existing PR/reference convention. Start with
+   the short task/PR guidance in [the standard](../standard.md#names-and-links).
+   Independent review and applicable checks remain part of normal development.
+5. Connect through the current Tracker's supported registry procedure, preserving
+   existing IDs and entries. Keep only the config/client this route requires; do
+   not select new execution policies merely to display Issues. Read the installed
+   Tracker's registration instructions before making that change.
+6. Publish registration using the existing process and check the actual board:
+   correct project, Issue links, statuses and freshness. Until that succeeds,
+   report connection as pending. Verify one isolated example; do not release
+   every product as an onboarding test.
+
+For an existing project, identify the few differences from this standard.
+Preserve current checks, history, local commands, data and delivery controls.
+Updating instructions is not a client or state migration. Resources such as ACL's
+data and releases belong under the parent project; a standalone resource-board
+mode must not be invented. Ordinary notes are not a development task per save;
+technical rule and automation changes still use tracked reviewed work.
+
+If supported registration cannot supply the requested display without additional
+development, record that concrete gap. Do not silently substitute the full
+initializer below or claim a new instruction-only machine mode exists.
+
+## Existing generated workflow support
+
+The remaining procedures document tools and policies that already exist. Use them
+when maintaining an adopted generated workflow or when that adoption is explicitly
+part of the task. They are not prerequisites for reading the common standard.
+Their defaults, generated files and activation requirements are unchanged by this
+documentation update. The exact compatible Tracker guide owns commands.
+
+Relevant references: [project choices](project-choices.md),
+[descriptor](descriptor.md), [capacity](capacity.md),
+[task context](task-context.md), [completion](completion-policy.md),
+[instruction-only integration](process-instructions.md),
+[delivery continuation](delivery-continuation.md),
+[CI reuse](ci-reuse.md), [bounded retry](ci-retry.md),
+[portable contract](portable-contract.md) and [upgrades](workflow-upgrades.md).
+
+## Existing initializer procedure
+
 The running agent performs the whole onboarding within the new-project request.
 Use a reviewed published standard revision. If only a selected candidate exists,
 state that fact and keep the result draft. Never invent a tag or deployment target.
