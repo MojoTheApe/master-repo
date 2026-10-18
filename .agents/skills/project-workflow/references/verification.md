@@ -1,9 +1,11 @@
 # Efficient verification
 
 Read the project's actual commands and required check names, not a generic test
-list. The pinned Master's `docs/verification.md` supplies the common policy;
-`docs/verification-submission.md` describes fast/full plans and existing CI events.
-Keep product platforms, installers and runtime acceptance local.
+list. Where present in the pinned Master, `docs/verification.md` supplies the common
+policy and `docs/verification-submission.md` describes fast/full plans and CI events.
+Older pins without either document keep their local instructions and required
+checks; do not update a pin merely to obtain a missing reference. Keep product
+platforms, installers and runtime acceptance local.
 
 ## Choose and reuse checks
 

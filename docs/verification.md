@@ -31,8 +31,10 @@ actual workload; this is an improvement target, not a universal timeout.
 | `n8n-source` | Relevant source checks; declared CI or DEV stage target | Reviewed source merge; runtime handoff stays separate |
 | `package` | Logic/UI, supported OS/runtime matrix and combined build | Immutable package, actual install/update/recovery |
 
-Choose actual commands during onboarding and retain their scope and exact CI job
-names in `delivery.json` and the matching Tracker policy. Validation never executes
+Choose actual commands during onboarding and record their scope and exact CI job
+names in the project's local verification instructions. Where the project already
+uses `delivery.json` and a matching Tracker policy, keep those settings consistent.
+This guidance does not require adding either file. Validation never executes
 descriptor commands. Unknown/mixed changes keep full applicable verification.
 Use lighter documentation checks only when the actual change cannot affect program,
 build or operational behavior and the project's rules support that coverage.
