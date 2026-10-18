@@ -1,5 +1,10 @@
 # Master Repo system
 
+MR-59 prepares source1.5.2 for the simplified MR-57 instructions. Only release
+metadata and documentation change; the compatible Tracker pin, generated support
+and canonical skill bytes remain unchanged. Actual release publication is verified
+separately on the [release task](https://github.com/MojoTheApe/master-repo/issues/59).
+
 ## Common instructions and existing technical support
 
 [MR-57](https://github.com/MojoTheApe/master-repo/issues/57) makes the
