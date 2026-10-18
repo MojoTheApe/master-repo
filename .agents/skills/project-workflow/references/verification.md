@@ -4,13 +4,15 @@ Read the project's actual commands and required check names, not a generic test
 list. Where present in the pinned Master, `docs/verification.md` supplies the common
 policy and `docs/verification-submission.md` describes fast/full plans and CI events.
 Older pins without either document keep their local instructions and required
-checks; do not update a pin merely to obtain a missing reference. Keep product
-platforms, installers and runtime acceptance local.
+checks; do not update a pin merely to obtain a missing reference. Compatible prose
+clarifications may be reviewed locally without pin/helper changes. Keep product
+platforms, installers, exact admission rules and runtime acceptance local.
 
 ## Choose and reuse checks
 
 - During implementation run the cheapest meaningful checks for the changed
-  behavior. Group related fixes before another expensive run.
+  behavior. Group related fixes into a meaningful ready submission on the existing
+  branch; keep useful intermediate feedback and normal review corrections.
 - At ready handoff and integration, cover the full applicable project plan.
   Fast feedback is intermediate; unknown or mixed scope keeps full coverage.
 - Reviewers inspect existing evidence first. Add checks for a finding, missing
@@ -28,24 +30,29 @@ platforms, installers and runtime acceptance local.
   make one justified repeat of the needed part; if it fails again, investigate.
   Preserve any stricter already adopted retry rules. An uncertain dispatch needs
   observation before another request; a new session or empty commit is no cure.
-- Cancel only your own superseded run where supported, preserving required
-  integration/main/release evidence. Separate metadata-only edits from heavy
-  source suites using existing settings when that change is in scope.
+- Use one supported final admission check where it already includes linkage or
+  other checks; keep early feedback and distinct required delivery actions.
+- Avoid redundant agent-requested runs. GitHub events still select automatic
+  checks and cancellation. Preserve required integration/main/release evidence.
+  Use supported cancellation only for superseded work where the project allows it.
+  Trigger/concurrency/settings changes need explicit task scope; existing
+  authorization is sufficient, without a routine new approval.
 
 Use meaningful tests for actual risks. Do not add a test merely to mirror a
 reversible prose edit. Existing required repository checks still apply.
 
-## Demonstrate the benefit
+## Observe ordinary work
 
-Use ordinary necessary work and existing history. Compare similar changes:
-first useful feedback, total wait, run count and runner minutes, keeping platforms
-separate. Parallel job minutes are not elapsed time. Estimates are not invoices;
-unavailable billing stays unknown. Do not schedule paid demonstration runs.
+Use ordinary necessary tasks and existing Issue/PR/run links. Briefly note an
+unexpected repeat, confusing transition or manual expensive launch with its known
+reason or uncertainty; do not create a per-job register, new blocker or form.
+Do not create extra sample tasks, paid demonstrations, automation or scheduled
+audits merely to prove a prose edit. Separately requested audits or configuration
+work follow their existing authorization and retain required checks.
 
-Record each concrete waste, its cause, the available correction and how to check
-it. Examples include duplicate PR/push tests, unchanged reviewer reruns, heavy
-setup before cheap failures and unnecessary rebuilds. Preserve useful checks.
-A documentation update establishes the instruction, not measured savings.
+Compare similar workloads only: first feedback, elapsed cycle and platform/job
+minutes are different measures; unavailable billing stays unknown. Updated prose
+establishes guidance, not savings.
 
 ## Existing selected support
 

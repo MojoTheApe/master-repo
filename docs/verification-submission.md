@@ -50,45 +50,55 @@ prove that pair. Record the actual changed contract or missing proof as the reas
 for that heavier publication check. No product installer or consumer deployment
 is launched to test Master templates.
 
-Group related local corrections on the same owned task branch before submitting
-a meaningful new candidate. Preserve checkpoints and useful early hosted feedback;
-there is no fixed waiting interval. Keep one task per ordinary execution source
-PR and retain the original branch for author fixes. Inspect existing author/native
-evidence before repeating unchanged checks. Reviewers add checks for a finding,
-missing scope or an unresolved concern.
+Group related local corrections into a meaningful ready submission on the same
+owned task branch. Preserve checkpoints and useful early hosted feedback; this
+does not impose one push or a waiting interval. Keep the project's source/task
+membership rules and the original branch for review fixes. A new reviewer reads
+the full current scope and valid author/native evidence; a new session does not
+justify blanket reruns. Changed review or admission context still needs its exact
+required proof, independently of whether existing tests remain applicable.
 
-## Launch decisions and native evidence
+## Agent decisions and automatic runs
 
-Record why new expensive verification is needed: changed relevant content or
-inputs, missing platform coverage, an actual merge composition, expired or invalid
-proof, a permitted diagnosed transient retry, or required fresh delivery acceptance.
-Bind an observed decision to its actual candidate and native run. Historical
-reasons inferred from commit text or incomplete logs remain labelled inferred or
-unknown. A reason string never grants permission or resets a durable budget.
+Before requesting another expensive run, inspect the available evidence and actual
+candidate. Changed relevant inputs, missing coverage, a new integration composition,
+invalid proof, a diagnosed permitted retry or required fresh delivery acceptance
+can justify it. Explain a manual expensive launch or unexpected repetition briefly
+in the existing Issue/PR with the actual run link. Do not create a record for every
+automatic job. Inferred or unavailable reasons remain labelled as such; a note
+does not grant permission or reset an adopted retry budget.
 
-Separate PR metadata/linkage checks and their concurrency group from code checks.
-Body edits keep metadata validation without restarting unchanged heavy work.
-Use PR content events for source suites and retain actual integration/main push
-evidence; avoid duplicate heavy push and PR suites for the same source event.
-Cancel only superseded work for that same PR. Preserve every required integration,
-main, Stage, installer and platform result and the existing job timeouts.
+GitHub's existing event configuration controls automatic runs. Keep required
+native source, integration/main, Stage, installer and platform results and current
+timeouts. Do not create an empty commit or another manual dispatch merely to repeat
+unchanged checks. Use supported cancellation only for superseded work where the
+existing project permits it; preserve admitted integration evidence.
 
-Use adopted semantic compatibility evidence for an unchanged Approved source when
-the pinned engine supports it. Unrelated main movement does not require an empty
-commit or a meaningless merge just to restart CI. Actual conflicts, changed scope
-or inputs need reconciliation; disjoint files alone are not compatibility proof.
-Native branch protection and independent combined review still apply.
+Separating metadata/source triggers or concurrency groups, removing duplicate
+push/PR suites, and changing caches or sharding are configuration recommendations
+within an explicitly scoped task; existing authorization suffices. Following this
+prose alone does not authorize or perform those changes.
 
-For an unchanged candidate, use supported native retry operations. Where a durable
-retry policy is already adopted, follow it. The existing common collector's single-attempt support
-cannot infer coverage for successful jobs omitted from a partial rerun. Preserve
-a project's stronger reviewed adapter; otherwise use a supported bounded fresh
-attempt or stop. Never reinterpret an instruction-only skip as reuse or broaden
-an exhausted partial retry into repeated full runs.
+Use adopted semantic compatibility evidence for an unchanged Approved source only
+where supported. Unrelated main movement does not by itself require a meaningless
+merge to restart CI. Actual conflicts, scope or input changes need reconciliation;
+disjoint files alone are not compatibility proof. Exact current head/base review,
+native branch protection and independent combined review still apply.
 
-Measure first useful feedback, full-cycle latency and actual execution intervals
-separately on comparable ordinary workloads. Parallel execution minutes are not
-wall-clock latency. Preserve missing coverage, workload/environment changes and
-unavailable billing in both human and machine reports; fewer runs alone establish
-neither lower net charges nor a fleet saving. No paid demonstration or recurring
-analytics service is required.
+For an unchanged candidate, use native failed-job reruns only with adequate existing
+proof for successful original jobs and dependencies. Preserve adopted retry rules.
+A single-attempt collector cannot infer coverage omitted from a partial rerun;
+use the project's stronger reviewed adapter or its supported bounded complete
+attempt when needed. Do not broaden support or repeat full runs without cause.
+Inspect uncertain dispatch outcomes before retrying.
+
+Use one supported final admission operation where it includes linkage and the
+required checks; do not duplicate its immediate prerequisites through separate
+service calls. Early feedback and distinct required review/delivery actions remain.
+
+Observe ordinary necessary work through existing task/PR/run links. Record concrete
+unnecessary repeats or confusing steps; distinguish ready instructions from measured
+benefit. Do not create extra demonstration tasks or schedule an audit merely to
+prove a prose edit. Separately requested audit/configuration work follows its
+existing authorization. Compare suitable workloads, separate wall-clock latency
+from platform/job minutes and keep unavailable billing unknown.

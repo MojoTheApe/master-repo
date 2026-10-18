@@ -116,8 +116,9 @@ Give it the current requirements, actual source and relevant check results.
 If it changes the implementation, arrange another final reviewer. Report an
 unavailable reviewer honestly rather than recording self-approval.
 
-Reviewers inspect existing evidence and add checks for a finding, missing scope
-or unresolved risk. New comments alone do not justify repeating all tests.
+Reviewers inspect valid existing evidence and add checks for a finding, missing
+scope, changed input or unresolved risk. A new agent, session or comment alone
+does not justify repeating all tests.
 When main moves, assess actual compatibility: conflicts and changed behavior
 need reconciliation and appropriate review; an unchanged compatible result does
 not need a rewrite solely to restart CI. Preserve required current-base checks.
@@ -187,9 +188,13 @@ or completed release; do not create separate adoption merely to align instructio
 
 ## Checks and project setup
 
-Use [efficient verification](docs/verification.md) for quick feedback, required
-coverage, reuse and measured cost. Optimizing this workflow uses instructions and
-existing GitHub features; it does not require a new collector or retry service.
+Use [efficient verification](docs/verification.md) for grouped ready submissions,
+required coverage and supported reuse. Agents can avoid their own redundant
+launches; GitHub still runs the checks selected by existing configuration. Compatible
+instruction clarifications require no pin/helper upgrade. Actions/settings changes
+need explicit task scope; existing authorization suffices. Observe ordinary work
+through existing links without extra demonstrations or scheduled audits merely to
+prove a prose edit. Do not claim unmeasured savings.
 
 For a new project use the short [setup procedure](docs/adoption.md#new-project-procedure).
 For an existing one, change only the needed instructions and supported display;

@@ -1,8 +1,10 @@
 # Efficient verification
 
-This is the shared verification policy. Product commands, supported platforms and
-runtime acceptance remain project-owned. Adopt it through a reviewed standard
-upgrade; it does not change an existing project's required checks or engine pin.
+This is shared verification guidance. Product commands, supported platforms and
+runtime acceptance remain project-owned. Compatible prose clarifications can be
+reviewed in local instructions without upgrading a standard pin or helper. They
+cannot change adopted required checks, proof capabilities or delivery authority;
+a technical upgrade follows the separate existing upgrade procedure.
 
 Use existing checks and GitHub features. This policy requires no new retry service,
 collector, scheduler or script. Where a project already selects executable reuse,
@@ -77,41 +79,50 @@ acceptance retain their own target/freshness rules; CI cannot be relabeled as
 delivery. Preserve explicit manual/release full-verification rules. A review-limit
 change alone does not require revalidating unrelated historical delivery receipts.
 
-## Avoid duplicate work and measure results
+## Avoid agent-controlled repetition
 
-Run source suites on PR content events and actual integration-branch pushes. Keep
-linkage/metadata checks on body edits and ready handoff. Cancel superseded runs of
-the same PR, but preserve each admitted stage/main push's evidence. Dependency
-caches accelerate setup; they are not test-result evidence.
+Implementers group related fixes into a meaningful ready candidate on the existing
+task branch. Keep useful intermediate feedback; this is not a one-push limit or
+a waiting period. Reviewers inspect valid existing results before adding checks
+for findings, missing scope, changed inputs or unresolved concerns. A new agent,
+session or review comment alone does not reset that evidence. Refresh current
+review/admission as required without discarding tests that still prove their scope.
 
-Implementers self-check the relevant candidate. Reviewers inspect those results
-and add checks for findings, missing scope or unresolved concerns. Refresh evidence
-when a dependent input changes, and current admission immediately before merge.
-Retry supported failed jobs of an unchanged candidate instead of repeating passing
-ones without cause. Diagnose recurring infrastructure/test failures; retries must
-not conceal a product defect.
+Use one supported final admission check where it already includes linkage or other
+checks. Keep useful early feedback and separately required delivery operations.
+After an uncertain write or dispatch, inspect the actual result before repeating it.
 
-For a confirmed temporary problem, make one justified repeat of the needed part;
-another failure needs diagnosis. Preserve any stricter existing retry policy.
-If the result of dispatch is unknown, observe the current run before requesting
-another one. If the project's final check cannot account for successful original
-jobs after a partial rerun, use its supported complete run and explain why.
+Diagnose failures before retrying. For a confirmed temporary problem, make one
+justified repeat of the needed part; another failure needs diagnosis. Preserve
+stricter adopted retry limits. Use native failed-job reruns only when the project's
+final check accounts for original successful jobs and dependencies. Otherwise use
+its supported complete run and explain the missing coverage.
 
-Keep a short list of concrete waste: duplicate source triggers, unchanged reviewer
-reruns, heavy setup before quick failures, or rebuilding an unchanged package.
-For each, name the cause, a correction using existing tools, expected benefit and
-how to verify it. Existing Actions configuration changes are separate concrete
-changes; documenting the rule does not mean the configuration is already fixed.
+## Automatic runs and configuration changes
 
-Measure first-feedback and full-cycle time separately from summed job minutes.
-Retain slow-test/setup timings and retry causes. Balance shards by measured cost
-while preserving deterministic complete platform membership. Compare similar
-candidates before/after: parallel jobs and review cannot be summed as elapsed time.
+Existing GitHub events select automatic runs and their cancellation. An agent can
+avoid duplicate manual launches, but written guidance does not suppress those
+automatic runs. Leave required native source, integration/main and release checks
+intact; use existing supported cancellation only for superseded work where allowed.
 
-Use ordinary necessary work and existing history rather than paid demonstration
-runs. Keep platform minutes separate and unavailable billing explicit. Estimated
-minutes are not an invoice; fewer runs alone do not establish a money saving.
-Report instruction readiness separately from measured time or cost improvements.
+Trigger separation, concurrency, caches, sharding and other workflow/settings
+optimizations need their own explicit task scope. Existing authorization for that
+work is sufficient; no routine new approval is required. Do not implement them
+merely to follow this prose. Dependency caches provide no test-result evidence.
+
+## Observe ordinary work
+
+Use existing Issue/PR comments and run links for brief observations of an unexpected
+repeat, a confusing transition or a manually requested expensive run. State the
+known reason or uncertainty and relevant candidate; no per-job register, new form,
+blocker or tracking service is needed. A reason does not authorize missing coverage.
+
+Use ordinary necessary work and existing history. Do not create extra sample
+tasks, paid demonstrations, automation or a scheduled audit merely to prove a
+prose edit. Separately requested audits or CI work proceed within their existing
+authorization. Separate first feedback and full-cycle time from summed platform/job
+minutes; compare suitable workloads and keep unavailable billing explicit.
+Record instructions as ready, not savings as proven.
 
 Sources: [DORA](https://dora.dev/capabilities/test-automation/),
 [risk-based testing](https://bmad-code-org.github.io/bmad-method-test-architecture-enterprise/explanation/risk-based-testing/),
