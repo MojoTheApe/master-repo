@@ -54,6 +54,15 @@ A changed main needs compatibility assessment, not an automatic rewrite of
 unchanged work. A task's age alone needs no extra permission. On an uncertain
 write, inspect the actual Issue/PR/target before retrying. Keep useful history.
 
+Accept the owner's direct confirmation that an agent stopped; an unavailable host
+does not require repeating that confirmation. Use the local supported stop or
+stopped-owner transfer with the actual acting identity. Preserve work references,
+history and dependencies; mark uninspected local content unknown. Paused and
+Blocked are different: correct a conservative stop-added flag only through a
+supported command and only when no real obstacle is hidden. Verify the released
+assignments. Before resuming, inspect retained work and current scope/main/dependencies
+and follow normal ownership, independent review and delivery.
+
 Independent tasks may use available real agents in isolated worktrees when
 delegation is authorized. Coordinate overlap and expensive checks in the existing
 task. Report serial work honestly when parallel sessions are unavailable. Use a
@@ -92,6 +101,10 @@ system/runtime knowledge, history, data and deployment controls. A shared
 instruction update does not automatically select new execution policies or
 upgrade clients. Use [instruction ownership](references/instruction-ownership.md)
 when changing shared rules, templates or skill distribution.
+
+Keep existing data/release repositories as the parent's related resources when
+that is their actual role. Follow parent delivery and resource-local controls;
+do not invent separate adoption, active tasks or completion from a resource link.
 
 ## Existing selected mechanisms
 

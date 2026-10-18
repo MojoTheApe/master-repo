@@ -1,5 +1,19 @@
 # Repository process history
 
+## 2026-10-18 — MR-61 clarify owner-confirmed pause and resume
+
+Accept direct owner stop confirmation, preserve original work and unknown local
+contents, and use only supported ownership recovery. Distinguish voluntary Paused
+from real Blocked; retain dependencies and inspect saved work before resumption.
+Keep existing data/release repositories as parent resources. Update the canonical
+skill/reference together and prepare source 1.5.3 for the ordinary verified release
+and maintained mirror process.
+
+Project Workflow impact: updated. Task Tracker impact: no executable, state or
+display change; the guidance uses existing commands and projection. No generated
+templates/helpers, policies, engine pins, CI configuration or consumer changes.
+Task: https://github.com/MojoTheApe/master-repo/issues/61.
+
 ## 2026-10-18 — MR-59 prepare the simplified standard release 1.5.2
 
 Version the already reviewed MR-57 instructions as1.5.2 and align the self
