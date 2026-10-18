@@ -1,292 +1,121 @@
 ---
 name: project-workflow
-description: Follow MojoTheApe's shared project workflow when creating or onboarding a repository, explicitly upgrading its standard, or doing engineering/release work in a project with delivery.json. Locate the project's pinned rules, use its Tracker, preserve local controls, and arrange independent review. Ordinary feature work is not a standard migration.
+description: Follow MojoTheApe's shared development instructions when working in an adopted project, creating or connecting a repository, or explicitly updating its standard. Use the project's existing task, checks and delivery process; ordinary feature work is not a standard migration.
 ---
 
 # Project workflow
 
-## Find the adopted instructions
+Use GitHub for tasks, code, reviews and checks; Master Repo for the common standard;
+Task Tracker for visibility. This skill guides the active agent. It does not
+schedule agents, create permissions or install another workflow system.
 
-Read project `AGENTS.md` and `delivery.json`, then follow their reading map.
-Separated projects keep Git/Tracker rules in `docs/repository/`, product knowledge
-in `docs/system/` and operational safeguards in `docs/runtime/`. Earlier pins may
-use forwarding or legacy paths; follow their own checked-in contract. Master source: `https://github.com/MojoTheApe/master-repo`.
-Use a clean checkout at the descriptor's exact commit and read `standard.md` plus
-the relevant profile. For schema 1/2, follow that pinned version's semantics. Never
-silently apply newer descriptor3 or execution4 rules to an old project.
+## Read the applicable instructions
 
-This skill is installed once per agent environment. Its canonical copy lives at
-`.agents/skills/project-workflow/SKILL.md` in Master Repo. Project AGENTS files are
-short reading maps; they are not copies of this global skill.
-The team's AI Skills repository publishes a verified mirror of this skill as a
-Codex plugin. Edit Project Workflow in Master Repo; the library copy is generated.
-When changing Master standards or process contracts, assess this skill in the same
-PR. Update affected instructions/references or record a concrete no-impact reason
-under the source repository's skill impact rule. Library-owned skills are authored
-directly in AI Skills. Distribution never upgrades a consumer's pinned standard.
-Do not assume files outside the installed skill directory exist. Locate or obtain
-authorized pinned source checkouts explicitly. An updated skill is a navigator,
-not permission to upgrade project pins or replace unique project behavior.
+Start with project `AGENTS.md` and the task's current requirements. Follow its
+reading map to local workflow, product knowledge, check commands and delivery.
+Where `delivery.json` pins Master, obtain that exact reviewed revision and read
+`standard.md` plus the relevant profile. Do not assume the installed skill contains
+a Master checkout or that the latest branch is the project's adopted standard.
 
-If the source is unavailable, continue independent work from checked-in project
-guidance and identify the missing dependency before dependent operations. For new
-projects use a reviewed released revision; if only a specifically selected
-candidate exists, disclose it and keep adoption draft. Do not invent releases,
-environments, check commands or live registration proof.
+The canonical skill is `.agents/skills/project-workflow/` in Master Repo:
+https://github.com/MojoTheApe/master-repo .
+AI Skills distributes a verified mirror. Edit the source and affected references
+together; do not independently edit the mirror or install it into other
+environments merely to test a change. Skill updates do not change consumer pins.
 
-## Select the operation
+Read only what the task needs. If a source is unavailable, use checked-in guidance
+for independent work and identify the missing dependency for dependent actions.
 
-- **Ordinary work:** follow current project pins, Tracker and local deployment
-  controls. No standard migration or unrelated refactor.
-- **New project:** read the pinned `docs/adoption.md`. Where supported, choose role,
-  route, Stage, actual capacities, profile and required completion independently;
-  read [explicit choices](references/project-choices.md). Select a conservative
-  preset by actual work and inspect its final values. Older pins retain their
-  actual defaults. Choose public ID prefix, workspace ID and actual targets. Local means manual
-  pull, package is separate. Preview/apply the initializer with a clean compatible
-  Tracker checkout. Preserve supplied specs, configure the draft, publish initial
-  main, run onboarding for branches/labels/registry, complete the maintained
-  registry publication and verify the fresh live project board. Record actual
-  onboarding proof and validate before marking ready. A local scaffold is not a
-  connected project. Keep the application in Task Tracker, only its client locally.
-  Resource boards need their actual producer/registration contract; a descriptive
-  role cannot invent it. Legacy selection and actual migration follow that exact guide.
-  Select CI evidence only from reviewed actual jobs/inputs, never guessed generic
-  environments. Existing consumer upgrades retain their adopted choices.
-- **Existing adoption:** audit IDs/history, modules, open PRs, release state,
-  deployment, installers and exceptions. Preserve them. Finish pre-adoption open
-  PRs under original rules before activating new checks; reconcile historical
-  completion. Integrate a preview in a project PR; never delete local files to make
-  a template fit. Without a trusted old template base, do not invent one.
-- **Upgrade:** use the selected new standard's `upgrade` preview and its compatible
-  engine. Compare old template, new template and local project; preserve local
-  fixes, resolve conflicts explicitly, keep pins/config/CI consistent, test and
-  independently review. Bulk requests use an inventory and one project PR each.
-- **Release:** follow the local maintained mechanism, exact verified content and
-  current authorization. Read [delivery continuation](references/delivery-continuation.md).
-  Under the adopted flow, owner approval to integrate/merge selected tasks into
-  main includes maintained delivery and verification without also saying “and
-  deliver”. For eligible runtime/package batches persist it with `--deliver` by
-  default; honor explicit source-only/skip-release instructions and keep deferred
-  runtime delivery unfinished. Development or source approval alone does not
-  authorize integration, and arbitrary pushes cannot start a release.
-  Descriptor/merge are not installation or behavior proof.
+## Carry a task through
 
-## Execute the ticket lifecycle
+1. Read the complete Issue and prior decisions. Check whether the result already
+   exists or another participant is working on it. Separate requirements from
+   progress notes; assess changed requirements and relevant source changes.
+2. Record the implementer and a short plan in the existing task. Use an isolated
+   task branch and the project's supported naming/reference fields. Follow any
+   already adopted local ownership procedure; do not invent a new one.
+3. Implement the agreed result and update affected product knowledge. Use the
+   project checks described in [verification](references/verification.md).
+4. Link the ready PR and Issue both ways. Invoke a separate non-implementing
+   subagent to review the actual head/base, full scope, changed files and existing
+   evidence. Self-review under another label is not independent review.
+5. Address findings on the task branch. Follow the local return/handoff procedure
+   where one exists. Obtain current relevant review and checks for changed content.
+6. Integrate and complete the project's authorized delivery with its existing
+   tools. Record the actual result and remaining problems; do not close partial
+   work or call source merge a deployment.
 
-For CI work, read [verification](references/verification.md). Matching explicit
-`workflow.ci_retry` / Tracker `ci_retry_policy` selects the pinned bounded retry
-contract; files, a newer skill or a failed run do not activate it. Follow the
-exact local CI_RETRY.md and owned activation, evidence-backed operator diagnosis,
-durable reservations and reconciliation. Keep product fast/full commands local,
-full admission intact and actual billing separate from interval estimates.
+Use one supported final merge check; if it includes linkage, keep early link
+feedback without repeating it immediately before merge. Respect actual branch
+protections. Reviewers add checks for findings, missing coverage or unresolved
+risk, not merely because they started another session.
 
-Use the project's generated local Tracker guide as the primary route for its
-actual selected execution mode, Stage and delivery target. Supported older routes
-remain reference material and never imply activation. Read the
-[instruction ownership map](references/instruction-ownership.md) before changing
-shared rules or templates. Tracker owns exact commands and parser fields; Master
-retains common lifecycle and profile guarantees. Keep generated consumer PR fields
-and frozen batch/promotion member identity intact.
+A changed main needs compatibility assessment, not an automatic rewrite of
+unchanged work. A task's age alone needs no extra permission. On an uncertain
+write, inspect the actual Issue/PR/target before retrying. Keep useful history.
 
-Before selecting an optional policy in an existing package project, verify that
-the exact compatible pin supports delivery of that selection before activation.
-Use its bounded prior-operative-policy receipt path only for the genuinely frozen
-single-selection batch and existing authorized package. Complete actual package
-verification before maintenance; then drain every other owner/pending delivery and
-perform the documented owned adoption. This supplies no general old-config
-admission, in-maintenance delivery or source-only exception. Unsupported pins and
-unknown effects remain blocked; follow [delivery continuation](references/delivery-continuation.md).
+Independent tasks may use available real agents in isolated worktrees when
+delegation is authorized. Coordinate overlap and expensive checks in the existing
+task. Report serial work honestly when parallel sessions are unavailable. Use a
+different final reviewer; if unavailable, report that limitation.
 
-When descriptor `workflow.completion_policy` and Tracker `completion_policy`
-explicitly match, read [accepted-scope completion](references/completion-policy.md)
-and the exact exported engine guide. Verify the actual reader/writers and durable
-owned activation; old receipts with unknown scope cannot acquire new proof from
-today's Issue body. An installed skill does not activate consumer policy.
+## Know what is finished
 
-Check for matching explicit `workflow.task_context` and Tracker
-`task_context_policy`. When adopted with a compatible engine, read
-[task context](references/task-context.md) and its exact command guide before
-starting or resuming work. It binds semantic readiness to current requirements
-and main, separates an explicit terminal journal, and permits owned independent
-compatibility review of unchanged sources in its supported route. Older pins retain their
-actual commands and whole-body evidence; this skill never opts them in.
+Read the project's completion condition before implementing. Source-only work can
+finish at checked main integration; a service needs verified delivery; a package
+needs its required release and installation check. A publication-specific task
+requires publication proof. Use the project's real target and supported evidence.
 
-Check whether matching descriptor `workflow.process_instructions` and Tracker
-`process_instructions` explicitly adopt the [instruction-only route](references/process-instructions.md).
-Use the pinned complete-diff classifier: eligible regular process instructions
-keep genuine task/author/independent review and their checks, then go directly to
-main and normal Merged handoff. In execution v2 they retain the source review lane
-through main instead of Approved/batch/stage. Wait for held integration/stage work
-before changing main. Mixed, automation, CI, configuration, system/runtime or
-application/build changes retain their normal route. A newer skill never opts in.
+Continue already authorized integration/delivery without another routine approval.
+Preserve separately required local authorization and explicit source-only scope.
+If blocked, record the concrete cause and next action on the original task.
+Do not infer an installation, deployment or approval from a status label.
 
-Check whether the pinned project explicitly has matching `workflow.execution`
-and Tracker `execution_policy`. For schema 1, read
-[parallel execution](references/parallel-execution.md) for claims, delegation and
-the single review/integration lane. If absent, preserve the pinned legacy slot
-behavior; installing this skill does not opt the project in.
+The Tracker shows recorded work. Queue length, reserved capacity and running
+agents are different; use available confirmed data and show unknown as unknown.
+Archive preserves history and does not itself complete or reopen work.
 
-For explicitly selected descriptor3/execution4, read
-[project choices and single-source work](references/project-choices.md) before
-using the exact local guide. Modern context2/completion1, compatible actual
-readers/writers and owned outer7 activation are required. Direct retains the real
-source Reviewer and single integration reservation through main receipt,
-reconciled task status and release; it creates no Approved pool or synthetic
-batch. Batch retains real frozen members and its separate integration Reviewer.
-Return, stop, takeover, main advancement and ambiguous writes use the exact
-maintained owner/CAS procedure. Preserve retry6 history, budgets and unknown
-effects inside the fence. Old choices and absent policies remain unchanged.
+Ordinary knowledge or working-data capture does not become an engineering task
+for every save. Changes to rules, automation or product behavior use the development
+process. Existing projects with a selected capture mechanism retain that procedure.
 
-Ordinary capture has no Issue only under an identical already adopted explicit
-`workflow.knowledge_capture` / `knowledge_capture_policy` and real approved
-mandate. Complete immutable-diff classification and independent semantic
-attestation are mandatory. Notes cannot authorize themselves; role, extension,
-SKILL.md or a newer skill never exempts governance, mixed or unsafe work. Capture
-uses a real operation, normal pools, applicable checks, selected Stage and exact
-recovery without a fake Issue/dependency/release member. It grants no runtime,
-package or publication completion. Keep the existing adopted process-only route
-separate. No new mandate or consumer adoption is introduced by this reference.
+## Set up or update a project
 
-For matching execution schema 2 or 3, read
-[batch integration](references/batch-integration.md) for approval and
-integration ownership: Review -> Approved releases the review lane; one Coordinator
-owns a frozen batch up to the configured `batch_limit` (initial setting five).
-Schema 3 permits 1..5 independent source-review lanes with distinct actual Reviewer
-runs and one separate integration Reviewer; schema 2 retains one source lane.
-Use each source's actual PR/claim for evidence, return, takeover and approval.
-State adoption requires idle owners and the exact compatible migration; no newer
-skill or descriptor edit grants capacity before that migration succeeds.
-For a preserved queue with closed historical handoffs, use only the explicit
-compatible migration option in that reference; it preserves unfinished history
-and grants no approval or admission. The one-task source PR rule remains. The execution-v1 lane lifetime and same-single-
-task staging instructions below apply only to v1. Use only commands supported by
-the exact pinned engine; preserve older consumers and their actual delivery rules.
+For a new repository, read the chosen Master's `docs/adoption.md` short setup
+procedure: product description, local commands, completion condition, common
+instruction reference and connection to the existing Tracker. Verify the real
+board; a local file alone does not connect it. Do not promise a registration mode
+the current Tracker does not support.
 
-Read capacity from a compatible board's project-wide held-reservation projection,
-not filtered tasks, activity animations or timers. Occupied/limit/free, review
-queue length and batch member count have different meanings. A numerically free
-pool does not authorize a claim; scoped admission barriers and stale/unknown data
-still require the exact command's current checks. Missing projection is unknown,
-not an empty legacy slot. The selected execution references explain its real pools.
+For an existing project, update only what the task requires. Preserve local tests,
+system/runtime knowledge, history, data and deployment controls. A shared
+instruction update does not automatically select new execution policies or
+upgrade clients. Use [instruction ownership](references/instruction-ownership.md)
+when changing shared rules, templates or skill distribution.
 
-Idea request -> Idea; task request -> Backlog. Planning and To Do do not start code.
-On explicit development, read the full Issue, claim the Tracker slot with its
-`work` command and create a task branch under the pinned naming rules and any
-host/user prefix policy. Legacy projects use `codex/<public-id-lowercase>-<short-name>`;
-opted-in execution also accepts neutral `work/<public-id-lowercase>-<short-name>`. Preserve
-classification, dependencies and existing queue semantics. All opted-in execution versions
-use exactly one task per ordinary engineering source PR: `[RF-67] Summary`, one `Tracker issues: RF-67`
-line and a link back from that Issue. Frozen integration and promotion PRs carry their complete original batch member
-set; several related IDs in an ordinary source PR are supported only under legacy
-execution. PR numbers are different from Issue IDs. Avoid automatic closing keywords
-in both PR text and commits. Keep partial tasks and abandoned PRs unfinished.
-Explicit modern capture follows its exact selected operation field/template and
-has no Issue alias. Task categories and assignees never grant a route or claim.
+## Existing selected mechanisms
 
-Implement and self-check, update affected system docs/history or explain no impact,
-create a ready PR and set Review. Automatically invoke a different subagent for
-independent review of the actual head/base, full task scope and changed files.
-For execution v1, hand off the implementation claim and acquire its sole
-review/integration lane before invoking the Reviewer; other ready PRs wait.
-Delegated Workers hand off to their Coordinator, who starts the review.
-The reviewer reports findings/checks/verdict; the implementer fixes on the same
-branch. In execution v1, any post-handoff edit, including updating the base
-or resolving conflicts, first requires `execution review-return`, a fresh author
-implementation claim and another handoff. Retain the lane with `--keep-lane` when
-needed; it is mandatory after entering stage. Then reacquire/resume the lane and
-independently review current content. Never let a Coordinator or Reviewer edit an
-unclaimed branch. If the reviewer edited code, use another final reviewer. A missing
-independent reviewer is a limitation to report, not self-approval. Changed code,
-base, task scope or policy needs fresh approval. Preserve the durable report and
-record it using the pinned Tracker evidence command when supported.
+The following references apply only when the checked-in project actually selects
+that mechanism. Use the exact local Tracker guide for commands, policy versions,
+PR fields, ownership and recovery. Do not activate a mechanism because its
+reference is installed. This update does not disable an existing one.
 
-Use `check-pr N` for early link feedback and `check-merge N` for final admission
-in the supported contract; the latter already includes linkage, so do not repeat
-both immediately before merge. Keep older pins' actual commands. Admission verifies current review, required checks and
-stage; a link check alone does not authorize merge. Verify actual GitHub branch
-protections separately. Merge after valid review/checks within the existing task
-authorization; no additional routine owner-confirmation step is needed.
+| Existing project feature or operation | Read when relevant |
+| --- | --- |
+| Task relevance and retained source compatibility | [Task context](references/task-context.md) |
+| Accepted-scope completion | [Completion policy](references/completion-policy.md) |
+| Adopted instruction-only main route | [Process instructions](references/process-instructions.md) |
+| Execution v1 ownership and review lane | [Parallel execution](references/parallel-execution.md) |
+| Execution v2/v3 frozen integration batches | [Batch integration](references/batch-integration.md) |
+| Explicit modern project choices/direct route or capture | [Project choices](references/project-choices.md) |
+| Adopted delivery continuation or optional-policy selection package | [Delivery continuation](references/delivery-continuation.md) |
+| Selected CI evidence, retry or maintenance support | [Verification references](references/verification.md#existing-selected-support) |
 
-## Stage, merge and completion
+Preserve required task fields, genuine authors/reviewers, frozen integration
+members and active ownership when those procedures apply. Never clear another
+owner or rewrite a pending operation to get around a problem. New project-level
+mechanisms or changes to existing ones require their own justified scope.
 
-For a proven adopted instruction-only source, use the direct-main procedure above
-and complete its fully reviewed scope at the admitted main merge. Do not require
-a package release/install or a Stage receipt for it. Legacy consumers retain their
-own execution slot and independent review attestation; execution lane commands
-apply only when the pinned project has adopted that execution policy.
-
-For preserved legacy/execution-v1 work, if enabled: working branch -> permanent
-stage -> permanent main. Preserve the same
-single task in execution v1 (a related task set is legacy-only), one active stage
-candidate and exact approved content. Keep the working branch for
-fixes after its first PR; new fix PRs use that branch. Do not delete permanent
-branches. Record Stage after the source merge, verify the real stage target, and
-promote only matching content. Use merge/squash with the approved baseline, not
-rebase merge. If main changes, follow the claimed-author fix procedure above to
-reconcile the working branch and repeat review,
-stage and verification. If disabled: working branch -> main, no Stage column.
-
-For work outside the instruction-only exception, execution v2/v3 uses the [batch integration](references/batch-integration.md) ownership,
-assembly and recovery procedure instead of that v1 single-source stage sequence.
-Staging can be explicitly disabled only under a compatible pinned policy; keep
-Approved, source checks and independent combined review, and use the reserved
-`batch` main direction. Ordinary sources remain approval-only.
-After source approval, use its separate Coordinator batch claim; do not acquire a
-v1 review/integration lane for multiple tasks or infer v2 return-command syntax.
-Execution4 instead follows its explicitly selected direct/batch reference above;
-the legacy/v1 sequence is not a substitute for its owned modern finalizer.
-
-Record Merged only for fully implemented ticket scope actually included in main.
-Instruction-only and local manual-pull/tooling work completes after admitted merge.
-For other work, VPS/n8n need verified
-production delivery; package needs its stable release and installation check.
-Pending/failed delivery is unfinished in dependencies and release readiness.
-Continue the authorized project release/deploy and verification after main, or
-hand off to its tested durable CI, until completed or concretely blocked. Read
-[delivery continuation](references/delivery-continuation.md) for exact task/revision/
-target binding, serialization, resumable failure and receipt retries. The skill
-directs the active agent; it does not create a background listener or deployer.
-Record actual receipts against the configured target; never relabel stage evidence
-as production success or change completion merely to bypass a failure.
-
-Preserve local approvals, credentials, backups, compatible rollback and data.
-n8n workflow publication is distinct from upgrading the n8n server. ReactForge's
-installer/hotfix redesign is separate scope. Do not deploy, install global skills
-or migrate other consumers merely as a test.
-
-## Keep shared and local knowledge current
-
-`docs/system/PROJECT.md` describes the implemented system; `docs/system/CHANGELOG.md` explains
-meaningful changes and reasons with ticket/PR links. Preserve original specs and
-distinguish plans from implemented features. Documentation changes belong in the
-implementation PR and independent review.
-
-For process changes in Master Repo, assess Task Tracker impact; for Tracker
-changes, assess Master Repo impact. Record no impact with a reason, or propose a
-concrete linked fix and compatible release/migration order. Implement a matching
-change when already within the user's authorized scope; otherwise present the
-prepared proposal. Do not impose an automatic consumer upgrade.
-
-Report briefly: result, issue/PR, pins and checks, actual stage/delivery/connection
-proof, preserved exceptions and any concrete remaining setup. Keep explanations
-readable for a nontechnical owner.
-
-## Verification and coordinated upgrades
-
-When the adopted pin contains `docs/verification.md` and `docs/workflow-upgrades.md`,
-follow them; generated `docs/repository/VERIFICATION.md` is the project reading map.
-Read [efficient verification](references/verification.md) when selecting checks,
-reusing CI proof or coordinating a cutover. Older pins retain actual required
-checks and supported commands. A newer skill cannot activate a maintenance gate
-or collector the exact pinned engine lacks. Pins supplying `docs/portable-contract.md`
-use the Tracker-owned generated helper closure and the trusted Master structural
-snapshot; follow the verification reference before refreshing or publishing a pair.
-When the adopted pin supplies the
-TT-107 companion, read its exact `docs/MAINTENANCE_AND_CI_EVIDENCE.md` before using
-owned maintenance or explicit native CI coverage. Exported support alone enables
-neither policy nor live reservation and grants no consumer deployment permission.
-
-Keep process history in `docs/repository/CHANGELOG.md`. System/runtime files are
-project-owned; never refresh their contents from an upstream template. Shared
-upgrades of a legacy mixed layout require an audited split, not a bulk overwrite.
+Report briefly in the owner's language: result, task/PR, checks, actual delivery
+and remaining action. Do not report planned work as implemented or unmeasured
+savings as a demonstrated result.

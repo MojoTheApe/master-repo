@@ -1,13 +1,14 @@
 # Efficient verification
 
-For the executable shared recipe, explicit policy mirroring and missing-job
-adapter, read [CI result reuse](ci-reuse.md) and the pinned engine's CI_REUSE.md.
-Use one supported final `check-merge`: it already validates linkage. Keep early
-link feedback; do not immediately repeat it solely as a second admission step.
-
 This is the shared verification policy. Product commands, supported platforms and
 runtime acceptance remain project-owned. Adopt it through a reviewed standard
 upgrade; it does not change an existing project's required checks or engine pin.
+
+Use existing checks and GitHub features. This policy requires no new retry service,
+collector, scheduler or script. Where a project already selects executable reuse,
+read [CI result reuse](ci-reuse.md) and its pinned CI_REUSE.md. A supported final
+`check-merge` already validates linkage; retain early link feedback without an
+immediate duplicate final check.
 
 Use the [submission plan](verification-submission.md) for distinct project-owned
 fast feedback and full ready-candidate checks, grouped corrections, observed
@@ -33,8 +34,10 @@ actual workload; this is an improvement target, not a universal timeout.
 Choose actual commands during onboarding and retain their scope and exact CI job
 names in `delivery.json` and the matching Tracker policy. Validation never executes
 descriptor commands. Unknown/mixed changes keep full applicable verification.
-Instruction-only selection requires the adopted complete-diff classifier, not
-labels, titles or guessed path lists.
+Use lighter documentation checks only when the actual change cannot affect program,
+build or operational behavior and the project's rules support that coverage.
+Where a project selects a special instruction-only admission route, its existing
+complete-diff classifier still applies; labels or titles cannot select it.
 
 Prune or move a test only when its risk is preserved by another meaningful check;
 test counts alone do not establish redundancy. Preserve isolated synthetic data.
@@ -45,9 +48,9 @@ outer CI timeout alone may not resolve an installer or runner hang.
 ## Reuse proven results, not green labels
 
 Keep existing bounded reuse supported by the adopted project. The optional
-[Tracker companion](tracker-companion.md) supplies a narrowly supported native CI
-protocol; it is not enabled by this guidance or exported defaults. Expanding reuse
-requires a maintained collector proving all relevant inputs:
+[Tracker companion](tracker-companion.md) applies only where already selected.
+Do not build a new collector to implement this instruction. When judging whether
+an available result is suitable, consider the inputs relevant to its coverage:
 
 - Repository and actual tested content from Git or trusted producer evidence.
 - Trusted immutable workflow/check producer and profile, required jobs/platforms,
@@ -86,10 +89,27 @@ Retry supported failed jobs of an unchanged candidate instead of repeating passi
 ones without cause. Diagnose recurring infrastructure/test failures; retries must
 not conceal a product defect.
 
+For a confirmed temporary problem, make one justified repeat of the needed part;
+another failure needs diagnosis. Preserve any stricter existing retry policy.
+If the result of dispatch is unknown, observe the current run before requesting
+another one. If the project's final check cannot account for successful original
+jobs after a partial rerun, use its supported complete run and explain why.
+
+Keep a short list of concrete waste: duplicate source triggers, unchanged reviewer
+reruns, heavy setup before quick failures, or rebuilding an unchanged package.
+For each, name the cause, a correction using existing tools, expected benefit and
+how to verify it. Existing Actions configuration changes are separate concrete
+changes; documenting the rule does not mean the configuration is already fixed.
+
 Measure first-feedback and full-cycle time separately from summed job minutes.
 Retain slow-test/setup timings and retry causes. Balance shards by measured cost
 while preserving deterministic complete platform membership. Compare similar
 candidates before/after: parallel jobs and review cannot be summed as elapsed time.
+
+Use ordinary necessary work and existing history rather than paid demonstration
+runs. Keep platform minutes separate and unavailable billing explicit. Estimated
+minutes are not an invoice; fewer runs alone do not establish a money saving.
+Report instruction readiness separately from measured time or cost improvements.
 
 Sources: [DORA](https://dora.dev/capabilities/test-automation/),
 [risk-based testing](https://bmad-code-org.github.io/bmad-method-test-architecture-enterprise/explanation/risk-based-testing/),

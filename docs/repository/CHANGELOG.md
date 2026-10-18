@@ -1,5 +1,21 @@
 # Repository process history
 
+## 2026-10-18 — MR-57 simplify the common instructions
+
+Replace the protocol-heavy standard and skill entry point with the common task,
+review, checks and delivery process. Retain relevant selected-mechanism references
+and current project safeguards. Add a short setup path and separate existing
+initializer behavior; do not promise a new runtime or registration mode.
+Clarify useful test reuse, diagnosed repeats, existing Actions optimization and
+the difference between written guidance and measured savings.
+
+Project Workflow impact: updated together with its verification and ownership
+guidance. Task Tracker impact: no code or exported contract change. No provider,
+client, compatibility, CI configuration, consumer or release changes. Independent
+review and required source checks precede source completion; publication and
+installed-skill verification belong to the later handover stage.
+Task: https://github.com/MojoTheApe/master-repo/issues/57.
+
 ## 2026-10-17 — MR-54 package selection before activation
 
 Separate compatible support, one reviewed configuration selection, its existing

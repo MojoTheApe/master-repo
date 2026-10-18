@@ -79,8 +79,8 @@ commit or a meaningless merge just to restart CI. Actual conflicts, changed scop
 or inputs need reconciliation; disjoint files alone are not compatibility proof.
 Native branch protection and independent combined review still apply.
 
-For an unchanged candidate, use only supported native retry operations under its
-adopted durable policy. The current common collector's single-attempt support
+For an unchanged candidate, use supported native retry operations. Where a durable
+retry policy is already adopted, follow it. The existing common collector's single-attempt support
 cannot infer coverage for successful jobs omitted from a partial rerun. Preserve
 a project's stronger reviewed adapter; otherwise use a supported bounded fresh
 attempt or stop. Never reinterpret an instruction-only skip as reuse or broaden

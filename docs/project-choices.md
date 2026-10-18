@@ -1,5 +1,10 @@
 # Explicit project choices
 
+This reference describes the existing generated workflow's versioned choices.
+Use it when that adoption or a change to those settings is part of the task.
+For ordinary project setup start with the [short procedure](adoption.md#new-project-procedure);
+these presets are not prerequisites for following the common instructions.
+
 The Master1.5 source candidate pins actual published Tracker3.7.0 at
 `0b317d99997a4d3ef35b637bd6d19244630539f9` for descriptor3 and modern routes.
 The final Master review, native paired verification and publication remain

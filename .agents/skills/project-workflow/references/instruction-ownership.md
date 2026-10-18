@@ -1,5 +1,11 @@
 # Instruction ownership and selected guidance
 
+For ordinary work use the short skill workflow and the project's local reading
+map. The technical contracts below apply only where the project already selects
+them. A prose-only standard/skill update does not require an executable-policy
+migration or regenerated helpers; actual template/export changes still need their
+appropriate compatibility verification.
+
 Start from the checked-in project reading map, exact descriptor and local Tracker
 guide. The selected guide describes only its actual execution mode, Stage and
 delivery target. Other supported routes are reference material; a new installed
