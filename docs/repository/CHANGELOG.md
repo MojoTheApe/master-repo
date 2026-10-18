@@ -1,5 +1,15 @@
 # Repository process history
 
+## 2026-10-18 — MR-59 prepare the simplified standard release 1.5.2
+
+Version the already reviewed MR-57 instructions as1.5.2 and align the self
+descriptor. Preserve the compatible Tracker3.7.1 pin, templates, code and existing
+consumer behavior. Required checks, independent review, actual-main verification
+and exact release readback precede completion of this publication-specific task.
+Project Workflow impact: no impact; its content and operating instructions are
+unchanged by the version-only leaf. Task Tracker impact: no contract or UI change.
+Task: https://github.com/MojoTheApe/master-repo/issues/59.
+
 ## 2026-10-18 — MR-57 simplify the common instructions
 
 Replace the protocol-heavy standard and skill entry point with the common task,

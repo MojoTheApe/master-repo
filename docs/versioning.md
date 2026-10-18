@@ -1,5 +1,24 @@
 # Versioning and safe upgrades
 
+## Simplified instructions release 1.5.2
+
+Candidate1.5.2 packages the simplified common instructions and canonical skill
+already reviewed in [MR-57](https://github.com/MojoTheApe/master-repo/pull/58).
+It changes the source version and self descriptor together. The compatible Tracker
+remains published3.7.1 at `be87599d1b5e625058bbddc33c35bda86687b5bf`;
+validators, generated templates, portable artifacts and policies are unchanged.
+Consumers retain their exact pins and existing behavior.
+
+[MR-59](https://github.com/MojoTheApe/master-repo/issues/59) tracks the authorized
+publication. Complete the repository checks and existing clean compatible-pair
+release check, independent review, protected main integration and actual-main
+checks before publishing tag `v1.5.2` at that exact merge. Verify the accessible
+release and tag target before completing the task. Keep existing tags unchanged.
+The source version alone does not claim publication or consumer adoption.
+The unchanged canonical skill remains distributed through AI Skills; verify the
+complete copy rather than creating a duplicate authored change or reinstalling it.
+
+
 ## One-policy package continuation
 
 Source candidate1.5.1 corrects the optional-policy package/adoption order and
