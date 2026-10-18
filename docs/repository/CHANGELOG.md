@@ -1,5 +1,21 @@
 # Repository process history
 
+## 2026-10-18 — MR-63 clarify verification without CI changes
+
+Distinguish agent-requested repetitions from existing automatic GitHub runs.
+Consolidate grouped ready submissions, independent use of valid evidence, supported
+failed-job retries and one final admission operation. Clarify that compatible prose
+needs no pin/helper upgrade; workflow/settings optimization is separately scoped.
+Use ordinary work and existing links for brief observations; do not add a per-job
+register, demonstration or scheduled audit merely to prove a prose edit. Explicitly
+scoped audit/configuration work retains its existing authorization; savings need evidence.
+
+Project Workflow impact: updated with its verification reference. Task Tracker
+impact: no parser, status, data or runtime change. Technical contracts/helpers,
+exports/templates, configuration, VERSION, delivery.json and workflows are unchanged.
+No standard release or consumer adoption; use the existing verified skill mirror.
+Task: https://github.com/MojoTheApe/master-repo/issues/63.
+
 ## 2026-10-18 — MR-61 clarify owner-confirmed pause and resume
 
 Accept direct owner stop confirmation, preserve original work and unknown local

@@ -34,8 +34,9 @@ for independent work and identify the missing dependency for dependent actions.
 2. Record the implementer and a short plan in the existing task. Use an isolated
    task branch and the project's supported naming/reference fields. Follow any
    already adopted local ownership procedure; do not invent a new one.
-3. Implement the agreed result and update affected product knowledge. Use the
-   project checks described in [verification](references/verification.md).
+3. Implement the agreed result and update affected product knowledge. Group related
+   fixes into a meaningful ready submission using the existing
+   [verification](references/verification.md) plan and useful intermediate feedback.
 4. Link the ready PR and Issue both ways. Invoke a separate non-implementing
    subagent to review the actual head/base, full scope, changed files and existing
    evidence. Self-review under another label is not independent review.
@@ -45,10 +46,19 @@ for independent work and identify the missing dependency for dependent actions.
    tools. Record the actual result and remaining problems; do not close partial
    work or call source merge a deployment.
 
-Use one supported final merge check; if it includes linkage, keep early link
-feedback without repeating it immediately before merge. Respect actual branch
-protections. Reviewers add checks for findings, missing coverage or unresolved
-risk, not merely because they started another session.
+Use one supported final admission check; if it includes linkage or other checks,
+keep early feedback without immediately repeating those service actions. Respect
+actual branch protections and distinct delivery requirements. Reviewers inspect
+valid evidence and add checks for findings, missing coverage, changed inputs or
+unresolved risk; another agent/session does not reset unchanged test evidence.
+
+Avoid duplicate agent-requested runs. Existing GitHub events still start their
+configured checks; do not edit workflows/settings to enforce this guidance.
+Compatible prose can be clarified locally without pin/helper upgrades. Note
+concrete unnecessary repeats or confusing steps using existing Issue/PR/run links.
+Do not create extra demonstrations, scheduled audits or a new register merely to
+prove a prose edit. Audit/configuration work follows its explicit scope and existing
+authorization, without a routine new approval. Do not claim unmeasured savings.
 
 A changed main needs compatibility assessment, not an automatic rewrite of
 unchanged work. A task's age alone needs no extra permission. On an uncertain

@@ -1,5 +1,14 @@
 # Master Repo system
 
+[MR-63](https://github.com/MojoTheApe/master-repo/issues/63) clarifies which
+verification repetitions the agent controls and which GitHub starts automatically.
+Common guidance and the canonical skill consolidate grouped submissions, valid
+evidence reuse, independent review, supported retries and final admission.
+Brief observations use real tasks and existing links. This prose update changes
+no technical contract, required check, setting, pin or release; Tracker parser,
+status and runtime behavior are unchanged. Skill distribution remains separate
+from a versioned standard release or consumer adoption.
+
 [MR-61](https://github.com/MojoTheApe/master-repo/issues/61) prepares source 1.5.3
 with common owner-confirmed pause/resume guidance and the matching canonical
 skill. It distinguishes voluntary pause from real obstacles, retains unknown
