@@ -1,5 +1,13 @@
 # Master Repo system
 
+[MR-61](https://github.com/MojoTheApe/master-repo/issues/61) prepares source 1.5.3
+with common owner-confirmed pause/resume guidance and the matching canonical
+skill. It distinguishes voluntary pause from real obstacles, retains unknown
+local work honestly, and preserves existing parent/resource relationships.
+This changes instructions and release metadata only; existing ownership commands,
+policies, generated support and consumer settings stay intact. Exact release,
+skill distribution and separately authorized ACL adoption require their own evidence.
+
 MR-59 prepares source1.5.2 for the simplified MR-57 instructions. Only release
 metadata and documentation change; the compatible Tracker pin, generated support
 and canonical skill bytes remain unchanged. Actual release publication is verified

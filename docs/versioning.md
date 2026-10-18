@@ -1,5 +1,20 @@
 # Versioning and safe upgrades
 
+## Pause and resume instructions release 1.5.3
+
+[MR-61](https://github.com/MojoTheApe/master-repo/issues/61) prepares the common
+pause/resume clarification and matching canonical skill as source 1.5.3. The
+compatible Tracker remains published 3.7.1 at
+`be87599d1b5e625058bbddc33c35bda86687b5bf`; generated templates, helpers,
+validators, policies and consumer settings are unchanged.
+
+Complete the declared repository checks, existing clean compatible-pair gate,
+independent review, protected main integration and actual-main checks before
+publishing `v1.5.3` at the exact reviewed merge. Verify tag/release readback and
+the complete canonical skill mirror/catalog through AI Skills' maintained sync.
+Never move existing tags or edit generated/installed mirrors manually. Source
+version and publication do not update a consumer pin; ACL adoption is separate.
+
 ## Simplified instructions release 1.5.2
 
 Candidate1.5.2 packages the simplified common instructions and canonical skill

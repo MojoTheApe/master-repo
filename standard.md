@@ -53,6 +53,28 @@ waiting for review differs from active review; merged code differs from a
 published or installed result. Use the project's supported status vocabulary.
 The Tracker's categories are a presentation concern, not new permissions.
 
+## Pause and resume existing work
+
+An owner's direct confirmation that an agent has stopped establishes that fact.
+Do not require an unavailable computer to come online just to confirm it again.
+Age, silence or an occupied slot alone does not establish a stop. Record the
+request and use the project's existing stop or stopped-owner transfer procedure
+under the actual acting identity; never impersonate the previous owner or edit
+ownership state by hand. A real command refusal remains a concrete limitation.
+
+Preserve the task, scope, dependencies, history and known branch/commit/work-location
+references. Uninspected local files and implementation readiness remain unknown;
+an administrative pause does not require inventing a copied checkout or a backup.
+Verify that only the requested assignments were released and report any remaining
+reservation. Paused means intentionally stopped; Blocked means a concrete obstacle.
+If the existing stop command adds a conservative blocker, use the supported status
+correction only after confirming no real obstacle is being hidden.
+
+On resumption, inspect the retained work and handoff, current requirements, main
+and dependencies, then acquire or resume ownership through the local procedure.
+Continue the existing task and branch where appropriate. Keep valid evidence and
+the project's required independent review, integration and delivery.
+
 When a requirement changes, assess the result against that requirement. Preserve
 the old work and decision history. A progress note alone is not a changed
 requirement. If an operation's result is uncertain, inspect GitHub or the target
@@ -157,6 +179,11 @@ Master owns the common standard and canonical
 distributes its verified copy through the existing process. A shared rule change
 updates the skill and affected references in the same PR; do not maintain an
 independent edited mirror. Project-specific product and runtime knowledge stays local.
+
+An existing parent project's data or release repositories can remain related
+resources. Follow the parent's delivery process and each resource's local controls
+for actual changes. A link does not imply an independent task queue, active agent
+or completed release; do not create separate adoption merely to align instructions.
 
 ## Checks and project setup
 
