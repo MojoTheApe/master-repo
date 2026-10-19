@@ -1,5 +1,16 @@
 # Versioning and safe upgrades
 
+## Executor activity support 1.5.4
+
+MR-65 pairs common owner-bound activity instructions with Task Tracker TT-174.
+Refresh compatible generated support mechanically from the exact reviewed and
+published Tracker3.7.2 source. Preserve consumer policies, retained templates,
+real claims and historical receipts. After independent review, repository checks,
+clean compatible-pair acceptance and verified main checks, publish v1.5.4 at the
+exact accepted merge without moving earlier tags. Verify the actual release and
+skill mirror through the maintained path. Source publication does not restart
+executors; ACL adopts the exact pair separately under its normal delivery route.
+
 ## Pause and resume instructions release 1.5.3
 
 [MR-61](https://github.com/MojoTheApe/master-repo/issues/61) prepares the common

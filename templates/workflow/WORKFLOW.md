@@ -67,3 +67,13 @@ impact and link the matching fix or concrete no-impact result.
 The installed `project-workflow` skill is navigation. Its canonical Master source
 and verified AI Skills mirror do not activate this project's policies or replace
 its adopted local instructions. Record actual exceptions in `delivery.json`.
+
+## Executor activity
+
+Follow the selected pinned Tracker guide for `activity report` and the foreground
+`activity run --exec` wrapper when supported. Only the current owner/session/claim
+reports running, waiting and stopped. Confirm once a minute while running; five
+minutes without a running/waiting report freezes work time and means activity
+unconfirmed. A recorded stop remains while that owner is assigned. Neither
+condition releases ownership. No detached endless reporter or coordinator heartbeat
+for another executor. Existing runs without a producer remain unknown.

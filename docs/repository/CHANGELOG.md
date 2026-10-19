@@ -328,3 +328,10 @@ validator, templates and canonical skill distinguish it from application/build o
 mixed changes, preserve existing delivery history and require actual diff proof.
 Companion Task Tracker admission/completion support is required before consumers
 activate it. Source adoption itself remains on each project's existing route.
+## MR-65 — truthful executor activity — 2026-10-19
+
+Pair Task Tracker TT-174 with common owner-bound reporting, waiting and lost-report
+semantics. Update the standard, workflow template and complete canonical skill
+reference. Expiry never releases ownership; installed guidance never invents a
+producer. Native history retains real actors and coverage limits. ACL adoption is
+separate and changes common support, with existing policies preserved.

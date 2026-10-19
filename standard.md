@@ -53,6 +53,13 @@ waiting for review differs from active review; merged code differs from a
 published or installed result. Use the project's supported status vocabulary.
 The Tracker's categories are a presentation concern, not new permissions.
 
+Confirm [actual executor activity](docs/executor-activity.md) through the compatible
+project's shared commands. Report running, waiting and stopped for your own run;
+confirm once a minute while running. Five minutes without a running/waiting report
+freezes work time and means activity unconfirmed. A recorded stop remains while
+that owner is assigned. Neither condition releases a reservation.
+Do not keep another agent apparently alive with a detached reporter.
+
 ## Pause and resume existing work
 
 An owner's direct confirmation that an agent has stopped establishes that fact.
