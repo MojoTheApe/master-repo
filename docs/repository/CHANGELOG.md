@@ -335,3 +335,6 @@ semantics. Update the standard, workflow template and complete canonical skill
 reference. Expiry never releases ownership; installed guidance never invents a
 producer. Native history retains real actors and coverage limits. ACL adoption is
 separate and changes common support, with existing policies preserved.
+The final1.5.4 publication selects corrected Tracker3.7.3: foreground renewals
+preserve explicit waiting/stopped even across concurrent owner reports. The
+earlier3.7.2 pin was merged source preparation and was not published as1.5.4.

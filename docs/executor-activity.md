@@ -17,9 +17,12 @@ do not install a reporter or update a consumer pin.
   remains explicitly incomplete rather than estimated from Issue timestamps.
 - The common foreground `activity run --exec` wrapper may cover the actual agent
   child process. Preserve its failure code and lifetime. Never wrap a perpetual
-  sleeper or launch a detached heartbeat that survives the executor. A coordinator
-  must not renew another executor's report. A test process being alive does not
-  prove a separate reviewer is active or that useful progress is being made.
+  sleeper or launch a detached heartbeat that survives the executor.
+  Periodic wrapper renewals preserve the actual run's latest explicit mode,
+  including waiting/stopped; they never resume work by themselves. Explicit owner
+  reports or a real new launch control resumption, including concurrent reports.
+  A coordinator must not renew another executor's report. A test process being
+  alive does not prove a separate reviewer is active or useful progress.
 - Interactive agents report at actual tool boundaries. A long period without a
   tool call can become unconfirmed; do not conceal that by keeping a fake reporter
   alive. Current compatible ownership commands remain the only stop/transfer path.

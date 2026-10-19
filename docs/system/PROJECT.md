@@ -7,6 +7,8 @@ establish liveness. Real owner-bound observations distinguish running, waiting
 and stopped work; expiry freezes confirmed time without releasing ownership.
 Compatible source refresh and consumer adoption retain their existing reviewed
 procedures. No execution/delivery selection or restarted agent is implicit.
+The compatible3.7.3 follow-up preserves explicit waiting/stopped modes during
+foreground renewals, including CAS conflicts; a heartbeat alone cannot resume work.
 
 [MR-63](https://github.com/MojoTheApe/master-repo/issues/63) clarifies which
 verification repetitions the agent controls and which GitHub starts automatically.

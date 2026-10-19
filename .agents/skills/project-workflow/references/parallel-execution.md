@@ -27,6 +27,8 @@ that owner is assigned. Neither condition frees a lane. No coordinator may renew
 another executor or run an endless detached reporter. Existing runs without a
 producer remain unknown until their actual owner reports or launches via the
 common foreground wrapper. Preserve actual ownership and independent review.
+Wrapper renewals preserve explicit waiting/stopped, including concurrent owner
+reports; an explicit report or actual new launch controls resumption.
 
 Legacy retains one shared slot; it does not acquire the parallel pools from this
 guide. Execution v1 counts real Worker claims and its one shared review/integration

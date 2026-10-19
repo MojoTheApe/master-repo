@@ -101,6 +101,8 @@ means unknown activity and a frozen work clock; a recorded stop remains while th
 owner is assigned. Neither condition releases authority. A foreground wrapper
 covers only its actual agent child; do not use a detached perpetual heartbeat or
 report for another agent. Missing producers and old runtime gaps remain unknown.
+Foreground renewals preserve explicit waiting/stopped modes. Resume running only
+through an explicit owner report or an actual new launch.
 Read Master's `docs/executor-activity.md` when adopting this common support.
 
 Ordinary knowledge or working-data capture does not become an engineering task
