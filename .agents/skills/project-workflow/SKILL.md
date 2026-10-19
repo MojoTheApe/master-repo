@@ -94,6 +94,15 @@ The Tracker shows recorded work. Queue length, reserved capacity and running
 agents are different; use available confirmed data and show unknown as unknown.
 Archive preserves history and does not itself complete or reopen work.
 
+Use the compatible project's selected guide for actual executor activity reporting.
+Report your own running, waiting or stopped state with the current owner/session/
+claim, once a minute while running. Five minutes without a running/waiting report
+means unknown activity and a frozen work clock; a recorded stop remains while that
+owner is assigned. Neither condition releases authority. A foreground wrapper
+covers only its actual agent child; do not use a detached perpetual heartbeat or
+report for another agent. Missing producers and old runtime gaps remain unknown.
+Read Master's `docs/executor-activity.md` when adopting this common support.
+
 Ordinary knowledge or working-data capture does not become an engineering task
 for every save. Changes to rules, automation or product behavior use the development
 process. Existing projects with a selected capture mechanism retain that procedure.

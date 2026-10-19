@@ -1,5 +1,13 @@
 # Master Repo system
 
+[MR-65](https://github.com/MojoTheApe/master-repo/issues/65) pairs the common
+[executor activity rules](../executor-activity.md), generated guidance and
+canonical Project Workflow skill with Task Tracker TT-174. Reservations do not
+establish liveness. Real owner-bound observations distinguish running, waiting
+and stopped work; expiry freezes confirmed time without releasing ownership.
+Compatible source refresh and consumer adoption retain their existing reviewed
+procedures. No execution/delivery selection or restarted agent is implicit.
+
 [MR-63](https://github.com/MojoTheApe/master-repo/issues/63) clarifies which
 verification repetitions the agent controls and which GitHub starts automatically.
 Common guidance and the canonical skill consolidate grouped submissions, valid
