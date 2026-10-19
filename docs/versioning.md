@@ -4,7 +4,8 @@
 
 MR-65 pairs common owner-bound activity instructions with Task Tracker TT-174.
 Refresh compatible generated support mechanically from the exact reviewed and
-published Tracker3.7.2 source. Preserve consumer policies, retained templates,
+published Tracker3.7.3 source, which preserves explicit waiting/stopped modes
+during foreground wrapper renewals. Preserve consumer policies, retained templates,
 real claims and historical receipts. After independent review, repository checks,
 clean compatible-pair acceptance and verified main checks, publish v1.5.4 at the
 exact accepted merge without moving earlier tags. Verify the actual release and
