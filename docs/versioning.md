@@ -3,9 +3,12 @@
 ## Process/product separation candidate1.6.0
 
 MR-68 pairs the global rule and canonical skill with Tracker TT-177's compatible
-canonical support proof. Publish the reviewed Tracker3.8.0 source and compatible
-reader first, then mechanically refresh this source from that exact published
-commit. Require the clean compatible-pair portable replay, including the advertised
+canonical support proof. Tracker3.8.0 is published at
+`9c3ad4deec6b3596d5ef48400430b126155012dd` (tag v3.8.0, release418130984), after
+its independent source review and successful actual-main checks. The maintained
+refresh consumes that exact source and its complete57-file closure; installed
+reader availability is verified separately before consumer writers. Require the
+clean compatible-pair portable replay, including the advertised
 process-support fixture on actual Python3.9 and both exported layouts, together
 with retained profile/upgrade and negative compatibility checks. Ordinary schema1,
 policy selections, targets and pending product requests remain unchanged.

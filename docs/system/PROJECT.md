@@ -7,9 +7,12 @@ process verification/delivery independent of the consuming product. The companio
 Tracker TT-177 adds bounded canonical shared-support completion after unchanged
 ordinary admission, exact published provenance and genuine independent whole-scope
 and product-isolation review. Schema1 instruction admission and existing policies,
-targets, receipts and requested product delivery remain unchanged. Candidate1.6.0
-needs the exact published compatible Tracker pin, clean pair, protected/main checks,
-publication and verified skill distribution. Consumer adoption remains separate.
+targets, receipts and requested product delivery remain unchanged. The maintained
+refresh consumes published Tracker3.8.0 at
+`9c3ad4deec6b3596d5ef48400430b126155012dd`, including its complete57-file canonical
+closure, 13raw/26separated helpers and source-owned process-support fixture/runner.
+Candidate1.6.0 still needs its clean pair, protected/main checks, publication and
+verified skill distribution. Consumer adoption remains separate.
 
 [MR-65](https://github.com/MojoTheApe/master-repo/issues/65) pairs the common
 [executor activity rules](../executor-activity.md), generated guidance and
