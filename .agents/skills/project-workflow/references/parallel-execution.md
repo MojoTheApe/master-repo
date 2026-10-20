@@ -89,14 +89,17 @@ renaming an author or taking a new role does not create independent review.
 
 On interruption inspect the persisted claim and available branch/PR/stage evidence.
 The owner's direct confirmation that the old agent stopped is sufficient for that
-fact; do not demand access to its host merely to repeat the confirmation. Use the
-pinned stopped-owner transfer with the new actual actor/session when required,
-then its supported stop. Preserve the old claim/history and original work location;
+fact; do not demand access to its host merely to repeat the confirmation. With
+compatible task_pause support, use the selected phase-preserving pause commands
+described below. Only older consumers without that support use their pinned
+stopped-owner transfer with the new actual actor/session when required, then
+their existing stop; that fallback can still move work to Todo. Preserve the old claim/history and original work location;
 record inaccessible local contents as unknown rather than claiming they were copied.
 Never impersonate the former owner or bypass a real command refusal.
 
 Verify only the requested claims were released. A voluntary pause is not itself a
-product blocker: use the existing supported flag correction if stop adds Blocked,
+product blocker. For the older stop fallback only, use its existing supported flag
+correction if it adds Blocked,
 while retaining actual obstacles and dependencies. Resume implementation only after
 inspecting retained work and current scope/main/dependencies under valid ownership.
 Timeouts alone do not permit takeover or deletion of ownership. If independent
