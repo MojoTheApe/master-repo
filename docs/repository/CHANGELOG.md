@@ -1,5 +1,9 @@
 # Repository process history
 
+## MR-70 — common phase-preserving pause and safe resume
+
+Candidate1.7.0 pairs common [pause guidance](../task-pause.md) with Tracker TT-179. Publish the exact compatible Tracker first, then mechanically refresh complete trusted artifacts and canonical native pause fixtures. Retain existing profiles/choices/product requests and require actual Python3.9 clean paired verification, independent review, actual-main checks, stable publication and maintained skill mirror. ACL adoption remains separate.
+
 ## 2026-10-20 — MR-68 global process/product separation
 
 Update the standard, delivery/verification guidance, templates, selected instructions

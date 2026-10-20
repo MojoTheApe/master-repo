@@ -22,7 +22,8 @@ guide apply to other work.
 An occupied slot is not proof its owner is still running. With compatible shared
 support, the actual owner reports running/waiting/stopped using the selected guide.
 Confirm once a minute while running; after five minutes without a running/waiting
-report the clock freezes and activity is unknown. A recorded stop remains while
+report the clock freezes and shows Connection lost after prior confirmation;
+never-confirmed activity stays Activity unconfirmed. A recorded stop remains while
 that owner is assigned. Neither condition frees a lane. No coordinator may renew
 another executor or run an endless detached reporter. Existing runs without a
 producer remain unknown until their actual owner reports or launches via the
@@ -103,3 +104,16 @@ review is unavailable, retain ready work for a real reviewer and report the limi
 Do not fabricate delegation, identity or review evidence. Changing execution
 settings requires an authorized project upgrade and safe state migration; this
 skill update supplies neither consumer activation nor deployment permission.
+
+## Phase-preserving executor pause
+
+Use only the compatible selected guide's real `pause stop/resume` flow. Explicit
+confirmed stop checkpoints the owner and releases only its slot while retaining
+its native category/phase, PR/branch/work reference, history, blockers and pending
+integration/Stage/product obligations. Resume acquires fresh legitimate capacity
+and authority after current scope/source/main/dependency and independence checks;
+no capacity or changed evidence keeps the pause. A frozen Coordinator needs a
+new actual session and resumes before its combined Reviewer. Old claims and old
+reviews cannot regain authority. Source publication and pin/skill changes do not
+activate the outer8 protocol: first verify compatible readers/all writers, then
+perform owned idle maintenance activation. See Master docs/task-pause.md.

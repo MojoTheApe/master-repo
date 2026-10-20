@@ -92,6 +92,8 @@ def plan(engine, revision, python):
         'accounting.json': 'tests/fixtures/ci_accounting_synthetic.json',
         'selection.json': 'tests/fixtures/portable_selection.json',
     }
+    if record.get('contracts', {}).get('task_pause') == [1]:
+        fixture_sources['pause.json'] = 'tests/fixtures/portable_pause.json'
     if record.get('contracts', {}).get('process_support') == [1]:
         fixture_sources['process.json'] = 'tests/fixtures/portable_process_support.json'
     if 4 in record.get('contracts', {}).get('execution_policy', []):

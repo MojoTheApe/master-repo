@@ -56,7 +56,7 @@ The Tracker's categories are a presentation concern, not new permissions.
 Confirm [actual executor activity](docs/executor-activity.md) through the compatible
 project's shared commands. Report running, waiting and stopped for your own run;
 confirm once a minute while running. Five minutes without a running/waiting report
-freezes work time and means activity unconfirmed. A recorded stop remains while
+freezes work time and means Connection lost after prior confirmation; never-confirmed work remains Activity unconfirmed. A recorded stop remains while
 that owner is assigned. Neither condition releases a reservation.
 Do not keep another agent apparently alive with a detached reporter.
 
@@ -65,22 +65,27 @@ Do not keep another agent apparently alive with a detached reporter.
 An owner's direct confirmation that an agent has stopped establishes that fact.
 Do not require an unavailable computer to come online just to confirm it again.
 Age, silence or an occupied slot alone does not establish a stop. Record the
-request and use the project's existing stop or stopped-owner transfer procedure
-under the actual acting identity; never impersonate the previous owner or edit
-ownership state by hand. A real command refusal remains a concrete limitation.
+request and use the compatible project's explicit phase-preserving `pause stop`
+with a durable handoff and genuine acting identity. Preview/apply only after
+confirmed stop; never impersonate the old owner or edit state by hand. With an
+older pin, follow its supported procedure and report the remaining limitation.
+Do not call the older Todo-moving stop/review-return operation phase-preserving.
 
-Preserve the task, scope, dependencies, history and known branch/commit/work-location
-references. Uninspected local files and implementation readiness remain unknown;
-an administrative pause does not require inventing a copied checkout or a backup.
-Verify that only the requested assignments were released and report any remaining
-reservation. Paused means intentionally stopped; Blocked means a concrete obstacle.
-If the existing stop command adds a conservative blocker, use the supported status
-correction only after confirming no real obstacle is being hidden.
+Keep the native phase/category, task, source PR, saved branch/work location,
+history, scope, dependencies and genuine blockers. Paused replaces the display
+status inside that category and releases only its confirmed stopped executor.
+Frozen integration, Stage receipts and actual product delivery requests remain
+fenced. Paused and Blocked are distinct; neither silence nor a reporting expiry
+releases authority. An unavailable host does not require an invented backup.
 
-On resumption, inspect the retained work and handoff, current requirements, main
-and dependencies, then acquire or resume ownership through the local procedure.
-Continue the existing task and branch where appropriate. Keep valid evidence and
-the project's required independent review, integration and delivery.
+Resume explicitly at the prior phase with a genuinely free slot and fresh
+ownership, after checking current requirements/main/source/dependencies and role
+independence. No capacity or changed evidence keeps the pause with a reason.
+Retained reviews remain history, not automatic approval. A frozen Coordinator
+resumes in a genuine new session before its combined Reviewer. Preserve the
+project's independent review, integration and actual delivery. Read the global
+[pause contract](docs/task-pause.md), including compatible reader/all-writer
+publication and owned idle outer8 activation; a pin/skill update activates nobody.
 
 When a requirement changes, assess the result against that requirement. Preserve
 the old work and decision history. A progress note alone is not a changed

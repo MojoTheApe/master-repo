@@ -132,3 +132,11 @@ unfinished task/receipt evidence.
 ACL [parent task 1923](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/923)
 and [source task 1924](https://github.com/MojoTheApe/adopy-campaing-launcher/issues/924)
 separate the old-route source integration from live activation.
+
+## Phase-preserving task pause
+
+The compatible Tracker TT-179 contract supplies owned task pause/resume and its
+strict outer8 reader/writer fence. Follow [task pause](task-pause.md) and the exact
+pinned selected guide. Keep actual maintenance and per-task pause separate;
+activation requires genuinely idle actual owners and verified compatible service
+reader/all writers. Publishing Master or its skill changes no consumer state.
