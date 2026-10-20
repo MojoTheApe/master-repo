@@ -1,5 +1,12 @@
 # Verification policy
 
+Verify process changes separately from product delivery for every profile.
+Instructions and isolated task/workflow tooling need relevant checks and
+independent review. Assess complete immutable inputs, including indirect product,
+build, install and update effects; a directory or label alone is insufficient.
+Testing a build or installer does not authorize publishing an unchanged product.
+Split mixed changes and use only the pinned supported completion proof.
+
 __CI_RETRY_GUIDANCE__
 
 For explicitly adopted `workflow.ci_evidence`, read the exact engine's

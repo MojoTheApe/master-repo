@@ -1,5 +1,10 @@
 # n8n workflows
 
+The global [process/product boundary](../docs/process-product-separation.md)
+applies to both n8n profiles. Proven isolated development-process updates do not
+import, publish or run a business workflow. Actual product/publication scope keeps
+the corresponding authorization and verified delivery below.
+
 ## Explicit Git-only scope
 
 Select schema-2 `n8n-source` only when the owner explicitly ends this project's

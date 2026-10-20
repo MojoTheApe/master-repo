@@ -35,7 +35,12 @@ batch. An arbitrary main push cannot create a selected integration authorization
 The running Coordinator follows through until success or a concrete blocker.
 For tooling/local and explicitly source-only profiles, the existing admitted
 reviewed-merge completion rule is the final result. For package, VPS and ordinary
-n8n projects, merge hands off unfinished delivery to the project mechanism.
+n8n product scope, merge hands off unfinished delivery to the project mechanism.
+The global [process/product boundary](process-product-separation.md) applies to
+every profile: proven canonical process-support scope keeps all ordinary integration
+gates and its own completion evidence, without requesting consumer product delivery.
+An existing product request remains pending until its actual receipt. Do not cancel
+or reinterpret it to obtain process-only completion.
 
 ## Project-owned adapter
 

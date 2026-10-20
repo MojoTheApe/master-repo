@@ -1,5 +1,9 @@
 # Instruction-only integration
 
+The global [process/product separation rule](process-product-separation.md) applies
+regardless of the delivery profile. This document retains schema1's exact bounded
+instruction route. It does not grant an executable/configuration exception.
+
 The separated repository/system/runtime layout defines file ownership. It does
 not itself select a different integration route. A project explicitly adopts
 `workflow.process_instructions` in `delivery.json`, mirrored exactly as top-level

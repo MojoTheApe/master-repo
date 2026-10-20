@@ -19,6 +19,11 @@ feedback never substitutes for missing full admission coverage.
 
 ## Select checks by the changed risk
 
+Apply [process/product separation](process-product-separation.md) before inheriting
+a product release from the repository profile. Process verification remains
+required; testing a build or installer does not itself authorize its publication.
+Product input changes retain the relevant checks and actual product delivery.
+
 Use the cheapest meaningful check that can detect the changed behavior. Separate
 fast source feedback, combined-candidate integration and real delivery acceptance.
 Run applicable checks before admission; a quick source check is not full release

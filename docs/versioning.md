@@ -1,5 +1,21 @@
 # Versioning and safe upgrades
 
+## Process/product separation candidate1.6.0
+
+MR-68 pairs the global rule and canonical skill with Tracker TT-177's compatible
+canonical support proof. Publish the reviewed Tracker3.8.0 source and compatible
+reader first, then mechanically refresh this source from that exact published
+commit. Require the clean compatible-pair portable replay, including the advertised
+process-support fixture on actual Python3.9 and both exported layouts, together
+with retained profile/upgrade and negative compatibility checks. Ordinary schema1,
+policy selections, targets and pending product requests remain unchanged.
+
+After independent full-scope review, protected integration and actual-main checks,
+publish v1.6.0 at the accepted merge and verify the complete canonical skill mirror
+and catalog through AI Skills' maintained path. Keep source/tooling delivery,
+consumer adoption and product publication separate. No existing tag is moved;
+no consumer installer/deploy is created merely to distribute this process update.
+
 ## Executor activity support 1.5.4
 
 MR-65 pairs common owner-bound activity instructions with Task Tracker TT-174.

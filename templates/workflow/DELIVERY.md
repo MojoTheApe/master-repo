@@ -8,6 +8,14 @@ proof before changing adoption from draft to ready.
 
 ## Selected integration and target
 
+Process updates are delivered separately from the product for every profile.
+Instructions and proven isolated task/workflow support retain their own review,
+checks and admitted source/tooling completion. They do not by themselves require
+a new consumer installer, application deployment or n8n publication. Product and
+explicit publication scope retain the actual target below. Split mixed changes;
+use only the pinned supported proof, never a task label or generic source-only
+waiver. Preserve existing authorized delivery requests and unfinished obligations.
+
 __SELECTED_DELIVERY__
 
 __COMPLETION_GUIDANCE__

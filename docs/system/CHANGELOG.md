@@ -1,5 +1,16 @@
 # System changes
 
+## 2026-10-20 — MR-68 / TT-177 process delivery independent of the product
+
+Apply the same process/product boundary to all delivery profiles. Preserve actual
+product publication requests, complete task scopes, independent review and normal
+integration. Add generated guidance and consume the compatible source-owned
+portable process-support fixture through the maintained refresh/pair path.
+Canonical support needs authenticated published helpers and an independent
+whole-outcome/product-isolation assessment; generic scripts/CI get no exception.
+Source1.6.0, exact publication, reader availability, skill distribution and each
+consumer adoption require their own actual evidence.
+
 ## 2026-10-17 — MR-40 / TT-157 explicit project choices
 
 Add descriptor3 with independent role, delivery profile/completion, direct/batch,

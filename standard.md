@@ -164,6 +164,18 @@ does not restore an old approval or fabricate a new completion.
 Staging, integration batches and operational recovery remain project-specific.
 Do not add those steps to a simple project merely to make every repository alike.
 
+## Process and product updates
+
+[Deliver the process separately from the product](docs/process-product-separation.md)
+in every repository and delivery profile. Independently verify instructions,
+agent/task tooling and compatible shared support against their own accepted scope.
+A proven process-only update does not require a new consumer installer, application
+deployment or n8n publication. Preserve the product's actual delivery for product
+changes and explicit publication requirements. Split mixed changes; unknown impact
+cannot obtain process-only completion. A changed path or task label alone is not
+proof. Use only supported immutable proof and genuine review/admission receipts;
+new instructions never activate an unsupported route or rewrite old obligations.
+
 ## Living documentation
 
 Keep one authoritative copy of each rule and short links from other entry points:

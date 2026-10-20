@@ -1,5 +1,17 @@
 # Repository process history
 
+## 2026-10-20 — MR-68 global process/product separation
+
+Update the standard, delivery/verification guidance, templates, selected instructions
+and canonical Project Workflow skill together. Process updates have their own
+review, checks and delivery for every installation/deployment profile. Product
+scope and explicitly requested releases retain actual product acceptance.
+Tracker impact: [TT-177](https://github.com/MojoTheApe/task-tracker/issues/177)
+owns bounded canonical support proof, completion and reader projection.
+The maintained refresh and portable pair consume its exact published export and
+synthetic support fixture without authoring a second helper implementation.
+No consumer upgrade or product publication is implied by this source candidate.
+
 ## 2026-10-18 — MR-63 clarify verification without CI changes
 
 Distinguish agent-requested repetitions from existing automatic GitHub runs.

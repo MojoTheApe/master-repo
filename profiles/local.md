@@ -1,5 +1,10 @@
 # Local projects
 
+The global [process/product boundary](../docs/process-product-separation.md)
+applies to local, tooling and package repositories. The product delivery below is
+required for product scope; a proven isolated process update has its own checked
+completion and does not publish an unchanged installer.
+
 The default local profile is a repository the owner pulls manually. It completes
 after independent review, required tests, optional stage verification and the
 admitted merge into main. Do not wait for the owner's pull, create an installer or
