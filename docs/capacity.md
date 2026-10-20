@@ -21,6 +21,12 @@ denominator. A four-task batch occupies one integration slot and has four member
 Approved tasks and intake selection do not each reserve another integration slot.
 Host agent availability is separate from every project's adopted limits.
 
+The [common lifecycle](task-lifecycle.md) places genuine approved waiting work in
+Delivery as Ready for integration. Its queue count has no slot denominator and
+does not reserve one slot per task. Review contains unfinished review. Recorded
+approval waiting age is separate from confirmed work; unknown history stays
+unknown. Explicitly paused approved work retains Delivery and its native phase.
+
 A held record counts throughout its supported lifetime, including a pending
 handoff, return, fix or uncertain write. A returning Reviewer can retain a lane
 while an author holds a genuine implementation claim for the same task: those

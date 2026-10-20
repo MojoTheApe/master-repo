@@ -151,7 +151,7 @@ def public(state):
                      'previous_status': row['statuses'][str(n)]['id'],
                      'previous_phase': row['statuses'][str(n)]['phase'],
                      'category': 'delivery' if row['kind']=='merging' or row['checkpoint']['resource']=='integration-review'
-                     else {'in_progress':'in_progress','review':'review','approved':'review','stage':'delivery','merged':'delivery'}[row['statuses'][str(n)]['phase']]}
+                     else {'in_progress':'in_progress','review':'review','approved':'delivery','stage':'delivery','merged':'delivery'}[row['statuses'][str(n)]['phase']]}
             for row in active(state) for n in row['issues']}
 
 

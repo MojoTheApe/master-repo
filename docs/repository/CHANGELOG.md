@@ -1,5 +1,13 @@
 # Repository process history
 
+## MR-72 — ready integration belongs to Delivery
+
+Clarify the five common categories, ready source queue, current approval waiting
+timestamp and separate reservation/activity facts. Update the standard, workflow
+template and canonical skill consistently; preserve native status keys, admission,
+pause, Stage and real product delivery. Tracker's paired UI and exact compatible
+publication are separate from consumer adoption and installer publication.
+
 ## MR-70 — common phase-preserving pause and safe resume
 
 Candidate1.7.0 pairs common [pause guidance](../task-pause.md) with Tracker TT-179. Publish the exact compatible Tracker first, then mechanically refresh complete trusted artifacts and canonical native pause fixtures. Retain existing profiles/choices/product requests and require actual Python3.9 clean paired verification, independent review, actual-main checks, stable publication and maintained skill mirror. ACL adoption remains separate.

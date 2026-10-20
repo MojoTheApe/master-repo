@@ -112,6 +112,11 @@ Do not infer an installation, deployment or approval from a status label.
 The Tracker shows recorded work. Queue length, reserved capacity and running
 agents are different; use available confirmed data and show unknown as unknown.
 Archive preserves history and does not itself complete or reopen work.
+Unfinished review stays in Review. Genuine approved waiting work appears in
+Delivery as Ready for integration, preserving the native approved key and current
+admission rules. Waiting age uses the actual current approval timestamp; unknown
+history stays unknown and never becomes active work time. A paused ready task
+retains Delivery. Read Master's docs/task-lifecycle.md for the common rule.
 
 Use the compatible project's selected guide for actual executor activity reporting.
 Report your own running, waiting or stopped state with the current owner/session/

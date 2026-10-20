@@ -1,5 +1,15 @@
 # Master Repo system
 
+## MR-72 — distinguish ready delivery from unfinished review
+
+Candidate1.7.1 defines the common [task lifecycle](../task-lifecycle.md): genuine
+approved waiting work appears in Delivery as Ready for integration. Preserve
+native keys, paused category, actual authority and completion; distinguish queue
+size, reserved slots, confirmed activity and recorded approval waiting age.
+Tracker owns the matching central header/presentation update. Select its actual
+reviewed published compatible source mechanically, verify the clean portable pair,
+then publish the standard and maintained canonical skill; consumers adopt separately.
+
 ## MR-70 — preserve workflow phase across pause
 
 Candidate1.7.0 pairs common [pause guidance](../task-pause.md) with Tracker TT-179. Publish the exact compatible Tracker first, then mechanically refresh complete trusted artifacts and canonical native pause fixtures. Retain existing profiles/choices/product requests and require actual Python3.9 clean paired verification, independent review, actual-main checks, stable publication and maintained skill mirror. ACL adoption remains separate.

@@ -68,6 +68,16 @@ The installed `project-workflow` skill is navigation. Its canonical Master sourc
 and verified AI Skills mirror do not activate this project's policies or replace
 its adopted local instructions. Record actual exceptions in `delivery.json`.
 
+## Read the task lifecycle
+
+Review contains unfinished review. Actual approved waiting work appears in Delivery
+as Ready for integration, preserving the native approved key and current admission
+rules. Queue size, occupied slots and confirmed activity are different facts.
+Waiting age uses the actual current approval timestamp; missing history stays
+unknown and never counts as active work. Paused ready work retains Delivery.
+Integrating and required publication remain separate steps; Done follows the
+project's actual whole-scope delivery, without a consumer installer for process-only work.
+
 ## Executor activity
 
 Follow the selected pinned Tracker guide for `activity report` and the foreground
