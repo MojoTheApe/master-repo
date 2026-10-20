@@ -38,8 +38,10 @@ or change in delivery/execution policy is implied. Other consumers stay pinned.
 Public presentation retains safe mode/kind, confirmation time and confirmed totals.
 Do not expose claim/session IDs, process arguments, reports or credentials. History
 names the actual GitHub actor; shared credentials do not identify a particular
-human or independently prove an agent's identity. Native status transitions may
-stay within one UI category, such as Review to Approved. Retain coverage limits
+human or independently prove an agent's identity. Native status history and UI
+categories are different: genuine approved waiting work moves from Review to
+Delivery as Ready for integration. Recorded approval waiting age is separate
+from confirmed work time; absent history remains unknown. Retain coverage limits
 and source links; missing history is not proof that nothing happened.
 
 ## Explicit phase-preserving pause

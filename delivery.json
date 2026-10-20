@@ -7,7 +7,7 @@
   "standard": {
     "repository": "https://github.com/MojoTheApe/master-repo",
     "revision": "self",
-    "version": "1.7.0"
+    "version": "1.7.1"
   },
   "profile": "standard",
   "adoption": "ready",

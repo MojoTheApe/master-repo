@@ -53,6 +53,12 @@ waiting for review differs from active review; merged code differs from a
 published or installed result. Use the project's supported status vocabulary.
 The Tracker's categories are a presentation concern, not new permissions.
 
+Use the common [task lifecycle](docs/task-lifecycle.md): unfinished review stays
+in Review; actual approved waiting work appears in Delivery as Ready for
+integration. Preserve native keys and existing admission. Queue size, occupied
+slots, confirmed activity and recorded waiting age are different facts. A paused
+task retains that category; completion follows its actual scope and delivery.
+
 Confirm [actual executor activity](docs/executor-activity.md) through the compatible
 project's shared commands. Report running, waiting and stopped for your own run;
 confirm once a minute while running. Five minutes without a running/waiting report
