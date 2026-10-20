@@ -118,6 +118,25 @@ admission rules. Waiting age uses the actual current approval timestamp; unknown
 history stays unknown and never becomes active work time. A paused ready task
 retains Delivery. Read Master's docs/task-lifecycle.md for the common rule.
 
+Genuine author corrections wait in Backlog as Needs fixes (native To Do). Only
+actual implementation ownership shows Fixing in In Progress. Preserve genuine
+origin through supported stop/takeover/pause/resume; fresh handoff ends the cycle
+and needs independent review. Done and explicit Paused win. Old missing origin
+stays neutral and a claim never invents current activity. Use selected native
+owned return/reclaim procedures; compatible legacy Reviewers use `return-for-fixes`
+with their actual observed identity and durable report, retaining the same pending
+operation after an uncertain write. Never edit private state to create a status.
+Source corrections from Delivery preserve frozen intake and Stage; integration-only
+findings do not return all members, and publication-only failures remain Delivery.
+
+The active Coordinator continues corrections of the owner's already selected task
+set when capacity/admission permit, without another routine approval. New
+unselected work, explicit pause resumption and materially changed outcomes retain
+actual owner decisions. A free slot never launches an agent or restarts a stopped
+run. Source approval alone is no integration permission; already authorized
+integration carries through actual required delivery. No scheduler, new ordering,
+limits, automatic merge or live policy activation is introduced.
+
 Use the compatible project's selected guide for actual executor activity reporting.
 Report your own running, waiting or stopped state with the current owner/session/
 claim, once a minute while running. Five minutes without a running/waiting report

@@ -1,5 +1,14 @@
 # Repository process history
 
+## Candidate1.7.2 — MR-74
+
+Define genuine correction waiting/claimed fixing, fresh review and current
+continuation boundaries across project profiles. Update the canonical skill and
+selected route references. Pair with published compatible Tracker TT-183 through
+the maintained mechanical refresh and clean source verification; preserve all
+native gates and separate consumer adoption. ACL integration remains deferred.
+
+
 ## MR-72 — ready integration belongs to Delivery
 
 Clarify the five common categories, ready source queue, current approval waiting

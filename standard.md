@@ -58,6 +58,12 @@ in Review; actual approved waiting work appears in Delivery as Ready for
 integration. Preserve native keys and existing admission. Queue size, occupied
 slots, confirmed activity and recorded waiting age are different facts. A paused
 task retains that category; completion follows its actual scope and delivery.
+Genuine returned corrections wait as Needs fixes in Backlog; their actual author
+claim shows Fixing in In Progress, then fresh independent Review. The active
+Coordinator continues the already selected task set within actual admission;
+new work, explicit pause resumption and changed outcomes retain owner decisions.
+A free slot does not launch an agent. Source approval alone does not authorize
+integration; authorized integration includes its necessary verified delivery.
 
 Confirm [actual executor activity](docs/executor-activity.md) through the compatible
 project's shared commands. Report running, waiting and stopped for your own run;

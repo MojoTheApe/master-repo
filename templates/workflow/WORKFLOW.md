@@ -75,6 +75,16 @@ as Ready for integration, preserving the native approved key and current admissi
 rules. Queue size, occupied slots and confirmed activity are different facts.
 Waiting age uses the actual current approval timestamp; missing history stays
 unknown and never counts as active work. Paused ready work retains Delivery.
+Genuine owned author returns wait as Needs fixes in Backlog (native To Do); only
+actual implementation ownership shows Fixing in In Progress. Preserve genuine
+origin through supported stop/takeover/pause/resume, then require fresh independent
+Review. Old missing origin stays neutral; a claim never proves running activity.
+The active Coordinator continues corrections of the owner's already selected set
+within actual capacity/admission. New unselected work, explicit pause resumption
+and materially changed outcomes retain owner decisions. A free slot launches no
+agent. Source approval alone does not authorize integration; already authorized
+integration includes necessary verified delivery. Integration-only findings do not
+return every frozen source; publication-only failure remains Delivery.
 Integrating and required publication remain separate steps; Done follows the
 project's actual whole-scope delivery, without a consumer installer for process-only work.
 

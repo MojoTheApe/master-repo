@@ -98,6 +98,103 @@
         ]
       },
       "context": "source",
+      "correction_return": {
+        "config": {
+          "completion_label": "Merged",
+          "default_backlog_priority": "medium",
+          "default_release": "",
+          "delivery_policy": {
+            "completion": "reviewed-merge",
+            "delivery_target": "example/production",
+            "required_checks": [
+              "tests"
+            ],
+            "schema_version": 1,
+            "staging": {
+              "branch": "stage",
+              "enabled": false,
+              "target": "example/stage"
+            }
+          },
+          "modules": [
+            {
+              "description": "Account behavior",
+              "id": "accounts",
+              "name": "Accounts"
+            }
+          ],
+          "priorities": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "project": {
+            "base_branch": "main",
+            "id_prefix": "EX",
+            "name": "Example",
+            "repository": "owner/repo"
+          },
+          "refresh_seconds": 60,
+          "release_mode": "single",
+          "release_view_label": "Release",
+          "schema_version": 2,
+          "workflow": [
+            "idea",
+            "backlog",
+            "todo",
+            "in_progress",
+            "review",
+            "merged"
+          ]
+        },
+        "pr": 10,
+        "requests": {
+          "repos/owner/repo/contents/.tracker-state.json?ref=tracker-state": {
+            "content": "eyJzY2hlbWFfdmVyc2lvbiI6IDEsICJhY3RpdmUiOiBudWxsLCAicnVuIjogbnVsbCwgInRvZG9fb3JkZXIiOiBbXSwgInRvZG9fYWRkZWQiOiB7IjEiOiAiMjAyNi0xMC0yMFQxNzo1Njo1MiswMDowMCJ9LCAidGltaW5nX2hpc3RvcnkiOiBbeyJpc3N1ZSI6IDEsICJraW5kIjogImltcGxlbWVudGluZyIsICJzdGFydGVkX2F0IjogIjIwMjYtMTAtMjBUMTc6NTY6NTIrMDA6MDAiLCAiZmluaXNoZWRfYXQiOiAiMjAyNi0xMC0yMFQxNzo1Njo1MiswMDowMCJ9XSwgImFjdGl2aXR5X3RpbWVycyI6IHsicmV2aWV3aW5nIjogeyJraW5kIjogInJldmlld2luZyIsICJhY3RvciI6ICJSZXZpZXdlci1SMDAxIiwgInNlc3Npb24iOiAiYWN0dWFsX2ZpeHR1cmVfcmV2aWV3IiwgImlzc3VlcyI6IFsxXSwgInN0YXJ0ZWRfYXQiOiAiMjAyNi0xMC0yMFQxNzo1Njo1MiswMDowMCJ9fSwgImRlbGl2ZXJ5X3dvcmtmbG93IjogeyJyZXZpZXdzIjoge319LCAicmV3b3JrIjogeyIxIjogeyJpZCI6ICI4MjViYTc1YTUyMzM0ODk3ODIxMTUzMjE5ODc1OGUyNyIsICJzdGF0ZSI6ICJyZXR1cm5pbmciLCAicmVwb3J0IjogIk5FVkVSX1BSSU5UX1BSSVZBVEVfU1RBVEU6IGFjdHVhbCBwcml2YXRlIGNvcnJlY3Rpb24gcmVwb3J0IiwgImFjdG9yIjogIlJldmlld2VyLVIwMDEiLCAic2Vzc2lvbiI6ICJhY3R1YWxfZml4dHVyZV9yZXZpZXciLCAiY2xhaW0iOiBudWxsLCAic2NvcGUiOiAiY2ZlZjY3NTk2ZTlhOTQ0M2RiYjE4Y2EyNDA3NDE4YTQ4NjBhMGQxMThiOTM4ZDE0Nzk0OWI4NjU2NmRiZGJlMCIsICJyZXF1ZXN0ZWRfYXQiOiAiMjAyNi0xMC0yMFQxNzo1Njo1MiswMDowMCIsICJ3b3JrX2hpc3RvcnlfY291bnQiOiAxLCAicmV2aWV3X3BycyI6IFsxMF19fX0=",
+            "sha": "8"
+          },
+          "repos/owner/repo/issues/1": {
+            "body": "",
+            "created_at": "2026-01-01T00:00:00Z",
+            "labels": [
+              {
+                "name": "module:accounts"
+              },
+              {
+                "name": "priority:medium"
+              },
+              {
+                "name": "status:review"
+              },
+              {
+                "name": "type:improvement"
+              }
+            ],
+            "number": 1,
+            "state": "open",
+            "title": "Task 1"
+          },
+          "repos/owner/repo/pulls/10": {
+            "base": {
+              "ref": "main",
+              "sha": "0000000000000000000000000000000000000001"
+            },
+            "body": "Tracker issues: EX-1",
+            "draft": false,
+            "head": {
+              "ref": "codex/ex-1-task",
+              "repo": {
+                "full_name": "owner/repo"
+              },
+              "sha": "0000000000000000000000000000000000000002"
+            },
+            "merged": false,
+            "number": 10,
+            "state": "open",
+            "title": "[EX-1] Task 1"
+          }
+        }
+      },
       "gate": {
         "advisory": true,
         "context": "source",
@@ -1545,6 +1642,103 @@
         ]
       },
       "context": "source",
+      "correction_return": {
+        "config": {
+          "completion_label": "Merged",
+          "default_backlog_priority": "medium",
+          "default_release": "",
+          "delivery_policy": {
+            "completion": "reviewed-merge",
+            "delivery_target": "example/production",
+            "required_checks": [
+              "tests"
+            ],
+            "schema_version": 1,
+            "staging": {
+              "branch": "stage",
+              "enabled": false,
+              "target": "example/stage"
+            }
+          },
+          "modules": [
+            {
+              "description": "Account behavior",
+              "id": "accounts",
+              "name": "Accounts"
+            }
+          ],
+          "priorities": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "project": {
+            "base_branch": "main",
+            "id_prefix": "EX",
+            "name": "Example",
+            "repository": "owner/repo"
+          },
+          "refresh_seconds": 60,
+          "release_mode": "single",
+          "release_view_label": "Release",
+          "schema_version": 2,
+          "workflow": [
+            "idea",
+            "backlog",
+            "todo",
+            "in_progress",
+            "review",
+            "merged"
+          ]
+        },
+        "pr": 10,
+        "requests": {
+          "repos/owner/repo/contents/.tracker-state.json?ref=tracker-state": {
+            "content": "eyJzY2hlbWFfdmVyc2lvbiI6IDEsICJhY3RpdmUiOiBudWxsLCAicnVuIjogbnVsbCwgInRvZG9fb3JkZXIiOiBbXSwgInRvZG9fYWRkZWQiOiB7IjEiOiAiMjAyNi0xMC0yMFQxNzo1Njo1MiswMDowMCJ9LCAidGltaW5nX2hpc3RvcnkiOiBbeyJpc3N1ZSI6IDEsICJraW5kIjogImltcGxlbWVudGluZyIsICJzdGFydGVkX2F0IjogIjIwMjYtMTAtMjBUMTc6NTY6NTIrMDA6MDAiLCAiZmluaXNoZWRfYXQiOiAiMjAyNi0xMC0yMFQxNzo1Njo1MiswMDowMCJ9XSwgImFjdGl2aXR5X3RpbWVycyI6IHsicmV2aWV3aW5nIjogeyJraW5kIjogInJldmlld2luZyIsICJhY3RvciI6ICJSZXZpZXdlci1SMDAxIiwgInNlc3Npb24iOiAiYWN0dWFsX2ZpeHR1cmVfcmV2aWV3IiwgImlzc3VlcyI6IFsxXSwgInN0YXJ0ZWRfYXQiOiAiMjAyNi0xMC0yMFQxNzo1Njo1MiswMDowMCJ9fSwgImRlbGl2ZXJ5X3dvcmtmbG93IjogeyJyZXZpZXdzIjoge319LCAicmV3b3JrIjogeyIxIjogeyJpZCI6ICI4MjViYTc1YTUyMzM0ODk3ODIxMTUzMjE5ODc1OGUyNyIsICJzdGF0ZSI6ICJyZXR1cm5pbmciLCAicmVwb3J0IjogIk5FVkVSX1BSSU5UX1BSSVZBVEVfU1RBVEU6IGFjdHVhbCBwcml2YXRlIGNvcnJlY3Rpb24gcmVwb3J0IiwgImFjdG9yIjogIlJldmlld2VyLVIwMDEiLCAic2Vzc2lvbiI6ICJhY3R1YWxfZml4dHVyZV9yZXZpZXciLCAiY2xhaW0iOiBudWxsLCAic2NvcGUiOiAiY2ZlZjY3NTk2ZTlhOTQ0M2RiYjE4Y2EyNDA3NDE4YTQ4NjBhMGQxMThiOTM4ZDE0Nzk0OWI4NjU2NmRiZGJlMCIsICJyZXF1ZXN0ZWRfYXQiOiAiMjAyNi0xMC0yMFQxNzo1Njo1MiswMDowMCIsICJ3b3JrX2hpc3RvcnlfY291bnQiOiAxLCAicmV2aWV3X3BycyI6IFsxMF19fX0=",
+            "sha": "8"
+          },
+          "repos/owner/repo/issues/1": {
+            "body": "",
+            "created_at": "2026-01-01T00:00:00Z",
+            "labels": [
+              {
+                "name": "module:accounts"
+              },
+              {
+                "name": "priority:medium"
+              },
+              {
+                "name": "status:review"
+              },
+              {
+                "name": "type:improvement"
+              }
+            ],
+            "number": 1,
+            "state": "open",
+            "title": "Task 1"
+          },
+          "repos/owner/repo/pulls/10": {
+            "base": {
+              "ref": "main",
+              "sha": "0000000000000000000000000000000000000001"
+            },
+            "body": "Tracker issues: EX-1",
+            "draft": false,
+            "head": {
+              "ref": "codex/ex-1-task",
+              "repo": {
+                "full_name": "owner/repo"
+              },
+              "sha": "0000000000000000000000000000000000000002"
+            },
+            "merged": false,
+            "number": 10,
+            "state": "open",
+            "title": "[EX-1] Task 1"
+          }
+        }
+      },
       "gate": {
         "advisory": true,
         "context": "source",

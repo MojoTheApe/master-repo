@@ -1,5 +1,25 @@
 # Versioning and safe upgrades
 
+## Correction cycle candidate1.7.2
+
+MR-74 pairs common correction/continuation guidance and the canonical skill with
+Tracker TT-183. Tracker3.9.2 is published at
+`3d32586d72e4621f70d56d35f1e199a19fa13b00` (tag v3.9.2, release418718586),
+after independent source review and successful actual-main verify/portable checks.
+The maintained mechanical refresh consumes its complete61-file canonical
+closure, including the changed portable admission helper, source-owned
+runner and genuine pending-return native fixtures. Verify actualPython3.9 replay
+in both layouts, all retained profile/old-source/modern upgrades and negative
+compatibility gates in the clean exact final pair.
+
+After independent complete-scope review, actual protection and merged-candidate
+checks, publish immutable v1.7.2 and verify its exact commit plus the complete
+maintained AI Skills mirror/catalog. Native phases, ownership, pause, selected
+policies, intake, Stage and actual required product delivery remain intact.
+Source/tooling delivery and shared reader deployment do not adopt ACL or change
+live consumer state. ACL integration/adoption and other consumer rollouts are
+explicitly deferred; no consumer installer is published for this process change.
+
 ## Ready delivery and header refinement candidate1.7.1
 
 MR-72 pairs common lifecycle guidance and the canonical skill with Tracker TT-181.
