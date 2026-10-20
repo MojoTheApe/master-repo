@@ -751,11 +751,21 @@ def review_matches(receipt, config, pr, content, numbers):
     return pr.get('merged') or receipt.get('base_sha') == pr['base']['sha']
 
 
+def require_settled_corrections(state, number):
+    """A real unfinished legacy return cannot receive new approval or admission."""
+    rows = state.get('rework')
+    row = rows.get(str(number), {}) if isinstance(rows, dict) else {}
+    if (isinstance(row, dict) and row.get('state') == 'returning'
+            and isinstance(row.get('id'), str) and re.fullmatch(r'[a-f0-9]{32}', row['id'])):
+        raise ValueError('Finish the original pending correction return with its same report and identity first')
+
+
 def admit(request, config, pr, numbers):
     value = policy(config)
     process = process_module() if 'process_instructions' in config else None
     shared = read_full_state(request, config['project']['repository'])
     for number in numbers:
+        require_settled_corrections(shared, number)
         pause_module().require_unpaused(shared, number)
     if pause_module().integration_held(shared):
         raise ValueError('Paused frozen integration must resume/recover before admitting a conflicting main change')

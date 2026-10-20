@@ -1,5 +1,19 @@
 # Master Repo system
 
+## MR-74 — shared correction cycle and authorized continuation
+
+Candidate1.7.2 pairs the common Needs fixes → Fixing → fresh independent Review
+flow with Tracker TT-183. Preserve native phases, actual ownership, pause, frozen
+intake, Stage and complete delivery. The active Coordinator continues fixes in
+its owner-selected task set subject to real capacity/admission; no slot/status
+launches an agent. New work, explicit pause resumption and changed outcomes keep
+owner decisions. Canonical skill/reference changes ship through the maintained
+exact-source mirror after compatible publication and clean pair verification.
+ACL adoption/integration and live consumer state remain deferred.
+The exact published Tracker3.9.2 source is
+`3d32586d72e4621f70d56d35f1e199a19fa13b00` (release418718586); the maintained
+refresh preserves its full61-file closure, native policies and consumer choices.
+
 ## MR-72 — distinguish ready delivery from unfinished review
 
 Candidate1.7.1 defines the common [task lifecycle](../task-lifecycle.md): genuine

@@ -120,3 +120,18 @@ new actual session and resumes before its combined Reviewer. Old claims and old
 reviews cannot regain authority. Source publication and pin/skill changes do not
 activate the outer8 protocol: first verify compatible readers/all writers, then
 perform owned idle maintenance activation. See Master docs/task-pause.md.
+
+## Current correction cycle
+
+Follow Master's common `docs/task-lifecycle.md`: a genuine owned author return
+waits as Needs fixes in Backlog; actual implementation ownership shows Fixing in
+In Progress. Use the selected native return and fresh claim, then checks, handoff
+and current independent review. Preserve genuine origin through supported
+stop/takeover/pause/resume, without fabricating current activity or releasing
+another owner. The active Coordinator continues fixes of the already owner-selected
+set within actual capacity/admission. New unselected work, explicit pause resumption
+and materially changed outcomes retain owner decisions. A free slot launches
+nothing. Source approval alone grants no integration permission; authorized
+integration includes necessary actual delivery. Integration-only findings do not
+return all frozen sources; publication-only failure remains Delivery. No policy
+selection, scheduler, new order/limit or automatic merge is implied.

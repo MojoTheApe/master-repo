@@ -85,8 +85,55 @@ def native_fixture(layout='raw', context='source'):
         'ref':'refs/heads/tracker-state','object':{'type':'commit','sha':state_sha}}]
     recorded[n.api.root+'/contents/.tracker-state.json?ref='+state_sha]={
         'content':base64.b64encode(json.dumps(state).encode()).decode()}
-    return {'config':n.config,'head':head,'pr':n.number,'context':context,'clock':clock,
-            'requests':recorded,'plan':expected_plan,'gate':expected_gate}
+    fixture = {'config':n.config,'head':head,'pr':n.number,'context':context,'clock':clock,
+               'requests':recorded,'plan':expected_plan,'gate':expected_gate}
+    if context == 'source':
+        fixture['correction_return'] = pending_correction_fixture()
+    return fixture
+
+
+def pending_correction_fixture():
+    """Capture genuine legacy pending return admission for engine-free replay."""
+    from types import SimpleNamespace
+    from unittest import mock
+    from tracker import commands, delivery, github, pr_checks, queue, rework, timing
+    from test_execution import Project
+    with tempfile.TemporaryDirectory(prefix='tracker-native-correction-') as directory:
+        p = Project(Path(directory), migrate=False)
+        p.config.pop('execution_policy')
+        p.api.prs[10]['head']['ref'] = 'codex/ex-1-task'
+        queue.start(p.api, p.config, p.store, 1)
+        commands.change(p.api, p.config, p.store, 1, status='review')
+        queue.release(p.store, 1)
+        args = SimpleNamespace(action='start', kind='reviewing', issues=['EX-1'],
+            actor='Reviewer-R001', session='actual_fixture_review', claim=None, report_file=p.report)
+        timing.legacy_timer(p.api, p.config, p.store, args)
+        pr = p.api.prs[10]
+        document = dict(kind='independent-review', verdict='approved', reviewer=args.actor,
+            implementer='Worker-W001', head_sha=pr['head']['sha'], base_sha=pr['base']['sha'],
+            tree_sha=p.api.commits[pr['head']['sha']]['tree']['sha'], report='Actual native independent fixture review')
+        delivery.record_review(p.api, p.config, p.store, 10, document, True)
+        p.report.write_text('NEVER_PRINT_PRIVATE_STATE: actual private correction report')
+        with mock.patch.object(p.api, 'labels', side_effect=github.APIError('Uncertain source labels')):
+            try:
+                rework.return_legacy(p.api, p.config, p.store, 1, args)
+            except github.APIError:
+                pass
+            else:
+                raise AssertionError('A real pending return was required')
+        requests = {}
+        original = p.api.request
+        def request(path, *a, **kw):
+            value = original(path, *a, **kw)
+            requests[path] = copy.deepcopy(value)
+            return value
+        try:
+            pr_checks.check(request, p.config, 10, admission=True)
+        except ValueError as error:
+            assert 'pending correction return' in str(error)
+        else:
+            raise AssertionError('Native pending correction must block main admission')
+        return dict(config=p.config, pr=10, requests=requests)
 
 
 GH_STUB = '''#!/usr/bin/env python3
@@ -161,6 +208,26 @@ def exercise(root, python, layout, fixture):
                 assert fenced.returncode!=0 and 'scoped completion state protocol' in fenced.stderr
                 assert 'NEVER_PRINT_PRIVATE_STATE' not in fenced.stdout+fenced.stderr
                 data.write_text(json.dumps(fixture))
+        if fixture['context'] == 'source':
+            correction = fixture['correction_return']
+            saved = scratch/'pending-correction.json';saved.write_text(json.dumps(correction))
+            probe = """import json,runpy,sys
+from pathlib import Path
+entry=Path(sys.argv[1]);sys.path.insert(0,str(entry.parent))
+checker=runpy.run_path(str(entry),run_name='portable_readonly_admission')
+row=json.loads(Path(sys.argv[2]).read_text())
+try:checker['check'](lambda path:row['requests'][path],row['config'],row['pr'],admission=True)
+except ValueError as error:assert 'pending correction return' in str(error),str(error)
+else:raise AssertionError('Unfinished return admitted')
+assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
+"""
+            checks=['scripts/tracker_pr_check.py']
+            if layout=='separated':checks.append('.workflow/tools/tracker_pr_check.py')
+            for check in checks:
+                rejected=subprocess.run([python,'-B','-I','-c',probe,str(root/check),str(saved)],
+                    cwd=root,env=env,capture_output=True,text=True)
+                assert rejected.returncode==0,(check,rejected.stderr)
+                assert 'NEVER_PRINT_PRIVATE_STATE' not in rejected.stdout+rejected.stderr
         code="import sys; sys.path.insert(0,sys.argv[1]); import tracker_ci_gate, tracker_ci_evidence, tracker_batch_policy, tracker_pr_check, tracker_task_context, tracker_delivery_receipt; assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules); print('isolated import passed')"
         for directory in ['scripts']+(['.workflow/tools'] if layout=='separated' else []):
             result=subprocess.run([python,'-B','-I','-c',code,str(root/directory)],cwd=scratch,env=env,capture_output=True,text=True)

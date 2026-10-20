@@ -65,7 +65,7 @@
   },
   "engine": {
     "repository": "MojoTheApe/task-tracker",
-    "revision": "22b4e40a5ce452464c3f9015d784cf4531802823"
+    "revision": "3d32586d72e4621f70d56d35f1e199a19fa13b00"
   },
   "format_version": 1,
   "layouts": {
@@ -76,7 +76,7 @@
       "scripts/tracker_ci_evidence.py": "a35c57b079c6774662c9e15a2f033bf605df6b166c71d65a7f67c9f5b9cdf230",
       "scripts/tracker_ci_gate.py": "8496073ab5c4deabacb26255420963d7a531cd4b6cc0541d6b29a6bb1462f307",
       "scripts/tracker_ci_retry.py": "058d385513827e96f2d7b968af27af16cf56b7fe5b6df73952db2d88af168d86",
-      "scripts/tracker_delivery_policy.py": "30c3a3d3aa6535adda802f64f471e3b577b1e40396d55de98e9e3891829882a0",
+      "scripts/tracker_delivery_policy.py": "2ec209b6b46a0c27f85536e6322dde0ee99fcd4c99809f8dc509a9a8713862a2",
       "scripts/tracker_delivery_receipt.py": "20f6d147d9f11810b65a42ae8cfe5d72ce7f29ce569d9d085965fcdbcfcdd01e",
       "scripts/tracker_direct_policy.py": "7b263533dc011d9ba07f4e80fda98ea1c231eaa1fe7e723344249a9e733f5c29",
       "scripts/tracker_pause_policy.py": "c5a8ae75d56e437750fb4c3dfb26a1652a83a3854e45f488e72187dac020df17",
@@ -92,7 +92,7 @@
       ".workflow/tools/tracker_ci_evidence.py": "a35c57b079c6774662c9e15a2f033bf605df6b166c71d65a7f67c9f5b9cdf230",
       ".workflow/tools/tracker_ci_gate.py": "8496073ab5c4deabacb26255420963d7a531cd4b6cc0541d6b29a6bb1462f307",
       ".workflow/tools/tracker_ci_retry.py": "058d385513827e96f2d7b968af27af16cf56b7fe5b6df73952db2d88af168d86",
-      ".workflow/tools/tracker_delivery_policy.py": "30c3a3d3aa6535adda802f64f471e3b577b1e40396d55de98e9e3891829882a0",
+      ".workflow/tools/tracker_delivery_policy.py": "2ec209b6b46a0c27f85536e6322dde0ee99fcd4c99809f8dc509a9a8713862a2",
       ".workflow/tools/tracker_delivery_receipt.py": "20f6d147d9f11810b65a42ae8cfe5d72ce7f29ce569d9d085965fcdbcfcdd01e",
       ".workflow/tools/tracker_direct_policy.py": "7b263533dc011d9ba07f4e80fda98ea1c231eaa1fe7e723344249a9e733f5c29",
       ".workflow/tools/tracker_pause_policy.py": "c5a8ae75d56e437750fb4c3dfb26a1652a83a3854e45f488e72187dac020df17",
