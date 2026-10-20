@@ -80,9 +80,21 @@ different final reviewer; if unavailable, report that limitation.
 
 ## Know what is finished
 
+Deliver process changes separately from the consuming product, regardless of its
+installation/deployment profile. Instructions and isolated agent/task tooling have
+their own checks and delivery. A verified process-only update does not publish an
+otherwise unchanged installer, deploy the application or publish an n8n workflow.
+Assess the complete scope and actual product/build/install/update inputs; a path
+or label alone cannot establish isolation. Split mixed changes and preserve explicit
+product publication requirements. Use the exact supported process proof and normal
+admission; never manufacture a source-only completion waiver or cancel an existing
+delivery request. Read Master's `docs/process-product-separation.md` for the global
+boundary and compatibility order.
+
 Read the project's completion condition before implementing. Source-only work can
-finish at checked main integration; a service needs verified delivery; a package
-needs its required release and installation check. A publication-specific task
+finish at checked main integration. Product changes in a service need verified
+delivery; product changes in a package need its required release and installation
+check. A publication-specific task
 requires publication proof. Use the project's real target and supported evidence.
 
 Continue already authorized integration/delivery without another routine approval.

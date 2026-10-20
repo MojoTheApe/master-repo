@@ -25,6 +25,8 @@ def fixture_sources(record):
                 or validator['source'] != 'tracker/direct_policy.py'):
             raise ValueError('Modern fixtures require the canonical route validator')
         sources['direct.json'] = 'tests/fixtures/portable_direct.json'
+    if record.get('contracts', {}).get('process_support') == [1]:
+        sources['process.json'] = 'tests/fixtures/portable_process_support.json'
     return sources
 
 
@@ -156,7 +158,7 @@ def exercise_all(python, tracker=None):
     runner = types.ModuleType('_canonical_tracker_portable_fixture')
     runner.__file__ = str(SOURCE/FIXTURES/'runner.py')
     exec(compile(artifacts['runner.py'], runner.__file__, 'exec'), runner.__dict__)
-    results, accounting_results, direct_results, selection_results = [], [], [], []
+    results, accounting_results, direct_results, selection_results, process_results = [], [], [], [], []
     with tempfile.TemporaryDirectory(prefix='master-portable-native-') as temporary:
         for index, row in enumerate(data['contexts']):
             root = Path(temporary)/str(index); root.mkdir()
@@ -175,8 +177,19 @@ def exercise_all(python, tracker=None):
                 json.loads(artifacts['accounting.json'], object_pairs_hook=contract.unique)))
         direct_results = exercise_direct_cases(record, artifacts, runner, python, temporary)
         selection_results = exercise_selection_cases(record, artifacts, runner, python, temporary)
+        if 'process.json' in artifacts:
+            support = json.loads(artifacts['process.json'], object_pairs_hook=contract.unique)
+            if support.get('schema_version') != 1 or support.get('synthetic') is not True or support.get('case') != 'canonical-support-main':
+                raise ValueError('Canonical process fixture requires actual synthetic ordinary admission and completion')
+            for layout in ('raw', 'separated'):
+                root = Path(temporary)/('process-'+layout); root.mkdir()
+                for name in contract.layout_files(record, layout):
+                    path = root/name; path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes((SOURCE/FIXTURES/layout/name).read_bytes())
+                process_results.append(runner.exercise_support(root, python, layout, support))
     return {'engine': record['engine'], 'provenance': provenance, 'cases': results,
             'accounting': accounting_results, 'direct': direct_results, 'selection_delivery': selection_results,
+            'process_support': process_results,
             'clock_fixture_only': True,
             'private_engine_required': False, 'live_requests': 0}
 

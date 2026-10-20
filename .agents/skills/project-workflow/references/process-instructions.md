@@ -1,5 +1,12 @@
 # Instruction-only route
 
+Process and product delivery are separate in every profile. This schema1 route
+is one bounded implementation of that rule, not permission to classify arbitrary
+scripts, configuration or CI as instructions. Compatible canonical shared-support
+upgrades need their actual published proof support and retain ordinary admission.
+Preserve explicit product publication and existing authorized delivery requests.
+Do not claim a consumer adopted new executable support from an installed skill.
+
 Use only when the pinned engine supports it and `delivery.json`
 `workflow.process_instructions` exactly matches Tracker's top-level
 `process_instructions`. Absence keeps the old route. Updating this skill does not

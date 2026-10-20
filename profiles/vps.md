@@ -1,5 +1,10 @@
 # VPS applications
 
+The global [process/product boundary](../docs/process-product-separation.md)
+applies here. The delivery below covers product changes. Proven isolated process
+updates retain their own review/checks/completion without deploying or restarting
+the consuming application. Existing explicit product requests remain required.
+
 When project staging is enabled (the default), use one logical stage environment
 and one production environment. If explicitly disabled, retain independent review,
 CI and verified production delivery without inventing a stage receipt. Each

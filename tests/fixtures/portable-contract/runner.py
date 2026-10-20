@@ -544,3 +544,79 @@ def exercise_selection(root, python, layout, row):
     return dict(case=row['case'], layout=layout, entrypoints=entries, phases=[p['name'] for p in row['phases']],
         negative_cases=negative_cases, native_fixture_gets=sum(method=='GET' for method,_ in calls),
         fixture_receipt_cas=len(entries), engine_imported=False, consumer_writes=False)
+
+
+def support_fixture():
+    """Save actual ordinary admission/completion with wholly synthetic GETs."""
+    from unittest import mock
+    from tracker import delivery
+    from test_process_support import SupportProject
+    with mock.patch.object(delivery, 'now', lambda: '2026-10-20T00:00:00+00:00'):
+        project = SupportProject()
+        source = copy.deepcopy(project.api.prs[10])
+        project.review()
+        receipt = project.merge()
+        return dict(schema_version=1, synthetic=True, case='canonical-support-main',
+            config=project.config, source_pr=source, main_pr=project.api.prs[10],
+            state=project.api.state, admission=receipt['verification']['admission'],
+            requests=project.observed, expected_proof_sha256=receipt['verification']['proof_sha256'])
+
+
+SUPPORT_BOOTSTRAP = r'''
+import copy,json,sys
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+import tracker_process_support as support, tracker_delivery_policy as rules
+row=json.loads(Path(sys.argv[2]).read_text())
+assert row['schema_version']==1 and row['synthetic'] is True and row['case']=='canonical-support-main'
+calls=[]
+def request(path):
+ calls.append(path)
+ if path not in row['requests']:raise AssertionError('Undeclared synthetic GET: '+path)
+ return copy.deepcopy(row['requests'][path])
+proof=support.classify(request,row['config'],row['source_pr'])
+assert proof['proof_sha256']==row['expected_proof_sha256']
+result=support.completion(request,row['config'],row['state'],row['main_pr'],row['admission'],[1])
+assert result['route']=='process-support' and result['admission']['route']=='main'
+receipt=row['state']['delivery_workflow']['tasks']['1']
+assert rules.summary(receipt)['process_support'] and rules.summary(receipt)['verified']
+negative=0
+original=copy.deepcopy(row)
+root='repos/'+support.MASTER
+for change in ('unpublished','wrong-tag','changed-scope','mixed-product','requested-delivery','unknown-isolation'):
+ row=copy.deepcopy(original)
+ if change=='unpublished':row['requests'][root+'/releases/tags/v1.6.0']['draft']=True
+ elif change=='wrong-tag':row['requests'][root+'/git/ref/tags/v1.6.0']['object']['sha']='f'*40
+ elif change=='changed-scope':row['requests']['repos/owner/repo/issues/1']['body']+='\nNew publication criterion.'
+ elif change=='mixed-product':
+  tree='repos/owner/repo/git/trees/'+('0000000000000000000000000000000000000066')+'?recursive=1'
+  entry=next(x for x in row['requests'][tree]['tree'] if x['path']=='app.py')
+  entry['mode']='100755'
+ elif change=='requested-delivery':row['state']['execution']={'integration':{'issues':[1],'delivery_request':{'state':'requested','issues':[1]}}}
+ else:row['state']['delivery_workflow']['reviews']['10']['process_support']['product_isolation']['result']='unknown'
+ try:
+  invalid=support.completion(request,row['config'],row['state'],row['main_pr'],row['admission'],[1])
+ except ValueError:pass
+ else:assert invalid is None,(change,'invalid support accepted')
+ negative+=1
+assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
+print(json.dumps(dict(case=original['case'],negative_cases=negative,engine_imported=False,consumer_writes=False,native_fixture_gets=len(calls))))
+'''
+
+
+def exercise_support(root, python, layout, row):
+    """Real exported proof/reader on the portable floor, with GET-only fixtures."""
+    root = Path(root)
+    before = {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    locations = ['scripts'] + (['.workflow/tools'] if layout == 'separated' else [])
+    results = []
+    with tempfile.TemporaryDirectory(prefix='tracker-support-portable-') as directory:
+        data = Path(directory)/'synthetic.json'; data.write_text(json.dumps(row))
+        for location in locations:
+            completed = subprocess.run([python, '-B', '-I', '-c', SUPPORT_BOOTSTRAP, str(root/location), str(data)],
+                cwd=directory, capture_output=True, text=True)
+            assert completed.returncode == 0, completed.stderr + completed.stdout
+            results.append(dict(location=location, **json.loads(completed.stdout)))
+    after = {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    assert before == after and not (root/'.tracker-runtime').exists()
+    return dict(case=row['case'], layout=layout, entries=results, engine_imported=False, consumer_writes=False)

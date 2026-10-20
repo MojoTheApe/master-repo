@@ -21,6 +21,7 @@ controller, permission service, script or database.
 | Need | Read |
 | --- | --- |
 | Task, review, completion and short templates | [Shared workflow](standard.md) |
+| Process updates independent of product installation or deployment | [Process/product boundary](docs/process-product-separation.md) |
 | Checks, reuse, retries and cost measurement | [Verification](docs/verification.md) |
 | Existing fast/full check plans and CI event behavior | [Submission](docs/verification-submission.md) |
 | New or existing project setup | [Adoption](docs/adoption.md) |

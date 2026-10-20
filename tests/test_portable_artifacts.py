@@ -18,8 +18,10 @@ class PortableArtifacts(unittest.TestCase):
         record, provenance, artifacts, data = verified_artifacts()
         self.assertEqual(len(data['contexts']), 8)
         modern = 'direct.json' in fixtures.fixture_sources(record)
-        self.assertEqual(len(record['layouts']['raw']), 12 if modern else 11)
-        self.assertEqual(len(record['layouts']['separated']), 24 if modern else 22)
+        support = record.get('contracts', {}).get('process_support') == [1]
+        raw_count = 11 + int(modern) + int(support)
+        self.assertEqual(len(record['layouts']['raw']), raw_count)
+        self.assertEqual(len(record['layouts']['separated']), raw_count * 2)
         self.assertEqual(provenance['engine'], record['engine'])
         self.assertIn(b'def exercise(', artifacts['runner.py'])
         self.assertIn('accounting.json', artifacts)
@@ -28,6 +30,9 @@ class PortableArtifacts(unittest.TestCase):
         self.assertEqual(len(fixtures.direct_cases(artifacts)), 4 if modern else 0)
         if modern:
             self.assertIn(b'def exercise_direct(', artifacts['runner.py'])
+        if support:
+            self.assertIn('process.json', artifacts)
+            self.assertIn(b'def exercise_support(', artifacts['runner.py'])
 
     def copied_source(self):
         temporary = tempfile.TemporaryDirectory(); self.addCleanup(temporary.cleanup)

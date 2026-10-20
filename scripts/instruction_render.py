@@ -99,17 +99,22 @@ def selected(data):
                   'repository-only/manual-pull target creates no installer or '
                   'application deployment obligation.')
     elif completion == 'verified-stable-package':
-        target = ('This package project remains unfinished after main until the '
+        target = ('Product changes in this package project remain unfinished after main until the '
                   'maintained producer publishes the stable release and verifies '
                   'installation for the exact accepted source/task/target. Record the '
                   'genuine delivery receipt; merge or a tag alone is insufficient.')
     elif completion == 'verified-production':
-        target = ('This project remains unfinished after main until its maintained '
+        target = ('Product changes in this project remain unfinished after main until its maintained '
                   'producer verifies production delivery for the exact accepted '
                   'source/task/target. Record the genuine delivery receipt; source '
                   'storage or Stage evidence alone is insufficient.')
     else:
         raise ValueError('Unsupported selected completion rule')
+    target += (' Process changes follow the global process/product boundary: prove '
+               'the complete scope and isolation, preserve ordinary admission and '
+               'record process completion without publishing an unchanged consumer '
+               'product. Explicit product requests remain binding; unsupported or '
+               'unknown effects cannot use a completion waiver.')
     if data['profile'] == 'n8n-source':
         target += (' The selected n8n-source profile covers Git source only. Workflow '
                    'publication and verified business behavior require their own '

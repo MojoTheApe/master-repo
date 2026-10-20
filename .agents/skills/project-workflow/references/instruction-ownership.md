@@ -12,6 +12,10 @@ delivery target. Other supported routes are reference material; a new installed
 skill never selects them.
 
 Master owns the common lifecycle, profile guarantees, templates and this skill.
+The process/product boundary applies across all those profiles. Deliver a proven
+process-only change with its own checks and source/tooling evidence; do not inherit
+a consumer product release merely from its profile. Preserve actual product input
+checks, explicit publication scope and unchanged accepted delivery obligations.
 Tracker owns executable policy, commands, parser fields, ownership claims and
 portable helper/reference closure. Consume its exact compatible output. Ordinary
 opted-in engineering sources contain one task; explicitly adopted ordinary
