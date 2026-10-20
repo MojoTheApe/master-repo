@@ -3,8 +3,11 @@
 ## Ready delivery and header refinement candidate1.7.1
 
 MR-72 pairs common lifecycle guidance and the canonical skill with Tracker TT-181.
-Select the actual independently reviewed published Tracker3.9.1 through the
-maintained full canonical refresh. Verify the clean exact source pair and actual
+Tracker3.9.1 is published at
+`22b4e40a5ce452464c3f9015d784cf4531802823` (tag v3.9.1, release418560541), after
+independent source review and successful actual-main checks. The maintained
+mechanical refresh consumes its complete61-file canonical closure, including the
+compatible approved-pause Delivery projection. Verify the clean exact source pair and actual
 Python3.9 native portable fixtures before protected main integration, actual-main
 checks and immutable v1.7.1 publication. Verify the maintained whole-directory
 AI Skills mirror/catalog. Native policy/status keys and all selected project
