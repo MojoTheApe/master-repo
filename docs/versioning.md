@@ -1,10 +1,13 @@
 # Versioning and safe upgrades
 
-## Phase-preserving pause candidate1.7.0
+## Phase-preserving pause1.7.0
 
 MR-70 pairs the global pause/resume rule and canonical skill with Tracker TT-179.
-Select the exact independently reviewed, checked and published Tracker3.9.0
-through the maintained mechanical refresh; candidate pins are not publication.
+Tracker3.9.0 is published at
+`b4ace9d5de2fb4034ca507d96da028e66ac5adc5` (tag v3.9.0, release418424989), after
+independent source review and successful actual-main checks. The maintained
+mechanical refresh consumes that exact source and its complete61-file closure;
+candidate pins alone are not publication.
 Require the complete source-owned native pause fixture replay on actual Python3.9
 and both layouts in the clean final pair, plus all existing profile/upgrade and
 negative compatibility gates. Publish v1.7.0 only at the accepted checked main
