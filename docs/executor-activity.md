@@ -9,7 +9,7 @@ do not install a reporter or update a consumer pin.
 - Report running when actually executing, waiting before waiting for checks or
   input, and stopped when the executor finishes. While running, confirm once a
   minute through the maintained shared command and actual owner/session/claim.
-- Five minutes without a running/waiting report means Activity unconfirmed. Freeze at the last
+- Five minutes without a running/waiting report means Connection lost after prior confirmation; never-confirmed work stays Activity unconfirmed. Freeze at the last
   confirmed work total; silence never proves a stop and never releases ownership.
   A confirmed stopped fact remains while its original owner is still assigned.
 - Waiting and missing-reporting gaps do not count as work. Repeated review,
@@ -41,3 +41,15 @@ names the actual GitHub actor; shared credentials do not identify a particular
 human or independently prove an agent's identity. Native status transitions may
 stay within one UI category, such as Review to Approved. Retain coverage limits
 and source links; missing history is not proof that nothing happened.
+
+## Explicit phase-preserving pause
+
+Follow the compatible selected Tracker guide for owned `pause stop/resume`.
+A confirmed stopped executor displays Paused inside its saved category and
+releases only its own slot. Preserve native phase, saved work, history, frozen
+integration/Stage and genuine blockers. Resume requires current scope/source
+checks, role independence, genuine capacity and fresh authority; otherwise remain
+paused with an explanation. A frozen Coordinator needs a genuinely new session
+before its combined Reviewer. Silence never invokes pause or releases ownership.
+Publish compatible readers/all writers before owned idle `pause activate`; source,
+exports, pin and skill updates never activate live state or publish a product.

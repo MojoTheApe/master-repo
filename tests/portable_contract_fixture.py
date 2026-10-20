@@ -25,6 +25,8 @@ def fixture_sources(record):
                 or validator['source'] != 'tracker/direct_policy.py'):
             raise ValueError('Modern fixtures require the canonical route validator')
         sources['direct.json'] = 'tests/fixtures/portable_direct.json'
+    if record.get('contracts', {}).get('task_pause') == [1]:
+        sources['pause.json'] = 'tests/fixtures/portable_pause.json'
     if record.get('contracts', {}).get('process_support') == [1]:
         sources['process.json'] = 'tests/fixtures/portable_process_support.json'
     return sources
@@ -158,7 +160,7 @@ def exercise_all(python, tracker=None):
     runner = types.ModuleType('_canonical_tracker_portable_fixture')
     runner.__file__ = str(SOURCE/FIXTURES/'runner.py')
     exec(compile(artifacts['runner.py'], runner.__file__, 'exec'), runner.__dict__)
-    results, accounting_results, direct_results, selection_results, process_results = [], [], [], [], []
+    results, accounting_results, direct_results, selection_results, process_results, pause_results = [], [], [], [], [], []
     with tempfile.TemporaryDirectory(prefix='master-portable-native-') as temporary:
         for index, row in enumerate(data['contexts']):
             root = Path(temporary)/str(index); root.mkdir()
@@ -187,9 +189,19 @@ def exercise_all(python, tracker=None):
                     path = root/name; path.parent.mkdir(parents=True, exist_ok=True)
                     path.write_bytes((SOURCE/FIXTURES/layout/name).read_bytes())
                 process_results.append(runner.exercise_support(root, python, layout, support))
+        if 'pause.json' in artifacts:
+            pause = json.loads(artifacts['pause.json'], object_pairs_hook=contract.unique)
+            if pause.get('schema_version') != 1 or pause.get('synthetic') is not True:
+                raise ValueError('Canonical pause fixture requires actual synthetic native histories')
+            for layout in ('raw', 'separated'):
+                root = Path(temporary)/('pause-'+layout); root.mkdir()
+                for name in contract.layout_files(record, layout):
+                    path = root/name; path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes((SOURCE/FIXTURES/layout/name).read_bytes())
+                pause_results.append(runner.exercise_pause(root, python, layout, pause))
     return {'engine': record['engine'], 'provenance': provenance, 'cases': results,
             'accounting': accounting_results, 'direct': direct_results, 'selection_delivery': selection_results,
-            'process_support': process_results,
+            'process_support': process_results, 'task_pause': pause_results,
             'clock_fixture_only': True,
             'private_engine_required': False, 'live_requests': 0}
 

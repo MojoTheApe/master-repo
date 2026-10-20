@@ -1,0 +1,3422 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "cases": [
+    {
+      "version": 1,
+      "config": {
+        "schema_version": 2,
+        "project": {
+          "name": "Example",
+          "repository": "owner/repo",
+          "base_branch": "main",
+          "id_prefix": "EX"
+        },
+        "completion_label": "Merged",
+        "workflow": [
+          "idea",
+          "backlog",
+          "todo",
+          "in_progress",
+          "review",
+          "merged"
+        ],
+        "priorities": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "default_backlog_priority": "medium",
+        "release_view_label": "Release",
+        "default_release": "",
+        "refresh_seconds": 60,
+        "modules": [
+          {
+            "id": "accounts",
+            "name": "Accounts",
+            "description": "Account behavior"
+          }
+        ],
+        "release_mode": "single",
+        "delivery_policy": {
+          "schema_version": 1,
+          "staging": {
+            "enabled": false,
+            "branch": "stage",
+            "target": "example/stage"
+          },
+          "completion": "reviewed-merge",
+          "delivery_target": "example/production",
+          "required_checks": [
+            "tests"
+          ]
+        },
+        "execution_policy": {
+          "schema_version": 1,
+          "implementation_limit": 2,
+          "review_limit": 1
+        }
+      },
+      "paused": {
+        "schema_version": 8,
+        "active": null,
+        "run": null,
+        "todo_order": [],
+        "todo_added": {},
+        "execution": {
+          "claims": {},
+          "tasks": {
+            "1": {
+              "implementers": [
+                {
+                  "actor": "Worker-W001",
+                  "session": "worker_session_1"
+                }
+              ],
+              "state": "paused",
+              "worker": "Worker-W001",
+              "coordinator": "Coordinator-C001",
+              "handoff": {
+                "actor": "Worker-W001",
+                "session": "worker_session_1",
+                "coordinator": "Coordinator-C001",
+                "branch": "work/ex-1-task",
+                "worktree": "/synthetic/pause/work-1",
+                "id": "00000000000000000000000000000002",
+                "issue": 1,
+                "state": "handoff",
+                "started_at": "2026-10-20T00:00:00+00:00",
+                "from_status": "status:todo",
+                "pr": 10,
+                "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "pr": 10,
+              "queued_at": "2026-10-20T00:00:00+00:00",
+              "reviewer": "Reviewer-R001"
+            }
+          },
+          "actors": {
+            "Worker-W001": {
+              "session": "worker_session_1",
+              "role": "Worker"
+            },
+            "Reviewer-R001": {
+              "session": "review_session_1",
+              "role": "Reviewer"
+            }
+          },
+          "completed": {},
+          "review_queue": [],
+          "review": null,
+          "history": [
+            {
+              "event": "policy-adopted",
+              "at": "2026-10-20T00:00:00+00:00",
+              "policy": {
+                "schema_version": 1,
+                "implementation_limit": 2,
+                "review_limit": 1
+              },
+              "preserved_review_queue": []
+            },
+            {
+              "event": "claimed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "claim": "00000000000000000000000000000002",
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "handed-off",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "pr": 10,
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "review-acquired",
+              "at": "2026-10-20T00:00:00+00:00",
+              "pr": 10,
+              "lane": "00000000000000000000000000000003",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-paused",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000004",
+              "previous_claim": "00000000000000000000000000000003",
+              "actor": "Reviewer-R001"
+            }
+          ],
+          "policy": {
+            "schema_version": 1,
+            "implementation_limit": 2,
+            "review_limit": 1
+          },
+          "delivery_policy": "a4998d1d9e818d7d1553644321c76c90ce95192639dcf2efcb7249e4b4eaa80f"
+        },
+        "maintenance_history": [
+          {
+            "event": "maintenance-reserved",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "00000000000000000000000000000001",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            }
+          },
+          {
+            "event": "maintenance-resumed",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "00000000000000000000000000000001",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            },
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          }
+        ],
+        "task_pause": {
+          "schema_version": 1,
+          "base_schema_version": 2,
+          "repository": "owner/repo",
+          "activation": {
+            "at": "2026-10-20T00:00:00+00:00",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          },
+          "records": {
+            "00000000000000000000000000000004": {
+              "id": "00000000000000000000000000000004",
+              "kind": "reviewing",
+              "issues": [
+                1
+              ],
+              "state": "paused",
+              "paused_at": "2026-10-20T00:00:00+00:00",
+              "actor": "Reviewer-R001",
+              "session": "review_session_1",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes.",
+              "checkpoint": {
+                "resource": "source-review",
+                "owner": {
+                  "id": "00000000000000000000000000000003",
+                  "pr": 10,
+                  "issues": [
+                    1
+                  ],
+                  "actor": "Reviewer-R001",
+                  "session": "review_session_1",
+                  "coordinator": "Coordinator-C001",
+                  "started_at": "2026-10-20T00:00:00+00:00",
+                  "state": "reviewing"
+                },
+                "key": "1",
+                "tasks": {
+                  "1": {
+                    "implementers": [
+                      {
+                        "actor": "Worker-W001",
+                        "session": "worker_session_1"
+                      }
+                    ],
+                    "state": "reviewing",
+                    "worker": "Worker-W001",
+                    "coordinator": "Coordinator-C001",
+                    "handoff": {
+                      "actor": "Worker-W001",
+                      "session": "worker_session_1",
+                      "coordinator": "Coordinator-C001",
+                      "branch": "work/ex-1-task",
+                      "worktree": "/synthetic/pause/work-1",
+                      "id": "00000000000000000000000000000002",
+                      "issue": 1,
+                      "state": "handoff",
+                      "started_at": "2026-10-20T00:00:00+00:00",
+                      "from_status": "status:todo",
+                      "pr": 10,
+                      "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+                    },
+                    "pr": 10,
+                    "queued_at": "2026-10-20T00:00:00+00:00",
+                    "reviewer": "Reviewer-R001"
+                  }
+                },
+                "timers": {},
+                "reviews": {},
+                "source_identity": {
+                  "10": {
+                    "head_ref": "work/ex-1-task",
+                    "base_ref": "main",
+                    "repository": "owner/repo",
+                    "route": "main",
+                    "merge_sha": null,
+                    "issues": [
+                      1
+                    ]
+                  }
+                }
+              },
+              "statuses": {
+                "1": {
+                  "id": "review",
+                  "phase": "review"
+                }
+              },
+              "scopes": {
+                "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+              },
+              "main_sha": "0000000000000000000000000000000000000001",
+              "source_heads": {
+                "10": "0000000000000000000000000000000000000002"
+              }
+            }
+          }
+        }
+      },
+      "resumed": {
+        "schema_version": 8,
+        "active": null,
+        "run": null,
+        "todo_order": [],
+        "todo_added": {},
+        "execution": {
+          "claims": {},
+          "tasks": {
+            "1": {
+              "implementers": [
+                {
+                  "actor": "Worker-W001",
+                  "session": "worker_session_1"
+                }
+              ],
+              "state": "reviewing",
+              "worker": "Worker-W001",
+              "coordinator": "Coordinator-C001",
+              "handoff": {
+                "actor": "Worker-W001",
+                "session": "worker_session_1",
+                "coordinator": "Coordinator-C001",
+                "branch": "work/ex-1-task",
+                "worktree": "/synthetic/pause/work-1",
+                "id": "00000000000000000000000000000002",
+                "issue": 1,
+                "state": "handoff",
+                "started_at": "2026-10-20T00:00:00+00:00",
+                "from_status": "status:todo",
+                "pr": 10,
+                "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "pr": 10,
+              "queued_at": "2026-10-20T00:00:00+00:00",
+              "reviewer": "Reviewer-R001"
+            }
+          },
+          "actors": {
+            "Worker-W001": {
+              "session": "worker_session_1",
+              "role": "Worker"
+            },
+            "Reviewer-R001": {
+              "session": "review_session_1",
+              "role": "Reviewer"
+            }
+          },
+          "completed": {},
+          "review_queue": [],
+          "review": {
+            "id": "00000000000000000000000000000005",
+            "pr": 10,
+            "issues": [
+              1
+            ],
+            "actor": "Reviewer-R001",
+            "session": "review_session_1",
+            "coordinator": "Coordinator-C001",
+            "started_at": "2026-10-20T00:00:00+00:00",
+            "state": "reviewing"
+          },
+          "history": [
+            {
+              "event": "policy-adopted",
+              "at": "2026-10-20T00:00:00+00:00",
+              "policy": {
+                "schema_version": 1,
+                "implementation_limit": 2,
+                "review_limit": 1
+              },
+              "preserved_review_queue": []
+            },
+            {
+              "event": "claimed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "claim": "00000000000000000000000000000002",
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "handed-off",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "pr": 10,
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "review-acquired",
+              "at": "2026-10-20T00:00:00+00:00",
+              "pr": 10,
+              "lane": "00000000000000000000000000000003",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-paused",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000004",
+              "previous_claim": "00000000000000000000000000000003",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-resumed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000004",
+              "claim": "00000000000000000000000000000005",
+              "actor": "Reviewer-R001",
+              "main_sha": "0000000000000000000000000000000000000001"
+            }
+          ],
+          "policy": {
+            "schema_version": 1,
+            "implementation_limit": 2,
+            "review_limit": 1
+          },
+          "delivery_policy": "a4998d1d9e818d7d1553644321c76c90ce95192639dcf2efcb7249e4b4eaa80f"
+        },
+        "maintenance_history": [
+          {
+            "event": "maintenance-reserved",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "00000000000000000000000000000001",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            }
+          },
+          {
+            "event": "maintenance-resumed",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "00000000000000000000000000000001",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            },
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          }
+        ],
+        "task_pause": {
+          "schema_version": 1,
+          "base_schema_version": 2,
+          "repository": "owner/repo",
+          "activation": {
+            "at": "2026-10-20T00:00:00+00:00",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          },
+          "records": {
+            "00000000000000000000000000000004": {
+              "id": "00000000000000000000000000000004",
+              "kind": "reviewing",
+              "issues": [
+                1
+              ],
+              "state": "resumed",
+              "paused_at": "2026-10-20T00:00:00+00:00",
+              "actor": "Reviewer-R001",
+              "session": "review_session_1",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes.",
+              "checkpoint": {
+                "resource": "source-review",
+                "owner": {
+                  "id": "00000000000000000000000000000003",
+                  "pr": 10,
+                  "issues": [
+                    1
+                  ],
+                  "actor": "Reviewer-R001",
+                  "session": "review_session_1",
+                  "coordinator": "Coordinator-C001",
+                  "started_at": "2026-10-20T00:00:00+00:00",
+                  "state": "reviewing"
+                },
+                "key": "1",
+                "tasks": {
+                  "1": {
+                    "implementers": [
+                      {
+                        "actor": "Worker-W001",
+                        "session": "worker_session_1"
+                      }
+                    ],
+                    "state": "reviewing",
+                    "worker": "Worker-W001",
+                    "coordinator": "Coordinator-C001",
+                    "handoff": {
+                      "actor": "Worker-W001",
+                      "session": "worker_session_1",
+                      "coordinator": "Coordinator-C001",
+                      "branch": "work/ex-1-task",
+                      "worktree": "/synthetic/pause/work-1",
+                      "id": "00000000000000000000000000000002",
+                      "issue": 1,
+                      "state": "handoff",
+                      "started_at": "2026-10-20T00:00:00+00:00",
+                      "from_status": "status:todo",
+                      "pr": 10,
+                      "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+                    },
+                    "pr": 10,
+                    "queued_at": "2026-10-20T00:00:00+00:00",
+                    "reviewer": "Reviewer-R001"
+                  }
+                },
+                "timers": {},
+                "reviews": {},
+                "source_identity": {
+                  "10": {
+                    "head_ref": "work/ex-1-task",
+                    "base_ref": "main",
+                    "repository": "owner/repo",
+                    "route": "main",
+                    "merge_sha": null,
+                    "issues": [
+                      1
+                    ]
+                  }
+                },
+                "resumed_session": "review_session_1",
+                "resume_report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "statuses": {
+                "1": {
+                  "id": "review",
+                  "phase": "review"
+                }
+              },
+              "scopes": {
+                "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+              },
+              "main_sha": "0000000000000000000000000000000000000001",
+              "source_heads": {
+                "10": "0000000000000000000000000000000000000002"
+              },
+              "resumed_at": "2026-10-20T00:00:00+00:00",
+              "resumed_by": "Reviewer-R001",
+              "new_claim": "00000000000000000000000000000005"
+            }
+          }
+        }
+      }
+    },
+    {
+      "version": 2,
+      "config": {
+        "schema_version": 2,
+        "project": {
+          "name": "Example",
+          "repository": "owner/repo",
+          "base_branch": "main",
+          "id_prefix": "EX"
+        },
+        "completion_label": "Merged",
+        "workflow": [
+          "idea",
+          "backlog",
+          "todo",
+          "in_progress",
+          "review",
+          "approved",
+          "merged"
+        ],
+        "priorities": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "default_backlog_priority": "medium",
+        "release_view_label": "Release",
+        "default_release": "",
+        "refresh_seconds": 60,
+        "modules": [
+          {
+            "id": "accounts",
+            "name": "Accounts",
+            "description": "Account behavior"
+          }
+        ],
+        "release_mode": "single",
+        "delivery_policy": {
+          "schema_version": 1,
+          "staging": {
+            "enabled": false,
+            "branch": "stage",
+            "target": "example/stage"
+          },
+          "completion": "reviewed-merge",
+          "delivery_target": "example/production",
+          "required_checks": [
+            "tests"
+          ]
+        },
+        "execution_policy": {
+          "schema_version": 2,
+          "implementation_limit": 2,
+          "review_limit": 1,
+          "batch_limit": 5
+        }
+      },
+      "paused": {
+        "schema_version": 8,
+        "active": null,
+        "run": null,
+        "todo_order": [],
+        "todo_added": {},
+        "execution": {
+          "claims": {},
+          "tasks": {
+            "1": {
+              "implementers": [
+                {
+                  "actor": "Worker-W001",
+                  "session": "worker_session_1"
+                }
+              ],
+              "state": "paused",
+              "worker": "Worker-W001",
+              "coordinator": "Coordinator-C001",
+              "handoff": {
+                "actor": "Worker-W001",
+                "session": "worker_session_1",
+                "coordinator": "Coordinator-C001",
+                "branch": "work/ex-1-task",
+                "worktree": "/synthetic/pause/work-1",
+                "id": "00000000000000000000000000000007",
+                "issue": 1,
+                "state": "handoff",
+                "started_at": "2026-10-20T00:00:00+00:00",
+                "from_status": "status:todo",
+                "pr": 10,
+                "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "pr": 10,
+              "queued_at": "2026-10-20T00:00:00+00:00",
+              "reviewer": "Reviewer-R001"
+            }
+          },
+          "actors": {
+            "Worker-W001": {
+              "session": "worker_session_1",
+              "role": "Worker"
+            },
+            "Reviewer-R001": {
+              "session": "review_session_1",
+              "role": "Reviewer"
+            }
+          },
+          "completed": {},
+          "review_queue": [],
+          "review": null,
+          "history": [
+            {
+              "event": "policy-adopted",
+              "at": "2026-10-20T00:00:00+00:00",
+              "policy": {
+                "schema_version": 2,
+                "implementation_limit": 2,
+                "review_limit": 1,
+                "batch_limit": 5
+              },
+              "preserved_review_queue": []
+            },
+            {
+              "event": "claimed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "claim": "00000000000000000000000000000007",
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "handed-off",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "pr": 10,
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "review-acquired",
+              "at": "2026-10-20T00:00:00+00:00",
+              "pr": 10,
+              "lane": "00000000000000000000000000000008",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-paused",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000009",
+              "previous_claim": "00000000000000000000000000000008",
+              "actor": "Reviewer-R001"
+            }
+          ],
+          "policy": {
+            "schema_version": 2,
+            "implementation_limit": 2,
+            "review_limit": 1,
+            "batch_limit": 5
+          },
+          "delivery_policy": "a4998d1d9e818d7d1553644321c76c90ce95192639dcf2efcb7249e4b4eaa80f",
+          "approvals": {},
+          "batches": {},
+          "integration": null,
+          "intake": null
+        },
+        "maintenance_history": [
+          {
+            "event": "maintenance-reserved",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "00000000000000000000000000000006",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            }
+          },
+          {
+            "event": "maintenance-resumed",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "00000000000000000000000000000006",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            },
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          }
+        ],
+        "task_pause": {
+          "schema_version": 1,
+          "base_schema_version": 2,
+          "repository": "owner/repo",
+          "activation": {
+            "at": "2026-10-20T00:00:00+00:00",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          },
+          "records": {
+            "00000000000000000000000000000009": {
+              "id": "00000000000000000000000000000009",
+              "kind": "reviewing",
+              "issues": [
+                1
+              ],
+              "state": "paused",
+              "paused_at": "2026-10-20T00:00:00+00:00",
+              "actor": "Reviewer-R001",
+              "session": "review_session_1",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes.",
+              "checkpoint": {
+                "resource": "source-review",
+                "owner": {
+                  "id": "00000000000000000000000000000008",
+                  "pr": 10,
+                  "issues": [
+                    1
+                  ],
+                  "actor": "Reviewer-R001",
+                  "session": "review_session_1",
+                  "coordinator": "Coordinator-C001",
+                  "started_at": "2026-10-20T00:00:00+00:00",
+                  "state": "reviewing"
+                },
+                "key": "1",
+                "tasks": {
+                  "1": {
+                    "implementers": [
+                      {
+                        "actor": "Worker-W001",
+                        "session": "worker_session_1"
+                      }
+                    ],
+                    "state": "reviewing",
+                    "worker": "Worker-W001",
+                    "coordinator": "Coordinator-C001",
+                    "handoff": {
+                      "actor": "Worker-W001",
+                      "session": "worker_session_1",
+                      "coordinator": "Coordinator-C001",
+                      "branch": "work/ex-1-task",
+                      "worktree": "/synthetic/pause/work-1",
+                      "id": "00000000000000000000000000000007",
+                      "issue": 1,
+                      "state": "handoff",
+                      "started_at": "2026-10-20T00:00:00+00:00",
+                      "from_status": "status:todo",
+                      "pr": 10,
+                      "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+                    },
+                    "pr": 10,
+                    "queued_at": "2026-10-20T00:00:00+00:00",
+                    "reviewer": "Reviewer-R001"
+                  }
+                },
+                "timers": {},
+                "reviews": {},
+                "source_identity": {
+                  "10": {
+                    "head_ref": "work/ex-1-task",
+                    "base_ref": "main",
+                    "repository": "owner/repo",
+                    "route": "approval",
+                    "merge_sha": null,
+                    "issues": [
+                      1
+                    ]
+                  }
+                }
+              },
+              "statuses": {
+                "1": {
+                  "id": "review",
+                  "phase": "review"
+                }
+              },
+              "scopes": {
+                "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+              },
+              "main_sha": "0000000000000000000000000000000000000001",
+              "source_heads": {
+                "10": "000000000000000000000000000000000000000b"
+              }
+            }
+          }
+        }
+      },
+      "resumed": {
+        "schema_version": 8,
+        "active": null,
+        "run": null,
+        "todo_order": [],
+        "todo_added": {},
+        "execution": {
+          "claims": {},
+          "tasks": {
+            "1": {
+              "implementers": [
+                {
+                  "actor": "Worker-W001",
+                  "session": "worker_session_1"
+                }
+              ],
+              "state": "reviewing",
+              "worker": "Worker-W001",
+              "coordinator": "Coordinator-C001",
+              "handoff": {
+                "actor": "Worker-W001",
+                "session": "worker_session_1",
+                "coordinator": "Coordinator-C001",
+                "branch": "work/ex-1-task",
+                "worktree": "/synthetic/pause/work-1",
+                "id": "00000000000000000000000000000007",
+                "issue": 1,
+                "state": "handoff",
+                "started_at": "2026-10-20T00:00:00+00:00",
+                "from_status": "status:todo",
+                "pr": 10,
+                "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "pr": 10,
+              "queued_at": "2026-10-20T00:00:00+00:00",
+              "reviewer": "Reviewer-R001"
+            }
+          },
+          "actors": {
+            "Worker-W001": {
+              "session": "worker_session_1",
+              "role": "Worker"
+            },
+            "Reviewer-R001": {
+              "session": "review_session_1",
+              "role": "Reviewer"
+            }
+          },
+          "completed": {},
+          "review_queue": [],
+          "review": {
+            "id": "0000000000000000000000000000000a",
+            "pr": 10,
+            "issues": [
+              1
+            ],
+            "actor": "Reviewer-R001",
+            "session": "review_session_1",
+            "coordinator": "Coordinator-C001",
+            "started_at": "2026-10-20T00:00:00+00:00",
+            "state": "reviewing"
+          },
+          "history": [
+            {
+              "event": "policy-adopted",
+              "at": "2026-10-20T00:00:00+00:00",
+              "policy": {
+                "schema_version": 2,
+                "implementation_limit": 2,
+                "review_limit": 1,
+                "batch_limit": 5
+              },
+              "preserved_review_queue": []
+            },
+            {
+              "event": "claimed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "claim": "00000000000000000000000000000007",
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "handed-off",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "pr": 10,
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "review-acquired",
+              "at": "2026-10-20T00:00:00+00:00",
+              "pr": 10,
+              "lane": "00000000000000000000000000000008",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-paused",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000009",
+              "previous_claim": "00000000000000000000000000000008",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-resumed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000009",
+              "claim": "0000000000000000000000000000000a",
+              "actor": "Reviewer-R001",
+              "main_sha": "0000000000000000000000000000000000000001"
+            }
+          ],
+          "policy": {
+            "schema_version": 2,
+            "implementation_limit": 2,
+            "review_limit": 1,
+            "batch_limit": 5
+          },
+          "delivery_policy": "a4998d1d9e818d7d1553644321c76c90ce95192639dcf2efcb7249e4b4eaa80f",
+          "approvals": {},
+          "batches": {},
+          "integration": null,
+          "intake": null
+        },
+        "maintenance_history": [
+          {
+            "event": "maintenance-reserved",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "00000000000000000000000000000006",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            }
+          },
+          {
+            "event": "maintenance-resumed",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "00000000000000000000000000000006",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            },
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          }
+        ],
+        "task_pause": {
+          "schema_version": 1,
+          "base_schema_version": 2,
+          "repository": "owner/repo",
+          "activation": {
+            "at": "2026-10-20T00:00:00+00:00",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          },
+          "records": {
+            "00000000000000000000000000000009": {
+              "id": "00000000000000000000000000000009",
+              "kind": "reviewing",
+              "issues": [
+                1
+              ],
+              "state": "resumed",
+              "paused_at": "2026-10-20T00:00:00+00:00",
+              "actor": "Reviewer-R001",
+              "session": "review_session_1",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes.",
+              "checkpoint": {
+                "resource": "source-review",
+                "owner": {
+                  "id": "00000000000000000000000000000008",
+                  "pr": 10,
+                  "issues": [
+                    1
+                  ],
+                  "actor": "Reviewer-R001",
+                  "session": "review_session_1",
+                  "coordinator": "Coordinator-C001",
+                  "started_at": "2026-10-20T00:00:00+00:00",
+                  "state": "reviewing"
+                },
+                "key": "1",
+                "tasks": {
+                  "1": {
+                    "implementers": [
+                      {
+                        "actor": "Worker-W001",
+                        "session": "worker_session_1"
+                      }
+                    ],
+                    "state": "reviewing",
+                    "worker": "Worker-W001",
+                    "coordinator": "Coordinator-C001",
+                    "handoff": {
+                      "actor": "Worker-W001",
+                      "session": "worker_session_1",
+                      "coordinator": "Coordinator-C001",
+                      "branch": "work/ex-1-task",
+                      "worktree": "/synthetic/pause/work-1",
+                      "id": "00000000000000000000000000000007",
+                      "issue": 1,
+                      "state": "handoff",
+                      "started_at": "2026-10-20T00:00:00+00:00",
+                      "from_status": "status:todo",
+                      "pr": 10,
+                      "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+                    },
+                    "pr": 10,
+                    "queued_at": "2026-10-20T00:00:00+00:00",
+                    "reviewer": "Reviewer-R001"
+                  }
+                },
+                "timers": {},
+                "reviews": {},
+                "source_identity": {
+                  "10": {
+                    "head_ref": "work/ex-1-task",
+                    "base_ref": "main",
+                    "repository": "owner/repo",
+                    "route": "approval",
+                    "merge_sha": null,
+                    "issues": [
+                      1
+                    ]
+                  }
+                },
+                "resumed_session": "review_session_1",
+                "resume_report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "statuses": {
+                "1": {
+                  "id": "review",
+                  "phase": "review"
+                }
+              },
+              "scopes": {
+                "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+              },
+              "main_sha": "0000000000000000000000000000000000000001",
+              "source_heads": {
+                "10": "000000000000000000000000000000000000000b"
+              },
+              "resumed_at": "2026-10-20T00:00:00+00:00",
+              "resumed_by": "Reviewer-R001",
+              "new_claim": "0000000000000000000000000000000a"
+            }
+          }
+        }
+      }
+    },
+    {
+      "version": 3,
+      "config": {
+        "schema_version": 2,
+        "project": {
+          "name": "Example",
+          "repository": "owner/repo",
+          "base_branch": "main",
+          "id_prefix": "EX"
+        },
+        "completion_label": "Merged",
+        "workflow": [
+          "idea",
+          "backlog",
+          "todo",
+          "in_progress",
+          "review",
+          "approved",
+          "merged"
+        ],
+        "priorities": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "default_backlog_priority": "medium",
+        "release_view_label": "Release",
+        "default_release": "",
+        "refresh_seconds": 60,
+        "modules": [
+          {
+            "id": "accounts",
+            "name": "Accounts",
+            "description": "Account behavior"
+          }
+        ],
+        "release_mode": "single",
+        "delivery_policy": {
+          "schema_version": 1,
+          "staging": {
+            "enabled": false,
+            "branch": "stage",
+            "target": "example/stage"
+          },
+          "completion": "reviewed-merge",
+          "delivery_target": "example/production",
+          "required_checks": [
+            "tests"
+          ]
+        },
+        "execution_policy": {
+          "schema_version": 3,
+          "implementation_limit": 2,
+          "review_limit": 2,
+          "batch_limit": 5
+        }
+      },
+      "paused": {
+        "schema_version": 8,
+        "active": null,
+        "run": null,
+        "todo_order": [],
+        "todo_added": {},
+        "execution": {
+          "claims": {},
+          "tasks": {
+            "1": {
+              "implementers": [
+                {
+                  "actor": "Worker-W001",
+                  "session": "worker_session_1"
+                }
+              ],
+              "state": "paused",
+              "worker": "Worker-W001",
+              "coordinator": "Coordinator-C001",
+              "handoff": {
+                "actor": "Worker-W001",
+                "session": "worker_session_1",
+                "coordinator": "Coordinator-C001",
+                "branch": "work/ex-1-task",
+                "worktree": "/synthetic/pause/work-1",
+                "id": "0000000000000000000000000000000c",
+                "issue": 1,
+                "state": "handoff",
+                "started_at": "2026-10-20T00:00:00+00:00",
+                "from_status": "status:todo",
+                "pr": 10,
+                "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "pr": 10,
+              "queued_at": "2026-10-20T00:00:00+00:00",
+              "reviewer": "Reviewer-R001"
+            }
+          },
+          "actors": {
+            "Worker-W001": {
+              "session": "worker_session_1",
+              "role": "Worker"
+            },
+            "Reviewer-R001": {
+              "session": "review_session_1",
+              "role": "Reviewer"
+            }
+          },
+          "completed": {},
+          "review_queue": [],
+          "review": null,
+          "history": [
+            {
+              "event": "policy-adopted",
+              "at": "2026-10-20T00:00:00+00:00",
+              "policy": {
+                "schema_version": 2,
+                "implementation_limit": 2,
+                "review_limit": 1,
+                "batch_limit": 5
+              },
+              "preserved_review_queue": []
+            },
+            {
+              "event": "policy-adopted",
+              "at": "2026-10-20T00:00:00+00:00",
+              "policy": {
+                "schema_version": 3,
+                "implementation_limit": 2,
+                "review_limit": 2,
+                "batch_limit": 5
+              },
+              "preserved_review_queue": []
+            },
+            {
+              "event": "claimed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "claim": "0000000000000000000000000000000c",
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "handed-off",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "pr": 10,
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "review-acquired",
+              "at": "2026-10-20T00:00:00+00:00",
+              "pr": 10,
+              "lane": "0000000000000000000000000000000d",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-paused",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "0000000000000000000000000000000e",
+              "previous_claim": "0000000000000000000000000000000d",
+              "actor": "Reviewer-R001"
+            }
+          ],
+          "policy": {
+            "schema_version": 3,
+            "implementation_limit": 2,
+            "review_limit": 2,
+            "batch_limit": 5
+          },
+          "delivery_policy": "a4998d1d9e818d7d1553644321c76c90ce95192639dcf2efcb7249e4b4eaa80f",
+          "approvals": {},
+          "batches": {},
+          "integration": null,
+          "intake": null,
+          "source_reviews": {}
+        },
+        "maintenance_history": [
+          {
+            "event": "maintenance-reserved",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "0000000000000000000000000000000b",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            }
+          },
+          {
+            "event": "maintenance-resumed",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "0000000000000000000000000000000b",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            },
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          }
+        ],
+        "task_pause": {
+          "schema_version": 1,
+          "base_schema_version": 2,
+          "repository": "owner/repo",
+          "activation": {
+            "at": "2026-10-20T00:00:00+00:00",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          },
+          "records": {
+            "0000000000000000000000000000000e": {
+              "id": "0000000000000000000000000000000e",
+              "kind": "reviewing",
+              "issues": [
+                1
+              ],
+              "state": "paused",
+              "paused_at": "2026-10-20T00:00:00+00:00",
+              "actor": "Reviewer-R001",
+              "session": "review_session_1",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes.",
+              "checkpoint": {
+                "resource": "source-review",
+                "owner": {
+                  "id": "0000000000000000000000000000000d",
+                  "pr": 10,
+                  "issues": [
+                    1
+                  ],
+                  "actor": "Reviewer-R001",
+                  "session": "review_session_1",
+                  "coordinator": "Coordinator-C001",
+                  "started_at": "2026-10-20T00:00:00+00:00",
+                  "state": "reviewing"
+                },
+                "key": "1",
+                "tasks": {
+                  "1": {
+                    "implementers": [
+                      {
+                        "actor": "Worker-W001",
+                        "session": "worker_session_1"
+                      }
+                    ],
+                    "state": "reviewing",
+                    "worker": "Worker-W001",
+                    "coordinator": "Coordinator-C001",
+                    "handoff": {
+                      "actor": "Worker-W001",
+                      "session": "worker_session_1",
+                      "coordinator": "Coordinator-C001",
+                      "branch": "work/ex-1-task",
+                      "worktree": "/synthetic/pause/work-1",
+                      "id": "0000000000000000000000000000000c",
+                      "issue": 1,
+                      "state": "handoff",
+                      "started_at": "2026-10-20T00:00:00+00:00",
+                      "from_status": "status:todo",
+                      "pr": 10,
+                      "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+                    },
+                    "pr": 10,
+                    "queued_at": "2026-10-20T00:00:00+00:00",
+                    "reviewer": "Reviewer-R001"
+                  }
+                },
+                "timers": {},
+                "reviews": {},
+                "source_identity": {
+                  "10": {
+                    "head_ref": "work/ex-1-task",
+                    "base_ref": "main",
+                    "repository": "owner/repo",
+                    "route": "approval",
+                    "merge_sha": null,
+                    "issues": [
+                      1
+                    ]
+                  }
+                }
+              },
+              "statuses": {
+                "1": {
+                  "id": "review",
+                  "phase": "review"
+                }
+              },
+              "scopes": {
+                "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+              },
+              "main_sha": "0000000000000000000000000000000000000001",
+              "source_heads": {
+                "10": "000000000000000000000000000000000000000b"
+              }
+            }
+          }
+        }
+      },
+      "resumed": {
+        "schema_version": 8,
+        "active": null,
+        "run": null,
+        "todo_order": [],
+        "todo_added": {},
+        "execution": {
+          "claims": {},
+          "tasks": {
+            "1": {
+              "implementers": [
+                {
+                  "actor": "Worker-W001",
+                  "session": "worker_session_1"
+                }
+              ],
+              "state": "reviewing",
+              "worker": "Worker-W001",
+              "coordinator": "Coordinator-C001",
+              "handoff": {
+                "actor": "Worker-W001",
+                "session": "worker_session_1",
+                "coordinator": "Coordinator-C001",
+                "branch": "work/ex-1-task",
+                "worktree": "/synthetic/pause/work-1",
+                "id": "0000000000000000000000000000000c",
+                "issue": 1,
+                "state": "handoff",
+                "started_at": "2026-10-20T00:00:00+00:00",
+                "from_status": "status:todo",
+                "pr": 10,
+                "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "pr": 10,
+              "queued_at": "2026-10-20T00:00:00+00:00",
+              "reviewer": "Reviewer-R001"
+            }
+          },
+          "actors": {
+            "Worker-W001": {
+              "session": "worker_session_1",
+              "role": "Worker"
+            },
+            "Reviewer-R001": {
+              "session": "review_session_1",
+              "role": "Reviewer"
+            }
+          },
+          "completed": {},
+          "review_queue": [],
+          "review": null,
+          "history": [
+            {
+              "event": "policy-adopted",
+              "at": "2026-10-20T00:00:00+00:00",
+              "policy": {
+                "schema_version": 2,
+                "implementation_limit": 2,
+                "review_limit": 1,
+                "batch_limit": 5
+              },
+              "preserved_review_queue": []
+            },
+            {
+              "event": "policy-adopted",
+              "at": "2026-10-20T00:00:00+00:00",
+              "policy": {
+                "schema_version": 3,
+                "implementation_limit": 2,
+                "review_limit": 2,
+                "batch_limit": 5
+              },
+              "preserved_review_queue": []
+            },
+            {
+              "event": "claimed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "claim": "0000000000000000000000000000000c",
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "handed-off",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issue": 1,
+              "pr": 10,
+              "actor": "Worker-W001"
+            },
+            {
+              "event": "review-acquired",
+              "at": "2026-10-20T00:00:00+00:00",
+              "pr": 10,
+              "lane": "0000000000000000000000000000000d",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-paused",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "0000000000000000000000000000000e",
+              "previous_claim": "0000000000000000000000000000000d",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-resumed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "0000000000000000000000000000000e",
+              "claim": "0000000000000000000000000000000f",
+              "actor": "Reviewer-R001",
+              "main_sha": "0000000000000000000000000000000000000001"
+            }
+          ],
+          "policy": {
+            "schema_version": 3,
+            "implementation_limit": 2,
+            "review_limit": 2,
+            "batch_limit": 5
+          },
+          "delivery_policy": "a4998d1d9e818d7d1553644321c76c90ce95192639dcf2efcb7249e4b4eaa80f",
+          "approvals": {},
+          "batches": {},
+          "integration": null,
+          "intake": null,
+          "source_reviews": {
+            "10": {
+              "id": "0000000000000000000000000000000f",
+              "pr": 10,
+              "issues": [
+                1
+              ],
+              "actor": "Reviewer-R001",
+              "session": "review_session_1",
+              "coordinator": "Coordinator-C001",
+              "started_at": "2026-10-20T00:00:00+00:00",
+              "state": "reviewing"
+            }
+          }
+        },
+        "maintenance_history": [
+          {
+            "event": "maintenance-reserved",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "0000000000000000000000000000000b",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            }
+          },
+          {
+            "event": "maintenance-resumed",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 2,
+              "id": "0000000000000000000000000000000b",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            },
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          }
+        ],
+        "task_pause": {
+          "schema_version": 1,
+          "base_schema_version": 2,
+          "repository": "owner/repo",
+          "activation": {
+            "at": "2026-10-20T00:00:00+00:00",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          },
+          "records": {
+            "0000000000000000000000000000000e": {
+              "id": "0000000000000000000000000000000e",
+              "kind": "reviewing",
+              "issues": [
+                1
+              ],
+              "state": "resumed",
+              "paused_at": "2026-10-20T00:00:00+00:00",
+              "actor": "Reviewer-R001",
+              "session": "review_session_1",
+              "report": "Actual checks passed; exact PR is ready. Private implementation notes.",
+              "checkpoint": {
+                "resource": "source-review",
+                "owner": {
+                  "id": "0000000000000000000000000000000d",
+                  "pr": 10,
+                  "issues": [
+                    1
+                  ],
+                  "actor": "Reviewer-R001",
+                  "session": "review_session_1",
+                  "coordinator": "Coordinator-C001",
+                  "started_at": "2026-10-20T00:00:00+00:00",
+                  "state": "reviewing"
+                },
+                "key": "1",
+                "tasks": {
+                  "1": {
+                    "implementers": [
+                      {
+                        "actor": "Worker-W001",
+                        "session": "worker_session_1"
+                      }
+                    ],
+                    "state": "reviewing",
+                    "worker": "Worker-W001",
+                    "coordinator": "Coordinator-C001",
+                    "handoff": {
+                      "actor": "Worker-W001",
+                      "session": "worker_session_1",
+                      "coordinator": "Coordinator-C001",
+                      "branch": "work/ex-1-task",
+                      "worktree": "/synthetic/pause/work-1",
+                      "id": "0000000000000000000000000000000c",
+                      "issue": 1,
+                      "state": "handoff",
+                      "started_at": "2026-10-20T00:00:00+00:00",
+                      "from_status": "status:todo",
+                      "pr": 10,
+                      "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+                    },
+                    "pr": 10,
+                    "queued_at": "2026-10-20T00:00:00+00:00",
+                    "reviewer": "Reviewer-R001"
+                  }
+                },
+                "timers": {},
+                "reviews": {},
+                "source_identity": {
+                  "10": {
+                    "head_ref": "work/ex-1-task",
+                    "base_ref": "main",
+                    "repository": "owner/repo",
+                    "route": "approval",
+                    "merge_sha": null,
+                    "issues": [
+                      1
+                    ]
+                  }
+                },
+                "resumed_session": "review_session_1",
+                "resume_report": "Actual checks passed; exact PR is ready. Private implementation notes."
+              },
+              "statuses": {
+                "1": {
+                  "id": "review",
+                  "phase": "review"
+                }
+              },
+              "scopes": {
+                "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+              },
+              "main_sha": "0000000000000000000000000000000000000001",
+              "source_heads": {
+                "10": "000000000000000000000000000000000000000b"
+              },
+              "resumed_at": "2026-10-20T00:00:00+00:00",
+              "resumed_by": "Reviewer-R001",
+              "new_claim": "0000000000000000000000000000000f"
+            }
+          }
+        }
+      }
+    },
+    {
+      "version": 4,
+      "config": {
+        "schema_version": 2,
+        "project": {
+          "name": "Example",
+          "repository": "owner/repo",
+          "base_branch": "main",
+          "id_prefix": "EX"
+        },
+        "completion_label": "Merged",
+        "workflow": [
+          "idea",
+          "backlog",
+          "todo",
+          "in_progress",
+          "review",
+          "merged"
+        ],
+        "priorities": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "default_backlog_priority": "medium",
+        "release_view_label": "Release",
+        "default_release": "",
+        "refresh_seconds": 60,
+        "modules": [
+          {
+            "id": "accounts",
+            "name": "Accounts",
+            "description": "Account behavior"
+          }
+        ],
+        "release_mode": "single",
+        "delivery_policy": {
+          "schema_version": 1,
+          "staging": {
+            "enabled": false,
+            "branch": "stage",
+            "target": "example/stage"
+          },
+          "completion": "reviewed-merge",
+          "delivery_target": "example/production",
+          "required_checks": [
+            "tests"
+          ]
+        },
+        "execution_policy": {
+          "schema_version": 4,
+          "route": "direct",
+          "implementation_limit": 2,
+          "review_limit": 2
+        },
+        "task_context_policy": {
+          "schema_version": 2
+        },
+        "completion_policy": {
+          "schema_version": 1
+        }
+      },
+      "paused": {
+        "schema_version": 8,
+        "active": null,
+        "run": null,
+        "todo_order": [],
+        "todo_added": {},
+        "execution": {
+          "policy": {
+            "schema_version": 4,
+            "route": "direct",
+            "implementation_limit": 2,
+            "review_limit": 2
+          },
+          "delivery_policy": "a4998d1d9e818d7d1553644321c76c90ce95192639dcf2efcb7249e4b4eaa80f",
+          "claims": {},
+          "tasks": {
+            "1": {
+              "implementers": [
+                {
+                  "actor": "Worker-W001",
+                  "session": "worker_run_1"
+                }
+              ],
+              "state": "paused",
+              "worker": "Worker-W001",
+              "coordinator": "Coordinator-C001",
+              "handoff": {
+                "schema_version": 1,
+                "repository": "owner/repo",
+                "subject": {
+                  "kind": "task",
+                  "id": 1
+                },
+                "kind": "handoff",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "coordinator": "Coordinator-C001",
+                "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                "source": {
+                  "branch": "codex/ex-1-task-a",
+                  "pr": 10,
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                },
+                "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                "at": "2026-10-20T00:00:00+00:00"
+              },
+              "pr": 10,
+              "reviewer": "Reviewer-R001"
+            }
+          },
+          "actors": {
+            "Worker-W001": {
+              "session": "worker_run_1",
+              "role": "Worker"
+            },
+            "Reviewer-R001": {
+              "session": "reviewer_run_1",
+              "role": "Reviewer"
+            }
+          },
+          "completed": {},
+          "review_queue": [],
+          "review": null,
+          "source_reviews": {},
+          "approvals": {},
+          "batches": {},
+          "integration": null,
+          "intake": null,
+          "history": [
+            {
+              "event": "source-bound",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": null,
+              "actor": "Worker-W001",
+              "session": "worker_run_1"
+            },
+            {
+              "event": "source-bound",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": null,
+              "actor": "Worker-W001",
+              "session": "worker_run_1"
+            },
+            {
+              "event": "handoff-pending",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": {
+                "schema_version": 1,
+                "repository": "owner/repo",
+                "subject": {
+                  "kind": "task",
+                  "id": 1
+                },
+                "kind": "handoff",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "coordinator": "Coordinator-C001",
+                "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                "source": {
+                  "branch": "codex/ex-1-task-a",
+                  "pr": 10,
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                },
+                "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                "at": "2026-10-20T00:00:00+00:00"
+              },
+              "actor": "Worker-W001",
+              "session": "worker_run_1"
+            },
+            {
+              "event": "handed-off",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": {
+                "schema_version": 1,
+                "repository": "owner/repo",
+                "subject": {
+                  "kind": "task",
+                  "id": 1
+                },
+                "kind": "handoff",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "coordinator": "Coordinator-C001",
+                "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                "source": {
+                  "branch": "codex/ex-1-task-a",
+                  "pr": 10,
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                },
+                "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                "at": "2026-10-20T00:00:00+00:00"
+              },
+              "actor": "Worker-W001",
+              "session": "worker_run_1"
+            },
+            {
+              "event": "review-bound",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": {
+                "schema_version": 1,
+                "repository": "owner/repo",
+                "subject": {
+                  "kind": "task",
+                  "id": 1
+                },
+                "kind": "handoff",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "coordinator": "Coordinator-C001",
+                "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                "source": {
+                  "branch": "codex/ex-1-task-a",
+                  "pr": 10,
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                },
+                "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                "at": "2026-10-20T00:00:00+00:00"
+              },
+              "actor": "Reviewer-R001",
+              "session": "reviewer_run_1"
+            },
+            {
+              "event": "task-paused",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000013",
+              "previous_claim": "00000000000000000000000000000012",
+              "actor": "Reviewer-R001"
+            }
+          ],
+          "captures": {
+            "schema_version": 1,
+            "policy": null,
+            "operations": {}
+          }
+        },
+        "completion": {
+          "policy": {
+            "schema_version": 1
+          },
+          "base_schema_version": 4,
+          "repository": "owner/repo",
+          "history": [
+            {
+              "event": "adopted"
+            }
+          ]
+        },
+        "task_context": {
+          "policy": {
+            "schema_version": 2
+          },
+          "base_schema_version": 2,
+          "readiness": {
+            "1": {
+              "worker_run_1": {
+                "kind": "task-readiness",
+                "repository": "owner/repo",
+                "issue": 1,
+                "scope": "v2:f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775",
+                "main_sha": "0000000000000000000000000000000000000001",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "verdict": "ready",
+                "assessment_sha256": "32d620c56b1f0177e55970e578e38bd106718e21f8366fbbf4d5eca2806fa143",
+                "report_sha256": "b274caa28650551c4e995e905a1cff61795a2d4d8b72d3a443cfcc20ededa3b5"
+              }
+            }
+          },
+          "history": [
+            {
+              "event": "assessed",
+              "evidence": {
+                "kind": "task-readiness",
+                "repository": "owner/repo",
+                "issue": 1,
+                "scope": "v2:f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775",
+                "main_sha": "0000000000000000000000000000000000000001",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "verdict": "ready",
+                "assessment_sha256": "32d620c56b1f0177e55970e578e38bd106718e21f8366fbbf4d5eca2806fa143",
+                "report_sha256": "b274caa28650551c4e995e905a1cff61795a2d4d8b72d3a443cfcc20ededa3b5"
+              }
+            }
+          ]
+        },
+        "execution_contract": {
+          "schema_version": 1,
+          "base_schema_version": 5,
+          "repository": "owner/repo",
+          "history": [
+            {
+              "event": "adopted",
+              "at": "2026-10-17T00:00:00Z",
+              "main_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "policy_sha256": "c601f49b93aafc09fd5f70832f70cafaedeb651a9ae4f79483b6eff8197973f3",
+              "report_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          ]
+        },
+        "maintenance_history": [
+          {
+            "event": "maintenance-reserved",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 7,
+              "id": "00000000000000000000000000000010",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual synthetic source checks and scope handoff."
+            }
+          },
+          {
+            "event": "maintenance-resumed",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 7,
+              "id": "00000000000000000000000000000010",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual synthetic source checks and scope handoff."
+            },
+            "report": "Actual synthetic source checks and scope handoff."
+          }
+        ],
+        "task_pause": {
+          "schema_version": 1,
+          "base_schema_version": 7,
+          "repository": "owner/repo",
+          "activation": {
+            "at": "2026-10-20T00:00:00+00:00",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "report": "Actual synthetic source checks and scope handoff."
+          },
+          "records": {
+            "00000000000000000000000000000013": {
+              "id": "00000000000000000000000000000013",
+              "kind": "reviewing",
+              "issues": [
+                1
+              ],
+              "state": "paused",
+              "paused_at": "2026-10-20T00:00:00+00:00",
+              "actor": "Reviewer-R001",
+              "session": "reviewer_run_1",
+              "report": "Actual synthetic source checks and scope handoff.",
+              "checkpoint": {
+                "resource": "source-review",
+                "owner": {
+                  "id": "00000000000000000000000000000012",
+                  "subject": {
+                    "kind": "task",
+                    "id": 1
+                  },
+                  "pr": 10,
+                  "actor": "Reviewer-R001",
+                  "session": "reviewer_run_1",
+                  "coordinator": "Coordinator-C001",
+                  "state": "reviewing",
+                  "started_at": "2026-10-20T00:00:00+00:00"
+                },
+                "key": "task:1",
+                "tasks": {
+                  "1": {
+                    "implementers": [
+                      {
+                        "actor": "Worker-W001",
+                        "session": "worker_run_1"
+                      }
+                    ],
+                    "state": "reviewing",
+                    "worker": "Worker-W001",
+                    "coordinator": "Coordinator-C001",
+                    "handoff": {
+                      "schema_version": 1,
+                      "repository": "owner/repo",
+                      "subject": {
+                        "kind": "task",
+                        "id": 1
+                      },
+                      "kind": "handoff",
+                      "actor": "Worker-W001",
+                      "session": "worker_run_1",
+                      "coordinator": "Coordinator-C001",
+                      "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                      "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                      "source": {
+                        "branch": "codex/ex-1-task-a",
+                        "pr": 10,
+                        "base_sha": "0000000000000000000000000000000000000001",
+                        "head_sha": "0000000000000000000000000000000000000002",
+                        "tree_sha": "0000000000000000000000000000000000000066"
+                      },
+                      "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                      "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                      "at": "2026-10-20T00:00:00+00:00"
+                    },
+                    "pr": 10,
+                    "reviewer": "Reviewer-R001"
+                  }
+                },
+                "timers": {},
+                "reviews": {},
+                "source_identity": {
+                  "10": {
+                    "head_ref": "codex/ex-1-task-a",
+                    "base_ref": "main",
+                    "repository": "owner/repo",
+                    "route": "main",
+                    "merge_sha": null,
+                    "issues": [
+                      1
+                    ]
+                  }
+                }
+              },
+              "statuses": {
+                "1": {
+                  "id": "review",
+                  "phase": "review"
+                }
+              },
+              "scopes": {
+                "1": "v2:f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775"
+              },
+              "main_sha": "0000000000000000000000000000000000000001",
+              "source_heads": {
+                "10": "0000000000000000000000000000000000000002"
+              }
+            }
+          }
+        }
+      },
+      "resumed": {
+        "schema_version": 8,
+        "active": null,
+        "run": null,
+        "todo_order": [],
+        "todo_added": {},
+        "execution": {
+          "policy": {
+            "schema_version": 4,
+            "route": "direct",
+            "implementation_limit": 2,
+            "review_limit": 2
+          },
+          "delivery_policy": "a4998d1d9e818d7d1553644321c76c90ce95192639dcf2efcb7249e4b4eaa80f",
+          "claims": {},
+          "tasks": {
+            "1": {
+              "implementers": [
+                {
+                  "actor": "Worker-W001",
+                  "session": "worker_run_1"
+                }
+              ],
+              "state": "reviewing",
+              "worker": "Worker-W001",
+              "coordinator": "Coordinator-C001",
+              "handoff": {
+                "schema_version": 1,
+                "repository": "owner/repo",
+                "subject": {
+                  "kind": "task",
+                  "id": 1
+                },
+                "kind": "handoff",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "coordinator": "Coordinator-C001",
+                "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                "source": {
+                  "branch": "codex/ex-1-task-a",
+                  "pr": 10,
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                },
+                "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                "at": "2026-10-20T00:00:00+00:00"
+              },
+              "pr": 10,
+              "reviewer": "Reviewer-R001"
+            }
+          },
+          "actors": {
+            "Worker-W001": {
+              "session": "worker_run_1",
+              "role": "Worker"
+            },
+            "Reviewer-R001": {
+              "session": "reviewer_run_1",
+              "role": "Reviewer"
+            }
+          },
+          "completed": {},
+          "review_queue": [],
+          "review": null,
+          "source_reviews": {
+            "10": {
+              "id": "00000000000000000000000000000014",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "pr": 10,
+              "actor": "Reviewer-R001",
+              "session": "reviewer_run_1",
+              "coordinator": "Coordinator-C001",
+              "state": "reviewing",
+              "started_at": "2026-10-20T00:00:00+00:00"
+            }
+          },
+          "approvals": {},
+          "batches": {},
+          "integration": null,
+          "intake": null,
+          "history": [
+            {
+              "event": "source-bound",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": null,
+              "actor": "Worker-W001",
+              "session": "worker_run_1"
+            },
+            {
+              "event": "source-bound",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": null,
+              "actor": "Worker-W001",
+              "session": "worker_run_1"
+            },
+            {
+              "event": "handoff-pending",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": {
+                "schema_version": 1,
+                "repository": "owner/repo",
+                "subject": {
+                  "kind": "task",
+                  "id": 1
+                },
+                "kind": "handoff",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "coordinator": "Coordinator-C001",
+                "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                "source": {
+                  "branch": "codex/ex-1-task-a",
+                  "pr": 10,
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                },
+                "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                "at": "2026-10-20T00:00:00+00:00"
+              },
+              "actor": "Worker-W001",
+              "session": "worker_run_1"
+            },
+            {
+              "event": "handed-off",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": {
+                "schema_version": 1,
+                "repository": "owner/repo",
+                "subject": {
+                  "kind": "task",
+                  "id": 1
+                },
+                "kind": "handoff",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "coordinator": "Coordinator-C001",
+                "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                "source": {
+                  "branch": "codex/ex-1-task-a",
+                  "pr": 10,
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                },
+                "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                "at": "2026-10-20T00:00:00+00:00"
+              },
+              "actor": "Worker-W001",
+              "session": "worker_run_1"
+            },
+            {
+              "event": "review-bound",
+              "at": "2026-10-20T00:00:00+00:00",
+              "subject": {
+                "kind": "task",
+                "id": 1
+              },
+              "issue": 1,
+              "handoff": {
+                "schema_version": 1,
+                "repository": "owner/repo",
+                "subject": {
+                  "kind": "task",
+                  "id": 1
+                },
+                "kind": "handoff",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "coordinator": "Coordinator-C001",
+                "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                "source": {
+                  "branch": "codex/ex-1-task-a",
+                  "pr": 10,
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                },
+                "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                "at": "2026-10-20T00:00:00+00:00"
+              },
+              "actor": "Reviewer-R001",
+              "session": "reviewer_run_1"
+            },
+            {
+              "event": "task-paused",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000013",
+              "previous_claim": "00000000000000000000000000000012",
+              "actor": "Reviewer-R001"
+            },
+            {
+              "event": "task-resumed",
+              "at": "2026-10-20T00:00:00+00:00",
+              "issues": [
+                1
+              ],
+              "kind": "reviewing",
+              "pause": "00000000000000000000000000000013",
+              "claim": "00000000000000000000000000000014",
+              "actor": "Reviewer-R001",
+              "main_sha": "0000000000000000000000000000000000000001"
+            }
+          ],
+          "captures": {
+            "schema_version": 1,
+            "policy": null,
+            "operations": {}
+          }
+        },
+        "completion": {
+          "policy": {
+            "schema_version": 1
+          },
+          "base_schema_version": 4,
+          "repository": "owner/repo",
+          "history": [
+            {
+              "event": "adopted"
+            }
+          ]
+        },
+        "task_context": {
+          "policy": {
+            "schema_version": 2
+          },
+          "base_schema_version": 2,
+          "readiness": {
+            "1": {
+              "worker_run_1": {
+                "kind": "task-readiness",
+                "repository": "owner/repo",
+                "issue": 1,
+                "scope": "v2:f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775",
+                "main_sha": "0000000000000000000000000000000000000001",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "verdict": "ready",
+                "assessment_sha256": "32d620c56b1f0177e55970e578e38bd106718e21f8366fbbf4d5eca2806fa143",
+                "report_sha256": "b274caa28650551c4e995e905a1cff61795a2d4d8b72d3a443cfcc20ededa3b5"
+              }
+            }
+          },
+          "history": [
+            {
+              "event": "assessed",
+              "evidence": {
+                "kind": "task-readiness",
+                "repository": "owner/repo",
+                "issue": 1,
+                "scope": "v2:f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775",
+                "main_sha": "0000000000000000000000000000000000000001",
+                "actor": "Worker-W001",
+                "session": "worker_run_1",
+                "verdict": "ready",
+                "assessment_sha256": "32d620c56b1f0177e55970e578e38bd106718e21f8366fbbf4d5eca2806fa143",
+                "report_sha256": "b274caa28650551c4e995e905a1cff61795a2d4d8b72d3a443cfcc20ededa3b5"
+              }
+            }
+          ]
+        },
+        "execution_contract": {
+          "schema_version": 1,
+          "base_schema_version": 5,
+          "repository": "owner/repo",
+          "history": [
+            {
+              "event": "adopted",
+              "at": "2026-10-17T00:00:00Z",
+              "main_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "policy_sha256": "c601f49b93aafc09fd5f70832f70cafaedeb651a9ae4f79483b6eff8197973f3",
+              "report_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          ]
+        },
+        "maintenance_history": [
+          {
+            "event": "maintenance-reserved",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 7,
+              "id": "00000000000000000000000000000010",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual synthetic source checks and scope handoff."
+            }
+          },
+          {
+            "event": "maintenance-resumed",
+            "at": "2026-10-20T00:00:00+00:00",
+            "owner": {
+              "schema_version": 1,
+              "state": "held",
+              "base_schema_version": 7,
+              "id": "00000000000000000000000000000010",
+              "actor": "Maintainer-M001",
+              "session": "maintenance_run",
+              "reserved_at": "2026-10-20T00:00:00+00:00",
+              "report": "Actual synthetic source checks and scope handoff."
+            },
+            "report": "Actual synthetic source checks and scope handoff."
+          }
+        ],
+        "task_pause": {
+          "schema_version": 1,
+          "base_schema_version": 7,
+          "repository": "owner/repo",
+          "activation": {
+            "at": "2026-10-20T00:00:00+00:00",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "report": "Actual synthetic source checks and scope handoff."
+          },
+          "records": {
+            "00000000000000000000000000000013": {
+              "id": "00000000000000000000000000000013",
+              "kind": "reviewing",
+              "issues": [
+                1
+              ],
+              "state": "resumed",
+              "paused_at": "2026-10-20T00:00:00+00:00",
+              "actor": "Reviewer-R001",
+              "session": "reviewer_run_1",
+              "report": "Actual synthetic source checks and scope handoff.",
+              "checkpoint": {
+                "resource": "source-review",
+                "owner": {
+                  "id": "00000000000000000000000000000012",
+                  "subject": {
+                    "kind": "task",
+                    "id": 1
+                  },
+                  "pr": 10,
+                  "actor": "Reviewer-R001",
+                  "session": "reviewer_run_1",
+                  "coordinator": "Coordinator-C001",
+                  "state": "reviewing",
+                  "started_at": "2026-10-20T00:00:00+00:00"
+                },
+                "key": "task:1",
+                "tasks": {
+                  "1": {
+                    "implementers": [
+                      {
+                        "actor": "Worker-W001",
+                        "session": "worker_run_1"
+                      }
+                    ],
+                    "state": "reviewing",
+                    "worker": "Worker-W001",
+                    "coordinator": "Coordinator-C001",
+                    "handoff": {
+                      "schema_version": 1,
+                      "repository": "owner/repo",
+                      "subject": {
+                        "kind": "task",
+                        "id": 1
+                      },
+                      "kind": "handoff",
+                      "actor": "Worker-W001",
+                      "session": "worker_run_1",
+                      "coordinator": "Coordinator-C001",
+                      "worktree_sha256": "e7b6c97ad58bd37ffa965b5af4cc40ad0bb92164fcb2c8462623c5481b795f58",
+                      "claim_sha256": "81904f43e45072f37c47fa1481770d933db6daf2ce51ca35cd8d5d2af2b2b419",
+                      "source": {
+                        "branch": "codex/ex-1-task-a",
+                        "pr": 10,
+                        "base_sha": "0000000000000000000000000000000000000001",
+                        "head_sha": "0000000000000000000000000000000000000002",
+                        "tree_sha": "0000000000000000000000000000000000000066"
+                      },
+                      "scope_sha256": "3a42f92b7f7ed07032e20d849319c01a87c28c73235c42ab0e9b86036173ab00",
+                      "report_sha256": "f86f6259c7f1f05f38c72976eae31c28d3b087989179948a120e501f3870f4f1",
+                      "at": "2026-10-20T00:00:00+00:00"
+                    },
+                    "pr": 10,
+                    "reviewer": "Reviewer-R001"
+                  }
+                },
+                "timers": {},
+                "reviews": {},
+                "source_identity": {
+                  "10": {
+                    "head_ref": "codex/ex-1-task-a",
+                    "base_ref": "main",
+                    "repository": "owner/repo",
+                    "route": "main",
+                    "merge_sha": null,
+                    "issues": [
+                      1
+                    ]
+                  }
+                },
+                "resumed_session": "reviewer_run_1",
+                "resume_report": "Actual synthetic source checks and scope handoff."
+              },
+              "statuses": {
+                "1": {
+                  "id": "review",
+                  "phase": "review"
+                }
+              },
+              "scopes": {
+                "1": "v2:f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775"
+              },
+              "main_sha": "0000000000000000000000000000000000000001",
+              "source_heads": {
+                "10": "0000000000000000000000000000000000000002"
+              },
+              "resumed_at": "2026-10-20T00:00:00+00:00",
+              "resumed_by": "Reviewer-R001",
+              "new_claim": "00000000000000000000000000000014"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "legacy": {
+    "config": {
+      "schema_version": 2,
+      "project": {
+        "name": "Example",
+        "repository": "owner/repo",
+        "base_branch": "main",
+        "id_prefix": "EX"
+      },
+      "completion_label": "Merged",
+      "workflow": [
+        "idea",
+        "backlog",
+        "todo",
+        "in_progress",
+        "review",
+        "stage",
+        "merged"
+      ],
+      "priorities": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "default_backlog_priority": "medium",
+      "release_view_label": "Release",
+      "default_release": "",
+      "refresh_seconds": 60,
+      "modules": [
+        {
+          "id": "accounts",
+          "name": "Accounts",
+          "description": "Account behavior"
+        }
+      ],
+      "release_mode": "single",
+      "delivery_policy": {
+        "schema_version": 1,
+        "staging": {
+          "enabled": true,
+          "branch": "stage",
+          "target": "example/stage"
+        },
+        "completion": "reviewed-merge",
+        "delivery_target": "example/production",
+        "required_checks": [
+          "tests"
+        ]
+      }
+    },
+    "paused": {
+      "schema_version": 8,
+      "active": null,
+      "run": null,
+      "todo_order": [],
+      "todo_added": {},
+      "maintenance_history": [
+        {
+          "event": "maintenance-reserved",
+          "at": "2026-10-20T00:00:00+00:00",
+          "owner": {
+            "schema_version": 1,
+            "state": "held",
+            "base_schema_version": 1,
+            "id": "00000000000000000000000000000015",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "reserved_at": "2026-10-20T00:00:00+00:00",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          }
+        },
+        {
+          "event": "maintenance-resumed",
+          "at": "2026-10-20T00:00:00+00:00",
+          "owner": {
+            "schema_version": 1,
+            "state": "held",
+            "base_schema_version": 1,
+            "id": "00000000000000000000000000000015",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "reserved_at": "2026-10-20T00:00:00+00:00",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          },
+          "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+        }
+      ],
+      "task_pause": {
+        "schema_version": 1,
+        "base_schema_version": 1,
+        "repository": "owner/repo",
+        "activation": {
+          "at": "2026-10-20T00:00:00+00:00",
+          "actor": "Maintainer-M001",
+          "session": "maintenance_run",
+          "main_sha": "0000000000000000000000000000000000000001",
+          "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+        },
+        "records": {
+          "00000000000000000000000000000016": {
+            "id": "00000000000000000000000000000016",
+            "kind": "reviewing",
+            "issues": [
+              1,
+              2
+            ],
+            "state": "paused",
+            "paused_at": "2026-10-20T00:00:00+00:00",
+            "actor": "Reviewer-R001",
+            "session": "actual_old_review",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes.",
+            "checkpoint": {
+              "resource": "legacy-observation",
+              "owner": {
+                "kind": "reviewing",
+                "actor": "Reviewer-R001",
+                "session": "actual_old_review",
+                "issues": [
+                  1,
+                  2
+                ],
+                "started_at": "2026-10-20T00:00:00+00:00"
+              },
+              "active": null,
+              "timer_key": "reviewing",
+              "tasks": {},
+              "timers": {},
+              "reviews": {
+                "10": {
+                  "kind": "independent-review",
+                  "verdict": "approved",
+                  "reviewer": "Reviewer-R001",
+                  "review_session": "actual_old_review",
+                  "execution_lane": "actual_old_review",
+                  "implementer": "Worker-W001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "tree_sha": "0000000000000000000000000000000000000066",
+                  "report": "Actual independent review of all source and task requirements.",
+                  "main_sha": "0000000000000000000000000000000000000001",
+                  "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+                  "issues": [
+                    1
+                  ],
+                  "recorded_at": "2026-10-20T00:00:00+00:00",
+                  "issue_scopes": {
+                    "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+                  }
+                },
+                "20": {
+                  "kind": "independent-review",
+                  "verdict": "approved",
+                  "reviewer": "Reviewer-R001",
+                  "review_session": "actual_old_review",
+                  "execution_lane": "actual_old_review",
+                  "implementer": "Worker-W001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "tree_sha": "0000000000000000000000000000000000000066",
+                  "report": "Actual independent review of all source and task requirements.",
+                  "main_sha": "0000000000000000000000000000000000000001",
+                  "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+                  "issues": [
+                    2
+                  ],
+                  "recorded_at": "2026-10-20T00:00:00+00:00",
+                  "issue_scopes": {
+                    "2": "1b5858444e2349cf83871c19142504d2d26ae096d0c8360a88a65626af1a07ef"
+                  }
+                }
+              },
+              "stage": {
+                "pr": 10,
+                "issues": [
+                  1
+                ],
+                "tree_sha": "0000000000000000000000000000000000000066",
+                "source_sha": "0000000000000000000000000000000000000003",
+                "main_tree": "0000000000000000000000000000000000000065",
+                "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+                "state": "passed",
+                "recorded_at": "2026-10-20T00:00:00+00:00",
+                "issue_scopes": {
+                  "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+                },
+                "verification": {
+                  "result": "passed",
+                  "target": "example/stage",
+                  "source_sha": "0000000000000000000000000000000000000003",
+                  "tree_sha": "0000000000000000000000000000000000000066",
+                  "checks": [
+                    "Actual Stage smoke"
+                  ],
+                  "report": "Actual retained Stage verification"
+                },
+                "verified_at": "2026-10-20T00:00:00+00:00"
+              },
+              "source_identity": {
+                "10": {
+                  "head_ref": "codex/ex-1-task",
+                  "base_ref": "stage",
+                  "repository": "owner/repo",
+                  "route": "stage",
+                  "merge_sha": "0000000000000000000000000000000000000003",
+                  "issues": [
+                    1
+                  ]
+                },
+                "20": {
+                  "head_ref": "codex/ex-2-task",
+                  "base_ref": "stage",
+                  "repository": "owner/repo",
+                  "route": "stage",
+                  "merge_sha": null,
+                  "issues": [
+                    2
+                  ]
+                }
+              }
+            },
+            "statuses": {
+              "1": {
+                "id": "stage",
+                "phase": "stage"
+              },
+              "2": {
+                "id": "review",
+                "phase": "review"
+              }
+            },
+            "scopes": {
+              "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0",
+              "2": "1b5858444e2349cf83871c19142504d2d26ae096d0c8360a88a65626af1a07ef"
+            },
+            "main_sha": "0000000000000000000000000000000000000001",
+            "source_heads": {
+              "10": "0000000000000000000000000000000000000002",
+              "20": "0000000000000000000000000000000000000002"
+            }
+          }
+        }
+      },
+      "timing_history": [
+        {
+          "issue": 1,
+          "kind": "implementing",
+          "started_at": "2026-10-20T00:00:00+00:00",
+          "finished_at": "2026-10-20T00:00:00+00:00"
+        },
+        {
+          "issue": 2,
+          "kind": "implementing",
+          "started_at": "2026-10-20T00:00:00+00:00",
+          "finished_at": "2026-10-20T00:00:00+00:00"
+        },
+        {
+          "issue": 1,
+          "kind": "reviewing",
+          "started_at": "2026-10-20T00:00:00+00:00",
+          "finished_at": "2026-10-20T00:00:00+00:00"
+        }
+      ],
+      "activity_timers": {
+        "reviewing": {
+          "kind": "reviewing",
+          "actor": "Reviewer-R001",
+          "session": "actual_old_review",
+          "issues": [
+            2
+          ],
+          "started_at": "2026-10-20T00:00:00+00:00"
+        }
+      },
+      "delivery_workflow": {
+        "reviews": {},
+        "stage": {
+          "pr": 10,
+          "issues": [
+            1
+          ],
+          "tree_sha": "0000000000000000000000000000000000000066",
+          "source_sha": "0000000000000000000000000000000000000003",
+          "main_tree": "0000000000000000000000000000000000000065",
+          "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+          "state": "passed",
+          "recorded_at": "2026-10-20T00:00:00+00:00",
+          "issue_scopes": {
+            "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+          },
+          "verification": {
+            "result": "passed",
+            "target": "example/stage",
+            "source_sha": "0000000000000000000000000000000000000003",
+            "tree_sha": "0000000000000000000000000000000000000066",
+            "checks": [
+              "Actual Stage smoke"
+            ],
+            "report": "Actual retained Stage verification"
+          },
+          "verified_at": "2026-10-20T00:00:00+00:00"
+        }
+      }
+    },
+    "resumed": {
+      "schema_version": 8,
+      "active": {
+        "issue": 1,
+        "id": "00000000000000000000000000000017",
+        "actor": "Reviewer-R009",
+        "session": "actual_fresh_review",
+        "kind": "reviewing",
+        "started_at": "2026-10-20T00:00:00+00:00",
+        "branch": null,
+        "worktree": null
+      },
+      "run": null,
+      "todo_order": [],
+      "todo_added": {},
+      "maintenance_history": [
+        {
+          "event": "maintenance-reserved",
+          "at": "2026-10-20T00:00:00+00:00",
+          "owner": {
+            "schema_version": 1,
+            "state": "held",
+            "base_schema_version": 1,
+            "id": "00000000000000000000000000000015",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "reserved_at": "2026-10-20T00:00:00+00:00",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          }
+        },
+        {
+          "event": "maintenance-resumed",
+          "at": "2026-10-20T00:00:00+00:00",
+          "owner": {
+            "schema_version": 1,
+            "state": "held",
+            "base_schema_version": 1,
+            "id": "00000000000000000000000000000015",
+            "actor": "Maintainer-M001",
+            "session": "maintenance_run",
+            "reserved_at": "2026-10-20T00:00:00+00:00",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+          },
+          "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+        }
+      ],
+      "task_pause": {
+        "schema_version": 1,
+        "base_schema_version": 1,
+        "repository": "owner/repo",
+        "activation": {
+          "at": "2026-10-20T00:00:00+00:00",
+          "actor": "Maintainer-M001",
+          "session": "maintenance_run",
+          "main_sha": "0000000000000000000000000000000000000001",
+          "report": "Actual checks passed; exact PR is ready. Private implementation notes."
+        },
+        "records": {
+          "00000000000000000000000000000016": {
+            "id": "00000000000000000000000000000016",
+            "kind": "reviewing",
+            "issues": [
+              1,
+              2
+            ],
+            "state": "resumed",
+            "paused_at": "2026-10-20T00:00:00+00:00",
+            "actor": "Reviewer-R001",
+            "session": "actual_old_review",
+            "report": "Actual checks passed; exact PR is ready. Private implementation notes.",
+            "checkpoint": {
+              "resource": "legacy-observation",
+              "owner": {
+                "kind": "reviewing",
+                "actor": "Reviewer-R001",
+                "session": "actual_old_review",
+                "issues": [
+                  1,
+                  2
+                ],
+                "started_at": "2026-10-20T00:00:00+00:00"
+              },
+              "active": null,
+              "timer_key": "reviewing",
+              "tasks": {},
+              "timers": {},
+              "reviews": {
+                "10": {
+                  "kind": "independent-review",
+                  "verdict": "approved",
+                  "reviewer": "Reviewer-R001",
+                  "review_session": "actual_old_review",
+                  "execution_lane": "actual_old_review",
+                  "implementer": "Worker-W001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "tree_sha": "0000000000000000000000000000000000000066",
+                  "report": "Actual independent review of all source and task requirements.",
+                  "main_sha": "0000000000000000000000000000000000000001",
+                  "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+                  "issues": [
+                    1
+                  ],
+                  "recorded_at": "2026-10-20T00:00:00+00:00",
+                  "issue_scopes": {
+                    "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+                  }
+                },
+                "20": {
+                  "kind": "independent-review",
+                  "verdict": "approved",
+                  "reviewer": "Reviewer-R001",
+                  "review_session": "actual_old_review",
+                  "execution_lane": "actual_old_review",
+                  "implementer": "Worker-W001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "tree_sha": "0000000000000000000000000000000000000066",
+                  "report": "Actual independent review of all source and task requirements.",
+                  "main_sha": "0000000000000000000000000000000000000001",
+                  "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+                  "issues": [
+                    2
+                  ],
+                  "recorded_at": "2026-10-20T00:00:00+00:00",
+                  "issue_scopes": {
+                    "2": "1b5858444e2349cf83871c19142504d2d26ae096d0c8360a88a65626af1a07ef"
+                  }
+                }
+              },
+              "stage": {
+                "pr": 10,
+                "issues": [
+                  1
+                ],
+                "tree_sha": "0000000000000000000000000000000000000066",
+                "source_sha": "0000000000000000000000000000000000000003",
+                "main_tree": "0000000000000000000000000000000000000065",
+                "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+                "state": "passed",
+                "recorded_at": "2026-10-20T00:00:00+00:00",
+                "issue_scopes": {
+                  "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+                },
+                "verification": {
+                  "result": "passed",
+                  "target": "example/stage",
+                  "source_sha": "0000000000000000000000000000000000000003",
+                  "tree_sha": "0000000000000000000000000000000000000066",
+                  "checks": [
+                    "Actual Stage smoke"
+                  ],
+                  "report": "Actual retained Stage verification"
+                },
+                "verified_at": "2026-10-20T00:00:00+00:00"
+              },
+              "source_identity": {
+                "10": {
+                  "head_ref": "codex/ex-1-task",
+                  "base_ref": "stage",
+                  "repository": "owner/repo",
+                  "route": "stage",
+                  "merge_sha": "0000000000000000000000000000000000000003",
+                  "issues": [
+                    1
+                  ]
+                },
+                "20": {
+                  "head_ref": "codex/ex-2-task",
+                  "base_ref": "stage",
+                  "repository": "owner/repo",
+                  "route": "stage",
+                  "merge_sha": null,
+                  "issues": [
+                    2
+                  ]
+                }
+              },
+              "resumed_session": "actual_fresh_review",
+              "resume_report": "Actual checks passed; exact PR is ready. Private implementation notes."
+            },
+            "statuses": {
+              "1": {
+                "id": "stage",
+                "phase": "stage"
+              },
+              "2": {
+                "id": "review",
+                "phase": "review"
+              }
+            },
+            "scopes": {
+              "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0",
+              "2": "1b5858444e2349cf83871c19142504d2d26ae096d0c8360a88a65626af1a07ef"
+            },
+            "main_sha": "0000000000000000000000000000000000000001",
+            "source_heads": {
+              "10": "0000000000000000000000000000000000000002",
+              "20": "0000000000000000000000000000000000000002"
+            },
+            "resumed_at": "2026-10-20T00:00:00+00:00",
+            "resumed_by": "Reviewer-R009",
+            "new_claim": "00000000000000000000000000000017"
+          }
+        }
+      },
+      "timing_history": [
+        {
+          "issue": 1,
+          "kind": "implementing",
+          "started_at": "2026-10-20T00:00:00+00:00",
+          "finished_at": "2026-10-20T00:00:00+00:00"
+        },
+        {
+          "issue": 2,
+          "kind": "implementing",
+          "started_at": "2026-10-20T00:00:00+00:00",
+          "finished_at": "2026-10-20T00:00:00+00:00"
+        },
+        {
+          "issue": 1,
+          "kind": "reviewing",
+          "started_at": "2026-10-20T00:00:00+00:00",
+          "finished_at": "2026-10-20T00:00:00+00:00"
+        }
+      ],
+      "activity_timers": {
+        "reviewing": {
+          "kind": "reviewing",
+          "actor": "Reviewer-R009",
+          "session": "actual_fresh_review",
+          "issues": [
+            1,
+            2
+          ],
+          "started_at": "2026-10-20T00:00:00+00:00",
+          "id": "00000000000000000000000000000017"
+        }
+      },
+      "delivery_workflow": {
+        "reviews": {},
+        "stage": {
+          "pr": 10,
+          "issues": [
+            1
+          ],
+          "tree_sha": "0000000000000000000000000000000000000066",
+          "source_sha": "0000000000000000000000000000000000000003",
+          "main_tree": "0000000000000000000000000000000000000065",
+          "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+          "state": "passed",
+          "recorded_at": "2026-10-20T00:00:00+00:00",
+          "issue_scopes": {
+            "1": "cfef67596e9a9443dbb18ca2407418a4860a0d118b938d147949b86566dbdbe0"
+          },
+          "verification": {
+            "result": "passed",
+            "target": "example/stage",
+            "source_sha": "0000000000000000000000000000000000000003",
+            "tree_sha": "0000000000000000000000000000000000000066",
+            "checks": [
+              "Actual Stage smoke"
+            ],
+            "report": "Actual retained Stage verification"
+          },
+          "verified_at": "2026-10-20T00:00:00+00:00"
+        }
+      }
+    },
+    "old_review": {
+      "kind": "independent-review",
+      "verdict": "approved",
+      "reviewer": "Reviewer-R001",
+      "review_session": "actual_old_review",
+      "execution_lane": "actual_old_review",
+      "implementer": "Worker-W001",
+      "head_sha": "0000000000000000000000000000000000000002",
+      "base_sha": "0000000000000000000000000000000000000001",
+      "tree_sha": "0000000000000000000000000000000000000066",
+      "report": "Actual independent review of all source and task requirements."
+    },
+    "fresh_review": {
+      "kind": "independent-review",
+      "verdict": "approved",
+      "reviewer": "Reviewer-R009",
+      "review_session": "actual_fresh_review",
+      "execution_lane": "00000000000000000000000000000017",
+      "implementer": "Worker-W001",
+      "head_sha": "0000000000000000000000000000000000000002",
+      "base_sha": "0000000000000000000000000000000000000001",
+      "tree_sha": "0000000000000000000000000000000000000066",
+      "report": "Actual independent review of all source and task requirements."
+    },
+    "requests": {
+      "repos/owner/repo/pulls/11": {
+        "number": 11,
+        "state": "open",
+        "draft": false,
+        "merged": false,
+        "title": "[EX-1] Task 1",
+        "body": "Tracker issues: EX-1",
+        "head": {
+          "ref": "stage",
+          "sha": "0000000000000000000000000000000000000003",
+          "repo": {
+            "full_name": "owner/repo"
+          }
+        },
+        "base": {
+          "ref": "main",
+          "sha": "0000000000000000000000000000000000000001"
+        },
+        "merge_commit_sha": "0000000000000000000000000000000000000003"
+      },
+      "repos/owner/repo/issues/1": {
+        "number": 1,
+        "title": "Task 1",
+        "state": "open",
+        "labels": [
+          {
+            "name": "module:accounts"
+          },
+          {
+            "name": "priority:medium"
+          },
+          {
+            "name": "status:stage"
+          },
+          {
+            "name": "type:improvement"
+          }
+        ],
+        "body": "",
+        "created_at": "2026-01-01T00:00:00Z"
+      },
+      "repos/owner/repo/contents/.tracker-state.json?ref=tracker-state": {
+        "content": "eyJzY2hlbWFfdmVyc2lvbiI6IDgsICJhY3RpdmUiOiB7Imlzc3VlIjogMSwgImlkIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDE3IiwgImFjdG9yIjogIlJldmlld2VyLVIwMDkiLCAic2Vzc2lvbiI6ICJhY3R1YWxfZnJlc2hfcmV2aWV3IiwgImtpbmQiOiAicmV2aWV3aW5nIiwgInN0YXJ0ZWRfYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCIsICJicmFuY2giOiBudWxsLCAid29ya3RyZWUiOiBudWxsfSwgInJ1biI6IG51bGwsICJ0b2RvX29yZGVyIjogW10sICJ0b2RvX2FkZGVkIjoge30sICJtYWludGVuYW5jZV9oaXN0b3J5IjogW3siZXZlbnQiOiAibWFpbnRlbmFuY2UtcmVzZXJ2ZWQiLCAiYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCIsICJvd25lciI6IHsic2NoZW1hX3ZlcnNpb24iOiAxLCAic3RhdGUiOiAiaGVsZCIsICJiYXNlX3NjaGVtYV92ZXJzaW9uIjogMSwgImlkIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDE1IiwgImFjdG9yIjogIk1haW50YWluZXItTTAwMSIsICJzZXNzaW9uIjogIm1haW50ZW5hbmNlX3J1biIsICJyZXNlcnZlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgInJlcG9ydCI6ICJBY3R1YWwgY2hlY2tzIHBhc3NlZDsgZXhhY3QgUFIgaXMgcmVhZHkuIFByaXZhdGUgaW1wbGVtZW50YXRpb24gbm90ZXMuIn19LCB7ImV2ZW50IjogIm1haW50ZW5hbmNlLXJlc3VtZWQiLCAiYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCIsICJvd25lciI6IHsic2NoZW1hX3ZlcnNpb24iOiAxLCAic3RhdGUiOiAiaGVsZCIsICJiYXNlX3NjaGVtYV92ZXJzaW9uIjogMSwgImlkIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDE1IiwgImFjdG9yIjogIk1haW50YWluZXItTTAwMSIsICJzZXNzaW9uIjogIm1haW50ZW5hbmNlX3J1biIsICJyZXNlcnZlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgInJlcG9ydCI6ICJBY3R1YWwgY2hlY2tzIHBhc3NlZDsgZXhhY3QgUFIgaXMgcmVhZHkuIFByaXZhdGUgaW1wbGVtZW50YXRpb24gbm90ZXMuIn0sICJyZXBvcnQiOiAiQWN0dWFsIGNoZWNrcyBwYXNzZWQ7IGV4YWN0IFBSIGlzIHJlYWR5LiBQcml2YXRlIGltcGxlbWVudGF0aW9uIG5vdGVzLiJ9XSwgInRhc2tfcGF1c2UiOiB7InNjaGVtYV92ZXJzaW9uIjogMSwgImJhc2Vfc2NoZW1hX3ZlcnNpb24iOiAxLCAicmVwb3NpdG9yeSI6ICJvd25lci9yZXBvIiwgImFjdGl2YXRpb24iOiB7ImF0IjogIjIwMjYtMTAtMjBUMDA6MDA6MDArMDA6MDAiLCAiYWN0b3IiOiAiTWFpbnRhaW5lci1NMDAxIiwgInNlc3Npb24iOiAibWFpbnRlbmFuY2VfcnVuIiwgIm1haW5fc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEiLCAicmVwb3J0IjogIkFjdHVhbCBjaGVja3MgcGFzc2VkOyBleGFjdCBQUiBpcyByZWFkeS4gUHJpdmF0ZSBpbXBsZW1lbnRhdGlvbiBub3Rlcy4ifSwgInJlY29yZHMiOiB7IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDE2IjogeyJpZCI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxNiIsICJraW5kIjogInJldmlld2luZyIsICJpc3N1ZXMiOiBbMSwgMl0sICJzdGF0ZSI6ICJyZXN1bWVkIiwgInBhdXNlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgImFjdG9yIjogIlJldmlld2VyLVIwMDEiLCAic2Vzc2lvbiI6ICJhY3R1YWxfb2xkX3JldmlldyIsICJyZXBvcnQiOiAiQWN0dWFsIGNoZWNrcyBwYXNzZWQ7IGV4YWN0IFBSIGlzIHJlYWR5LiBQcml2YXRlIGltcGxlbWVudGF0aW9uIG5vdGVzLiIsICJjaGVja3BvaW50IjogeyJyZXNvdXJjZSI6ICJsZWdhY3ktb2JzZXJ2YXRpb24iLCAib3duZXIiOiB7ImtpbmQiOiAicmV2aWV3aW5nIiwgImFjdG9yIjogIlJldmlld2VyLVIwMDEiLCAic2Vzc2lvbiI6ICJhY3R1YWxfb2xkX3JldmlldyIsICJpc3N1ZXMiOiBbMSwgMl0sICJzdGFydGVkX2F0IjogIjIwMjYtMTAtMjBUMDA6MDA6MDArMDA6MDAifSwgImFjdGl2ZSI6IG51bGwsICJ0aW1lcl9rZXkiOiAicmV2aWV3aW5nIiwgInRhc2tzIjoge30sICJ0aW1lcnMiOiB7fSwgInJldmlld3MiOiB7IjEwIjogeyJraW5kIjogImluZGVwZW5kZW50LXJldmlldyIsICJ2ZXJkaWN0IjogImFwcHJvdmVkIiwgInJldmlld2VyIjogIlJldmlld2VyLVIwMDEiLCAicmV2aWV3X3Nlc3Npb24iOiAiYWN0dWFsX29sZF9yZXZpZXciLCAiZXhlY3V0aW9uX2xhbmUiOiAiYWN0dWFsX29sZF9yZXZpZXciLCAiaW1wbGVtZW50ZXIiOiAiV29ya2VyLVcwMDEiLCAiaGVhZF9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMiIsICJiYXNlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxIiwgInRyZWVfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwNjYiLCAicmVwb3J0IjogIkFjdHVhbCBpbmRlcGVuZGVudCByZXZpZXcgb2YgYWxsIHNvdXJjZSBhbmQgdGFzayByZXF1aXJlbWVudHMuIiwgIm1haW5fc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEiLCAicG9saWN5IjogIjU2MWU5NTFiNTUzM2QyNGQyOGZlNjJmNTZkNjQ2NTZmMTdiNzUxZmMzNTQ4YWE2OTk1ZDc1ZGYxNGQ2ZjMzZGEiLCAiaXNzdWVzIjogWzFdLCAicmVjb3JkZWRfYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCIsICJpc3N1ZV9zY29wZXMiOiB7IjEiOiAiY2ZlZjY3NTk2ZTlhOTQ0M2RiYjE4Y2EyNDA3NDE4YTQ4NjBhMGQxMThiOTM4ZDE0Nzk0OWI4NjU2NmRiZGJlMCJ9fSwgIjIwIjogeyJraW5kIjogImluZGVwZW5kZW50LXJldmlldyIsICJ2ZXJkaWN0IjogImFwcHJvdmVkIiwgInJldmlld2VyIjogIlJldmlld2VyLVIwMDEiLCAicmV2aWV3X3Nlc3Npb24iOiAiYWN0dWFsX29sZF9yZXZpZXciLCAiZXhlY3V0aW9uX2xhbmUiOiAiYWN0dWFsX29sZF9yZXZpZXciLCAiaW1wbGVtZW50ZXIiOiAiV29ya2VyLVcwMDEiLCAiaGVhZF9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMiIsICJiYXNlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxIiwgInRyZWVfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwNjYiLCAicmVwb3J0IjogIkFjdHVhbCBpbmRlcGVuZGVudCByZXZpZXcgb2YgYWxsIHNvdXJjZSBhbmQgdGFzayByZXF1aXJlbWVudHMuIiwgIm1haW5fc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEiLCAicG9saWN5IjogIjU2MWU5NTFiNTUzM2QyNGQyOGZlNjJmNTZkNjQ2NTZmMTdiNzUxZmMzNTQ4YWE2OTk1ZDc1ZGYxNGQ2ZjMzZGEiLCAiaXNzdWVzIjogWzJdLCAicmVjb3JkZWRfYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCIsICJpc3N1ZV9zY29wZXMiOiB7IjIiOiAiMWI1ODU4NDQ0ZTIzNDljZjgzODcxYzE5MTQyNTA0ZDJkMjZhZTA5NmQwYzgzNjBhODhhNjU2MjZhZjFhMDdlZiJ9fX0sICJzdGFnZSI6IHsicHIiOiAxMCwgImlzc3VlcyI6IFsxXSwgInRyZWVfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwNjYiLCAic291cmNlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAzIiwgIm1haW5fdHJlZSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDY1IiwgInBvbGljeSI6ICI1NjFlOTUxYjU1MzNkMjRkMjhmZTYyZjU2ZDY0NjU2ZjE3Yjc1MWZjMzU0OGFhNjk5NWQ3NWRmMTRkNmYzM2RhIiwgInN0YXRlIjogInBhc3NlZCIsICJyZWNvcmRlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgImlzc3VlX3Njb3BlcyI6IHsiMSI6ICJjZmVmNjc1OTZlOWE5NDQzZGJiMThjYTI0MDc0MThhNDg2MGEwZDExOGI5MzhkMTQ3OTQ5Yjg2NTY2ZGJkYmUwIn0sICJ2ZXJpZmljYXRpb24iOiB7InJlc3VsdCI6ICJwYXNzZWQiLCAidGFyZ2V0IjogImV4YW1wbGUvc3RhZ2UiLCAic291cmNlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAzIiwgInRyZWVfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwNjYiLCAiY2hlY2tzIjogWyJBY3R1YWwgU3RhZ2Ugc21va2UiXSwgInJlcG9ydCI6ICJBY3R1YWwgcmV0YWluZWQgU3RhZ2UgdmVyaWZpY2F0aW9uIn0sICJ2ZXJpZmllZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIn0sICJzb3VyY2VfaWRlbnRpdHkiOiB7IjEwIjogeyJoZWFkX3JlZiI6ICJjb2RleC9leC0xLXRhc2siLCAiYmFzZV9yZWYiOiAic3RhZ2UiLCAicmVwb3NpdG9yeSI6ICJvd25lci9yZXBvIiwgInJvdXRlIjogInN0YWdlIiwgIm1lcmdlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAzIiwgImlzc3VlcyI6IFsxXX0sICIyMCI6IHsiaGVhZF9yZWYiOiAiY29kZXgvZXgtMi10YXNrIiwgImJhc2VfcmVmIjogInN0YWdlIiwgInJlcG9zaXRvcnkiOiAib3duZXIvcmVwbyIsICJyb3V0ZSI6ICJzdGFnZSIsICJtZXJnZV9zaGEiOiBudWxsLCAiaXNzdWVzIjogWzJdfX0sICJyZXN1bWVkX3Nlc3Npb24iOiAiYWN0dWFsX2ZyZXNoX3JldmlldyIsICJyZXN1bWVfcmVwb3J0IjogIkFjdHVhbCBjaGVja3MgcGFzc2VkOyBleGFjdCBQUiBpcyByZWFkeS4gUHJpdmF0ZSBpbXBsZW1lbnRhdGlvbiBub3Rlcy4ifSwgInN0YXR1c2VzIjogeyIxIjogeyJpZCI6ICJzdGFnZSIsICJwaGFzZSI6ICJzdGFnZSJ9LCAiMiI6IHsiaWQiOiAicmV2aWV3IiwgInBoYXNlIjogInJldmlldyJ9fSwgInNjb3BlcyI6IHsiMSI6ICJjZmVmNjc1OTZlOWE5NDQzZGJiMThjYTI0MDc0MThhNDg2MGEwZDExOGI5MzhkMTQ3OTQ5Yjg2NTY2ZGJkYmUwIiwgIjIiOiAiMWI1ODU4NDQ0ZTIzNDljZjgzODcxYzE5MTQyNTA0ZDJkMjZhZTA5NmQwYzgzNjBhODhhNjU2MjZhZjFhMDdlZiJ9LCAibWFpbl9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSIsICJzb3VyY2VfaGVhZHMiOiB7IjEwIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDIiLCAiMjAiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMiJ9LCAicmVzdW1lZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgInJlc3VtZWRfYnkiOiAiUmV2aWV3ZXItUjAwOSIsICJuZXdfY2xhaW0iOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTcifX19LCAidGltaW5nX2hpc3RvcnkiOiBbeyJpc3N1ZSI6IDEsICJraW5kIjogImltcGxlbWVudGluZyIsICJzdGFydGVkX2F0IjogIjIwMjYtMTAtMjBUMDA6MDA6MDArMDA6MDAiLCAiZmluaXNoZWRfYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCJ9LCB7Imlzc3VlIjogMiwgImtpbmQiOiAiaW1wbGVtZW50aW5nIiwgInN0YXJ0ZWRfYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCIsICJmaW5pc2hlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIn0sIHsiaXNzdWUiOiAxLCAia2luZCI6ICJyZXZpZXdpbmciLCAic3RhcnRlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgImZpbmlzaGVkX2F0IjogIjIwMjYtMTAtMjBUMDA6MDA6MDArMDA6MDAifV0sICJhY3Rpdml0eV90aW1lcnMiOiB7InJldmlld2luZyI6IHsia2luZCI6ICJyZXZpZXdpbmciLCAiYWN0b3IiOiAiUmV2aWV3ZXItUjAwOSIsICJzZXNzaW9uIjogImFjdHVhbF9mcmVzaF9yZXZpZXciLCAiaXNzdWVzIjogWzEsIDJdLCAic3RhcnRlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgImlkIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDE3In19LCAiZGVsaXZlcnlfd29ya2Zsb3ciOiB7InJldmlld3MiOiB7IjEwIjogeyJraW5kIjogImluZGVwZW5kZW50LXJldmlldyIsICJ2ZXJkaWN0IjogImFwcHJvdmVkIiwgInJldmlld2VyIjogIlJldmlld2VyLVIwMDkiLCAicmV2aWV3X3Nlc3Npb24iOiAiYWN0dWFsX2ZyZXNoX3JldmlldyIsICJleGVjdXRpb25fbGFuZSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxNyIsICJpbXBsZW1lbnRlciI6ICJXb3JrZXItVzAwMSIsICJoZWFkX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyIiwgImJhc2Vfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEiLCAidHJlZV9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA2NiIsICJyZXBvcnQiOiAiQWN0dWFsIGluZGVwZW5kZW50IHJldmlldyBvZiBhbGwgc291cmNlIGFuZCB0YXNrIHJlcXVpcmVtZW50cy4iLCAibWFpbl9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSIsICJwb2xpY3kiOiAiNTYxZTk1MWI1NTMzZDI0ZDI4ZmU2MmY1NmQ2NDY1NmYxN2I3NTFmYzM1NDhhYTY5OTVkNzVkZjE0ZDZmMzNkYSIsICJpc3N1ZXMiOiBbMV0sICJyZWNvcmRlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgImlzc3VlX3Njb3BlcyI6IHsiMSI6ICJjZmVmNjc1OTZlOWE5NDQzZGJiMThjYTI0MDc0MThhNDg2MGEwZDExOGI5MzhkMTQ3OTQ5Yjg2NTY2ZGJkYmUwIn19LCAiMjAiOiB7ImtpbmQiOiAiaW5kZXBlbmRlbnQtcmV2aWV3IiwgInZlcmRpY3QiOiAiYXBwcm92ZWQiLCAicmV2aWV3ZXIiOiAiUmV2aWV3ZXItUjAwOSIsICJyZXZpZXdfc2Vzc2lvbiI6ICJhY3R1YWxfZnJlc2hfcmV2aWV3IiwgImV4ZWN1dGlvbl9sYW5lIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDE3IiwgImltcGxlbWVudGVyIjogIldvcmtlci1XMDAxIiwgImhlYWRfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDIiLCAiYmFzZV9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSIsICJ0cmVlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDY2IiwgInJlcG9ydCI6ICJBY3R1YWwgaW5kZXBlbmRlbnQgcmV2aWV3IG9mIGFsbCBzb3VyY2UgYW5kIHRhc2sgcmVxdWlyZW1lbnRzLiIsICJtYWluX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxIiwgInBvbGljeSI6ICI1NjFlOTUxYjU1MzNkMjRkMjhmZTYyZjU2ZDY0NjU2ZjE3Yjc1MWZjMzU0OGFhNjk5NWQ3NWRmMTRkNmYzM2RhIiwgImlzc3VlcyI6IFsyXSwgInJlY29yZGVkX2F0IjogIjIwMjYtMTAtMjBUMDA6MDA6MDArMDA6MDAiLCAiaXNzdWVfc2NvcGVzIjogeyIyIjogIjFiNTg1ODQ0NGUyMzQ5Y2Y4Mzg3MWMxOTE0MjUwNGQyZDI2YWUwOTZkMGM4MzYwYTg4YTY1NjI2YWYxYTA3ZWYifX19LCAic3RhZ2UiOiB7InByIjogMTAsICJpc3N1ZXMiOiBbMV0sICJ0cmVlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDY2IiwgInNvdXJjZV9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMyIsICJtYWluX3RyZWUiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA2NSIsICJwb2xpY3kiOiAiNTYxZTk1MWI1NTMzZDI0ZDI4ZmU2MmY1NmQ2NDY1NmYxN2I3NTFmYzM1NDhhYTY5OTVkNzVkZjE0ZDZmMzNkYSIsICJzdGF0ZSI6ICJwYXNzZWQiLCAicmVjb3JkZWRfYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCIsICJpc3N1ZV9zY29wZXMiOiB7IjEiOiAiY2ZlZjY3NTk2ZTlhOTQ0M2RiYjE4Y2EyNDA3NDE4YTQ4NjBhMGQxMThiOTM4ZDE0Nzk0OWI4NjU2NmRiZGJlMCJ9LCAidmVyaWZpY2F0aW9uIjogeyJyZXN1bHQiOiAicGFzc2VkIiwgInRhcmdldCI6ICJleGFtcGxlL3N0YWdlIiwgInNvdXJjZV9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMyIsICJ0cmVlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDY2IiwgImNoZWNrcyI6IFsiQWN0dWFsIFN0YWdlIHNtb2tlIl0sICJyZXBvcnQiOiAiQWN0dWFsIHJldGFpbmVkIFN0YWdlIHZlcmlmaWNhdGlvbiJ9LCAidmVyaWZpZWRfYXQiOiAiMjAyNi0xMC0yMFQwMDowMDowMCswMDowMCJ9fX0=",
+        "sha": "19"
+      },
+      "repos/owner/repo/git/commits/0000000000000000000000000000000000000003": {
+        "tree": {
+          "sha": "0000000000000000000000000000000000000066"
+        },
+        "parents": [
+          {
+            "sha": "0000000000000000000000000000000000000001"
+          },
+          {
+            "sha": "0000000000000000000000000000000000000002"
+          }
+        ]
+      },
+      "repos/owner/repo/git/commits/0000000000000000000000000000000000000001": {
+        "tree": {
+          "sha": "0000000000000000000000000000000000000065"
+        },
+        "parents": []
+      },
+      "repos/owner/repo/pulls/10": {
+        "number": 10,
+        "state": "closed",
+        "draft": false,
+        "merged": true,
+        "title": "[EX-1] Task 1",
+        "body": "Tracker issues: EX-1",
+        "head": {
+          "ref": "codex/ex-1-task",
+          "sha": "0000000000000000000000000000000000000002",
+          "repo": {
+            "full_name": "owner/repo"
+          }
+        },
+        "base": {
+          "ref": "stage",
+          "sha": "0000000000000000000000000000000000000001"
+        },
+        "merge_commit_sha": "0000000000000000000000000000000000000003"
+      },
+      "repos/owner/repo/pulls/11/commits?per_page=100&page=1": [
+        {
+          "commit": {
+            "message": "Implement A"
+          }
+        }
+      ],
+      "repos/owner/repo/commits/0000000000000000000000000000000000000003/check-runs?per_page=100&page=1": {
+        "check_runs": [
+          {
+            "id": 1,
+            "name": "tests",
+            "head_sha": "0000000000000000000000000000000000000003",
+            "app": {
+              "slug": "github-actions"
+            },
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      "repos/owner/repo/pulls/20": {
+        "number": 20,
+        "state": "open",
+        "draft": false,
+        "merged": false,
+        "title": "[EX-2] Task 2",
+        "body": "Tracker issues: EX-2",
+        "head": {
+          "ref": "codex/ex-2-task",
+          "sha": "0000000000000000000000000000000000000002",
+          "repo": {
+            "full_name": "owner/repo"
+          }
+        },
+        "base": {
+          "ref": "stage",
+          "sha": "0000000000000000000000000000000000000001"
+        }
+      },
+      "repos/owner/repo/issues/2": {
+        "number": 2,
+        "title": "Task 2",
+        "state": "open",
+        "labels": [
+          {
+            "name": "module:accounts"
+          },
+          {
+            "name": "priority:medium"
+          },
+          {
+            "name": "status:review"
+          },
+          {
+            "name": "type:improvement"
+          }
+        ],
+        "body": "",
+        "created_at": "2026-01-02T00:00:00Z"
+      }
+    },
+    "admission": {
+      "repository": "owner/repo",
+      "pr": 11,
+      "issues": [
+        1
+      ],
+      "verified": true,
+      "admission": {
+        "tree_sha": "0000000000000000000000000000000000000066",
+        "policy": "561e951b5533d24d28fe62f56d64656f17b751fc3548aa6995d75df14d6f33da",
+        "route": "promotion",
+        "main_sha": null
+      }
+    },
+    "separate": {
+      "repository": "owner/repo",
+      "pr": 20,
+      "issues": [
+        2
+      ],
+      "verified": true
+    }
+  }
+}

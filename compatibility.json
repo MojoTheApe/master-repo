@@ -1,7 +1,7 @@
 {
   "tracker_repository": "MojoTheApe/task-tracker",
-  "tracker_revision": "9c3ad4deec6b3596d5ef48400430b126155012dd",
+  "tracker_revision": "b4ace9d5de2fb4034ca507d96da028e66ac5adc5",
   "delivery_contract": 1,
   "export_contract": 1,
-  "export_contract_sha256": "3ecdb2275cd42b3652e4c059e9263c706a30b0cb9d344f92791c8fdc3d6b2b6c"
+  "export_contract_sha256": "bdf897d8dea51a4563feaa7ed18a85de98c346b70157e42f7b0fd3b1bcebdeed"
 }

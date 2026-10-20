@@ -19,7 +19,8 @@ class PortableArtifacts(unittest.TestCase):
         self.assertEqual(len(data['contexts']), 8)
         modern = 'direct.json' in fixtures.fixture_sources(record)
         support = record.get('contracts', {}).get('process_support') == [1]
-        raw_count = 11 + int(modern) + int(support)
+        pause = record.get('contracts', {}).get('task_pause') == [1]
+        raw_count = 11 + int(modern) + int(support) + int(pause)
         self.assertEqual(len(record['layouts']['raw']), raw_count)
         self.assertEqual(len(record['layouts']['separated']), raw_count * 2)
         self.assertEqual(provenance['engine'], record['engine'])
@@ -30,6 +31,9 @@ class PortableArtifacts(unittest.TestCase):
         self.assertEqual(len(fixtures.direct_cases(artifacts)), 4 if modern else 0)
         if modern:
             self.assertIn(b'def exercise_direct(', artifacts['runner.py'])
+        if pause:
+            self.assertIn('pause.json', artifacts)
+            self.assertIn(b'def exercise_pause(', artifacts['runner.py'])
         if support:
             self.assertIn('process.json', artifacts)
             self.assertIn(b'def exercise_support(', artifacts['runner.py'])
@@ -95,3 +99,14 @@ class PortableArtifacts(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+
+
+class PauseArtifacts(unittest.TestCase):
+    def test_advertised_pause_closure_cannot_drop_native_history(self):
+        record,_,artifacts,_=verified_artifacts()
+        if record.get('contracts',{}).get('task_pause') != [1]:
+            self.skipTest('Published compatible Tracker has not been selected yet')
+        self.assertIn('pause.json',artifacts)
+        data=json.loads(artifacts['pause.json'])
+        self.assertIs(data['synthetic'],True)
+        self.assertEqual([row['version'] for row in data['cases']],[1,2,3,4])

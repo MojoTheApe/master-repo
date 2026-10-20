@@ -73,7 +73,18 @@ its adopted local instructions. Record actual exceptions in `delivery.json`.
 Follow the selected pinned Tracker guide for `activity report` and the foreground
 `activity run --exec` wrapper when supported. Only the current owner/session/claim
 reports running, waiting and stopped. Confirm once a minute while running; five
-minutes without a running/waiting report freezes work time and means activity
-unconfirmed. A recorded stop remains while that owner is assigned. Neither
+minutes without a running/waiting report freezes work time and means Connection lost after prior confirmation; never-confirmed work stays Activity unconfirmed. A recorded stop remains while that owner is assigned. Neither
 condition releases ownership. No detached endless reporter or coordinator heartbeat
 for another executor. Existing runs without a producer remain unknown.
+
+## Explicit phase-preserving pause
+
+Follow the compatible selected Tracker guide for owned `pause stop/resume`.
+A confirmed stopped executor displays Paused inside its saved category and
+releases only its own slot. Preserve native phase, saved work, history, frozen
+integration/Stage and genuine blockers. Resume requires current scope/source
+checks, role independence, genuine capacity and fresh authority; otherwise remain
+paused with an explanation. A frozen Coordinator needs a genuinely new session
+before its combined Reviewer. Silence never invokes pause or releases ownership.
+Publish compatible readers/all writers before owned idle `pause activate`; source,
+exports, pin and skill updates never activate live state or publish a product.

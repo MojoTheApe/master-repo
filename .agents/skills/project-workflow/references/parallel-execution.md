@@ -22,7 +22,8 @@ guide apply to other work.
 An occupied slot is not proof its owner is still running. With compatible shared
 support, the actual owner reports running/waiting/stopped using the selected guide.
 Confirm once a minute while running; after five minutes without a running/waiting
-report the clock freezes and activity is unknown. A recorded stop remains while
+report the clock freezes and shows Connection lost after prior confirmation;
+never-confirmed activity stays Activity unconfirmed. A recorded stop remains while
 that owner is assigned. Neither condition frees a lane. No coordinator may renew
 another executor or run an endless detached reporter. Existing runs without a
 producer remain unknown until their actual owner reports or launches via the
@@ -88,14 +89,17 @@ renaming an author or taking a new role does not create independent review.
 
 On interruption inspect the persisted claim and available branch/PR/stage evidence.
 The owner's direct confirmation that the old agent stopped is sufficient for that
-fact; do not demand access to its host merely to repeat the confirmation. Use the
-pinned stopped-owner transfer with the new actual actor/session when required,
-then its supported stop. Preserve the old claim/history and original work location;
+fact; do not demand access to its host merely to repeat the confirmation. With
+compatible task_pause support, use the selected phase-preserving pause commands
+described below. Only older consumers without that support use their pinned
+stopped-owner transfer with the new actual actor/session when required, then
+their existing stop; that fallback can still move work to Todo. Preserve the old claim/history and original work location;
 record inaccessible local contents as unknown rather than claiming they were copied.
 Never impersonate the former owner or bypass a real command refusal.
 
 Verify only the requested claims were released. A voluntary pause is not itself a
-product blocker: use the existing supported flag correction if stop adds Blocked,
+product blocker. For the older stop fallback only, use its existing supported flag
+correction if it adds Blocked,
 while retaining actual obstacles and dependencies. Resume implementation only after
 inspecting retained work and current scope/main/dependencies under valid ownership.
 Timeouts alone do not permit takeover or deletion of ownership. If independent
@@ -103,3 +107,16 @@ review is unavailable, retain ready work for a real reviewer and report the limi
 Do not fabricate delegation, identity or review evidence. Changing execution
 settings requires an authorized project upgrade and safe state migration; this
 skill update supplies neither consumer activation nor deployment permission.
+
+## Phase-preserving executor pause
+
+Use only the compatible selected guide's real `pause stop/resume` flow. Explicit
+confirmed stop checkpoints the owner and releases only its slot while retaining
+its native category/phase, PR/branch/work reference, history, blockers and pending
+integration/Stage/product obligations. Resume acquires fresh legitimate capacity
+and authority after current scope/source/main/dependency and independence checks;
+no capacity or changed evidence keeps the pause. A frozen Coordinator needs a
+new actual session and resumes before its combined Reviewer. Old claims and old
+reviews cannot regain authority. Source publication and pin/skill changes do not
+activate the outer8 protocol: first verify compatible readers/all writers, then
+perform owned idle maintenance activation. See Master docs/task-pause.md.

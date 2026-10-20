@@ -620,3 +620,129 @@ def exercise_support(root, python, layout, row):
     after = {p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob('*') if p.is_file()}
     assert before == after and not (root/'.tracker-runtime').exists()
     return dict(case=row['case'], layout=layout, entries=results, engine_imported=False, consumer_writes=False)
+
+
+def pause_fixture():
+    """Deterministic actual native stopped/resumed histories; no live projects."""
+    from contextlib import ExitStack
+    from types import SimpleNamespace
+    from unittest import mock
+    import uuid
+    from tracker import pause, execution, maintenance, direct_actions, task_context, delivery, timing, queue, pr_checks
+    from test_pause import project, arguments, legacy_review_case
+    sequence=iter(range(1,10000));clock='2026-10-20T00:00:00+00:00'
+    cases=[]
+    with tempfile.TemporaryDirectory(prefix='tracker-pause-author-') as directory, ExitStack() as stack:
+        stack.enter_context(mock.patch.object(uuid,'uuid4',lambda:SimpleNamespace(hex=f'{next(sequence):032x}')))
+        for module in (pause,execution,maintenance,direct_actions,delivery,timing,queue):
+            stack.enter_context(mock.patch.object(module,'now',lambda:clock))
+        for version in (1,2,3,4):
+            root=Path(directory)/str(version);root.mkdir()
+            p=project(root,version)
+            original_worker=p.worker
+            def stable_worker(n=1,**changes):
+                return original_worker(n,**dict(dict(worktree='/synthetic/pause/work-'+str(n)),**changes))
+            p.worker=stable_worker
+            p.handoff();review=p.review()
+            args=arguments(review,kind='reviewing',report_file=p.report)
+            token=pause.pause(p.api,p.config,p.store,1,args)['pause']
+            stopped=copy.deepcopy(p.api.state)
+            pause.resume(p.api,p.config,p.store,1,arguments(args,claim=token))
+            cases.append(dict(version=version,config=p.config,paused=stopped,resumed=p.api.state))
+        root=Path(directory)/'legacy';root.mkdir()
+        p,args,old,stopped=legacy_review_case(root,True,multiple=True)
+        resumed=copy.deepcopy(p.api.state)
+        fresh=dict(old,reviewer=args.actor,review_session=args.session,execution_lane=args.claim)
+        delivery.record_review(p.api,p.config,p.store,10,fresh,True)
+        delivery.record_review(p.api,p.config,p.store,20,fresh,True)
+        recorded={}
+        def request(path):
+            value=p.api.request(path);recorded[path]=copy.deepcopy(value);return value
+        admitted=pr_checks.check(request,p.config,11,admission=True)
+        separate=pr_checks.check(request,p.config,20)
+        legacy=dict(config=p.config,paused=stopped,resumed=resumed,old_review=old,fresh_review=fresh,
+                    requests=recorded,admission=admitted,separate=separate)
+    # Private work locations have no executable role in this read-only fixture.
+    return json.loads(json.dumps(dict(schema_version=1,synthetic=True,cases=cases,legacy=legacy)).replace(directory,'/synthetic/pause'))
+
+
+PAUSE_BOOTSTRAP=r'''
+import copy,json,sys
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+import tracker_pause_policy as proof,tracker_delivery_policy as rules
+row=json.loads(Path(sys.argv[2]).read_text());negative=0
+for case in row['cases']:
+ for state in (case['paused'],case['resumed']):
+  assert state['schema_version']==8
+  view=proof.decode(state);assert proof.encode(view)==state
+  assert rules.state_schema(state)==2
+  assert rules.execution_state(view,case['config'])['policy']['schema_version']==case['version']
+ assert proof.active(case['paused'],1) and not proof.active(case['resumed'],1)
+ assert proof.public(case['paused'])['1']['previous_phase']=='review'
+ assert 'checkpoint' not in json.dumps(proof.public(case['paused']))
+ try:proof.require_unpaused(case['paused'],1)
+ except ValueError:pass
+ else:raise AssertionError('Paused task admitted')
+ proof.require_unpaused(case['resumed'],1)
+ for change in ('unfenced','missing','wrong-base','wrong-activation','conflicting-authority'):
+  state=copy.deepcopy(case['paused'])
+  if change=='unfenced':state['schema_version']=state['task_pause']['base_schema_version']
+  elif change=='missing':state.pop('task_pause')
+  elif change=='wrong-base':state['task_pause']['base_schema_version']=8
+  elif change=='wrong-activation':state['task_pause']['activation']['actor']='Worker-FAKE'
+  else:
+   retained=next(iter(state['task_pause']['records'].values()))['checkpoint']['owner']
+   if case['version'] in (3,4):state['execution']['source_reviews']['10']=retained
+   else:state['execution']['review']=retained
+  try:rules.state_schema(proof.decode(state))
+  except ValueError:pass
+  else:raise AssertionError('Malformed pause accepted: '+change)
+  negative+=1
+legacy=copy.deepcopy(row['legacy'])
+assert rules.state_schema(legacy['paused'])==1 and proof.active(legacy['paused'],1)
+assert rules.state_schema(legacy['resumed'])==1 and not proof.active(legacy['resumed'],1)
+proof.require_legacy_review(legacy['resumed'],[1],legacy['fresh_review'],10)
+proof.require_legacy_review(legacy['resumed'],[2],legacy['fresh_review'],20)
+checkpoint=next(iter(legacy['paused']['task_pause']['records'].values()))['checkpoint']
+assert checkpoint['source_identity']['10']['issues']==[1]
+assert checkpoint['source_identity']['20']['issues']==[2]
+try:proof.require_legacy_review(legacy['resumed'],[1],legacy['old_review'],10)
+except ValueError:pass
+else:raise AssertionError('Old legacy review binding accepted')
+import base64,tracker_pr_check as checker
+original=copy.deepcopy(legacy)
+def request(path):
+ if path not in legacy['requests']:raise AssertionError('Unrecorded legacy fixture GET: '+path)
+ return copy.deepcopy(legacy['requests'][path])
+assert checker.check(request,legacy['config'],11,admission=True)==legacy['admission']
+assert checker.check(request,legacy['config'],20)==legacy['separate']
+for change in ('old-review','missing-review','changed-scope','wrong-stage-tree','paused'):
+ legacy=copy.deepcopy(original);path='repos/owner/repo/contents/.tracker-state.json?ref=tracker-state'
+ state=json.loads(base64.b64decode(legacy['requests'][path]['content']))
+ if change=='old-review':state['delivery_workflow']['reviews']['10']=legacy['old_review']
+ elif change=='missing-review':state['delivery_workflow']['reviews'].pop('10')
+ elif change=='changed-scope':legacy['requests']['repos/owner/repo/issues/1']['body']+='\nNew requirement'
+ elif change=='wrong-stage-tree':state['delivery_workflow']['stage']['tree_sha']='f'*40
+ else:state=legacy['paused']
+ legacy['requests'][path]['content']=base64.b64encode(json.dumps(state).encode()).decode()
+ try:checker.check(request,legacy['config'],11,admission=True)
+ except ValueError:pass
+ else:raise AssertionError('Unsafe legacy promotion accepted: '+change)
+ negative+=1
+assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
+print(json.dumps(dict(negative_cases=negative,versions=[0,1,2,3,4],legacy_stage=True,engine_imported=False,consumer_writes=False)))
+'''
+
+
+def exercise_pause(root,python,layout,row):
+    root=Path(root);before={p.relative_to(root).as_posix():p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    results=[]
+    with tempfile.TemporaryDirectory(prefix='tracker-pause-portable-') as directory:
+        data=Path(directory)/'pause.json';data.write_text(json.dumps(row))
+        for location in ['scripts']+(['.workflow/tools'] if layout=='separated' else []):
+            run=subprocess.run([python,'-B','-I','-c',PAUSE_BOOTSTRAP,str(root/location),str(data)],cwd=directory,capture_output=True,text=True)
+            assert run.returncode==0,run.stdout+run.stderr
+            results.append(dict(location=location,**json.loads(run.stdout)))
+    assert before=={p.relative_to(root).as_posix():p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    return dict(layout=layout,entries=results,engine_imported=False,consumer_writes=False)

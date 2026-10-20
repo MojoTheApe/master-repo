@@ -1,5 +1,9 @@
 # Master Repo system
 
+## MR-70 — preserve workflow phase across pause
+
+Candidate1.7.0 pairs common [pause guidance](../task-pause.md) with Tracker TT-179. Publish the exact compatible Tracker first, then mechanically refresh complete trusted artifacts and canonical native pause fixtures. Retain existing profiles/choices/product requests and require actual Python3.9 clean paired verification, independent review, actual-main checks, stable publication and maintained skill mirror. ACL adoption remains separate.
+
 [MR-68](https://github.com/MojoTheApe/master-repo/issues/68) establishes the global
 [process/product boundary](../process-product-separation.md) for every repository
 and delivery profile. Common instructions, templates and the canonical skill keep

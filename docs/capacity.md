@@ -90,3 +90,13 @@ behavior and a read-only comparison with actual held reservations after the
 compatible service is deployed. Source publication, the installed reader and
 that observed comparison are separate evidence. Updating the standard pin or
 navigation skill never changes a consumer's capacity or grants a new claim.
+
+## Paused work retains its phase
+
+The compatible [task-pause contract](task-pause.md) releases only the genuinely
+stopped executor slot. Review category counts still include the paused task;
+Review3/5 counts actual Reviewer reservations, not all tasks in that category.
+Frozen integration/intake/Stage/product requests remain admission barriers and
+are shown separately from numeric free capacity. Connection lost or Activity
+unconfirmed keeps the reservation. Resume requires fresh real capacity/authority;
+waiting for a slot leaves the task Paused and cannot restart its timer.

@@ -1,5 +1,17 @@
 # Portable Tracker contract
 
+## Pause-compatible source pair — MR-70
+
+The exact published Tracker3.9.0 closure advertises `task_pause:[1]` and adds
+its canonical pause helper,14raw/28separated files, real native1..4 paused/resumed
+histories and the offline replay runner. The maintained refresh copies all of
+these at the immutable source and binds provenance. The final clean paired
+Python3.9 gate replays both formats and refuses missing/contradictory pause state
+without importing the engine, making live requests or writing a consumer.
+Existing profile, policy selection, retry, direct, process and upgrade proofs
+remain required. Source publication changes no live state: verify installed
+reader/all writers before separate owned idle outer8 activation.
+
 Master owns descriptor/profile validation and common workflow policy. Tracker owns
 the executable portable helpers, CI policy validator and their fixed raw/separated
 layouts. Master requests `export-template --helper-layout separated` and consumes

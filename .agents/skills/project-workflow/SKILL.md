@@ -65,13 +65,20 @@ unchanged work. A task's age alone needs no extra permission. On an uncertain
 write, inspect the actual Issue/PR/target before retrying. Keep useful history.
 
 Accept the owner's direct confirmation that an agent stopped; an unavailable host
-does not require repeating that confirmation. Use the local supported stop or
-stopped-owner transfer with the actual acting identity. Preserve work references,
+does not require repeating that confirmation. Use the compatible selected guide for explicit phase-preserving `pause stop`
+with the actual acting identity, stopped fact and durable handoff; preview then apply. Preserve work references,
 history and dependencies; mark uninspected local content unknown. Paused and
 Blocked are different: correct a conservative stop-added flag only through a
 supported command and only when no real obstacle is hidden. Verify the released
-assignments. Before resuming, inspect retained work and current scope/main/dependencies
-and follow normal ownership, independent review and delivery.
+assignments. Preserve the native category/phase, source/history, frozen selection,
+Stage and requested product delivery. Resume requires a genuinely free slot, fresh
+authority and current scope/main/source/dependency/independence checks; otherwise
+remain Paused with a reason. A frozen Coordinator resumes in a genuine new session
+before its combined Reviewer. Retained reviews are history, not a new approval.
+Read Master docs/task-pause.md and the compatible selected Tracker guide; publish
+readers/all writers before owned idle outer8 activation. Upstream publication,
+exports, pin and skill updates never activate live state. Older consumers keep
+their adopted procedure; do not rename Todo-moving stops as phase-preserving Pause.
 
 Independent tasks may use available real agents in isolated worktrees when
 delegation is authorized. Coordinate overlap and expensive checks in the existing
@@ -109,7 +116,8 @@ Archive preserves history and does not itself complete or reopen work.
 Use the compatible project's selected guide for actual executor activity reporting.
 Report your own running, waiting or stopped state with the current owner/session/
 claim, once a minute while running. Five minutes without a running/waiting report
-means unknown activity and a frozen work clock; a recorded stop remains while that
+means Connection lost after prior confirmation and a frozen work clock;
+never-confirmed activity stays Activity unconfirmed; a recorded stop remains while that
 owner is assigned. Neither condition releases authority. A foreground wrapper
 covers only its actual agent child; do not use a detached perpetual heartbeat or
 report for another agent. Missing producers and old runtime gaps remain unknown.
