@@ -6,7 +6,7 @@ projects keep their adopted semantics; this installed navigation skill does not
 activate a new contract or upgrade consumer pins.
 
 The global process/product boundary also applies to accepted-scope completion.
-Supported canonical process completion is separately proven by the exact compatible
+Supported canonical and isolated-verification process completion is separately proven by the exact compatible
 engine; it does not select this optional policy. Preserve its genuine full-scope
 review and every existing requested product delivery. Never reinterpret old receipts
 or waive a publication criterion merely because the code diff is process-only.

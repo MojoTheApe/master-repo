@@ -1,5 +1,19 @@
 # Master Repo system
 
+## MR-77 — isolated manual verification completion
+
+Candidate1.8.0 pairs common process/product guidance with Tracker TT-194's additive
+isolated_verification1 proof. The existing process-support command supplements
+genuine original scope/review/main/acceptance with an actual independent isolation
+assessment and the exact successful official manual workflow attempt/jobs.
+Candidate syntax alone is not semantic isolation. Keep canonical v1, instruction
+admission, product/publication obligations, history and actual developer ownership.
+Mechanically consume the exact reviewed published engine and source-owned
+portable fixtures, then verify the clean pair and maintained canonical skill
+distribution. Consumer support adoption and actual ACL-2071 completion remain
+separate authorized outcomes; no consumer product installer is required by this
+process update. Source pins do not claim fleet activation.
+
 ## MR-74 — shared correction cycle and authorized continuation
 
 Candidate1.7.2 pairs the common Needs fixes → Fixing → fresh independent Review

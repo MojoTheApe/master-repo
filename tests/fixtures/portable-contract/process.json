@@ -63,6 +63,1075 @@
     ]
   },
   "expected_proof_sha256": "9d7118c3d04229084a94597735004d33593ee322b6b4eb8a6968b34a5ed0434f",
+  "isolated_verification": {
+    "config": {
+      "completion_label": "Merged",
+      "default_backlog_priority": "medium",
+      "default_release": "",
+      "delivery_policy": {
+        "completion": "verified-stable-package",
+        "delivery_target": "example/production",
+        "required_checks": [
+          "tests"
+        ],
+        "schema_version": 1,
+        "staging": {
+          "branch": "stage",
+          "enabled": false,
+          "target": "example/stage"
+        }
+      },
+      "modules": [
+        {
+          "description": "Account behavior",
+          "id": "accounts",
+          "name": "Accounts"
+        }
+      ],
+      "priorities": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "process_instructions": {
+        "required_checks": [
+          "descriptor",
+          "tracker-link",
+          "Process instructions"
+        ],
+        "schema_version": 1
+      },
+      "project": {
+        "base_branch": "main",
+        "id_prefix": "EX",
+        "name": "Example",
+        "repository": "owner/repo"
+      },
+      "refresh_seconds": 60,
+      "release_mode": "single",
+      "release_view_label": "Release",
+      "schema_version": 2,
+      "workflow": [
+        "idea",
+        "backlog",
+        "todo",
+        "in_progress",
+        "review",
+        "merged"
+      ]
+    },
+    "evidence": {
+      "implementer": "real-author",
+      "kind": "independent-process-verification",
+      "process_support": {
+        "issue_scopes": {
+          "1": "f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775"
+        },
+        "kind": "isolated-process-verification",
+        "outcome": "process-only",
+        "product_isolation": {
+          "evidence": "All product/build/install inputs unchanged; no imports or publication side effects.",
+          "result": "isolated"
+        },
+        "proof_sha256": "d89862a418401f6a851e77e9580dd1adc5e339669eafd166830b4ee0697adc7d",
+        "report": "Only isolated manual verification tooling.",
+        "schema_version": 1
+      },
+      "report": "Reviewed entire original outcome and preserved source/main acceptance.",
+      "reviewer": "actual-new-assessor",
+      "workflow_run": {
+        "attempt": 1,
+        "id": 100
+      }
+    },
+    "main_pr": {
+      "base": {
+        "ref": "main",
+        "repo": {
+          "full_name": "owner/repo"
+        },
+        "sha": "0000000000000000000000000000000000000001"
+      },
+      "body": "Tracker issues: EX-1",
+      "draft": false,
+      "head": {
+        "ref": "codex/ex-1-task-a",
+        "repo": {
+          "full_name": "owner/repo"
+        },
+        "sha": "0000000000000000000000000000000000000002"
+      },
+      "merge_commit_sha": "0000000000000000000000000000000000000384",
+      "merged": true,
+      "number": 10,
+      "state": "closed",
+      "title": "[EX-1] Task A"
+    },
+    "requests": {
+      "repos/MojoTheApe/master-repo/git/blobs/1f388417849fa20ea90314e48490c6cbf87549cc": {
+        "content": "eyJ0cmFja2VyX3JlcG9zaXRvcnkiOiAiTW9qb1RoZUFwZS90YXNrLXRyYWNrZXIiLCAidHJhY2tlcl9yZXZpc2lvbiI6ICJjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjIiwgImV4cG9ydF9jb250cmFjdCI6IDEsICJleHBvcnRfY29udHJhY3Rfc2hhMjU2IjogIjliNjIxZmFmYWUxZTc2MThkNDhjYTQ1ZTQ4N2U2N2M5YjBiMWI4MDc3YTVjNDZkYjczODAzZjQxOTYwZGJjNDIifQ==",
+        "encoding": "base64",
+        "sha": "1f388417849fa20ea90314e48490c6cbf87549cc",
+        "size": 229
+      },
+      "repos/MojoTheApe/master-repo/git/blobs/3ac2a5bb526da95ac3556f3a912ea747df8be5fe": {
+        "content": "ewogICJjaV9nYXRlIjogewogICAgImFjdGlvbnMiOiBbCiAgICAgICJwbGFuIiwKICAgICAgImdhdGUiCiAgICBdLAogICAgImNvbnRleHRzIjogWwogICAgICAiYXV0byIsCiAgICAgICJzb3VyY2UiLAogICAgICAiaW50ZWdyYXRpb24iLAogICAgICAibWFpbiIsCiAgICAgICJwcm9tb3Rpb24iCiAgICBdCiAgfSwKICAiY2lfcmV1c2VfY29udGV4dHMiOiB7CiAgICAiMSI6IFsKICAgICAgInNvdXJjZSIsCiAgICAgICJpbnRlZ3JhdGlvbiIKICAgIF0sCiAgICAiMiI6IFsKICAgICAgInNvdXJjZSIsCiAgICAgICJpbnRlZ3JhdGlvbiIsCiAgICAgICJtYWluIgogICAgXQogIH0sCiAgImNvbnRyYWN0cyI6IHsKICAgICJjaV9jb250ZXh0IjogWwogICAgICAxCiAgICBdLAogICAgImNpX2V2aWRlbmNlX3BvbGljeSI6IFsKICAgICAgMSwKICAgICAgMgogICAgXSwKICAgICJjaV9yZXRyeV9wb2xpY3kiOiBbCiAgICAgIDEKICAgIF0sCiAgICAiY29tcGxldGlvbl9wb2xpY3kiOiBbCiAgICAgIDEKICAgIF0sCiAgICAiZGVsaXZlcnlfcG9saWN5IjogWwogICAgICAxCiAgICBdLAogICAgImV4ZWN1dGlvbl9wb2xpY3kiOiBbCiAgICAgIDEsCiAgICAgIDIsCiAgICAgIDMsCiAgICAgIDQKICAgIF0sCiAgICAiaXNvbGF0ZWRfdmVyaWZpY2F0aW9uIjogWwogICAgICAxCiAgICBdLAogICAgImtub3dsZWRnZV9jYXB0dXJlX3BvbGljeSI6IFsKICAgICAgMQogICAgXSwKICAgICJwcm9jZXNzX2luc3RydWN0aW9ucyI6IFsKICAgICAgMQogICAgXSwKICAgICJwcm9jZXNzX3N1cHBvcnQiOiBbCiAgICAgIDEKICAgIF0sCiAgICAidGFza19jb250ZXh0X3BvbGljeSI6IFsKICAgICAgMSwKICAgICAgMgogICAgXSwKICAgICJ0YXNrX3BhdXNlIjogWwogICAgICAxCiAgICBdCiAgfSwKICAiZW5naW5lIjogewogICAgInJlcG9zaXRvcnkiOiAiTW9qb1RoZUFwZS90YXNrLXRyYWNrZXIiLAogICAgInJldmlzaW9uIjogImNjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2MiCiAgfSwKICAiZm9ybWF0X3ZlcnNpb24iOiAxLAogICJsYXlvdXRzIjogewogICAgInJhdyI6IHsKICAgICAgInNjcmlwdHMvdGFza190cmFja2VyLnB5IjogImMzZGUwYWFmNmIyYzY2NjE2ZTQ5N2Q1NTlmMDY5YjMyMzJiNTM5NmVmZjNiZDhkYzM5YmI0ZDJhOWYzYjRkNDMiLAogICAgICAic2NyaXB0cy90cmFja2VyX2JhdGNoX3BvbGljeS5weSI6ICJmOGFiMjExYjhkNDU3N2YwZmQ1YTlmZjAwNzU5M2JkYzFkZTU2NmE1ZjZmZmRiZjQ2OWM0ZjcwNjMwYjY0Y2MzIiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9jaV9hY2NvdW50aW5nLnB5IjogImM5YzhkMTJhYTA1Y2VkNDc3NTk1NmZlY2FlN2JmYTY5YmJiOTQ1ZTZhOTQwYTViZDdmYmQzMjZiNjhmMjhhZWQiLAogICAgICAic2NyaXB0cy90cmFja2VyX2NpX2V2aWRlbmNlLnB5IjogImEzNWM1N2IwNzljNjc3NDY2MmM5ZTE1YTJmMDMzYmY2MDVkZjZiMTY2YzcxZDY1YTdmNjdjOWY1YjljZGYyMzAiLAogICAgICAic2NyaXB0cy90cmFja2VyX2NpX2dhdGUucHkiOiAiODQ5NjA3M2FiNWM0ZGVhYmFjYjI2MjU1NDIwOTYzZDdhNTMxY2Q0YjZjYzA1NDFkNmIyOWE2YmIxNDYyZjMwNyIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfY2lfcmV0cnkucHkiOiAiMDU4ZDM4NTUxMzgyN2U5NmYyZDdiOTY4YWYyN2FmMTZjZjU2YjdmZTViNmRmNzM5NTJkYjJkODhhZjE2OGQ4NiIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfZGVsaXZlcnlfcG9saWN5LnB5IjogImMzNWIxZGY4ZTM4MGZjMDljYWQ0ODFiZjI4NDJhMjkzZGIzYWUwZDQ5OTU5NzAxZGFhMzc1NTc3MjcxYzJmYmIiLAogICAgICAic2NyaXB0cy90cmFja2VyX2RlbGl2ZXJ5X3JlY2VpcHQucHkiOiAiMjBmNmQxNDdkOWYxMTgxMGI2NWE0MmFlOGNmZTVkNzJjZTdmMjljZTU2OWQ5ZDA4NTk2NWZjZGJjZmNkZDAxZSIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfZGlyZWN0X3BvbGljeS5weSI6ICI3YjI2MzUzM2RjMDExZDliYTA3ZjRlODBmZGE5OGVhMWMyMzFlYWExZmU3ZTcyMzM0NDI0OWE5ZTczM2Y1YzI5IiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9wYXVzZV9wb2xpY3kucHkiOiAiYzVhOGFlNzVkNTZlNDM3NzUwZmI0YzNkZmIyNmExNjUyYTgzYTM4NTRlNDVmNDg4ZTcyMTg3ZGFjMDIwZGYxNyIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfcHJfY2hlY2sucHkiOiAiODMwZjcyZjk2Mjc3ZjM2MjIyM2M1YjlmNGI4ZmEwZmUyMDJkNTU0Y2I2Njg4YmRjZjhkMmNhOTMyMTRhNTdjOCIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfcHJvY2Vzc19pbnN0cnVjdGlvbnMucHkiOiAiOWQzYTMyYTk2OTNiZDcwMTlhNDRlOTVhNjRiN2NjZjA2MDg1NDQ3ODA4NTc2NjI2NTIyZTQ5MzdjZDc5MTYwNSIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfcHJvY2Vzc19zdXBwb3J0LnB5IjogImU1YTIxMWY4ZDBhYTVkNmFkNzQzNjllYzg3NzA0YTZiOGIyNmMxOTJlMWNmNmYwNWZhMmFhNzRmNzU5YWM4ZmUiLAogICAgICAic2NyaXB0cy90cmFja2VyX3Rhc2tfY29udGV4dC5weSI6ICIxMWRhZjQ1NzgzZjU1YTA4ZTdiNWZmODA0OGZlOGU2YmQyZjVmNmJhYmU3NTU2YzYxZGJiMTM5MTFkNTVlYmNmIgogICAgfSwKICAgICJzZXBhcmF0ZWQiOiB7CiAgICAgICIud29ya2Zsb3cvdG9vbHMvdGFza190cmFja2VyLnB5IjogImRmYzcwN2JkMGMyYTcyNjUzMWM3NDc4ZjFlZDU3NmM5ZGYyMGI5MjM4OGE0ZjdhMDU2NGE4NjhjMzllMzFiYmEiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfYmF0Y2hfcG9saWN5LnB5IjogImY4YWIyMTFiOGQ0NTc3ZjBmZDVhOWZmMDA3NTkzYmRjMWRlNTY2YTVmNmZmZGJmNDY5YzRmNzA2MzBiNjRjYzMiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfY2lfYWNjb3VudGluZy5weSI6ICJjOWM4ZDEyYWEwNWNlZDQ3NzU5NTZmZWNhZTdiZmE2OWJiYjk0NWU2YTk0MGE1YmQ3ZmJkMzI2YjY4ZjI4YWVkIiwKICAgICAgIi53b3JrZmxvdy90b29scy90cmFja2VyX2NpX2V2aWRlbmNlLnB5IjogImEzNWM1N2IwNzljNjc3NDY2MmM5ZTE1YTJmMDMzYmY2MDVkZjZiMTY2YzcxZDY1YTdmNjdjOWY1YjljZGYyMzAiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfY2lfZ2F0ZS5weSI6ICI4NDk2MDczYWI1YzRkZWFiYWNiMjYyNTU0MjA5NjNkN2E1MzFjZDRiNmNjMDU0MWQ2YjI5YTZiYjE0NjJmMzA3IiwKICAgICAgIi53b3JrZmxvdy90b29scy90cmFja2VyX2NpX3JldHJ5LnB5IjogIjA1OGQzODU1MTM4MjdlOTZmMmQ3Yjk2OGFmMjdhZjE2Y2Y1NmI3ZmU1YjZkZjczOTUyZGIyZDg4YWYxNjhkODYiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfZGVsaXZlcnlfcG9saWN5LnB5IjogImMzNWIxZGY4ZTM4MGZjMDljYWQ0ODFiZjI4NDJhMjkzZGIzYWUwZDQ5OTU5NzAxZGFhMzc1NTc3MjcxYzJmYmIiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfZGVsaXZlcnlfcmVjZWlwdC5weSI6ICIyMGY2ZDE0N2Q5ZjExODEwYjY1YTQyYWU4Y2ZlNWQ3MmNlN2YyOWNlNTY5ZDlkMDg1OTY1ZmNkYmNmY2RkMDFlIiwKICAgICAgIi53b3JrZmxvdy90b29scy90cmFja2VyX2RpcmVjdF9wb2xpY3kucHkiOiAiN2IyNjM1MzNkYzAxMWQ5YmEwN2Y0ZTgwZmRhOThlYTFjMjMxZWFhMWZlN2U3MjMzNDQyNDlhOWU3MzNmNWMyOSIsCiAgICAgICIud29ya2Zsb3cvdG9vbHMvdHJhY2tlcl9wYXVzZV9wb2xpY3kucHkiOiAiYzVhOGFlNzVkNTZlNDM3NzUwZmI0YzNkZmIyNmExNjUyYTgzYTM4NTRlNDVmNDg4ZTcyMTg3ZGFjMDIwZGYxNyIsCiAgICAgICIud29ya2Zsb3cvdG9vbHMvdHJhY2tlcl9wcl9jaGVjay5weSI6ICIzNzYwODY1NjMyZTJlMGNiOGU4MDI1NTMyMGUxNGE2YWVhY2Y1YTQwMTBjM2U4ZTY3NjE0OGI1MjJkYjQ4YTBkIiwKICAgICAgIi53b3JrZmxvdy90b29scy90cmFja2VyX3Byb2Nlc3NfaW5zdHJ1Y3Rpb25zLnB5IjogIjlkM2EzMmE5NjkzYmQ3MDE5YTQ0ZTk1YTY0YjdjY2YwNjA4NTQ0NzgwODU3NjYyNjUyMmU0OTM3Y2Q3OTE2MDUiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfcHJvY2Vzc19zdXBwb3J0LnB5IjogImU1YTIxMWY4ZDBhYTVkNmFkNzQzNjllYzg3NzA0YTZiOGIyNmMxOTJlMWNmNmYwNWZhMmFhNzRmNzU5YWM4ZmUiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfdGFza19jb250ZXh0LnB5IjogIjExZGFmNDU3ODNmNTVhMDhlN2I1ZmY4MDQ4ZmU4ZTZiZDJmNWY2YmFiZTc1NTZjNjFkYmIxMzkxMWQ1NWViY2YiLAogICAgICAic2NyaXB0cy90YXNrX3RyYWNrZXIucHkiOiAiNDA0YTg3ZmFmNjBiNGRhZWMxOTY1YzdmZjViZDM0ZTBkYTExMjE1YjUzY2M2ZGZhNTIxNmM5ZTIwNWU1NTg4NyIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfYmF0Y2hfcG9saWN5LnB5IjogImZjZDA4OGJjZmMyZDI4MmY0YThlNmQ2ZGFlZTIyZGJjZTZlNzgwYzI5ZTQ4NDA5MGYwMGY3Y2FjODAyMDI0MGUiLAogICAgICAic2NyaXB0cy90cmFja2VyX2NpX2FjY291bnRpbmcucHkiOiAiYTEwMGM1NWM2ZGU4NDE5ZDAxZjZiNzlhMGQzMGM0MGJjZGVhOWZjNDQxMmFlYjVmZjNjOTJmNTE4N2Y1MDczNyIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfY2lfZXZpZGVuY2UucHkiOiAiYWNlMDNmNGVkMTExOTE0NTIyOTQ4ZmVmYWY3OGNlODkzYjQwOTM1NmI3YmI0ODkwZTQ3OTFkMDk1ZGZhMDY1MCIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfY2lfZ2F0ZS5weSI6ICJlYmVjNWE1ZWI0NmQxNDdiODQ1MzZlNzE1M2IxZmU1ZThhOGExZTU0NDBlNjc3ZGQxY2Q2M2I2NWExZDE0NDQ5IiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9jaV9yZXRyeS5weSI6ICJkNWUxYThmNmI5M2RlOWI5NWJmMjM2ZjIwZjU3ZWY1YmVjODlhNWQwMTBjMTc2NmUzZjRkZWQ5NTkzZGI1ZTIzIiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9kZWxpdmVyeV9wb2xpY3kucHkiOiAiMTZiODFiM2M1MDI2ZWNhMTYxMzFmMGZjNjlmYjdiMTg3YjNjYzlkOWZiNDU2ODc3Zjk3YmE1Y2RmNjRkYjc4ZSIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfZGVsaXZlcnlfcmVjZWlwdC5weSI6ICJkNzQ0MTUzMDcxYjA1NTBkZjJiYjU1ZTc5NGQ3YWJkOWMwMGM0MWY4MjQ0NDM1MTUwZWY2Y2Q4MGQyYjc4ZjY4IiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9kaXJlY3RfcG9saWN5LnB5IjogIjI1MWI2YWFiMDE1M2RmN2I4NGJmOTljOTRmMGU0ZDNhZDEyODI3NWM5YmQyNzQxNDY5NzAzNTQzMGU3YTAxZDYiLAogICAgICAic2NyaXB0cy90cmFja2VyX3BhdXNlX3BvbGljeS5weSI6ICI2MDU3YTc4OTU5ZTgzMDBkM2ZiMWU3N2EyMDNlMTczNmNjMGVlNDUzMDRhMmEwMzJjMDlkODRhNzUzZjZhMDdmIiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9wcl9jaGVjay5weSI6ICIzYjgxN2FmNTUyYjRjMGEyNzc3NjA1MjNlZDU2OTAzNzQ1M2Y2ZDkzMzY1N2VhNmM2ZGUyYjk4NGIxMWZhNzZkIiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9wcm9jZXNzX2luc3RydWN0aW9ucy5weSI6ICI0ZjgxMGFhYTZlOTU0NGIyMjZjYTM2ZmFhZWNhMmE1YmY3OGNhYmY3NWI5NmY1ZDRjN2I5ZTM4MzViY2VmZjI3IiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9wcm9jZXNzX3N1cHBvcnQucHkiOiAiODA1YzdhYTAyODcwNTI0ZWNiNGU2ZGE2OGJiNjgyNDczODQ4ZmQ2NDRiYjBmMDgxY2YyOGU5YTQzZDllMzk4ZiIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfdGFza19jb250ZXh0LnB5IjogImQxNTVjZGMwMjc1YjdlNzQxZDkwY2UyOWIyOTZlNjExZjBlOWI4ZTNhMjhkOGJhMDFiYjc2MTc1Mzk5NzQyZjYiCiAgICB9CiAgfSwKICAicmV0cnlfdmFsaWRhdG9yIjogewogICAgInNoYTI1NiI6ICIwNThkMzg1NTEzODI3ZTk2ZjJkN2I5NjhhZjI3YWYxNmNmNTZiN2ZlNWI2ZGY3Mzk1MmRiMmQ4OGFmMTY4ZDg2IiwKICAgICJzb3VyY2UiOiAidHJhY2tlci9jaV9yZXRyeS5weSIKICB9LAogICJyb3V0ZV92YWxpZGF0b3IiOiB7CiAgICAic2hhMjU2IjogIjdiMjYzNTMzZGMwMTFkOWJhMDdmNGU4MGZkYTk4ZWExYzIzMWVhYTFmZTdlNzIzMzQ0MjQ5YTllNzMzZjVjMjkiLAogICAgInNvdXJjZSI6ICJ0cmFja2VyL2RpcmVjdF9wb2xpY3kucHkiCiAgfSwKICAicnVudGltZSI6IHsKICAgICJlbmdpbmVfbWluX3B5dGhvbiI6ICIzLjExIiwKICAgICJwb3J0YWJsZV9taW5fcHl0aG9uIjogIjMuOSIKICB9LAogICJ2YWxpZGF0b3IiOiB7CiAgICAic2hhMjU2IjogImEzNWM1N2IwNzljNjc3NDY2MmM5ZTE1YTJmMDMzYmY2MDVkZjZiMTY2YzcxZDY1YTdmNjdjOWY1YjljZGYyMzAiLAogICAgInNvdXJjZSI6ICJ0cmFja2VyL2NpX2V2aWRlbmNlLnB5IgogIH0KfQo=",
+        "encoding": "base64",
+        "sha": "3ac2a5bb526da95ac3556f3a912ea747df8be5fe",
+        "size": 6317
+      },
+      "repos/MojoTheApe/master-repo/git/blobs/94fe62c2740fdca94618a4f448e6c2575f123592": {
+        "content": "MS41LjQK",
+        "encoding": "base64",
+        "sha": "94fe62c2740fdca94618a4f448e6c2575f123592",
+        "size": 6
+      },
+      "repos/MojoTheApe/master-repo/git/commits/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa": {
+        "tree": {
+          "sha": "0000000000000000000000000000000000001f40"
+        }
+      },
+      "repos/MojoTheApe/master-repo/git/ref/tags/v1.5.4": {
+        "object": {
+          "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "commit",
+          "url": "https://api.github.com/immutable"
+        }
+      },
+      "repos/MojoTheApe/master-repo/git/trees/0000000000000000000000000000000000001f40?recursive=1": {
+        "sha": "0000000000000000000000000000000000001f40",
+        "tree": [
+          {
+            "mode": "100644",
+            "path": "VERSION",
+            "sha": "94fe62c2740fdca94618a4f448e6c2575f123592",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "compatibility.json",
+            "sha": "1f388417849fa20ea90314e48490c6cbf87549cc",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/vendor/tracker-export-contract.json",
+            "sha": "3ac2a5bb526da95ac3556f3a912ea747df8be5fe",
+            "type": "blob"
+          }
+        ],
+        "truncated": false
+      },
+      "repos/MojoTheApe/master-repo/releases/tags/v1.5.4": {
+        "draft": false,
+        "id": 100,
+        "prerelease": false,
+        "published_at": "2026-10-20T00:00:00Z",
+        "tag_name": "v1.5.4"
+      },
+      "repos/owner/repo/actions/runs/100": {
+        "conclusion": "success",
+        "event": "workflow_dispatch",
+        "head_repository": {
+          "full_name": "owner/repo"
+        },
+        "head_sha": "0000000000000000000000000000000000000384",
+        "id": 100,
+        "path": ".github/workflows/verify-published.yml",
+        "repository": {
+          "full_name": "owner/repo"
+        },
+        "run_attempt": 1,
+        "status": "completed",
+        "workflow_id": 11
+      },
+      "repos/owner/repo/actions/runs/100/attempts/1/jobs?per_page=100&page=1": {
+        "jobs": [
+          {
+            "conclusion": "success",
+            "head_sha": "0000000000000000000000000000000000000384",
+            "id": 101,
+            "name": "Verify published package",
+            "status": "completed"
+          }
+        ],
+        "total_count": 1
+      },
+      "repos/owner/repo/actions/workflows/11": {
+        "id": 11,
+        "path": ".github/workflows/verify-published.yml"
+      },
+      "repos/owner/repo/commits/0000000000000000000000000000000000000002/check-runs?per_page=100&page=1": {
+        "check_runs": [
+          {
+            "app": {
+              "slug": "github-actions"
+            },
+            "conclusion": "success",
+            "head_sha": "0000000000000000000000000000000000000002",
+            "id": 1,
+            "name": "descriptor",
+            "status": "completed"
+          },
+          {
+            "app": {
+              "slug": "github-actions"
+            },
+            "conclusion": "success",
+            "head_sha": "0000000000000000000000000000000000000002",
+            "id": 2,
+            "name": "tracker-link",
+            "status": "completed"
+          },
+          {
+            "app": {
+              "slug": "github-actions"
+            },
+            "conclusion": "success",
+            "head_sha": "0000000000000000000000000000000000000002",
+            "id": 3,
+            "name": "Process instructions",
+            "status": "completed"
+          },
+          {
+            "app": {
+              "slug": "github-actions"
+            },
+            "conclusion": "success",
+            "head_sha": "0000000000000000000000000000000000000002",
+            "id": 4,
+            "name": "tests",
+            "status": "completed"
+          }
+        ]
+      },
+      "repos/owner/repo/compare/0000000000000000000000000000000000000384...main": {
+        "status": "ahead"
+      },
+      "repos/owner/repo/contents/.tracker-state.json?ref=tracker-state": {
+        "content": "eyJzY2hlbWFfdmVyc2lvbiI6IDEsICJhY3RpdmUiOiBudWxsLCAicnVuIjogbnVsbCwgInRvZG9fb3JkZXIiOiBbXSwgInRvZG9fYWRkZWQiOiB7fSwgImRlbGl2ZXJ5X3dvcmtmbG93IjogeyJyZXZpZXdzIjogeyIxMCI6IHsia2luZCI6ICJpbmRlcGVuZGVudC1yZXZpZXciLCAicmV2aWV3ZXIiOiAicmVhbC1pbmRlcGVuZGVudC1yZXZpZXdlciIsICJpbXBsZW1lbnRlciI6ICJyZWFsLWF1dGhvciIsICJ2ZXJkaWN0IjogImFwcHJvdmVkIiwgInJlcG9ydCI6ICJBY3R1YWwgY29tcGxldGUgc2NvcGUgYW5kIGltbXV0YWJsZSBzdXBwb3J0IHJldmlld2VkOyBubyBwcm9kdWN0IHB1YmxpY2F0aW9uIHJlcXVlc3RlZC4iLCAiaGVhZF9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMiIsICJiYXNlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxIiwgInRyZWVfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwNjYiLCAibWFpbl9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSIsICJwb2xpY3kiOiAiMWJhODI5OTg2ZjJjZmI4NGQxMmI4N2RkZTdlZjFmY2U4NWIwNWYzNWM2OGVhNzdjNTFlNmEyNjE0NTEzM2I3YSIsICJpc3N1ZXMiOiBbMV0sICJyZWNvcmRlZF9hdCI6ICIyMDI2LTEwLTIwVDAwOjAwOjAwKzAwOjAwIiwgImlzc3VlX3Njb3BlcyI6IHsiMSI6ICJmNWMwNmQ0ZGRiZWIyNjU5ZGRhZGZiZDg4YTFhMTAzMTdkNTRjYjliNDA0NWVkYjE3NDZiNzgwYTQ2ZTEzNzc1In19fSwgInRhc2tzIjogeyIxIjogeyJwb2xpY3kiOiAiMWJhODI5OTg2ZjJjZmI4NGQxMmI4N2RkZTdlZjFmY2U4NWIwNWYzNWM2OGVhNzdjNTFlNmEyNjE0NTEzM2I3YSIsICJzb3VyY2VzIjogW3sicHIiOiAxMCwgIm1lcmdlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMzg0IiwgInRyZWVfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwNjYifV0sICJzdGF0ZSI6ICJwZW5kaW5nIiwgInJlY29yZGVkX2F0IjogIjIwMjYtMTAtMjBUMDA6MDA6MDArMDA6MDAiLCAic2NvcGUiOiAiZjVjMDZkNGRkYmViMjY1OWRkYWRmYmQ4OGExYTEwMzE3ZDU0Y2I5YjQwNDVlZGIxNzQ2Yjc4MGE0NmUxMzc3NSIsICJzY29wZV9wcm92ZW5hbmNlIjogeyJzY2hlbWFfdmVyc2lvbiI6IDEsICJyZXBvc2l0b3J5IjogIm93bmVyL3JlcG8iLCAiaXNzdWUiOiAxLCAicG9saWN5IjogIjFiYTgyOTk4NmYyY2ZiODRkMTJiODdkZGU3ZWYxZmNlODViMDVmMzVjNjhlYTc3YzUxZTZhMjYxNDUxMzNiN2EiLCAidGFyZ2V0IjogImV4YW1wbGUvcHJvZHVjdGlvbiIsICJzb3VyY2VzIjogW3sicHIiOiAxMCwgIm1lcmdlX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMzg0IiwgInRyZWVfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwNjYifV0sICJhY2NlcHRlZF9ieSI6IFt7ImtpbmQiOiAiaW5kZXBlbmRlbnQtcmV2aWV3IiwgInByIjogMTAsICJoZWFkX3NoYSI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyIiwgImJhc2Vfc2hhIjogIjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEiLCAidHJlZV9zaGEiOiAiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA2NiJ9XX19fX19",
+        "sha": "3"
+      },
+      "repos/owner/repo/git/blobs/3ac2a5bb526da95ac3556f3a912ea747df8be5fe": {
+        "content": "ewogICJjaV9nYXRlIjogewogICAgImFjdGlvbnMiOiBbCiAgICAgICJwbGFuIiwKICAgICAgImdhdGUiCiAgICBdLAogICAgImNvbnRleHRzIjogWwogICAgICAiYXV0byIsCiAgICAgICJzb3VyY2UiLAogICAgICAiaW50ZWdyYXRpb24iLAogICAgICAibWFpbiIsCiAgICAgICJwcm9tb3Rpb24iCiAgICBdCiAgfSwKICAiY2lfcmV1c2VfY29udGV4dHMiOiB7CiAgICAiMSI6IFsKICAgICAgInNvdXJjZSIsCiAgICAgICJpbnRlZ3JhdGlvbiIKICAgIF0sCiAgICAiMiI6IFsKICAgICAgInNvdXJjZSIsCiAgICAgICJpbnRlZ3JhdGlvbiIsCiAgICAgICJtYWluIgogICAgXQogIH0sCiAgImNvbnRyYWN0cyI6IHsKICAgICJjaV9jb250ZXh0IjogWwogICAgICAxCiAgICBdLAogICAgImNpX2V2aWRlbmNlX3BvbGljeSI6IFsKICAgICAgMSwKICAgICAgMgogICAgXSwKICAgICJjaV9yZXRyeV9wb2xpY3kiOiBbCiAgICAgIDEKICAgIF0sCiAgICAiY29tcGxldGlvbl9wb2xpY3kiOiBbCiAgICAgIDEKICAgIF0sCiAgICAiZGVsaXZlcnlfcG9saWN5IjogWwogICAgICAxCiAgICBdLAogICAgImV4ZWN1dGlvbl9wb2xpY3kiOiBbCiAgICAgIDEsCiAgICAgIDIsCiAgICAgIDMsCiAgICAgIDQKICAgIF0sCiAgICAiaXNvbGF0ZWRfdmVyaWZpY2F0aW9uIjogWwogICAgICAxCiAgICBdLAogICAgImtub3dsZWRnZV9jYXB0dXJlX3BvbGljeSI6IFsKICAgICAgMQogICAgXSwKICAgICJwcm9jZXNzX2luc3RydWN0aW9ucyI6IFsKICAgICAgMQogICAgXSwKICAgICJwcm9jZXNzX3N1cHBvcnQiOiBbCiAgICAgIDEKICAgIF0sCiAgICAidGFza19jb250ZXh0X3BvbGljeSI6IFsKICAgICAgMSwKICAgICAgMgogICAgXSwKICAgICJ0YXNrX3BhdXNlIjogWwogICAgICAxCiAgICBdCiAgfSwKICAiZW5naW5lIjogewogICAgInJlcG9zaXRvcnkiOiAiTW9qb1RoZUFwZS90YXNrLXRyYWNrZXIiLAogICAgInJldmlzaW9uIjogImNjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2MiCiAgfSwKICAiZm9ybWF0X3ZlcnNpb24iOiAxLAogICJsYXlvdXRzIjogewogICAgInJhdyI6IHsKICAgICAgInNjcmlwdHMvdGFza190cmFja2VyLnB5IjogImMzZGUwYWFmNmIyYzY2NjE2ZTQ5N2Q1NTlmMDY5YjMyMzJiNTM5NmVmZjNiZDhkYzM5YmI0ZDJhOWYzYjRkNDMiLAogICAgICAic2NyaXB0cy90cmFja2VyX2JhdGNoX3BvbGljeS5weSI6ICJmOGFiMjExYjhkNDU3N2YwZmQ1YTlmZjAwNzU5M2JkYzFkZTU2NmE1ZjZmZmRiZjQ2OWM0ZjcwNjMwYjY0Y2MzIiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9jaV9hY2NvdW50aW5nLnB5IjogImM5YzhkMTJhYTA1Y2VkNDc3NTk1NmZlY2FlN2JmYTY5YmJiOTQ1ZTZhOTQwYTViZDdmYmQzMjZiNjhmMjhhZWQiLAogICAgICAic2NyaXB0cy90cmFja2VyX2NpX2V2aWRlbmNlLnB5IjogImEzNWM1N2IwNzljNjc3NDY2MmM5ZTE1YTJmMDMzYmY2MDVkZjZiMTY2YzcxZDY1YTdmNjdjOWY1YjljZGYyMzAiLAogICAgICAic2NyaXB0cy90cmFja2VyX2NpX2dhdGUucHkiOiAiODQ5NjA3M2FiNWM0ZGVhYmFjYjI2MjU1NDIwOTYzZDdhNTMxY2Q0YjZjYzA1NDFkNmIyOWE2YmIxNDYyZjMwNyIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfY2lfcmV0cnkucHkiOiAiMDU4ZDM4NTUxMzgyN2U5NmYyZDdiOTY4YWYyN2FmMTZjZjU2YjdmZTViNmRmNzM5NTJkYjJkODhhZjE2OGQ4NiIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfZGVsaXZlcnlfcG9saWN5LnB5IjogImMzNWIxZGY4ZTM4MGZjMDljYWQ0ODFiZjI4NDJhMjkzZGIzYWUwZDQ5OTU5NzAxZGFhMzc1NTc3MjcxYzJmYmIiLAogICAgICAic2NyaXB0cy90cmFja2VyX2RlbGl2ZXJ5X3JlY2VpcHQucHkiOiAiMjBmNmQxNDdkOWYxMTgxMGI2NWE0MmFlOGNmZTVkNzJjZTdmMjljZTU2OWQ5ZDA4NTk2NWZjZGJjZmNkZDAxZSIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfZGlyZWN0X3BvbGljeS5weSI6ICI3YjI2MzUzM2RjMDExZDliYTA3ZjRlODBmZGE5OGVhMWMyMzFlYWExZmU3ZTcyMzM0NDI0OWE5ZTczM2Y1YzI5IiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9wYXVzZV9wb2xpY3kucHkiOiAiYzVhOGFlNzVkNTZlNDM3NzUwZmI0YzNkZmIyNmExNjUyYTgzYTM4NTRlNDVmNDg4ZTcyMTg3ZGFjMDIwZGYxNyIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfcHJfY2hlY2sucHkiOiAiODMwZjcyZjk2Mjc3ZjM2MjIyM2M1YjlmNGI4ZmEwZmUyMDJkNTU0Y2I2Njg4YmRjZjhkMmNhOTMyMTRhNTdjOCIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfcHJvY2Vzc19pbnN0cnVjdGlvbnMucHkiOiAiOWQzYTMyYTk2OTNiZDcwMTlhNDRlOTVhNjRiN2NjZjA2MDg1NDQ3ODA4NTc2NjI2NTIyZTQ5MzdjZDc5MTYwNSIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfcHJvY2Vzc19zdXBwb3J0LnB5IjogImU1YTIxMWY4ZDBhYTVkNmFkNzQzNjllYzg3NzA0YTZiOGIyNmMxOTJlMWNmNmYwNWZhMmFhNzRmNzU5YWM4ZmUiLAogICAgICAic2NyaXB0cy90cmFja2VyX3Rhc2tfY29udGV4dC5weSI6ICIxMWRhZjQ1NzgzZjU1YTA4ZTdiNWZmODA0OGZlOGU2YmQyZjVmNmJhYmU3NTU2YzYxZGJiMTM5MTFkNTVlYmNmIgogICAgfSwKICAgICJzZXBhcmF0ZWQiOiB7CiAgICAgICIud29ya2Zsb3cvdG9vbHMvdGFza190cmFja2VyLnB5IjogImRmYzcwN2JkMGMyYTcyNjUzMWM3NDc4ZjFlZDU3NmM5ZGYyMGI5MjM4OGE0ZjdhMDU2NGE4NjhjMzllMzFiYmEiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfYmF0Y2hfcG9saWN5LnB5IjogImY4YWIyMTFiOGQ0NTc3ZjBmZDVhOWZmMDA3NTkzYmRjMWRlNTY2YTVmNmZmZGJmNDY5YzRmNzA2MzBiNjRjYzMiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfY2lfYWNjb3VudGluZy5weSI6ICJjOWM4ZDEyYWEwNWNlZDQ3NzU5NTZmZWNhZTdiZmE2OWJiYjk0NWU2YTk0MGE1YmQ3ZmJkMzI2YjY4ZjI4YWVkIiwKICAgICAgIi53b3JrZmxvdy90b29scy90cmFja2VyX2NpX2V2aWRlbmNlLnB5IjogImEzNWM1N2IwNzljNjc3NDY2MmM5ZTE1YTJmMDMzYmY2MDVkZjZiMTY2YzcxZDY1YTdmNjdjOWY1YjljZGYyMzAiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfY2lfZ2F0ZS5weSI6ICI4NDk2MDczYWI1YzRkZWFiYWNiMjYyNTU0MjA5NjNkN2E1MzFjZDRiNmNjMDU0MWQ2YjI5YTZiYjE0NjJmMzA3IiwKICAgICAgIi53b3JrZmxvdy90b29scy90cmFja2VyX2NpX3JldHJ5LnB5IjogIjA1OGQzODU1MTM4MjdlOTZmMmQ3Yjk2OGFmMjdhZjE2Y2Y1NmI3ZmU1YjZkZjczOTUyZGIyZDg4YWYxNjhkODYiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfZGVsaXZlcnlfcG9saWN5LnB5IjogImMzNWIxZGY4ZTM4MGZjMDljYWQ0ODFiZjI4NDJhMjkzZGIzYWUwZDQ5OTU5NzAxZGFhMzc1NTc3MjcxYzJmYmIiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfZGVsaXZlcnlfcmVjZWlwdC5weSI6ICIyMGY2ZDE0N2Q5ZjExODEwYjY1YTQyYWU4Y2ZlNWQ3MmNlN2YyOWNlNTY5ZDlkMDg1OTY1ZmNkYmNmY2RkMDFlIiwKICAgICAgIi53b3JrZmxvdy90b29scy90cmFja2VyX2RpcmVjdF9wb2xpY3kucHkiOiAiN2IyNjM1MzNkYzAxMWQ5YmEwN2Y0ZTgwZmRhOThlYTFjMjMxZWFhMWZlN2U3MjMzNDQyNDlhOWU3MzNmNWMyOSIsCiAgICAgICIud29ya2Zsb3cvdG9vbHMvdHJhY2tlcl9wYXVzZV9wb2xpY3kucHkiOiAiYzVhOGFlNzVkNTZlNDM3NzUwZmI0YzNkZmIyNmExNjUyYTgzYTM4NTRlNDVmNDg4ZTcyMTg3ZGFjMDIwZGYxNyIsCiAgICAgICIud29ya2Zsb3cvdG9vbHMvdHJhY2tlcl9wcl9jaGVjay5weSI6ICIzNzYwODY1NjMyZTJlMGNiOGU4MDI1NTMyMGUxNGE2YWVhY2Y1YTQwMTBjM2U4ZTY3NjE0OGI1MjJkYjQ4YTBkIiwKICAgICAgIi53b3JrZmxvdy90b29scy90cmFja2VyX3Byb2Nlc3NfaW5zdHJ1Y3Rpb25zLnB5IjogIjlkM2EzMmE5NjkzYmQ3MDE5YTQ0ZTk1YTY0YjdjY2YwNjA4NTQ0NzgwODU3NjYyNjUyMmU0OTM3Y2Q3OTE2MDUiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfcHJvY2Vzc19zdXBwb3J0LnB5IjogImU1YTIxMWY4ZDBhYTVkNmFkNzQzNjllYzg3NzA0YTZiOGIyNmMxOTJlMWNmNmYwNWZhMmFhNzRmNzU5YWM4ZmUiLAogICAgICAiLndvcmtmbG93L3Rvb2xzL3RyYWNrZXJfdGFza19jb250ZXh0LnB5IjogIjExZGFmNDU3ODNmNTVhMDhlN2I1ZmY4MDQ4ZmU4ZTZiZDJmNWY2YmFiZTc1NTZjNjFkYmIxMzkxMWQ1NWViY2YiLAogICAgICAic2NyaXB0cy90YXNrX3RyYWNrZXIucHkiOiAiNDA0YTg3ZmFmNjBiNGRhZWMxOTY1YzdmZjViZDM0ZTBkYTExMjE1YjUzY2M2ZGZhNTIxNmM5ZTIwNWU1NTg4NyIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfYmF0Y2hfcG9saWN5LnB5IjogImZjZDA4OGJjZmMyZDI4MmY0YThlNmQ2ZGFlZTIyZGJjZTZlNzgwYzI5ZTQ4NDA5MGYwMGY3Y2FjODAyMDI0MGUiLAogICAgICAic2NyaXB0cy90cmFja2VyX2NpX2FjY291bnRpbmcucHkiOiAiYTEwMGM1NWM2ZGU4NDE5ZDAxZjZiNzlhMGQzMGM0MGJjZGVhOWZjNDQxMmFlYjVmZjNjOTJmNTE4N2Y1MDczNyIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfY2lfZXZpZGVuY2UucHkiOiAiYWNlMDNmNGVkMTExOTE0NTIyOTQ4ZmVmYWY3OGNlODkzYjQwOTM1NmI3YmI0ODkwZTQ3OTFkMDk1ZGZhMDY1MCIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfY2lfZ2F0ZS5weSI6ICJlYmVjNWE1ZWI0NmQxNDdiODQ1MzZlNzE1M2IxZmU1ZThhOGExZTU0NDBlNjc3ZGQxY2Q2M2I2NWExZDE0NDQ5IiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9jaV9yZXRyeS5weSI6ICJkNWUxYThmNmI5M2RlOWI5NWJmMjM2ZjIwZjU3ZWY1YmVjODlhNWQwMTBjMTc2NmUzZjRkZWQ5NTkzZGI1ZTIzIiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9kZWxpdmVyeV9wb2xpY3kucHkiOiAiMTZiODFiM2M1MDI2ZWNhMTYxMzFmMGZjNjlmYjdiMTg3YjNjYzlkOWZiNDU2ODc3Zjk3YmE1Y2RmNjRkYjc4ZSIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfZGVsaXZlcnlfcmVjZWlwdC5weSI6ICJkNzQ0MTUzMDcxYjA1NTBkZjJiYjU1ZTc5NGQ3YWJkOWMwMGM0MWY4MjQ0NDM1MTUwZWY2Y2Q4MGQyYjc4ZjY4IiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9kaXJlY3RfcG9saWN5LnB5IjogIjI1MWI2YWFiMDE1M2RmN2I4NGJmOTljOTRmMGU0ZDNhZDEyODI3NWM5YmQyNzQxNDY5NzAzNTQzMGU3YTAxZDYiLAogICAgICAic2NyaXB0cy90cmFja2VyX3BhdXNlX3BvbGljeS5weSI6ICI2MDU3YTc4OTU5ZTgzMDBkM2ZiMWU3N2EyMDNlMTczNmNjMGVlNDUzMDRhMmEwMzJjMDlkODRhNzUzZjZhMDdmIiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9wcl9jaGVjay5weSI6ICIzYjgxN2FmNTUyYjRjMGEyNzc3NjA1MjNlZDU2OTAzNzQ1M2Y2ZDkzMzY1N2VhNmM2ZGUyYjk4NGIxMWZhNzZkIiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9wcm9jZXNzX2luc3RydWN0aW9ucy5weSI6ICI0ZjgxMGFhYTZlOTU0NGIyMjZjYTM2ZmFhZWNhMmE1YmY3OGNhYmY3NWI5NmY1ZDRjN2I5ZTM4MzViY2VmZjI3IiwKICAgICAgInNjcmlwdHMvdHJhY2tlcl9wcm9jZXNzX3N1cHBvcnQucHkiOiAiODA1YzdhYTAyODcwNTI0ZWNiNGU2ZGE2OGJiNjgyNDczODQ4ZmQ2NDRiYjBmMDgxY2YyOGU5YTQzZDllMzk4ZiIsCiAgICAgICJzY3JpcHRzL3RyYWNrZXJfdGFza19jb250ZXh0LnB5IjogImQxNTVjZGMwMjc1YjdlNzQxZDkwY2UyOWIyOTZlNjExZjBlOWI4ZTNhMjhkOGJhMDFiYjc2MTc1Mzk5NzQyZjYiCiAgICB9CiAgfSwKICAicmV0cnlfdmFsaWRhdG9yIjogewogICAgInNoYTI1NiI6ICIwNThkMzg1NTEzODI3ZTk2ZjJkN2I5NjhhZjI3YWYxNmNmNTZiN2ZlNWI2ZGY3Mzk1MmRiMmQ4OGFmMTY4ZDg2IiwKICAgICJzb3VyY2UiOiAidHJhY2tlci9jaV9yZXRyeS5weSIKICB9LAogICJyb3V0ZV92YWxpZGF0b3IiOiB7CiAgICAic2hhMjU2IjogIjdiMjYzNTMzZGMwMTFkOWJhMDdmNGU4MGZkYTk4ZWExYzIzMWVhYTFmZTdlNzIzMzQ0MjQ5YTllNzMzZjVjMjkiLAogICAgInNvdXJjZSI6ICJ0cmFja2VyL2RpcmVjdF9wb2xpY3kucHkiCiAgfSwKICAicnVudGltZSI6IHsKICAgICJlbmdpbmVfbWluX3B5dGhvbiI6ICIzLjExIiwKICAgICJwb3J0YWJsZV9taW5fcHl0aG9uIjogIjMuOSIKICB9LAogICJ2YWxpZGF0b3IiOiB7CiAgICAic2hhMjU2IjogImEzNWM1N2IwNzljNjc3NDY2MmM5ZTE1YTJmMDMzYmY2MDVkZjZiMTY2YzcxZDY1YTdmNjdjOWY1YjljZGYyMzAiLAogICAgInNvdXJjZSI6ICJ0cmFja2VyL2NpX2V2aWRlbmNlLnB5IgogIH0KfQo=",
+        "encoding": "base64",
+        "sha": "3ac2a5bb526da95ac3556f3a912ea747df8be5fe",
+        "size": 6317
+      },
+      "repos/owner/repo/git/blobs/4399e91b9c6dde1c8d275a8cd514931f29bdd823": {
+        "content": "ZGVmIHRlc3RfYWN0dWFsX3Jlc3VsdCgpOiBwYXNzCg==",
+        "encoding": "base64",
+        "sha": "4399e91b9c6dde1c8d275a8cd514931f29bdd823",
+        "size": 31
+      },
+      "repos/owner/repo/git/blobs/5e802602842bc8fa08ba7b3dea4e18dacc85814e": {
+        "content": "bmFtZTogVmVyaWZ5IHB1Ymxpc2hlZCBwYWNrYWdlCm9uOgogIHdvcmtmbG93X2Rpc3BhdGNoOgogICAgaW5wdXRzOgogICAgICB0YWc6CiAgICAgICAgcmVxdWlyZWQ6IHRydWUKICAgICAgICB0eXBlOiBzdHJpbmcKcGVybWlzc2lvbnM6CiAgY29udGVudHM6IHJlYWQKam9iczoKICB2ZXJpZnk6CiAgICBuYW1lOiBWZXJpZnkgcHVibGlzaGVkIHBhY2thZ2UKICAgIHJ1bnMtb246IHdpbmRvd3MtbGF0ZXN0CiAgICB0aW1lb3V0LW1pbnV0ZXM6IDIwCiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHY0CiAgICAgIC0gcnVuOiBweXRob24gcGFja2FnaW5nL2NoZWNrLnB5Cg==",
+        "encoding": "base64",
+        "sha": "5e802602842bc8fa08ba7b3dea4e18dacc85814e",
+        "size": 340
+      },
+      "repos/owner/repo/git/blobs/73c4cde869f1715e58a2e4b97ed88c7b730c9744": {
+        "content": "eyJzY2hlbWFfdmVyc2lvbiI6IDIsICJwcm9maWxlIjogInBhY2thZ2UiLCAic3RhbmRhcmQiOiB7InJlcG9zaXRvcnkiOiAiaHR0cHM6Ly9naXRodWIuY29tL01vam9UaGVBcGUvbWFzdGVyLXJlcG8iLCAicmV2aXNpb24iOiAiYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYSIsICJ2ZXJzaW9uIjogIjEuNS40In0sICJ0cmFja2VyIjogeyJyZXZpc2lvbiI6ICJjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjIiwgIndvcmtzcGFjZV9pZCI6ICJleGFtcGxlIn0sICJ3b3JrZmxvdyI6IHsicHJvY2Vzc19pbnN0cnVjdGlvbnMiOiB7InNjaGVtYV92ZXJzaW9uIjogMSwgInJlcXVpcmVkX2NoZWNrcyI6IFsiZGVzY3JpcHRvciIsICJ0cmFja2VyLWxpbmsiLCAiUHJvY2VzcyBpbnN0cnVjdGlvbnMiXX19LCAiY29tcGxldGlvbiI6ICJ2ZXJpZmllZC1zdGFibGUtcGFja2FnZSIsICJkZWxpdmVyeSI6IHsicHJvY2VkdXJlIjogIktlZXAgYWN0dWFsIHByb2R1Y3QgaW5zdGFsbGF0aW9uL3VwZGF0ZSBjb250cm9scyJ9fQ==",
+        "encoding": "base64",
+        "sha": "73c4cde869f1715e58a2e4b97ed88c7b730c9744",
+        "size": 544
+      },
+      "repos/owner/repo/git/blobs/d8da226b59c5868d00102abe0d345bd9e5690a4b": {
+        "content": "eyJzY2hlbWFfdmVyc2lvbiI6IDIsICJwcm9qZWN0IjogeyJuYW1lIjogIkV4YW1wbGUiLCAicmVwb3NpdG9yeSI6ICJvd25lci9yZXBvIiwgImJhc2VfYnJhbmNoIjogIm1haW4iLCAiaWRfcHJlZml4IjogIkVYIn0sICJjb21wbGV0aW9uX2xhYmVsIjogIk1lcmdlZCIsICJ3b3JrZmxvdyI6IFsiaWRlYSIsICJiYWNrbG9nIiwgInRvZG8iLCAiaW5fcHJvZ3Jlc3MiLCAicmV2aWV3IiwgIm1lcmdlZCJdLCAicHJpb3JpdGllcyI6IFsiaGlnaCIsICJtZWRpdW0iLCAibG93Il0sICJkZWZhdWx0X2JhY2tsb2dfcHJpb3JpdHkiOiAibWVkaXVtIiwgInJlbGVhc2Vfdmlld19sYWJlbCI6ICJSZWxlYXNlIiwgImRlZmF1bHRfcmVsZWFzZSI6ICIiLCAicmVmcmVzaF9zZWNvbmRzIjogNjAsICJtb2R1bGVzIjogW3siaWQiOiAiYWNjb3VudHMiLCAibmFtZSI6ICJBY2NvdW50cyIsICJkZXNjcmlwdGlvbiI6ICJBY2NvdW50IGJlaGF2aW9yIn1dLCAicmVsZWFzZV9tb2RlIjogInNpbmdsZSIsICJkZWxpdmVyeV9wb2xpY3kiOiB7InNjaGVtYV92ZXJzaW9uIjogMSwgInN0YWdpbmciOiB7ImVuYWJsZWQiOiBmYWxzZSwgImJyYW5jaCI6ICJzdGFnZSIsICJ0YXJnZXQiOiAiZXhhbXBsZS9zdGFnZSJ9LCAiY29tcGxldGlvbiI6ICJ2ZXJpZmllZC1zdGFibGUtcGFja2FnZSIsICJkZWxpdmVyeV90YXJnZXQiOiAiZXhhbXBsZS9wcm9kdWN0aW9uIiwgInJlcXVpcmVkX2NoZWNrcyI6IFsidGVzdHMiXX0sICJwcm9jZXNzX2luc3RydWN0aW9ucyI6IHsic2NoZW1hX3ZlcnNpb24iOiAxLCAicmVxdWlyZWRfY2hlY2tzIjogWyJkZXNjcmlwdG9yIiwgInRyYWNrZXItbGluayIsICJQcm9jZXNzIGluc3RydWN0aW9ucyJdfX0=",
+        "encoding": "base64",
+        "sha": "d8da226b59c5868d00102abe0d345bd9e5690a4b",
+        "size": 854
+      },
+      "repos/owner/repo/git/blobs/db2cb8b6557940213ade7e771603dc5a1f88ba76": {
+        "content": "IyBNYW51YWwgdmVyaWZpY2F0aW9uCg==",
+        "encoding": "base64",
+        "sha": "db2cb8b6557940213ade7e771603dc5a1f88ba76",
+        "size": 22
+      },
+      "repos/owner/repo/git/blobs/e50a4d00d04a10137de0e5e9a1bed295da599943": {
+        "content": "eyJyZXBvc2l0b3J5IjogIk1vam9UaGVBcGUvdGFzay10cmFja2VyIiwgInJldmlzaW9uIjogImNjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2MifQ==",
+        "encoding": "base64",
+        "sha": "e50a4d00d04a10137de0e5e9a1bed295da599943",
+        "size": 97
+      },
+      "repos/owner/repo/git/commits/0000000000000000000000000000000000000001": {
+        "parents": [],
+        "tree": {
+          "sha": "0000000000000000000000000000000000000065"
+        }
+      },
+      "repos/owner/repo/git/commits/0000000000000000000000000000000000000002": {
+        "parents": [
+          {
+            "sha": "0000000000000000000000000000000000000001"
+          }
+        ],
+        "tree": {
+          "sha": "0000000000000000000000000000000000000066"
+        }
+      },
+      "repos/owner/repo/git/commits/0000000000000000000000000000000000000384": {
+        "parents": [
+          {
+            "sha": "0000000000000000000000000000000000000001"
+          },
+          {
+            "sha": "0000000000000000000000000000000000000002"
+          }
+        ],
+        "tree": {
+          "sha": "0000000000000000000000000000000000000066"
+        }
+      },
+      "repos/owner/repo/git/ref/heads/main": {
+        "object": {
+          "sha": "0000000000000000000000000000000000000384"
+        }
+      },
+      "repos/owner/repo/git/trees/0000000000000000000000000000000000000065?recursive=1": {
+        "sha": "0000000000000000000000000000000000000065",
+        "tree": [
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_pr_check.py",
+            "sha": "0352dbf9a8705492601f52064e0fe9a787645744",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_pr_check.py",
+            "sha": "4ab607e1d90d71ff0d75c688b1afeb835f1644a4",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "delivery.json",
+            "sha": "73c4cde869f1715e58a2e4b97ed88c7b730c9744",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "tracker/config.json",
+            "sha": "d8da226b59c5868d00102abe0d345bd9e5690a4b",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "tracker/engine.json",
+            "sha": "e50a4d00d04a10137de0e5e9a1bed295da599943",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "tracker/export-contract.json",
+            "sha": "3ac2a5bb526da95ac3556f3a912ea747df8be5fe",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/layout.json",
+            "sha": "8339836bb3b0d11017a1ea717e9e87f65eb15710",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "AGENTS.md",
+            "sha": "2359c9fde57fddd12711c484fa0cb37b44eccf59",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".github/workflows/delivery-check.yml",
+            "sha": "8fe1257974feb31333e0184c2f77dcde35b47afc",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "app.py",
+            "sha": "ab0b64f0ecdcfa55831482f23f616b7d5293df7b",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/template-base.json",
+            "sha": "057c8cec78f9bae0811f52e3425e5e9f82ce82ac",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/task_tracker.py",
+            "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/task_tracker.py",
+            "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_delivery_policy.py",
+            "sha": "4600deac96a0b3d252f24c3c2cf9f64ce39241b7",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_delivery_policy.py",
+            "sha": "5e8b6aa0da8b660cbe249c5207b0217d8ea103da",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_batch_policy.py",
+            "sha": "65f1f0a13c600e987226ab4754e832924cb19b81",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_batch_policy.py",
+            "sha": "957ab0e3e16fa90af98b8bfaa6604f48ac239de2",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_process_instructions.py",
+            "sha": "87eb7432e1b908438ef21f90e5c31f4ea1c665a2",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_process_instructions.py",
+            "sha": "67ccd3358da2591533e7f62f1b5e40cf9b6717c0",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_process_support.py",
+            "sha": "f532dcaf618917c65593c9dd023b81ef39903739",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_process_support.py",
+            "sha": "855e63a8f44c619a388f0a94e4edbb96a9023471",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_pause_policy.py",
+            "sha": "c8b5d7bc12db775b41cc765e9d90fa0f7b07259b",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_pause_policy.py",
+            "sha": "12ead2d62c3d84808c570e87f36d450efc58a9c9",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_ci_evidence.py",
+            "sha": "a68ba201821d892ed6d3e5e7f6697d36cce93f84",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_ci_evidence.py",
+            "sha": "09b5454b64d58a1d087014b261a40835cba0b255",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_delivery_receipt.py",
+            "sha": "f8564e2678823d00d92355158e1858d3f4abfd0a",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_delivery_receipt.py",
+            "sha": "963508495c14d7e644f2e94d1183a61b01710983",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_task_context.py",
+            "sha": "45f57c46923740e4cdfc318ce3104e236f91d9b4",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_task_context.py",
+            "sha": "5969a147c263236f4cf7f28bf766d4246de7e4be",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_ci_gate.py",
+            "sha": "823c9d389ab589f0dc90edbc00d8041dedb0be9f",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_ci_gate.py",
+            "sha": "b4575a3fdae572d678cb6ba4c6717e6ce43d84c7",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_ci_accounting.py",
+            "sha": "eb5bccc5b6abbd3b4860fce63cd894854a6c53ac",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_ci_accounting.py",
+            "sha": "74f7b8e7d1bda20abd2ae6965e568657708736e7",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_ci_retry.py",
+            "sha": "dcd0e0a8f640438ab6317057987fe7571b0bc555",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_ci_retry.py",
+            "sha": "da9661def037525f7a4d6c7a24f7b1cb2f0c7e61",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_direct_policy.py",
+            "sha": "c610bc323edcb8309690e589882df05d14da982d",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_direct_policy.py",
+            "sha": "9a4ad737829651e0115777e23ffc99b3f29f0bf4",
+            "type": "blob"
+          }
+        ],
+        "truncated": false
+      },
+      "repos/owner/repo/git/trees/0000000000000000000000000000000000000066?recursive=1": {
+        "sha": "0000000000000000000000000000000000000066",
+        "tree": [
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_pr_check.py",
+            "sha": "0352dbf9a8705492601f52064e0fe9a787645744",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_pr_check.py",
+            "sha": "4ab607e1d90d71ff0d75c688b1afeb835f1644a4",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "delivery.json",
+            "sha": "73c4cde869f1715e58a2e4b97ed88c7b730c9744",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "tracker/config.json",
+            "sha": "d8da226b59c5868d00102abe0d345bd9e5690a4b",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "tracker/engine.json",
+            "sha": "e50a4d00d04a10137de0e5e9a1bed295da599943",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "tracker/export-contract.json",
+            "sha": "3ac2a5bb526da95ac3556f3a912ea747df8be5fe",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/layout.json",
+            "sha": "8339836bb3b0d11017a1ea717e9e87f65eb15710",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "AGENTS.md",
+            "sha": "2359c9fde57fddd12711c484fa0cb37b44eccf59",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".github/workflows/delivery-check.yml",
+            "sha": "8fe1257974feb31333e0184c2f77dcde35b47afc",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "app.py",
+            "sha": "ab0b64f0ecdcfa55831482f23f616b7d5293df7b",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/template-base.json",
+            "sha": "057c8cec78f9bae0811f52e3425e5e9f82ce82ac",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/task_tracker.py",
+            "sha": "7f75a643d9fd5049a32cb2c47c0b75704056e01b",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/task_tracker.py",
+            "sha": "da2da63fef99a6c477689caa7dcab9c3e429c25c",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_delivery_policy.py",
+            "sha": "4600deac96a0b3d252f24c3c2cf9f64ce39241b7",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_delivery_policy.py",
+            "sha": "5e8b6aa0da8b660cbe249c5207b0217d8ea103da",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_batch_policy.py",
+            "sha": "65f1f0a13c600e987226ab4754e832924cb19b81",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_batch_policy.py",
+            "sha": "957ab0e3e16fa90af98b8bfaa6604f48ac239de2",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_process_instructions.py",
+            "sha": "87eb7432e1b908438ef21f90e5c31f4ea1c665a2",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_process_instructions.py",
+            "sha": "67ccd3358da2591533e7f62f1b5e40cf9b6717c0",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_process_support.py",
+            "sha": "f532dcaf618917c65593c9dd023b81ef39903739",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_process_support.py",
+            "sha": "855e63a8f44c619a388f0a94e4edbb96a9023471",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_pause_policy.py",
+            "sha": "c8b5d7bc12db775b41cc765e9d90fa0f7b07259b",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_pause_policy.py",
+            "sha": "12ead2d62c3d84808c570e87f36d450efc58a9c9",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_ci_evidence.py",
+            "sha": "a68ba201821d892ed6d3e5e7f6697d36cce93f84",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_ci_evidence.py",
+            "sha": "09b5454b64d58a1d087014b261a40835cba0b255",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_delivery_receipt.py",
+            "sha": "f8564e2678823d00d92355158e1858d3f4abfd0a",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_delivery_receipt.py",
+            "sha": "963508495c14d7e644f2e94d1183a61b01710983",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_task_context.py",
+            "sha": "45f57c46923740e4cdfc318ce3104e236f91d9b4",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_task_context.py",
+            "sha": "5969a147c263236f4cf7f28bf766d4246de7e4be",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_ci_gate.py",
+            "sha": "823c9d389ab589f0dc90edbc00d8041dedb0be9f",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_ci_gate.py",
+            "sha": "b4575a3fdae572d678cb6ba4c6717e6ce43d84c7",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_ci_accounting.py",
+            "sha": "eb5bccc5b6abbd3b4860fce63cd894854a6c53ac",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_ci_accounting.py",
+            "sha": "74f7b8e7d1bda20abd2ae6965e568657708736e7",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_ci_retry.py",
+            "sha": "dcd0e0a8f640438ab6317057987fe7571b0bc555",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_ci_retry.py",
+            "sha": "da9661def037525f7a4d6c7a24f7b1cb2f0c7e61",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".workflow/tools/tracker_direct_policy.py",
+            "sha": "c610bc323edcb8309690e589882df05d14da982d",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "scripts/tracker_direct_policy.py",
+            "sha": "9a4ad737829651e0115777e23ffc99b3f29f0bf4",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": ".github/workflows/verify-published.yml",
+            "sha": "5e802602842bc8fa08ba7b3dea4e18dacc85814e",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "tests/test_verification.py",
+            "sha": "4399e91b9c6dde1c8d275a8cd514931f29bdd823",
+            "type": "blob"
+          },
+          {
+            "mode": "100644",
+            "path": "docs/repository/DELIVERY.md",
+            "sha": "db2cb8b6557940213ade7e771603dc5a1f88ba76",
+            "type": "blob"
+          }
+        ],
+        "truncated": false
+      },
+      "repos/owner/repo/issues/1": {
+        "body": "",
+        "created_at": "2026-01-01T00:00:00Z",
+        "labels": [
+          {
+            "name": "module:accounts"
+          },
+          {
+            "name": "priority:medium"
+          },
+          {
+            "name": "status:merged"
+          },
+          {
+            "name": "type:improvement"
+          }
+        ],
+        "number": 1,
+        "state": "open",
+        "title": "A"
+      },
+      "repos/owner/repo/pulls/10": {
+        "base": {
+          "ref": "main",
+          "repo": {
+            "full_name": "owner/repo"
+          },
+          "sha": "0000000000000000000000000000000000000001"
+        },
+        "body": "Tracker issues: EX-1",
+        "draft": false,
+        "head": {
+          "ref": "codex/ex-1-task-a",
+          "repo": {
+            "full_name": "owner/repo"
+          },
+          "sha": "0000000000000000000000000000000000000002"
+        },
+        "merge_commit_sha": "0000000000000000000000000000000000000384",
+        "merged": true,
+        "number": 10,
+        "state": "closed",
+        "title": "[EX-1] Task A"
+      },
+      "repos/owner/repo/pulls/10/commits?per_page=100&page=1": [
+        {
+          "commit": {
+            "message": "Implement A"
+          }
+        }
+      ]
+    },
+    "state": {
+      "active": null,
+      "delivery_workflow": {
+        "reviews": {
+          "10": {
+            "base_sha": "0000000000000000000000000000000000000001",
+            "head_sha": "0000000000000000000000000000000000000002",
+            "implementer": "real-author",
+            "issue_scopes": {
+              "1": "f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775"
+            },
+            "issues": [
+              1
+            ],
+            "kind": "independent-review",
+            "main_sha": "0000000000000000000000000000000000000001",
+            "policy": "1ba829986f2cfb84d12b87dde7ef1fce85b05f35c68ea77c51e6a26145133b7a",
+            "recorded_at": "2026-10-20T00:00:00+00:00",
+            "report": "Actual complete scope and immutable support reviewed; no product publication requested.",
+            "reviewer": "real-independent-reviewer",
+            "tree_sha": "0000000000000000000000000000000000000066",
+            "verdict": "approved"
+          }
+        },
+        "tasks": {
+          "1": {
+            "history": [
+              {
+                "policy": "1ba829986f2cfb84d12b87dde7ef1fce85b05f35c68ea77c51e6a26145133b7a",
+                "recorded_at": "2026-10-20T00:00:00+00:00",
+                "scope": "f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775",
+                "scope_provenance": {
+                  "accepted_by": [
+                    {
+                      "base_sha": "0000000000000000000000000000000000000001",
+                      "head_sha": "0000000000000000000000000000000000000002",
+                      "kind": "independent-review",
+                      "pr": 10,
+                      "tree_sha": "0000000000000000000000000000000000000066"
+                    }
+                  ],
+                  "issue": 1,
+                  "policy": "1ba829986f2cfb84d12b87dde7ef1fce85b05f35c68ea77c51e6a26145133b7a",
+                  "repository": "owner/repo",
+                  "schema_version": 1,
+                  "sources": [
+                    {
+                      "merge_sha": "0000000000000000000000000000000000000384",
+                      "pr": 10,
+                      "tree_sha": "0000000000000000000000000000000000000066"
+                    }
+                  ],
+                  "target": "example/production"
+                },
+                "sources": [
+                  {
+                    "merge_sha": "0000000000000000000000000000000000000384",
+                    "pr": 10,
+                    "tree_sha": "0000000000000000000000000000000000000066"
+                  }
+                ],
+                "state": "pending"
+              }
+            ],
+            "policy": "1ba829986f2cfb84d12b87dde7ef1fce85b05f35c68ea77c51e6a26145133b7a",
+            "process": true,
+            "recorded_at": "2026-10-20T00:00:00+00:00",
+            "scope": "f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775",
+            "scope_provenance": {
+              "accepted_by": [
+                {
+                  "base_sha": "0000000000000000000000000000000000000001",
+                  "head_sha": "0000000000000000000000000000000000000002",
+                  "kind": "independent-review",
+                  "pr": 10,
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                }
+              ],
+              "issue": 1,
+              "policy": "1ba829986f2cfb84d12b87dde7ef1fce85b05f35c68ea77c51e6a26145133b7a",
+              "repository": "owner/repo",
+              "schema_version": 1,
+              "sources": [
+                {
+                  "merge_sha": "0000000000000000000000000000000000000384",
+                  "pr": 10,
+                  "tree_sha": "0000000000000000000000000000000000000066"
+                }
+              ],
+              "target": "example/production"
+            },
+            "sources": [
+              {
+                "merge_sha": "0000000000000000000000000000000000000384",
+                "pr": 10,
+                "tree_sha": "0000000000000000000000000000000000000066"
+              }
+            ],
+            "state": "verified",
+            "verification": {
+              "admission": {
+                "main_sha": null,
+                "policy": "1ba829986f2cfb84d12b87dde7ef1fce85b05f35c68ea77c51e6a26145133b7a",
+                "route": "main",
+                "tree_sha": "0000000000000000000000000000000000000066"
+              },
+              "assessment": {
+                "issue_scopes": {
+                  "1": "f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775"
+                },
+                "kind": "isolated-process-verification",
+                "outcome": "process-only",
+                "product_isolation": {
+                  "evidence": "All product/build/install inputs unchanged; no imports or publication side effects.",
+                  "result": "isolated"
+                },
+                "proof_sha256": "d89862a418401f6a851e77e9580dd1adc5e339669eafd166830b4ee0697adc7d",
+                "report": "Only isolated manual verification tooling.",
+                "schema_version": 1
+              },
+              "issue_scopes": {
+                "1": "f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775"
+              },
+              "kind": "isolated-process-verification",
+              "main_sha": "0000000000000000000000000000000000000001",
+              "policy": "1ba829986f2cfb84d12b87dde7ef1fce85b05f35c68ea77c51e6a26145133b7a",
+              "proof_sha256": "d89862a418401f6a851e77e9580dd1adc5e339669eafd166830b4ee0697adc7d",
+              "review_sha256": "a791d244736b7a161b39a7276e83eba72c7d5f4ce23936a0233a06571a669671",
+              "route": "process-support",
+              "schema_version": 1,
+              "supplemental_review": {
+                "implementer": "real-author",
+                "kind": "independent-process-verification",
+                "process_support": {
+                  "issue_scopes": {
+                    "1": "f5c06d4ddbeb2659ddadfbd88a1a10317d54cb9b4045edb1746b780a46e13775"
+                  },
+                  "kind": "isolated-process-verification",
+                  "outcome": "process-only",
+                  "product_isolation": {
+                    "evidence": "All product/build/install inputs unchanged; no imports or publication side effects.",
+                    "result": "isolated"
+                  },
+                  "proof_sha256": "d89862a418401f6a851e77e9580dd1adc5e339669eafd166830b4ee0697adc7d",
+                  "report": "Only isolated manual verification tooling.",
+                  "schema_version": 1
+                },
+                "report": "Reviewed entire original outcome and preserved source/main acceptance.",
+                "reviewer": "actual-new-assessor",
+                "workflow_run": {
+                  "attempt": 1,
+                  "id": 100
+                }
+              },
+              "support_proof": {
+                "base_tree_sha": "0000000000000000000000000000000000000065",
+                "files": [
+                  {
+                    "after": {
+                      "mode": "100644",
+                      "sha": "5e802602842bc8fa08ba7b3dea4e18dacc85814e",
+                      "type": "blob"
+                    },
+                    "before": null,
+                    "path": ".github/workflows/verify-published.yml"
+                  },
+                  {
+                    "after": {
+                      "mode": "100644",
+                      "sha": "db2cb8b6557940213ade7e771603dc5a1f88ba76",
+                      "type": "blob"
+                    },
+                    "before": null,
+                    "path": "docs/repository/DELIVERY.md"
+                  },
+                  {
+                    "after": {
+                      "mode": "100644",
+                      "sha": "4399e91b9c6dde1c8d275a8cd514931f29bdd823",
+                      "type": "blob"
+                    },
+                    "before": null,
+                    "path": "tests/test_verification.py"
+                  }
+                ],
+                "jobs": [
+                  "Verify published package"
+                ],
+                "kind": "isolated-process-verification",
+                "proof_sha256": "d89862a418401f6a851e77e9580dd1adc5e339669eafd166830b4ee0697adc7d",
+                "schema_version": 1,
+                "tree_sha": "0000000000000000000000000000000000000066",
+                "workflow": ".github/workflows/verify-published.yml",
+                "workflow_blob": "5e802602842bc8fa08ba7b3dea4e18dacc85814e"
+              },
+              "tree_sha": "0000000000000000000000000000000000000066",
+              "workflow_run": {
+                "attempt": 1,
+                "head_sha": "0000000000000000000000000000000000000384",
+                "id": 100,
+                "jobs": [
+                  "Verify published package"
+                ],
+                "path": ".github/workflows/verify-published.yml",
+                "result": "passed",
+                "workflow_blob": "5e802602842bc8fa08ba7b3dea4e18dacc85814e"
+              }
+            },
+            "verified_at": "2026-10-20T00:00:00+00:00"
+          }
+        }
+      },
+      "run": null,
+      "schema_version": 1,
+      "todo_added": {},
+      "todo_order": []
+    }
+  },
   "main_pr": {
     "base": {
       "ref": "main",

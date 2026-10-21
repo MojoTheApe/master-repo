@@ -98,6 +98,14 @@ admission; never manufacture a source-only completion waiver or cancel an existi
 delivery request. Read Master's `docs/process-product-separation.md` for the global
 boundary and compatibility order.
 
+For a pinned isolated_verification1 outcome, use the existing process-support
+command's bounded proof and supplemental independent assessment after ordinary
+main admission. Verify original scope/review/acceptance and the exact successful
+official manual workflow attempt/jobs. Syntax alone proves eligibility; inspect
+indirect product/build/credential effects. Preserve the pending receipt in history
+and actual assessor identity without taking over the original developer. Unknown,
+mixed or explicitly requested publication outcomes retain product delivery.
+
 Read the project's completion condition before implementing. Source-only work can
 finish at checked main integration. Product changes in a service need verified
 delivery; product changes in a package need its required release and installation

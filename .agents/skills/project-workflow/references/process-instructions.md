@@ -7,6 +7,16 @@ upgrades need their actual published proof support and retain ordinary admission
 Preserve explicit product publication and existing authorized delivery requests.
 Do not claim a consumer adopted new executable support from an installed skill.
 
+The separate isolated_verification1 capability can finish a bounded added manual
+verification workflow after ordinary main admission and actual verification. Use
+the pinned guide's process-support proof and supplemental independent whole-scope
+assessment, including indirect product/build/credential effects. Syntax is only
+eligibility. Require the exact successful official workflow_dispatch attempt and
+all expected jobs at the admitted main merge, original review/scope/acceptance and
+no product publication obligation. Preview the evidence before apply; retain the
+pending receipt history and actual new assessor identity. This neither broadens
+the instruction route below nor acquires or rewrites another developer's review.
+
 Use only when the pinned engine supports it and `delivery.json`
 `workflow.process_instructions` exactly matches Tracker's top-level
 `process_instructions`. Absence keeps the old route. Updating this skill does not
