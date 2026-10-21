@@ -1,5 +1,14 @@
 # Repository process history
 
+## Candidate1.8.0 — MR-77
+
+Clarify the bounded isolated manual verification completion supplied by TT-194,
+including genuine supplementary independent assessment, exact successful native
+run and retained original scope/review/acceptance/receipt history. Keep ordinary
+admission, capacities, product/publication obligations and canonical support v1.
+Update the canonical skill and template reading path, and mechanically refresh
+the exact published compatible Tracker artifacts before standard publication.
+
 ## Candidate1.7.2 — MR-74
 
 Define genuine correction waiting/claimed fixing, fresh review and current

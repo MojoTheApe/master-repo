@@ -39,6 +39,19 @@ The existing [instruction-only contract](process-instructions.md) remains its
 bounded schema1 route. Do not expand it to arbitrary scripts, CI or configuration.
 The companion Tracker contract adds complete canonical shared-support proof for
 published standard/engine upgrades, while preserving ordinary integration gates.
+The separately advertised isolated_verification1 extension covers one added
+manual read-permission verification workflow, repository instructions and test
+modules with every other product/configuration/build input unchanged. Its
+conservative syntax proof establishes eligibility only. An actual independent
+assessor must inspect the full original scope, indirect inputs and side effects;
+the exact official successful manual workflow attempt/jobs at the admitted main
+merge supplies actual process verification. The maintained process-support
+recorder supplements retained original source review and unchecked-criterion
+acceptance without taking over another developer or relabelling past approval.
+Only a genuine pending singleton outcome with unchanged accepted scope can finish;
+its pending receipt stays in history and existing publication requests remain
+binding. Unsupported executable changes still require their own maintained
+isolation contract; this is no general scripts/CI allowlist or direct-main route.
 Its supported proof, exact source capability and actual adoption must be verified
 before using process completion beyond the existing instruction route.
 

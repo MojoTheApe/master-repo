@@ -616,17 +616,32 @@ def exercise_selection(root, python, layout, row):
 def support_fixture():
     """Save actual ordinary admission/completion with wholly synthetic GETs."""
     from unittest import mock
-    from tracker import delivery
+    from tracker import delivery, sync, process_support
     from test_process_support import SupportProject
-    with mock.patch.object(delivery, 'now', lambda: '2026-10-20T00:00:00+00:00'):
+    from test_isolated_verification import project as verification_project, evidence
+    with mock.patch.object(delivery, 'now', lambda: '2026-10-20T00:00:00+00:00'), mock.patch.object(sync, 'now', lambda: '2026-10-20T00:00:00+00:00'):
         project = SupportProject()
         source = copy.deepcopy(project.api.prs[10])
         project.review()
         receipt = project.merge()
+        isolated = verification_project()
+        requests = {}
+        original = isolated.api.request
+        def capture(path, *args, **kwargs):
+            result = original(path, *args, **kwargs)
+            if (args[0] if args else kwargs.get('method', 'GET')) == 'GET':
+                requests[path] = copy.deepcopy(result)
+            return result
+        isolated.api.request = capture
+        document = evidence(isolated)
+        process_support.record_verification(isolated.api, isolated.config, isolated.store, 10, document, True)
+        verification = dict(config=isolated.config, main_pr=isolated.api.prs[10], state=isolated.api.state,
+                            requests=requests, evidence=document)
         return dict(schema_version=1, synthetic=True, case='canonical-support-main',
             config=project.config, source_pr=source, main_pr=project.api.prs[10],
             state=project.api.state, admission=receipt['verification']['admission'],
-            requests=project.observed, expected_proof_sha256=receipt['verification']['proof_sha256'])
+            requests=project.observed, expected_proof_sha256=receipt['verification']['proof_sha256'],
+            isolated_verification=verification)
 
 
 SUPPORT_BOOTSTRAP = r'''
@@ -666,8 +681,26 @@ for change in ('unpublished','wrong-tag','changed-scope','mixed-product','reques
  except ValueError:pass
  else:assert invalid is None,(change,'invalid support accepted')
  negative+=1
+isolated=original['isolated_verification'];row=isolated
+from types import SimpleNamespace
+proof=support.verification_proof(request,row['config'],row['main_pr'])
+receipt=row['state']['delivery_workflow']['tasks']['1']
+assert proof==receipt['verification']['support_proof']
+api=SimpleNamespace(root='repos/owner/repo',repository='owner/repo',request=request)
+assert support.verified_run(api,proof,receipt['sources'][0],row['evidence']['workflow_run'])==receipt['verification']['workflow_run']
+assert rules.summary(receipt)['verified'] and rules.summary(receipt)['process_support']
+for change in ('run','run-id','attempt','proof','review','workflow','scope'):
+ bad=copy.deepcopy(receipt)
+ if change=='run':bad['verification']['workflow_run']['head_sha']='f'*40
+ elif change=='run-id':bad['verification']['workflow_run']['id']=456
+ elif change=='attempt':bad['verification']['workflow_run']['attempt']=456
+ elif change=='proof':bad['verification']['support_proof']['workflow_blob']='f'*40
+ elif change=='review':bad['verification']['supplemental_review']['reviewer']='real-author'
+ elif change=='workflow':bad['verification']['workflow_run']['path']='.github/workflows/release.yml'
+ else:bad['scope']='wrong-scope'
+ assert not rules.summary(bad)['verified'],change
 assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
-print(json.dumps(dict(case=original['case'],negative_cases=negative,engine_imported=False,consumer_writes=False,native_fixture_gets=len(calls))))
+print(json.dumps(dict(case=original['case'],negative_cases=negative,isolated_verification=True,isolated_negative_cases=7,engine_imported=False,consumer_writes=False,native_fixture_gets=len(calls))))
 '''
 
 

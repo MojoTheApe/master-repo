@@ -1,5 +1,26 @@
 # Versioning and safe upgrades
 
+## Isolated manual verification candidate1.8.0
+
+MR-77 pairs shared process/product guidance and the canonical skill with Tracker
+TT-194's additive isolated_verification1 support. Canonical process_support1 and
+instruction schema1 remain unchanged. Tracker3.10.0 is published at
+`e71c9829247e60d79031dbb1bb038896fcedf4cc` (tag v3.10.0, release420140493),
+after independent PR195 review and successful actual-main verify/portable checks.
+The maintained mechanical refresh consumes its complete61-file canonical closure,
+preserving profiles, selections, local capacities,
+targets and historical/pending product evidence. Source-owned process fixtures
+exercise the new proof/reader and tamper refusals on actual Python3.9 in both
+layouts; require the full clean exact pair, existing profiles/upgrades and negative
+compatibility checks before independent final review and actual-main admission.
+
+Publish immutable v1.8.0 at the accepted successful main candidate and verify the
+maintained whole-directory canonical skill mirror/catalog. Compatible readers
+precede consumer writers. A separate reviewed ACL support upgrade and real
+supplementary ACL-2071 process assessment complete the owner's consumer scope;
+source/skill publication does not adopt that consumer or publish an installer.
+Keep MR-76/TT-190's original records and reserved patch versions intact.
+
 ## Correction cycle candidate1.7.2
 
 MR-74 pairs common correction/continuation guidance and the canonical skill with

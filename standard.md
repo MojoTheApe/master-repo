@@ -192,6 +192,10 @@ changes and explicit publication requirements. Split mixed changes; unknown impa
 cannot obtain process-only completion. A changed path or task label alone is not
 proof. Use only supported immutable proof and genuine review/admission receipts;
 new instructions never activate an unsupported route or rewrite old obligations.
+Supported manual verification tooling can retain ordinary admission and complete
+from supplemental independent whole-scope evidence plus its exact successful
+official verification run. Follow the pinned contract; preserve original review,
+acceptance and pending-receipt history without changing the original developer.
 
 ## Living documentation
 

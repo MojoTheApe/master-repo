@@ -23,7 +23,7 @@ handoff, verification and recovery. After merge continue using that mechanism.
 Tooling/local and explicitly n8n-source scope completes at the admitted reviewed
 merge; do not invent a deploy for it. Package/VPS/ordinary n8n product scope needs
 real delivery. Follow the global process/product boundary: a proven canonical
-process-support update retains ordinary integration and its own completion proof
+process-support update or supported isolated manual verification retains ordinary integration and its own completion proof
 without requesting consumer product delivery. An existing product request remains
 pending until its real receipt; never cancel it to reclassify a task as process-only.
 A skill directs the active agent; only a configured project mechanism continues
