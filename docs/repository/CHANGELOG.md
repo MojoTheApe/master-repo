@@ -1,5 +1,16 @@
 # Repository process history
 
+## MR-79 — stage residence and truthful activity — 2026-10-23
+
+Clarify separate stage-residence and confirmed-work clocks for every project
+and installation profile, with real entry/pause/continuity evidence and unknown
+history. Preserve owner-only renewal, expiry and compatibility; genuine owned
+launches may supply their own initial observation, never a central poll or fake
+reporter. Update common guidance, workflow template and canonical skill/reference.
+Tracker impact: TT-199 owns implementation and actual shared-service delivery.
+No helper/config/pin/descriptor/version, consumer product or installer change;
+standard publication and maintained exact-source skill distribution are separate.
+
 ## Candidate1.8.0 — MR-77
 
 Clarify the bounded isolated manual verification completion supplied by TT-194,

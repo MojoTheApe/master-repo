@@ -72,6 +72,13 @@ freezes work time and means Connection lost after prior confirmation; never-conf
 that owner is assigned. Neither condition releases a reservation.
 Do not keep another agent apparently alive with a detached reporter.
 
+Show time in the current stage separately from this confirmed work time. Stage
+residence includes waiting; a recorded new stage starts a new clock, explicit
+pause freezes it and supported resume continues it. Backlog has no stage clock.
+Missing historic entry facts stay unknown. Apply this distinction to every
+repository/profile; a changing status or running residence clock never proves
+an active executor or authorizes product installation.
+
 ## Pause and resume existing work
 
 An owner's direct confirmation that an agent has stopped establishes that fact.

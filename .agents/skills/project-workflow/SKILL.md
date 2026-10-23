@@ -157,6 +157,14 @@ Foreground renewals preserve explicit waiting/stopped modes. Resume running only
 through an explicit owner report or an actual new launch.
 Read Master's `docs/executor-activity.md` when adopting this common support.
 
+Distinguish time in the current stage from that confirmed work clock. Residence
+includes waiting; a real new stage resets it, explicit pause freezes it and
+supported resume continues it. Backlog has no stage clock and missing entry facts
+stay unknown. Use the compatible owned launch's actual first report and real
+owner/foreground renewal; no poll or detached producer may keep old/foreign work
+alive. Existing unfenced legacy clients do not gain protected identity through
+an instruction update. This common distinction changes no consumer product or pin.
+
 Ordinary knowledge or working-data capture does not become an engineering task
 for every save. Changes to rules, automation or product behavior use the development
 process. Existing projects with a selected capture mechanism retain that procedure.

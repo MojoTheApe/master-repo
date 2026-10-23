@@ -1,5 +1,19 @@
 # Master Repo system
 
+## MR-79 — distinguish stage residence from confirmed work
+
+The common lifecycle/executor guidance and canonical Project Workflow skill
+separate current-stage elapsed residence (including waiting) from actual
+running/waiting/stopped/lost/unconfirmed activity and confirmed work totals.
+Real stage entries, explicit pause/resume, known continuity and honest unknowns
+govern age; Issue/snapshot edits do not. Tracker TT-199 owns central rendering
+and compatible owned-launch first reports. Minute renewal still comes from the
+real executor; old/unfenced clients and current foreign runs are not upgraded or
+restarted. This prose clarification changes no descriptor, helper, pin, VERSION,
+execution/delivery choice or consumer product/installer. MR-77's candidate and
+publication work remain retained; reviewed source guidance/mirroring and actual
+Tracker service delivery are distinct outcomes.
+
 ## MR-77 — isolated manual verification completion
 
 Candidate1.8.0 pairs common process/product guidance with Tracker TT-194's additive

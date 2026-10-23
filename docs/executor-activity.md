@@ -6,6 +6,33 @@ selected Tracker guide. New shared support is implemented in
 [TT-174](https://github.com/MojoTheApe/task-tracker/issues/174); instructions alone
 do not install a reporter or update a consumer pin.
 
+## Stage residence and actual work
+
+Show current-stage residence separately from actual executor activity and
+confirmed Work/Review/Merge totals. Stage residence includes queue/check/input
+waiting; it is not evidence that an agent worked continuously. A genuine new
+stage entry starts a new clock, including a return to a previously visited stage.
+Explicit phase-preserving pause freezes this clock; supported resume continues
+the same stage with paused intervals excluded. Backlog has no stage clock;
+completion/archive must not leave a live clock.
+
+Use recorded native transitions or the actual qualified owned stage operation.
+Issue edits, snapshot timestamps, old approvals and guessed agent activity never
+replace missing entry facts. Known starts may survive a bounded visible history
+only when complete intervening reads prove continuity; gaps remain unknown.
+Activity loss freezes confirmed work, not the separately labeled residence clock.
+Changing an activity indicator alone does not establish a new workflow entry.
+
+Compatible successful owned launch/resume commands can seed the actual caller's
+first observation. This is not a periodic producer: the real owner still reports
+once a minute or uses the wrapper around its actual foreground agent. Never seed
+a queued/foreign/old run from a central poll. Protected legacy identity binding
+requires already compatible fenced writers; old unbound runs stay unknown until
+a supported actual owner/compatible new launch can report. Do not activate a
+policy or upgrade consumer pins implicitly to hide an unknown. Tracker
+[TT-199](https://github.com/MojoTheApe/task-tracker/issues/199) owns this compatible
+implementation and central presentation, independently of consumer products.
+
 - Report running when actually executing, waiting before waiting for checks or
   input, and stopped when the executor finishes. While running, confirm once a
   minute through the maintained shared command and actual owner/session/claim.
