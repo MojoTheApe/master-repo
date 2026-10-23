@@ -97,6 +97,12 @@ minutes without a running/waiting report freezes work time and means Connection 
 condition releases ownership. No detached endless reporter or coordinator heartbeat
 for another executor. Existing runs without a producer remain unknown.
 
+Show time in the current stage separately: it includes waiting, resets on a
+genuine new stage, freezes on explicit pause and continues on supported resume.
+Backlog has no clock and missing entry facts remain unknown. A residence clock
+is not measured executor work. Compatible actual owned launches can seed their
+first observation; renewal still needs the real owner/foreground agent.
+
 ## Explicit phase-preserving pause
 
 Follow the compatible selected Tracker guide for owned `pause stop/resume`.

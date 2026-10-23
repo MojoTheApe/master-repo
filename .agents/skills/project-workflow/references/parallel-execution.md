@@ -31,6 +31,13 @@ common foreground wrapper. Preserve actual ownership and independent review.
 Wrapper renewals preserve explicit waiting/stopped, including concurrent owner
 reports; an explicit report or actual new launch controls resumption.
 
+A separately labeled stage-residence clock includes waiting and must not be
+mistaken for confirmed Work/Review/Merge totals. Real stage entry resets it;
+explicit pause freezes it and supported resume continues it. Backlog has none,
+unknown history stays unknown, and loss of activity never frees the reservation.
+Compatible actual owned starts can seed their own first report; minute renewals
+still come from the real executor or its actual foreground child wrapper.
+
 Legacy retains one shared slot; it does not acquire the parallel pools from this
 guide. Execution v1 counts real Worker claims and its one shared review/integration
 lane. Pending handoff, returning, fixing and uncertain writes retain their actual

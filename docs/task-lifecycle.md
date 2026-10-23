@@ -53,6 +53,13 @@ activity describes actual current executor reports. A batch can contain several
 tasks in one integration reservation; a held reservation alone is not running
 work. Keep these facts separate in counts, navigation and descriptions.
 
+The current-stage clock measures residence, including waiting, independently of
+executor activity and confirmed work totals. A genuinely recorded new stage
+starts its own clock; explicit pause freezes it and supported resume continues
+it with paused intervals excluded. Backlog has no clock. Never substitute an
+Issue edit or snapshot time for an unknown stage entry. Activity loss does not
+turn residence into work or authorize a workflow/ownership transition.
+
 Waiting age uses the timestamp of the actual current native source approval.
 Missing, malformed or mismatched evidence remains unknown. Never infer it from
 the Issue's last edit, source creation, an old approval or active-work durations.
