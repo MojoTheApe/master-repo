@@ -37,7 +37,13 @@ for independent work and identify the missing dependency for dependent actions.
 3. Implement the agreed result and update affected product knowledge. Group related
    fixes into a meaningful ready submission using the existing
    [verification](references/verification.md) plan and useful intermediate feedback.
-4. Link the ready PR and Issue both ways. Invoke a separate non-implementing
+4. Keep unfinished work draft. Complete the project's supported task handoff and
+   read back its actual Review/ownership state before dispatching review; a ready
+   GitHub PR alone is not that handoff. Follow the pinned command's prerequisite:
+   legacy status-first routes set Review before ready, while an execution handoff
+   that requires a non-draft PR runs immediately after ready. See the
+   [submission order](references/verification.md#submit-to-review-in-the-supported-order).
+   Link the PR and Issue both ways. Invoke a separate non-implementing
    subagent to review the actual head/base, full scope, changed files and existing
    evidence. Self-review under another label is not independent review.
 5. Address findings on the task branch. Follow the local return/handoff procedure

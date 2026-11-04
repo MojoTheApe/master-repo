@@ -41,6 +41,43 @@ platforms, installers, exact admission rules and runtime acceptance local.
 Use meaningful tests for actual risks. Do not add a test merely to mirror a
 reversible prose edit. Existing required repository checks still apply.
 
+## Submit to review in the supported order
+
+Keep unfinished work in a draft PR. Finish the candidate, its task references and
+applicable author checks before requesting review. During returned author fixes,
+first use the native return/reclaim procedure; keep the existing PR draft while
+implementation is incomplete where the adopted route permits it. Do not steal a
+claim, edit another author's work or change task phase merely to make CI green.
+
+Read the exact pinned handoff prerequisites before choosing the order:
+
+- Legacy routes that permit an explicit Review transition: record the actual
+  completed implementation and set Review through the supported command, read it
+  back, then mark the PR ready.
+- Execution-owned routes: use the actual Worker identity/claim and native handoff.
+  If it requires an open non-draft PR, prepare the complete handoff first, mark the
+  PR ready and invoke handoff immediately. Never substitute a label edit or insist
+  on draft handoff when that engine rejects it.
+- A project with selected ready-PR synchronization follows that maintained
+  reconciler. Observe its result; do not run a competing writer or assume that the
+  GitHub event already completed the task transition.
+
+Before dispatching the independent Reviewer, read back the linked task's real
+Review state, exact PR head and any required durable handoff/review reservation.
+Ready, Review and review ownership are distinct facts. An uncertain handoff needs
+inspection and the supported same-owner recovery, not another blind write.
+
+Some existing routes necessarily expose a short ready-before-handoff window.
+Their linkage check may fail before the transition completes. A later label
+change alone may not retrigger that GitHub job. Diagnose its actual log: if the
+only failure was the task phase and the completed native handoff now verifies,
+use the adopted retry procedure for the failed linkage job only. Keep the same
+source and valid successful source checks; do not create an empty commit, toggle
+draft/ready repeatedly or launch a full suite to refresh metadata. A still active,
+blocked, mislinked or incompletely handed-off task is not eligible for that retry.
+This guidance changes no engine, trigger, retry budget or merge gate and does not
+promise to eliminate the inherent event race on older consumers.
+
 ## Observe ordinary work
 
 Use ordinary necessary tasks and existing Issue/PR/run links. Briefly note an

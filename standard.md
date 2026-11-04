@@ -36,7 +36,10 @@ every routine step.
 3. **Implement and self-check.** Make the needed change, update affected product
    knowledge and use meaningful early checks. Group related corrections before
    another expensive run.
-4. **Request independent review.** Link the PR and Issue both ways. A different,
+4. **Request independent review.** Complete and verify the project's actual
+   [task handoff](docs/verification-submission.md#task-handoff-and-github-readiness)
+   in its pinned order; a ready PR alone does not establish Review or ownership.
+   Link the PR and Issue both ways. A different,
    non-implementing agent reviews the actual change, full requirements and existing
    test evidence. Sharing a GitHub account does not make self-review independent.
 5. **Resolve findings.** Fix the same task branch, obtain the required updated
