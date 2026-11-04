@@ -9,7 +9,9 @@ MojoTheApe repositories.
 2. Follow the project's short `AGENTS.md` reading map and local commands.
 3. Use [efficient verification](docs/verification.md) to select checks and avoid
    unnecessary GitHub Actions runs.
-4. For a new project, follow [setup and connection](docs/adoption.md#new-project-procedure).
+4. Use the [common document map](docs/project-documents.md) and
+   [project workflow evolution](docs/workflow-evolution.md).
+5. For a new project, follow [setup and connection](docs/adoption.md#new-project-procedure).
 
 GitHub holds each project's Issues, code, reviews and checks. Master describes how
 to work. The existing Task Tracker displays that work. Coordination uses the
@@ -38,8 +40,9 @@ only the relevant [compatibility references](docs/adoption.md#existing-generated
 Installing a newer skill does not migrate a project.
 
 The existing initializer and validators remain available with their documented
-behavior; this documentation update does not change their defaults or promise a
-new execution mode. Consumer changes, standard releases, skill distribution and
+behavior. New CLI setup uses the existing simple preset unless a route/preset is
+explicitly selected; role and completion remain required. Existing upgrades and
+explicit legacy selection retain their behavior. Consumer changes, standard releases, skill distribution and
 running Tracker updates are separate results.
 
 Master's own completed candidate uses its existing checks:

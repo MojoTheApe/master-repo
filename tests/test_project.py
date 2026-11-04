@@ -507,10 +507,8 @@ class Projects(unittest.TestCase):
         args=['init','--root',str(self.root),'--profile','local','--repository','owner/example',
               '--name','Example','--id-prefix','EX','--workspace-id','example','--tracker-root','unused']
         with mock.patch.object(standard,'source_revision',return_value=OLD),mock.patch.object(project,'init',return_value={}) as initialize:
-            self.assertEqual(standard.main(args),0)
-            self.assertEqual(initialize.call_args.args[1]['implementation_limit'],5)
-            self.assertEqual(initialize.call_args.args[1]['batch_limit'],5)
-            self.assertEqual(initialize.call_args.args[1]['task_context'],{'schema_version':1})
+            self.assertEqual(standard.main(args),2)
+            initialize.assert_not_called()
             args += ['--legacy-execution']
             self.assertEqual(standard.main(args),0)
             self.assertNotIn('implementation_limit',initialize.call_args.args[1])
@@ -623,7 +621,7 @@ class Projects(unittest.TestCase):
         self.assertEqual(owned.read_text(),'Project-specific knowledge.\n');self.assertEqual(self.errors(),[])
     def test_process_cli_requires_explicit_opt_in_and_passes_actual_checks(self):
         args=['init','--root',str(self.root),'--profile','local','--repository','owner/example',
-              '--name','Example','--id-prefix','EX','--workspace-id','example','--tracker-root','unused']
+              '--name','Example','--id-prefix','EX','--workspace-id','example','--tracker-root','unused','--role','shared-tooling-library','--completion','reviewed-merge']
         with mock.patch.object(standard,'source_revision',return_value=OLD),mock.patch.object(project,'init',return_value={}) as initialize:
             self.assertEqual(standard.main(args),0);self.assertNotIn('process_instructions',initialize.call_args.args[1])
             self.assertEqual(standard.main(args+['--process-check','Actual check']),2)
@@ -673,7 +671,7 @@ class Projects(unittest.TestCase):
     def test_project_knowledge_is_never_refreshed_even_if_untouched(self):
         self.create()
         incoming=files(INPUTS,NEW)
-        owned=[name for name in incoming if name.startswith(project.PROJECT_AREAS)]
+        owned=[name for name in incoming if name == 'README.md' or name.startswith(project.PROJECT_AREAS)]
         before={name:(self.root/name).read_text() for name in owned}
         for name in owned:incoming[name]='Upstream replacement would lose project knowledge.\n'
         with mock.patch.object(project,'render',return_value=incoming):
@@ -681,6 +679,19 @@ class Projects(unittest.TestCase):
         self.assertTrue(result['applied'])
         self.assertEqual(before,{name:(self.root/name).read_text() for name in owned})
         self.assertEqual(self.json(project.BASELINE)['files'],incoming)
+    def test_upgrade_keeps_older_missing_readme_without_new_layout_requirement(self):
+        self.create()
+        (self.root/'README.md').unlink()
+        base = self.json(project.BASELINE)
+        base['files'].pop('README.md')
+        self.put(project.BASELINE, base)
+        old_workflow = self.json('delivery.json')['workflow']
+        result = project.upgrade(self.root, NEW, 'unused', apply=True)
+        self.assertTrue(result['applied'])
+        self.assertFalse((self.root/'README.md').exists())
+        self.assertEqual(old_workflow, self.json('delivery.json')['workflow'])
+        self.assertEqual(self.errors(), [])
+
     def test_missing_project_knowledge_needs_manual_repair(self):
         self.create();(self.root/'docs/runtime/DELIVERY.md').unlink()
         result=project.upgrade(self.root,NEW,'unused',apply=True)

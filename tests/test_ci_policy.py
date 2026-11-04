@@ -67,7 +67,7 @@ class EvidencePolicy(unittest.TestCase):
         path = self.root.parent/'policy.json'; path.write_text(project.dumps(policy()))
         with mock.patch.object(project, 'init', return_value={}) as init, mock.patch.object(standard, 'source_revision', return_value=fixtures.NEW):
             status = standard.main(['init', '--root', str(self.root), '--profile', 'local', '--repository', 'owner/example',
-                '--name', 'Example', '--id-prefix', 'EX', '--workspace-id', 'example', '--tracker-root', 'unused',
+                '--name', 'Example', '--id-prefix', 'EX', '--workspace-id', 'example', '--tracker-root', 'unused', '--legacy-execution',
                 '--ci-evidence-policy', str(path)])
             self.assertEqual(status, 0)
             self.assertEqual(init.call_args.args[1]['ci_evidence'], policy())

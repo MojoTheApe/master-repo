@@ -7,10 +7,12 @@ revision and record its link in the project's short reading map.
 
 1. Create or inspect the authorized repository. Keep the supplied requirements and
    product files. Describe what the project does and where important data lives.
-2. Add a short `AGENTS.md`: the common standard reference, local workflow/product
+2. Use the [common document map](project-documents.md) and add a short `AGENTS.md`: the common standard reference, local workflow/product
    documents, actual run/check commands and delivery instructions. Reuse existing
    files rather than creating empty copies of every template.
-3. State what completes a task: checked source merge, a working service, a verified
+3. Start from simple/direct work, assessing Stage and side-effect risk separately.
+   Follow [workflow evolution](workflow-evolution.md) for justified local choices.
+   State what completes a task: checked source merge, a working service, a verified
    package or the requested publication. Name real checks and targets, not guessed
    commands or environments.
 4. Use the project's GitHub Issues and existing PR/reference convention. Start with
@@ -41,8 +43,8 @@ initializer below or claim a new instruction-only machine mode exists.
 The remaining procedures document tools and policies that already exist. Use them
 when maintaining an adopted generated workflow or when that adoption is explicitly
 part of the task. They are not prerequisites for reading the common standard.
-Their defaults, generated files and activation requirements are unchanged by this
-documentation update. The exact compatible Tracker guide owns commands.
+Existing consumer settings and activation requirements remain unchanged.
+The initializer below documents the new simple CLI default and explicit legacy route. The exact compatible Tracker guide owns commands.
 
 Relevant references: [project choices](project-choices.md),
 [descriptor](descriptor.md), [capacity](capacity.md),
@@ -71,18 +73,19 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    python3 scripts/standard.py init --root /path/to/new-project --profile local \
      --repository owner/new-project --name "New Project" --id-prefix NP \
      --workspace-id new-project --tracker-root /path/to/pinned-tracker \
-     --role application --completion reviewed-merge --preset application
+     --role application --completion reviewed-merge
    ```
 
-   Add `--apply` only after reviewing the complete preview. `application` fills
+   Add `--apply` only after reviewing the complete preview. New CLI setup requires
+   `--role` and `--completion`; when no route/preset is given it selects `simple`.
+   `application` must be explicitly requested and fills
    omitted batch/Stage-on/2 Workers/1 source reviewer/2 members and modern guards.
    `simple` fills direct/Stage-off/1 Worker/1 source reviewer. Role, profile and
    completion remain explicit; flags override preset omissions. `--staging` or
    `--no-staging` chooses Stage independently. New resource-board registration
    remains unsupported until its actual producer contract exists.
-   The compatibility CLI without modern choice flags retains its old schema2
-   defaults (execution2, five Workers/one source reviewer/batch5/context1).
-   This preserved interface is not the new-project recommendation. Actual
+   Bare initialization no longer silently selects five-worker batches. Missing
+   role/completion stops with setup guidance before project files are written. Actual
    ownership still requires compatible published writers and owned activation.
    Existing upgrades retain original policy/capacity; presets never reset them.
    `--legacy-execution` keeps original explicit policy selection: omission means
@@ -90,8 +93,8 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
    Add `--no-staging` for an explicitly disabled stage with the same frozen batches.
    Worker capacity and batch size are independent; batches
    need not be full and an urgent task may ship alone.
-   Add `--review-limit 5` with explicit implementation/batch choices to select
-   schema 3 and five independent source reviews, retaining one combined reviewer.
+   In explicit `--legacy-execution` mode, add `--review-limit 5` with
+   implementation/batch choices to select schema 3 and five independent source reviews, retaining one combined reviewer.
    Add `--ci-evidence-policy FILE` only after reviewing actual product jobs,
    immutable environments and proof inputs under [CI reuse](ci-reuse.md). A generic
    initializer cannot invent product dependencies or safe coverage. Its guide and
@@ -109,7 +112,7 @@ state that fact and keep the result draft. Never invent a tag or deployment targ
 5. Publish the initial repository/main using its authorized bootstrap procedure.
    Use `scripts/onboard.py --root PROJECT --tracker-root PINNED_ENGINE --workspace
    TRACKER_REGISTRY/workspace.json` to preview branch/label/registration setup.
-   Add `--apply` to create a missing stage from main, initialize project labels and
+   Add `--apply` to create a missing stage from main only when selected, initialize project labels and
    prepare an idempotent registry entry with a fallback config. It preserves
    differing existing branches and registrations for audit. The engine checkout
    and the registry editing checkout may be separate.
@@ -195,9 +198,9 @@ a previous pin/config is a reviewed recovery change, never a rewritten shared ta
 
 ### Parallel source reviews (execution schema 3)
 
-Explicit schema 3 adds 1..5 independently owned source-review slots while retaining
+The explicit legacy schema-3 interface adds 1..5 independently owned source-review slots while retaining
 one integration Coordinator, one separate integration Reviewer and frozen batches
-of at most five. Select it during initialization with `--implementation-limit 5
+of at most five. Select it during initialization with `--legacy-execution --implementation-limit 5
 --batch-limit 5 --review-limit 5`; projects without this choice retain their prior
 policy. [MR-22](https://github.com/MojoTheApe/master-repo/issues/22) and
 [TT-97](https://github.com/MojoTheApe/task-tracker/issues/97) own the compatible

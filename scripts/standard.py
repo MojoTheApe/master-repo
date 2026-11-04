@@ -243,19 +243,19 @@ def main(argv=None):
     init.add_argument('--role', help='Explicit descriptor3 repository role; requires a compatible canonical route provider')
     init.add_argument('--route', choices=('direct', 'batch'), help='Explicit descriptor3 integration choice')
     init.add_argument('--completion', help='Explicit descriptor3 required completion; must retain the delivery profile obligation')
-    init.add_argument('--preset', choices=('simple', 'application'), help='Conservative descriptor3 choices; explicit options override the preset')
+    init.add_argument('--preset', choices=('simple', 'application'), help='New-project choices: simple by default; explicit route or preset overrides it')
     init.add_argument("--process-instructions", action="store_true",
                       help="Explicitly permit reviewed instruction-only PRs directly into main")
     init.add_argument("--process-check", action="append", default=[], metavar="NAME",
                       help="Additional real required check for the instruction route; requires --process-instructions")
     init.add_argument("--implementation-limit", type=int, choices=range(1, 17), metavar="N",
-                      help="Implementation capacity 1..16 (new-project default 5); with --legacy-execution this explicitly selects execution v1")
+                      help="Implementation capacity 1..16; simple default 1; explicit legacy capacity selects execution v1")
     init.add_argument("--batch-limit", type=int, nargs="?", const=5, choices=range(1, 17), metavar="N",
-                      help="Batch capacity (new-project default 5); legacy selection requires explicit implementation capacity; --no-staging selects direct-main batches")
+                      help="Batch capacity for an explicitly selected batch route; legacy selection requires explicit implementation capacity")
     init.add_argument("--review-limit", type=int, choices=range(1, 6), metavar="N",
                       help="Select schema 3 with 1..5 source reviewers and one integration reviewer; new defaults supply implementation/batch limits; legacy selection requires both explicitly")
     init.add_argument('--task-context', action='store_true', help='Explicit task readiness, requirements journal and source compatibility; requires batch execution')
-    init.add_argument('--legacy-execution', action='store_true', help='Select original explicit execution choices instead of new-project batch/task-context defaults; never used by upgrade')
+    init.add_argument('--legacy-execution', action='store_true', help='Retain original explicit legacy execution choices; never used by upgrade')
     init.add_argument('--ci-evidence-policy', type=Path, help='Explicit reviewed native CI policy JSON; unsupported coverage stays fresh')
     init.add_argument('--knowledge-capture-policy', type=Path, help='Explicit reviewed mandate/roots JSON; requires modern choices and separate owned adoption')
     upgrade = commands.add_parser("upgrade")
@@ -282,9 +282,14 @@ def main(argv=None):
             if args.command == "init":
                 inputs = {"profile": args.profile, "repository": args.repository, "name": args.name,
                           "prefix": args.id_prefix, "workspace_id": args.workspace_id}
-                modern = any(getattr(args, key) is not None for key in ('role', 'route', 'completion', 'preset'))
-                if modern and args.legacy_execution:
+                explicit_choices = any(getattr(args, key) is not None for key in ('role', 'route', 'completion', 'preset'))
+                if explicit_choices and args.legacy_execution:
                     raise ValueError('Explicit descriptor3 choices cannot be combined with --legacy-execution')
+                modern = not args.legacy_execution
+                if modern and (args.role is None or args.completion is None):
+                    raise ValueError('New projects require --role and --completion. Simple is the default; use --preset application for batches or --legacy-execution for the original explicit legacy interface.')
+                if modern and args.preset is None and args.route is None:
+                    inputs['preset'] = 'simple'
                 if args.staging is not None or not modern:
                     inputs['staging'] = True if args.staging is None else args.staging
                 if modern:
@@ -297,10 +302,6 @@ def main(argv=None):
                 if args.task_context: inputs['task_context'] = {'schema_version': 2 if modern else 1}
                 if args.completion_policy: inputs['completion_policy'] = {'schema_version': 1}
                 if args.ci_retry_policy is not None: inputs['ci_retry'] = retry_policy
-                if not args.legacy_execution and not modern:
-                    inputs.setdefault('implementation_limit', 5)
-                    inputs.setdefault('batch_limit', 5)
-                    inputs.setdefault('task_context', {'schema_version': 1})
                 if args.ci_evidence_policy:
                     inputs['ci_evidence'] = json.loads(args.ci_evidence_policy.read_text(encoding='utf-8'), object_pairs_hook=project.export_contract.unique)
                 if args.knowledge_capture_policy:
