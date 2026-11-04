@@ -55,6 +55,24 @@ isolation contract; this is no general scripts/CI allowlist or direct-main route
 Its supported proof, exact source capability and actual adoption must be verified
 before using process completion beyond the existing instruction route.
 
+### Verified build artifact retention
+
+The Task Tracker artifact-retention capability covers an admitted change to
+literal retention values on existing artifact upload steps. It verifies the
+immutable workflow change and its successful native upload and retention
+evidence. An independent assessor reviews the original task and confirms that
+the affected artifacts are intermediate CI outputs and that all accepted
+requirements are met.
+
+Use the published Tracker operator with a compatible snapshot reader. The
+supplemental operation binds the assessment to the original accepted task,
+review and merge. It preserves the pending receipt in history and refuses any
+genuine publication request. It applies after ordinary integration and required
+checks, without requiring a consumer release to complete the eligible task.
+Follow the operator's exact prerequisites, including standalone provider
+provenance where supported. Older clients that cannot read the new proof
+continue to treat the task as unfinished.
+
 For a proven shared-support update, keep the current source approval, real
 ownership, batch/Stage/main admission and applicable checks. Select process delivery
 without a consumer product-release request; record the exact admitted process

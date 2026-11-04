@@ -1,5 +1,12 @@
 # Master Repo system
 
+## MR-87 — verified artifact retention completion
+
+The [process and product boundary](../process-product-separation.md) documents
+how a supported Tracker operator records the checked retention setting separately
+from a consumer product release. The canonical skill directs agents to the
+operator's exact compatibility and evidence requirements.
+
 ## MR-85 — standard 1.9.0 release
 
 The source version now packages the reviewed MR-83 foundation and intervening
