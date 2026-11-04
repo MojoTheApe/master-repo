@@ -168,7 +168,7 @@ class RetrySelection(unittest.TestCase):
     def test_cli_file_selection_is_explicit_and_bad_json_never_starts_work(self):
         selected = self.root.parent/'retry.json'; selected.write_text(json.dumps(POLICY))
         init = ['init', '--root', str(self.root), '--profile', 'local', '--repository', 'owner/example',
-                '--name', 'Example', '--id-prefix', 'EX', '--workspace-id', 'example', '--tracker-root', 'unused']
+                '--name', 'Example', '--id-prefix', 'EX', '--workspace-id', 'example', '--tracker-root', 'unused', '--legacy-execution']
         upgrade = ['upgrade', '--root', str(self.root), '--tracker-root', 'unused']
         with mock.patch.object(standard, 'source_revision', return_value=OLD):
             with mock.patch.object(project, 'init', return_value={}) as create:

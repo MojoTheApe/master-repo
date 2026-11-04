@@ -29,7 +29,7 @@ PHASES = ['idea', 'backlog', 'todo', 'in_progress', 'review', 'stage', 'merged']
 BASELINE = '.workflow/template-base.json'
 LAYOUT = '.workflow/layout.json'
 PROJECT_AREAS = ('docs/system/', 'docs/runtime/')
-FILES = {'AGENTS.md': 'AGENTS.md', 'WORKFLOW.md': 'docs/repository/WORKFLOW.md',
+FILES = {'README.md': 'README.md', 'AGENTS.md': 'AGENTS.md', 'WORKFLOW.md': 'docs/repository/WORKFLOW.md',
          'VERIFICATION.md': 'docs/repository/VERIFICATION.md',
          'DELIVERY_CONTINUATION.md': 'docs/repository/DELIVERY_CONTINUATION.md',
          'LAYOUT.md': 'docs/repository/LAYOUT.md', 'DELIVERY.md': 'docs/repository/DELIVERY.md',
@@ -624,7 +624,7 @@ def upgrade(root, revision, tracker_root, python=sys.executable, apply=False, *,
     for name in sorted(old.keys() | new.keys()):
         path = standard.safe_path(root, name)
         before[name] = path.read_bytes().decode('utf-8') if path.is_file() else None
-        if name.startswith(PROJECT_AREAS):
+        if name == 'README.md' or name.startswith(PROJECT_AREAS):
             # Project ownership begins at creation, not at the first local edit.
             planned[name] = before[name]
             continue
@@ -770,7 +770,8 @@ def inspect(root, expected_revision=None):
         if not {'descriptor','tracker-link'} <= set(checks): raise ValueError('Descriptor and tracker-link checks are required')
         layout = json.loads(standard.safe_path(root, LAYOUT).read_text())
         if layout != LAYOUT_DATA: raise ValueError('Use the separated repository/system/runtime layout')
-        required = set(FILES.values()) | set(FORWARDS) | {'docs/repository/TRACKER.md', '.github/pull_request_template.md'}
+        # README is a project-owned seed, not a new requirement on older layouts.
+        required = (set(FILES.values()) - {'README.md'}) | set(FORWARDS) | {'docs/repository/TRACKER.md', '.github/pull_request_template.md'}
         if 'task_context' in wf:
             required.add('docs/repository/TASK_CONTEXT.md')
         if 'completion_policy' in wf:

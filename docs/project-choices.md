@@ -5,12 +5,11 @@ Use it when that adoption or a change to those settings is part of the task.
 For ordinary project setup start with the [short procedure](adoption.md#new-project-procedure);
 these presets are not prerequisites for following the common instructions.
 
-The Master1.5 source candidate pins actual published Tracker3.7.0 at
-`0b317d99997a4d3ef35b637bd6d19244630539f9` for descriptor3 and modern routes.
-The final Master review, native paired verification and publication remain
-required; a source version or successful engine release alone is not the
-published standard. This document selects no consumer policy and grants no
-capture mandate.
+Current source compatibility is recorded in [compatibility.json](../compatibility.json).
+The original Master1.5/Tracker3.7 introduction is retained in
+[dated history](system/CHANGELOG.md); it is not a pending prerequisite for ordinary
+setup. Source, exact release publication and consumer activation remain separate.
+This document grants no capture mandate or live policy selection.
 
 ## Choose independent properties
 
@@ -59,8 +58,10 @@ an engineering Issue lifecycle or claim registration from a local scaffold.
 
 ## Conservative new-project presets
 
-Presets fill omitted choices for a new project and expose the final values in the
-preview. Role, delivery profile, completion and actual target remain explicit.
+New CLI setup selects `simple` when no route/preset is supplied, and requires
+explicit role and completion. Presets fill omitted choices for a new project and
+expose the final values in the preview. Stage still needs a real risk assessment;
+use `--staging` when isolation is needed, including with simple/direct work. Role, delivery profile, completion and actual target remain explicit.
 
 | Preset | Route | Stage | Workers | Source reviews | Batch members |
 | --- | --- | --- | --- | --- | --- |

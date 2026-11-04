@@ -4,6 +4,8 @@ Paths in this document are relative to the repository root.
 
 | Area | Contents | Owner |
 |---|---|---|
+| `README.md` | Purpose, useful links and local startup entry | Project |
+| `AGENTS.md` | Short reading map to current common/local instructions | Shared navigation with local links |
 | `docs/repository/` | Git, tasks, review, checks, adoption and repository change history | Shared process, with reviewed project exceptions |
 | `docs/system/` | What the product does, architecture, requirements, domain constraints and system history | Project |
 | `docs/runtime/` | Environment identities, credentials handling, operational authorization, deployment, backup and recovery | Project |
@@ -21,7 +23,12 @@ split by section, preserving their requirements and dated evidence.
 they identify checks and completion policy and may link project procedures. They
 are not places for a product specification or full operational runbook.
 
-New projects receive starting outlines in `docs/system/` and `docs/runtime/`.
+Use the [common document map](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/project-documents.md)
+for exact responsibilities, specifications and meaningful history. Small tasks stay
+in Issues; larger specs link their implementation tasks. Keep progress and failure
+logs in those tasks rather than copying them into every document.
+
+New projects receive a project-owned README and starting outlines in `docs/system/` and `docs/runtime/`.
 Those files become project-owned immediately, even before they are customized.
 Standard upgrades never replace, merge or delete their contents. Missing required
 project documents need explicit repair in a project PR. The recorded template

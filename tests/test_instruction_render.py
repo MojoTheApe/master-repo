@@ -83,7 +83,7 @@ class SelectedInstructions(unittest.TestCase):
         data = project.descriptor(dict(INPUTS, implementation_limit=5, batch_limit=5,
                                        task_context={'schema_version': 1},
                                        process_instructions={'schema_version': 1, 'required_checks': ['descriptor', 'tracker-link']}), NEW)
-        text = instruction_render.render((project.SOURCE/'templates/workflow/WORKFLOW.md').read_text(), data)
+        text = instruction_render.render((project.SOURCE/'templates/workflow/WORKFLOW.md').read_text().replace('__STANDARD_REVISION__', NEW), data)
         self.assertIn('## Adopted task context', text)
         self.assertIn('before start/resume', text)
         self.assertIn('owned independent compatibility review', text)
@@ -134,7 +134,7 @@ class SelectedInstructions(unittest.TestCase):
         # Master-owned pure descriptor/navigation tests. No simulated engine
         # export, lifecycle, durable activation or source approval is involved.
         from test_project_choices import choices
-        template = (project.SOURCE/'templates/workflow/WORKFLOW.md').read_text()
+        template = (project.SOURCE/'templates/workflow/WORKFLOW.md').read_text().replace('__STANDARD_REVISION__', NEW)
         delivery = (project.SOURCE/'templates/workflow/DELIVERY.md').read_text()
         for route in ('direct', 'batch'):
             for stage in (False, True):
@@ -162,7 +162,7 @@ class SelectedInstructions(unittest.TestCase):
 
     def test_capture_guidance_is_only_selected_and_never_role_inferred(self):
         from test_project_choices import choices
-        template = (project.SOURCE/'templates/workflow/WORKFLOW.md').read_text()
+        template = (project.SOURCE/'templates/workflow/WORKFLOW.md').read_text().replace('__STANDARD_REVISION__', NEW)
         value = choices(role='knowledge')
         text = instruction_render.render(template, project.descriptor(value, NEW))
         self.assertNotIn('genuine capture operation', text)

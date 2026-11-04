@@ -1,5 +1,20 @@
 # Master Repo system
 
+## MR-83 — simple shared foundation
+
+The primary standard is the short common entry point. The document map gives
+new projects consistent repository/system/runtime responsibilities, with a
+project-owned README seed and linked specifications/history. Workflow evolution
+starts from actual needs and aligns local instructions with executable settings.
+
+New CLI initialization requires explicit role/completion and uses the existing
+simple/direct preset when no route/preset is supplied. Explicit application/batch,
+Stage/capacity and legacy choices remain supported. Ordinary upgrades retain their
+settings and preserve README/system/runtime knowledge, including an older missing
+README. No executable Tracker contract, compatible pin, consumer, live policy,
+standard version publication or product delivery changes as a side effect.
+Historical implementation entries below remain dated context.
+
 ## MR-81 — explicit review handoff order
 
 Shared submission guidance and the canonical Project Workflow skill distinguish
@@ -220,9 +235,9 @@ Execution versions remain explicit choices; schema 3 permits up to five source
 reviews with single combined integration. VERSION identifies the source version;
 actual immutable releases and existing consumer activation are separate facts.
 
-New CLI initialization selects execution v2 (implementation/batch limits five,
-one source reviewer) and task-context schema 1. Explicit legacy selection remains
-available; upgrades preserve old local policies. CI evidence is explicitly selected
+New CLI initialization uses the existing simple/direct preset with explicit
+role/completion; explicit route/preset and legacy choices remain available.
+Upgrades preserve old local policies. CI evidence is explicitly selected
 only after its actual product environment and checks are known.
 
 Master Repo defines the shared path from project creation and ticket intake to
@@ -254,7 +269,8 @@ requires compatible published writers; CI coverage requires explicit reviewed
 consumer adoption and retains every unsupported/missing job as fresh. This source
 selection does not change consumer execution capacity, state or runtime delivery.
 
-New projects default to permanent main/stage branches. Staging can be disabled,
+New projects use main with Stage selected according to their risk. Stage remains
+optional,
 including execution-v2/v3 frozen batches with Approved and independent combined
 review retained. The reserved combined candidate enters main directly; ordinary
 sources remain approval-only. The [continuation contract](../delivery-continuation.md)

@@ -6,6 +6,22 @@ Read `delivery.json`, the [system description](../system/PROJECT.md),
 project's actual immutable standard/engine pair, selected route and local controls.
 Use `python scripts/task_tracker.py guide` for the same pinned command guidance.
 
+## Project summary and evolution
+
+Briefly explain this project's selected process and link its actual settings,
+checks, delivery target and recovery. Do not copy the same machine values into a
+second settings register. Use the
+[common document map](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/project-documents.md).
+
+Change the process for a concrete observed need: recommend one useful adjustment
+with its cost, use the authorized task, update instructions/settings together,
+check the changed behavior and record a short result in repository history.
+Follow [workflow evolution](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/workflow-evolution.md).
+Preserve actual owners and selected migration controls. Neither a prose edit nor
+an installed skill activates a policy. Generalize only reusable lessons to Master;
+product-specific commands stay here. No routine new approval is needed for work
+already covered by the owner's request.
+
 ## Selected route
 
 __SELECTED_WORKFLOW__

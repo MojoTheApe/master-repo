@@ -1,126 +1,43 @@
 # Shared project workflow
 
-Use GitHub for the project's tasks, code, reviews and checks. Master Repo supplies
-the common instructions and structure; Task Tracker shows the recorded work.
-The agent follows this process using the tools already available to the project.
-
-Existing projects retain their checked-in instructions, required checks and
-delivery controls. Updating this standard or the installed skill does not change
-their selected execution mode, capacity, pins or running state. Read specialized
-instructions only when the project actually uses them.
+Master defines common development guarantees and document responsibilities.
+Each project chooses its checks, integration and delivery. GitHub holds tasks,
+source and review history; Tracker records work and enforces its selected rules.
+Existing projects keep their adopted pins, settings and live ownership.
 
 ## Start with the project
 
-Read `AGENTS.md`, the task's current requirements and the relevant local workflow,
-product and delivery instructions. Where `delivery.json` pins a standard, use that
-revision and its reading map rather than guessing from a newer release.
-
-Establish the intended result and completion condition before editing. Check for
-existing work on the same task and reuse it where appropriate. Age alone is not a
-reason to reject a task or seek a new permission. Check whether its requirements,
-source or dependencies changed.
-
-Ordinary feature work does not include upgrading the project's standard or
-redesigning its development infrastructure. Existing authorization carries through
-the actions it covers; ask about a genuinely missing decision or access, not
-every routine step.
+Read its short AGENTS map, current task and relevant product, workflow and runtime
+instructions. Use the selected standard revision and local Tracker guide. Establish
+what result is required and what completes it before changing code. Reuse existing
+work and authorization; ordinary feature work is not a standard migration.
 
 ## Ticket lifecycle
 
-1. **Describe the task.** Use its existing project Issue. Record the problem,
-   intended result and observable acceptance criteria; keep progress comments
-   separate from requirements.
-2. **Start the work.** Record the responsible implementer and a short plan. Check
-   for overlapping work. Use an isolated task branch/worktree and the project's
-   existing naming and ownership procedure.
-3. **Implement and self-check.** Make the needed change, update affected product
-   knowledge and use meaningful early checks. Group related corrections before
-   another expensive run.
-4. **Request independent review.** Complete and verify the project's actual
-   [task handoff](docs/verification-submission.md#task-handoff-and-github-readiness)
-   in its pinned order; a ready PR alone does not establish Review or ownership.
-   Link the PR and Issue both ways. A different,
-   non-implementing agent reviews the actual change, full requirements and existing
-   test evidence. Sharing a GitHub account does not make self-review independent.
-5. **Resolve findings.** Fix the same task branch, obtain the required updated
-   review and run checks affected by the changes. Reuse valid unchanged evidence.
-6. **Integrate and deliver.** Follow the project's existing merge and delivery
-   procedure with the required review and checks. Continue already authorized
-   delivery until verified or concretely blocked.
-7. **Record the result.** State what was included, how it was checked and what was
-   actually delivered. Close only the scope that meets the project's completion
-   condition; leave partial or failed work visible.
+1. **Describe the result.** Use the original task: problem, scope and observable
+   acceptance. Keep progress comments separate from requirements.
+2. **Start responsibly.** Record the actual implementer and a short plan, inspect
+   overlap, and use the project's isolated branch and ownership procedure.
+3. **Implement and check.** Update affected knowledge and run meaningful checks.
+   Group related fixes; reuse still-valid evidence instead of repeating it.
+4. **Hand off and review.** Complete the actual selected task handoff and verify
+   its state. A separate non-implementing reviewer assesses the current full scope,
+   source and evidence. Link the PR and task both ways.
+5. **Resolve and integrate.** Return findings through the adopted author procedure.
+   Keep required review/checks, use the supported final admission once, then merge.
+6. **Deliver and record.** Continue the authorized delivery to its verified result
+   or a concrete blocker. Record what actually shipped and leave partial work open.
 
-Status is a report of facts. Planning does not mean implementation is running;
-waiting for review differs from active review; merged code differs from a
-published or installed result. Use the project's supported status vocabulary.
-The Tracker's categories are a presentation concern, not new permissions.
-
-Use the common [task lifecycle](docs/task-lifecycle.md): unfinished review stays
-in Review; actual approved waiting work appears in Delivery as Ready for
-integration. Preserve native keys and existing admission. Queue size, occupied
-slots, confirmed activity and recorded waiting age are different facts. A paused
-task retains that category; completion follows its actual scope and delivery.
-Genuine returned corrections wait as Needs fixes in Backlog; their actual author
-claim shows Fixing in In Progress, then fresh independent Review. The active
-Coordinator continues the already selected task set within actual admission;
-new work, explicit pause resumption and changed outcomes retain owner decisions.
-A free slot does not launch an agent. Source approval alone does not authorize
-integration; authorized integration includes its necessary verified delivery.
-
-Confirm [actual executor activity](docs/executor-activity.md) through the compatible
-project's shared commands. Report running, waiting and stopped for your own run;
-confirm once a minute while running. Five minutes without a running/waiting report
-freezes work time and means Connection lost after prior confirmation; never-confirmed work remains Activity unconfirmed. A recorded stop remains while
-that owner is assigned. Neither condition releases a reservation.
-Do not keep another agent apparently alive with a detached reporter.
-
-Show time in the current stage separately from this confirmed work time. Stage
-residence includes waiting; a recorded new stage starts a new clock, explicit
-pause freezes it and supported resume continues it. Backlog has no stage clock.
-Missing historic entry facts stay unknown. Apply this distinction to every
-repository/profile; a changing status or running residence clock never proves
-an active executor or authorizes product installation.
-
-## Pause and resume existing work
-
-An owner's direct confirmation that an agent has stopped establishes that fact.
-Do not require an unavailable computer to come online just to confirm it again.
-Age, silence or an occupied slot alone does not establish a stop. Record the
-request and use the compatible project's explicit phase-preserving `pause stop`
-with a durable handoff and genuine acting identity. Preview/apply only after
-confirmed stop; never impersonate the old owner or edit state by hand. With an
-older pin, follow its supported procedure and report the remaining limitation.
-Do not call the older Todo-moving stop/review-return operation phase-preserving.
-
-Keep the native phase/category, task, source PR, saved branch/work location,
-history, scope, dependencies and genuine blockers. Paused replaces the display
-status inside that category and releases only its confirmed stopped executor.
-Frozen integration, Stage receipts and actual product delivery requests remain
-fenced. Paused and Blocked are distinct; neither silence nor a reporting expiry
-releases authority. An unavailable host does not require an invented backup.
-
-Resume explicitly at the prior phase with a genuinely free slot and fresh
-ownership, after checking current requirements/main/source/dependencies and role
-independence. No capacity or changed evidence keeps the pause with a reason.
-Retained reviews remain history, not automatic approval. A frozen Coordinator
-resumes in a genuine new session before its combined Reviewer. Preserve the
-project's independent review, integration and actual delivery. Read the global
-[pause contract](docs/task-pause.md), including compatible reader/all-writer
-publication and owned idle outer8 activation; a pin/skill update activates nobody.
-
-When a requirement changes, assess the result against that requirement. Preserve
-the old work and decision history. A progress note alone is not a changed
-requirement. If an operation's result is uncertain, inspect GitHub or the target
-before repeating it.
+Follow the pinned [submission order](docs/verification-submission.md#task-handoff-and-github-readiness).
+A ready PR alone is not a task handoff. Changed requirements need assessment;
+new requirements for accepted work normally belong in a linked follow-up.
+Age or a different agent alone does not invalidate existing work or evidence.
 
 ## Names and links
 
-Use the project's public task ID, validated Issue-reference line and branch
-convention. An Issue number and a PR number are different. Keep existing aliases
-and links. Avoid automatic closing keywords where delivery remains outstanding.
-
-A task description can be this short:
+Use the project's task IDs, branch convention and exact Issue-reference fields.
+Keep original links and aliases. Avoid automatic closing keywords while delivery
+is outstanding. A small task can contain just:
 
 ```text
 Description
@@ -128,129 +45,115 @@ What problem should be solved and for whom?
 
 Specifications
 - Expected result and boundaries.
-- Acceptance: what observation will show that it works?
-- Relevant existing context or dependency.
+- Observable acceptance.
+- Relevant context, dependency and verification.
 ```
 
-Put progress, check results and handoff in comments or the existing work journal.
-A PR explains the problem and resulting behavior, links its task, records checks
-and independent review, and names remaining delivery or concerns. Use the
-repository's existing PR template and required machine-readable fields; do not
-create a second task database.
-
-Routine notes, ad copy and working-data saves do not need a new engineering Issue
-just to document each save. Changes to technical rules, automation or application
-behavior use the development workflow. Preserve any already adopted local capture
-procedure; this common distinction does not remove an existing project's controls.
+Larger specifications link their tasks from the common
+[document structure](docs/project-documents.md). Progress, failures, reviews and
+recovery stay in the original Issue/PR. Ordinary notes/data saves follow the
+adopted capture procedure; they do not require a new engineering ticket per save.
+Technical rules, automation and product behavior use tracked engineering work.
 
 ## Independent review and merge
 
-Use a separate non-implementing subagent for the final review where available.
-Give it the current requirements, actual source and relevant check results.
-If it changes the implementation, arrange another final reviewer. Report an
-unavailable reviewer honestly rather than recording self-approval.
+Use a genuine separate non-implementing agent for final review where available;
+if it changes implementation, arrange a different final reviewer. Report missing
+review honestly. A shared GitHub account does not make self-review independent.
+Inspect actual scope, source, relevant tests and compatibility with current main.
+A main advance needs assessment, not an automatic rewrite of unchanged work.
 
-Reviewers inspect valid existing evidence and add checks for a finding, missing
-scope, changed input or unresolved risk. A new agent, session or comment alone
-does not justify repeating all tests.
-When main moves, assess actual compatibility: conflicts and changed behavior
-need reconciliation and appropriate review; an unchanged compatible result does
-not need a rewrite solely to restart CI. Preserve required current-base checks.
-
-Parallel work is useful for independent tasks with available real sessions.
-Coordinate overlap and check launches in the existing task; do not build a
-scheduler. Where a project already uses claims or a queue, follow its exact local
-procedure. Capacity is a limit, not proof that an agent is currently running.
-A missing independent reviewer or unresolved check is a concrete unfinished item.
-
-Use the supported final merge check once; when it includes linkage, do not repeat
-a separate link check immediately before it. Preserve actual GitHub protections.
-A label or local command is not evidence that GitHub enforces a branch rule.
+Keep existing branch protections and delivery controls. A label or local check is
+not evidence that GitHub enforces a protection. The supported final admission may
+include linkage; do not immediately duplicate it. Parallel work, batches, Stage
+and capacity are explicit local choices, not requirements on every project.
 
 ## Delivery is separate from merge
 
-The project defines what finishes its task:
-
-| Intended result | Completion evidence |
+| Accepted outcome | Completion |
 | --- | --- |
-| Source-only tooling, instructions or manual-pull work | Reviewed, checked change included in main |
+| Instructions or source-only work | Independently reviewed, checked, accepted change in main |
 | Running service or runtime n8n workflow | Required version and behavior verified on the intended target |
-| Distributed package | Required release published and agreed installation/update checks passed |
-| Publication-specific task | The requested artifact or catalog is accessible and matches the approved source |
+| Distributed package | Required publication and agreed installation/update checks passed |
+| Publication-specific work | Requested artifact/catalog accessible and matching approved source |
 
-Use existing project runbooks, installers and CI. A successful build is not a
-deployment; a tested installer does not prove installation on every employee
-machine. A release-specific task cannot be closed merely because its source merged.
-Retain separate local authorization boundaries and source-only instructions.
-
-If delivery fails, record the failure and next action on the original task.
-Inspect the target before retrying an uncertain operation. Archive means hidden
-from active work; it does not mean successful completion. Returning visibility
-does not restore an old approval or fabricate a new completion.
-
-Staging, integration batches and operational recovery remain project-specific.
-Do not add those steps to a simple project merely to make every repository alike.
+Keep actual local authorization and the whole accepted scope. A build is not a
+production deployment; installer acceptance does not prove every employee updated.
+Use maintained project delivery and recovery tools. Inspect an uncertain operation
+before repeating it. Archive preserves visibility/history; it is not completion.
 
 ## Process and product updates
 
-[Deliver the process separately from the product](docs/process-product-separation.md)
-in every repository and delivery profile. Independently verify instructions,
-agent/task tooling and compatible shared support against their own accepted scope.
-A proven process-only update does not require a new consumer installer, application
-deployment or n8n publication. Preserve the product's actual delivery for product
-changes and explicit publication requirements. Split mixed changes; unknown impact
-cannot obtain process-only completion. A changed path or task label alone is not
-proof. Use only supported immutable proof and genuine review/admission receipts;
-new instructions never activate an unsupported route or rewrite old obligations.
-Supported manual verification tooling can retain ordinary admission and complete
-from supplemental independent whole-scope evidence plus its exact successful
-official verification run. Follow the pinned contract; preserve original review,
-acceptance and pending-receipt history without changing the original developer.
+Deliver proven isolated instructions, tests and process tooling against their own
+accepted scope and relevant checks. Do not inherit an application release solely
+from the repository's delivery profile. Product/build/install/update effects and
+explicit publication requests retain their actual obligations. Mixed or unknown
+changes need investigation and appropriate coverage.
+
+The [process/product contract](docs/process-product-separation.md) defines supported
+proof. Instructions cannot grant an unsupported completion exception. Tracker owns
+executable recording; preserve original scope, reviews and delivery history.
 
 ## Living documentation
 
-Keep one authoritative copy of each rule and short links from other entry points:
-
-| Location or existing equivalent | Purpose |
-| --- | --- |
-| `AGENTS.md` | Short reading map to common rules and local specifics |
-| `docs/repository/` | How to work here, check changes and deliver them |
-| `docs/system/` | Product meaning, important decisions and implemented behavior |
-| `docs/runtime/` | Environment, delivery, recovery and data procedures |
-| Project Issues and PRs | Requirements, work history, reviews and results |
-
-Use existing files; a small project need not create an empty document for every
-row. Preserve original specifications and distinguish planned from implemented
-behavior. Update affected knowledge with the implementation, or state no impact.
-Keep secrets out of these documents. Existing generated layouts keep their
-[layout contract](templates/workflow/LAYOUT.md).
-
-Master owns the common standard and canonical
-[Project Workflow skill](.agents/skills/project-workflow/SKILL.md). AI Skills
-distributes its verified copy through the existing process. A shared rule change
-updates the skill and affected references in the same PR; do not maintain an
-independent edited mirror. Project-specific product and runtime knowledge stays local.
-
-An existing parent project's data or release repositories can remain related
-resources. Follow the parent's delivery process and each resource's local controls
-for actual changes. A link does not imply an independent task queue, active agent
-or completed release; do not create separate adoption merely to align instructions.
+Use the common [document map](docs/project-documents.md). Keep one authoritative
+copy of each rule, short navigation links, original specifications, and a clear
+separation between plans and implemented behavior. Update affected knowledge with
+the change; meaningful history links its task rather than duplicating logs.
+Secrets never belong in these documents. Preserve project-owned knowledge during
+upgrades and follow the [layout contract](templates/workflow/LAYOUT.md).
 
 ## Checks and project setup
 
-Use [efficient verification](docs/verification.md) for grouped ready submissions,
-required coverage and supported reuse. Agents can avoid their own redundant
-launches; GitHub still runs the checks selected by existing configuration. Compatible
-instruction clarifications require no pin/helper upgrade. Actions/settings changes
-need explicit task scope; existing authorization suffices. Observe ordinary work
-through existing links without extra demonstrations or scheduled audits merely to
-prove a prose edit. Do not claim unmeasured savings.
+Start new projects with the [setup procedure](docs/adoption.md#new-project-procedure).
+Use simple/direct work unless a concrete need justifies another route; choose
+Stage, actual capacity and delivery independently. The preset does not assess risk.
+Use real commands/targets and verify the actual Tracker connection. A generated
+outline or local registry edit is not completed onboarding.
 
-For a new project use the short [setup procedure](docs/adoption.md#new-project-procedure).
-For an existing one, change only the needed instructions and supported display;
-preserve useful tests, history, local commands, data and delivery behavior.
+Develop the project process through [bounded improvements](docs/workflow-evolution.md).
+Recommend the smallest useful change, implement existing authorization, update
+rules/settings together and record relevant verification. Generalize reusable
+lessons; keep unique product/runtime behavior local. Existing projects adopt only
+through separately scoped compatible changes.
 
-Detailed [existing workflow support](docs/adoption.md#existing-generated-workflow-support)
-remains available for projects that already selected it. Its versioned commands
-and activation procedures are compatibility references, not additional mandatory
-steps for every task.
+Use [efficient verification](docs/verification.md): meaningful changed-risk checks,
+valid evidence reuse and diagnosis before retries. Instructions alone do not alter
+GitHub events or suppress automatic checks. Do not invent extra demonstrations,
+reports or measured savings for a prose change.
+
+## Status and actual work
+
+Status reports facts: queued, actually working, under review, awaiting delivery
+and complete are different. Use the selected vocabulary and
+[task lifecycle](docs/task-lifecycle.md). Preserve correction origin and authorized
+continuation; a free slot/status does not launch an agent or grant new work.
+
+Where supported, report only your own actual activity using the pinned
+[executor procedure](docs/executor-activity.md). Missing activity does not release
+ownership. Stage residence, confirmed work and waiting are different measurements;
+unknown history stays unknown. Detailed clocks and commands belong in that guide.
+
+## Pause and resume existing work
+
+Use the selected [pause procedure](docs/task-pause.md). Direct owner confirmation
+that an agent stopped is sufficient; unavailable hardware need not reconfirm it.
+Silence alone is not a stop. Preserve phase, work, history and real blockers.
+Resume with actual capacity, fresh authority and current evidence. Never clear a
+foreign claim or impersonate an earlier owner. New instructions activate no state.
+
+## Specialized support and ownership
+
+Read detailed mechanisms only when the project selects them:
+[project choices](docs/project-choices.md), [ownership](docs/ownership.md),
+[existing generated support](docs/adoption.md#existing-generated-workflow-support),
+[compatible upgrades](docs/workflow-upgrades.md).
+Master owns common policy/templates and the canonical Project Workflow skill;
+Tracker owns commands and technical enforcement; each project owns its product
+and operational procedures. AI Skills distributes the approved canonical skill.
+Update affected skill instructions with a shared rule change; never edit a mirror
+independently or treat its installation as project activation.
+
+Related data/release repositories may remain resources of their parent project.
+A link alone does not require separate adoption or prove an independently supported
+resource board. Preserve their actual local controls.

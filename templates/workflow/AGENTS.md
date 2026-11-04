@@ -2,6 +2,7 @@
 
 Read these files before work; paths are relative to the repository root:
 
+- Overview: `README.md` when present; preserve project-owned entry points on upgrade.
 - Repository rules: [workflow](docs/repository/WORKFLOW.md),
   [Git delivery](docs/repository/DELIVERY.md), [Tracker](docs/repository/TRACKER.md),
   [verification](docs/repository/VERIFICATION.md).

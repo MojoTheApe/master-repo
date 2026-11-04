@@ -1,5 +1,17 @@
 # Repository process history
 
+## 2026-11-04 — MR-83 simple shared project foundation
+
+Shorten the common entry point; define document responsibilities and gradual local
+workflow changes. New CLI setup defaults to existing simple/direct with explicit
+role/completion, preserving explicit batch/Stage/capacity/legacy choices and all
+upgrade semantics. Add a project-owned README seed without a new requirement on
+old layouts. Align current/historical profile guidance and the canonical skill.
+Tracker impact: existing direct/export contracts unchanged; no pin, protocol,
+consumer state or runtime change. Source reviewed-merge completion is separate
+from standard release, skill distribution and consumer adoption.
+
+
 ## MR-81 — review handoff order — 2026-11-04
 
 Clarify that GitHub readiness does not complete a task handoff. Follow each pinned

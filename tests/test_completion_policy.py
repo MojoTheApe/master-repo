@@ -51,7 +51,7 @@ class CompletionPolicy(unittest.TestCase):
 
     def test_cli_selection_is_explicit_for_init_and_upgrade(self):
         args = ['init', '--root', str(self.root), '--profile', 'local', '--repository', 'owner/example',
-                '--name', 'Example', '--id-prefix', 'EX', '--workspace-id', 'example', '--tracker-root', 'unused']
+                '--name', 'Example', '--id-prefix', 'EX', '--workspace-id', 'example', '--tracker-root', 'unused', '--legacy-execution']
         with mock.patch.object(standard, 'source_revision', return_value=OLD):
             with mock.patch.object(project, 'init', return_value={}) as initialize:
                 self.assertEqual(standard.main(args), 0)

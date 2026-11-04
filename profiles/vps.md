@@ -5,14 +5,15 @@ applies here. The delivery below covers product changes. Proven isolated process
 updates retain their own review/checks/completion without deploying or restarting
 the consuming application. Existing explicit product requests remain required.
 
-When project staging is enabled (the default), use one logical stage environment
+When project staging is selected, use one logical stage environment
 and one production environment. If explicitly disabled, retain independent review,
 CI and verified production delivery without inventing a stage receipt. Each
 environment may contain multiple services. Keep configuration, credentials and writable data
 separate. Same-host staging needs demonstrated isolation and resource limits;
 otherwise report the capacity/isolation blocker before provisioning anything paid.
 
-Build a pinned artifact once, verify it in stage and promote those bytes with
+Build a pinned artifact once, verify it in the selected isolated checks (and Stage
+when enabled), and promote those bytes with
 production configuration. Preserve existing native admission and environment-bound
 proof. Reuse compatible pinned components without duplicating mutable state.
 
@@ -29,6 +30,11 @@ rollback artifacts and every live/evidence/preview dependency. Archive/delete on
 under the project's scoped policy after recovery and references are verified.
 Generated customer builds are not application installations and need their own
 retention rules. Git history does not replace consistent off-device data backups.
+
+## Historical project example
+
+The following records ReactForge-specific controls; it is not a requirement on
+other VPS projects. Current authority remains in that project.
 
 For ReactForge, retain orchestrator authority, renderer/consumer separation,
 existing maintenance locking and independent qualifications. Its legacy path

@@ -396,6 +396,43 @@ class ChoicesCLI(unittest.TestCase):
             self.assertTrue(initialize.call_args.args[1]['staging'])
             self.assertEqual(initialize.call_args.args[1]['implementation_limit'], 3)
 
+    def test_default_simple_preserves_each_delivery_profile_and_explicit_stage(self):
+        with tempfile.TemporaryDirectory() as directory, \
+                mock.patch.object(standard, 'source_revision', return_value=OLD), \
+                mock.patch.object(project, 'init', return_value={}) as initialize, \
+                contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            for profile, completion in project.PROFILES.items():
+                for stage in ([], ['--staging']):
+                    with self.subTest(profile=profile, stage=stage):
+                        args = self.arguments(Path(directory)/'consumer')
+                        args[args.index('--profile') + 1] = profile
+                        args += ['--role', 'application', '--completion', completion] + stage
+                        self.assertEqual(standard.main(args), 0)
+                        selected = initialize.call_args.args[1]
+                        data = project.descriptor(selected, OLD)
+                        self.assertEqual(data['completion'], completion)
+                        self.assertEqual(data['workflow']['execution']['route'], 'direct')
+                        self.assertEqual(selected['staging'], bool(stage))
+                        self.assertEqual(selected['implementation_limit'], 1)
+                        self.assertNotIn('batch_limit', selected)
+                        self.assertEqual(selected['completion_policy'], {'schema_version': 1})
+
+    def test_incomplete_or_weakened_new_intent_refuses_before_initialization(self):
+        with tempfile.TemporaryDirectory() as directory, \
+                mock.patch.object(standard, 'source_revision', return_value=OLD), \
+                mock.patch.object(project, 'init') as initialize, \
+                contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            root = Path(directory)/'consumer'
+            args = self.arguments(root)
+            for extra in ([], ['--role', 'application'], ['--completion', 'reviewed-merge'],
+                          ['--role', 'application', '--completion', 'reviewed-merge', '--batch-limit', '2']):
+                self.assertEqual(standard.main(args + extra + ['--apply']), 2)
+                initialize.assert_not_called()
+                self.assertFalse(root.exists())
+            args[args.index('--profile') + 1] = 'package'
+            self.assertEqual(standard.main(args + ['--role', 'application', '--completion', 'reviewed-merge']), 2)
+            initialize.assert_not_called()
+
     def test_explicit_cli_route_requires_its_choices_and_keeps_context2_without_batch_defaults(self):
         with tempfile.TemporaryDirectory() as directory, \
                 mock.patch.object(standard, 'source_revision', return_value=OLD), \

@@ -60,7 +60,7 @@ class TaskContext(unittest.TestCase):
     def test_cli_forwards_only_explicit_context(self):
         with mock.patch.object(project, 'init', return_value={}) as init, mock.patch.object(standard, 'source_revision', return_value=NEW):
             status = standard.main(['init', '--root', str(self.root), '--profile', 'local', '--repository', 'owner/example',
-                '--name', 'Example', '--id-prefix', 'EX', '--workspace-id', 'example', '--tracker-root', 'unused',
+                '--name', 'Example', '--id-prefix', 'EX', '--workspace-id', 'example', '--tracker-root', 'unused', '--legacy-execution',
                 '--implementation-limit', '2', '--batch-limit', '2', '--task-context'])
             self.assertEqual(status, 0)
             self.assertEqual(init.call_args.args[1]['task_context'], {'schema_version': 1})

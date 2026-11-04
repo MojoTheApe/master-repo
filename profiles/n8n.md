@@ -12,8 +12,10 @@ source-delivery task at the admitted main merge. It uses `reviewed-merge`; the
 ordinary `n8n` profile continues to require `verified-production`. The Git task
 does not claim any n8n import, publication, execution or business result.
 
-Keep permanent `stage` and `main` branches. The existing n8n DEV environment is
-the runtime counterpart of stage, not a third release lane. A repository-only
+When Stage is selected, keep permanent `stage` and `main` branches. The existing
+n8n DEV environment is then its runtime counterpart, not a third release lane.
+An explicitly no-Stage project uses its selected main route and does not invent
+Stage proof. A repository-only
 adoption can verify repository checks on the exact stage tree without accessing
 n8n; name that Git target explicitly and label its evidence as repository checks.
 Never describe those checks as a successful DEV runtime test. If a later workflow
@@ -26,7 +28,7 @@ integration is unavailable. Its handoff identifies the exact accepted main commi
 changed workflow definitions, required runtime bindings, checks and rollback
 reference. The runtime operator reconciles live state, preserves credentials and
 IDs, and records its own result. Switching the transfer mechanism later does not
-reverse the stage-before-main order or authorize production by Git merge alone.
+reverse an adopted stage-before-main order or authorize production by Git merge alone.
 
 For shared automation kept in multiple repositories, designate one maintained
 source per workflow. Keep historical exports explicitly read-only; use distinct
@@ -49,7 +51,7 @@ one instance**. The latter is weaker isolation, not two independent servers.
 It needs stable workflow-ID mapping, separate test destinations/webhooks/schedules,
 scoped credentials and controls against test side effects reaching production.
 
-When staging is enabled (the default), verify stage before main promotion. If the
+When staging is selected, verify stage before main promotion. If the
 project explicitly disables it, omit the stage import/test steps while preserving
 independent review, required CI, production authorization and verification.
 
@@ -60,8 +62,9 @@ independent review, required CI, production authorization and verification.
    merely because a local JSON file exists.
 2. Export/version selected definitions and all required dependent subworkflows.
    Associate them with the ticket/PR and an exact content digest.
-3. Import/pull the reviewed candidate into stage; bind test connections/settings.
-4. Verify the actual loaded version and behavior with safe test inputs.
+3. When Stage is selected, import/pull the reviewed candidate there and bind test settings.
+4. Verify its actual loaded version and behavior with safe inputs; a no-Stage project
+   uses its agreed isolated checks and retains production verification.
 5. After approval, promote that same content to the recorded production IDs.
    Rebind production connections and publish/activate under the agreed policy.
 6. Verify actual publication and operation. A Git push, import, successful API
