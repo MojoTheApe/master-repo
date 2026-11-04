@@ -253,8 +253,8 @@ def main(argv=None):
     init.add_argument("--batch-limit", type=int, nargs="?", const=5, choices=range(1, 17), metavar="N",
                       help="Batch capacity for an explicitly selected batch route; legacy selection requires explicit implementation capacity")
     init.add_argument("--review-limit", type=int, choices=range(1, 6), metavar="N",
-                      help="Select schema 3 with 1..5 source reviewers and one integration reviewer; new defaults supply implementation/batch limits; legacy selection requires both explicitly")
-    init.add_argument('--task-context', action='store_true', help='Explicit task readiness, requirements journal and source compatibility; requires batch execution')
+                      help="Source-review capacity 1..5; modern routes retain their topology; explicit legacy selection with implementation/batch limits chooses schema 3")
+    init.add_argument('--task-context', action='store_true', help='Task readiness and source compatibility: modern routes use context2; explicit legacy batch routes use context1')
     init.add_argument('--legacy-execution', action='store_true', help='Retain original explicit legacy execution choices; never used by upgrade')
     init.add_argument('--ci-evidence-policy', type=Path, help='Explicit reviewed native CI policy JSON; unsupported coverage stays fresh')
     init.add_argument('--knowledge-capture-policy', type=Path, help='Explicit reviewed mandate/roots JSON; requires modern choices and separate owned adoption')

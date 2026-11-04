@@ -79,9 +79,11 @@ remain required. Source merge, actual delivery and consumer activation differ.
 
 ## Set up or update a project
 
-For a new repository, read the chosen Master's `docs/project-documents.md`,
-`docs/workflow-evolution.md` and `docs/adoption.md` short setup
-procedure: product description, local commands, completion condition, common
+For a new repository, use the chosen Master's short setup procedure. When that
+revision supplies `docs/project-documents.md` and `docs/workflow-evolution.md`,
+read them with `docs/adoption.md`. Older selected revisions may lack those new
+documents: follow their existing adoption guide and reading map instead, without
+an automatic pin upgrade. Establish: product description, local commands, completion condition, common
 instruction reference and connection to the existing Tracker. Verify the real
 board; a local file alone does not connect it. Do not promise a registration mode
 the current Tracker does not support.
