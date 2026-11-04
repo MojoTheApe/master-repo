@@ -45,6 +45,13 @@ indirect product/build/credential effects. Preserve the pending receipt in histo
 and actual assessor identity without taking over the original developer. Unknown,
 mixed or explicitly requested publication outcomes retain product delivery.
 
+For an artifact-retention outcome, use the published Tracker operator that
+supports the exact provider and proof. After normal admission, an independent
+assessment of the whole original task and native evidence of the affected
+uploads can complete the setting without a consumer release. Confirm the
+reader supports the receipt before recording it. Follow the operator's exact
+prerequisites and preserve any existing publication request.
+
 Read the project's completion condition before implementing. Source-only work can
 finish at checked main integration. Product changes in a service need verified
 delivery; product changes in a package need its required release and installation

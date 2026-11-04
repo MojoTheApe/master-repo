@@ -1,5 +1,12 @@
 # Repository process history
 
+## 2026-11-04 — MR-87 verified artifact retention completion
+
+Document the supported process completion path for independently reviewed
+retention-only changes to intermediate CI uploads. Require the admitted source,
+native verification, original task scope and compatible Tracker tooling. Task
+Tracker owns the executable proof and receipt.
+
 ## 2026-11-04 — MR-85 standard 1.9.0 publication
 
 Package the reviewed simple project foundation as 1.9.0; keep the self descriptor
