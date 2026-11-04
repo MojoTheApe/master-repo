@@ -1,5 +1,15 @@
 # Repository process history
 
+## MR-81 — review handoff order — 2026-11-04
+
+Clarify that GitHub readiness does not complete a task handoff. Follow each pinned
+route's prerequisites, verify actual Review/ownership and retain the original
+branch for author fixes. Diagnose a stale phase-only linkage failure before a
+supported failed-metadata-check retry; avoid repeated full suites and empty
+commits. Canonical skill and shared submission guidance change together.
+Tracker impact: no engine, export, pin, policy, gate or trigger changes; existing
+ready-before-handoff races remain explicit. No consumer product delivery occurs.
+
 ## MR-79 — stage residence and truthful activity — 2026-10-23
 
 Clarify separate stage-residence and confirmed-work clocks for every project

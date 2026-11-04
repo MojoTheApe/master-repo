@@ -1,5 +1,16 @@
 # Master Repo system
 
+## MR-81 — explicit review handoff order
+
+Shared submission guidance and the canonical Project Workflow skill distinguish
+legacy status-first, execution-owned ready-before-handoff and selected automatic
+synchronization. Agents verify the actual transition before dispatching review
+and diagnose stale linkage failures before a supported metadata-only retry.
+This prose correction preserves command prerequisites, ownership, independent
+review, CI coverage and retry budgets. Task Tracker impact: no executable change,
+new pin, policy activation or claim that the existing event race was removed.
+The maintained skill mirror distributes the updated guidance separately.
+
 ## MR-79 — distinguish stage residence from confirmed work
 
 The common lifecycle/executor guidance and canonical Project Workflow skill

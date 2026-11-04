@@ -60,6 +60,30 @@ required proof, independently of whether existing tests remain applicable.
 
 ## Agent decisions and automatic runs
 
+### Task handoff and GitHub readiness
+
+An unfinished PR stays draft. Prepare the complete candidate, task references,
+author checks and handoff evidence before making it ready. Use the project's
+exact pinned handoff order: a legacy status-first route verifies Review before
+ready; an execution route whose handoff requires a non-draft PR makes it ready
+and immediately performs the owned handoff. A selected automatic reconciler must
+finish before its transition is assumed. Never replace a native claim/handoff
+with direct status labels or run a competing writer.
+
+Read back task phase, exact PR head and required durable ownership before
+dispatching independent review. Ready GitHub state is not evidence that the
+task reached Review. For author corrections, use the actual return/reclaim path
+and the same task branch; keep incomplete work draft where the route permits it.
+
+Existing ready-before-handoff routes can race the linkage job. Inspect the
+failure and verify the completed native transition before using the project's
+supported retry for only that failed metadata check. A task label change may not
+start it automatically. Do not use empty commits, repeated ready toggles or full
+source reruns to repair a stale linkage result. Still-active, blocked, incorrectly
+linked and incomplete tasks need their actual resolution, not forced Review.
+Required review, current checks, ownership and retry policies remain unchanged.
+The canonical skill gives the [agent sequence](../.agents/skills/project-workflow/references/verification.md#submit-to-review-in-the-supported-order).
+
 Before requesting another expensive run, inspect the available evidence and actual
 candidate. Changed relevant inputs, missing coverage, a new integration composition,
 invalid proof, a diagnosed permitted retry or required fresh delivery acceptance
