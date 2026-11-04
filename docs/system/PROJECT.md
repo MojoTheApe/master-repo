@@ -1,5 +1,16 @@
 # Master Repo system
 
+## MR-85 — standard 1.9.0 release
+
+The source version now packages the reviewed MR-83 foundation and intervening
+guidance as 1.9.0. The compatible Tracker remains 3.10.0; executable policies and
+consumer adoption are unchanged. [Versioning](../versioning.md) records the
+new-project CLI compatibility notice and publication procedure. The
+[ACL assessment](../validation/master-1.9.0-acl.md) preserves its standalone
+provider and existing working process. Source version alone is not publication;
+[MR-85](https://github.com/MojoTheApe/master-repo/issues/85) retains actual release
+and distribution evidence.
+
 ## MR-83 — simple shared foundation
 
 The primary standard is the short common entry point. The document map gives

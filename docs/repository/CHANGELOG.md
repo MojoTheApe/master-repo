@@ -1,5 +1,18 @@
 # Repository process history
 
+## 2026-11-04 — MR-85 standard 1.9.0 publication
+
+Package the reviewed simple project foundation as 1.9.0; keep the self descriptor
+and VERSION aligned and document the changed new-project CLI choices. Retain
+published Tracker 3.10.0 and all existing upgrade/portable contracts. Record a
+[read-only ACL assessment](../validation/master-1.9.0-acl.md): no required process
+rebuild, with optional coordinated documentation-reference alignment only.
+Tracker impact: none; no consumer pin, configuration, state, installer or delivery
+changes. Canonical skill content was reviewed in MR-83 and is unchanged here;
+verify its maintained distribution rather than authoring a second copy. Final
+review, checks, tag/release and distribution evidence belong to
+[MR-85](https://github.com/MojoTheApe/master-repo/issues/85).
+
 ## 2026-11-04 — MR-83 simple shared project foundation
 
 Shorten the common entry point; define document responsibilities and gradual local
