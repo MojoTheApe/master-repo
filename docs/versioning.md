@@ -1,5 +1,37 @@
 # Versioning and safe upgrades
 
+## Simple project foundation 1.9.0
+
+[MR-85](https://github.com/MojoTheApe/master-repo/issues/85) publishes the reviewed
+[MR-83 foundation](https://github.com/MojoTheApe/master-repo/pull/84), together
+with the intervening stage-activity and review-handoff guidance. The shared entry
+point is shorter; the [document map](project-documents.md) and
+[workflow evolution guide](workflow-evolution.md) keep project-specific processes
+local. New projects receive a project-owned README seed.
+
+New initialization changes intentionally: `--role` and `--completion` are required.
+Without an explicit route or preset, setup selects the existing simple/direct
+preset. Automation relying on the former implicit five-worker batch setup must
+now choose its role, completion and batch preset explicitly. Explicit batch,
+Stage, capacity and legacy choices remain available. Existing upgrades preserve
+their selections and project-owned knowledge; this release does not impose a
+new README on an older project.
+
+The compatible engine remains published Tracker 3.10.0 at
+`e71c9829247e60d79031dbb1bb038896fcedf4cc`; no portable artifact, protocol or live
+consumer policy changes. Verify the clean exact pair against released Master
+1.8.0 at `fddcdd0d60db2e14cce0a53e6af23e12356c3bc7` and its matching engine,
+including actual Python 3.9 replay, retained profiles/upgrades and negative gates.
+After independent review, protected integration and successful actual-main checks,
+publish and read back immutable tag/release `v1.9.0` at the accepted merge. Verify
+the maintained complete canonical skill mirror and catalog; do not edit mirrors
+or install global skills by hand. The Issue retains the final publication evidence.
+
+The [ACL alignment assessment](validation/master-1.9.0-acl.md) is read-only.
+ACL already has the common document responsibilities and a separately pinned,
+newer standalone provider. Its process, engine, policies, package release and
+acceptance are not changed or rerun by this standard publication.
+
 ## Isolated manual verification candidate1.8.0
 
 MR-77 pairs shared process/product guidance and the canonical skill with Tracker
