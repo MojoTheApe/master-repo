@@ -1,0 +1,25 @@
+{
+  "schema_version": 2,
+  "project": {
+    "name": "Master Repo",
+    "repository": "MojoTheApe/master-repo",
+    "base_branch": "main",
+    "id_prefix": "MR"
+  },
+  "completion_label": "Merged",
+  "workflow": [
+    "idea", "backlog", "todo", "in_progress", "review", "merged",
+    {"id": "done", "name": "Done", "phase": "merged", "color": "6B9571"}
+  ],
+  "priorities": ["high", "medium", "low"],
+  "default_backlog_priority": "medium",
+  "release_view_label": "Release",
+  "default_release": "",
+  "refresh_seconds": 60,
+  "modules": [
+    {"id": "standard", "name": "Standard & Guidance", "description": "Common guarantees, document responsibilities and project guidance.", "examples": []},
+    {"id": "tooling", "name": "Templates & Validation", "description": "Project templates, compatibility and validation tools.", "examples": []},
+    {"id": "operations", "name": "Publication & Adoption", "description": "Standard publication, project connection and maintained distribution.", "examples": []}
+  ],
+  "release_mode": "single"
+}

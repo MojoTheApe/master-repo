@@ -1,5 +1,14 @@
 # Master Repo system
 
+## MR-89 — existing Issue display
+
+The repository-owned `tracker/config.json` prepares the existing manual Issue
+lifecycle for the shared workspace, retaining MR identities and both historical
+Done/Merged labels. The actual connection is verified through TT-263. This adds
+no native client/state, execution policy or standard/skill publication. The
+schema1 self descriptor, existing maintenance workflow and broader MR-42 scope
+remain unchanged. See [repository delivery](../repository/DELIVERY.md#shared-task-display).
+
 ## MR-87 — verified artifact retention completion
 
 The [process and product boundary](../process-product-separation.md) documents
