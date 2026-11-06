@@ -35,3 +35,25 @@ completion: it does not publish a consumer installer, deploy Tracker, migrate li
 consumer state, install the global skill or release the standard as a side effect.
 Those operations remain separately scoped. Required CI runs automatically; the
 running agent performs the final verified Issue transition.
+
+## Shared task display
+
+[The display configuration](../../tracker/config.json) gives existing local Issues
+their stable `MR-NUMBER` identity in the shared Tracker. GitHub remains authoritative;
+the manual start, Review, reviewed merge, evidence and closure procedure above stays
+unchanged. PR references remain `Tracker issues: #NUMBER`.
+
+Both retained `status:done` and `status:merged` labels map to completed work. Original
+Issue bodies, IDs, labels and open/closed history are preserved. Missing historical
+metadata remains explicitly unconfirmed; a closed record without a recorded status
+is retained in Archive by the existing shared reader. Do not bulk relabel history.
+For new maintenance work, record the actual stage and relevant module/type/priority;
+never infer running activity or publication from a status label.
+
+This is display-only registration, not a new native ownership or delivery policy.
+The schema1 standard self descriptor and required checks remain unchanged. Actual
+registry publication and fresh board verification are recorded in
+[TT-263](https://github.com/MojoTheApe/task-tracker/issues/263).
+[MR-89](https://github.com/MojoTheApe/master-repo/issues/89) owns this bounded result;
+the broader [MR-42](https://github.com/MojoTheApe/master-repo/issues/42) retains its
+remaining original requirements. No standard release is inherent in this connection.

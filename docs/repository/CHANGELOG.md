@@ -1,5 +1,12 @@
 # Repository process history
 
+## 2026-11-06 — MR-89: отображение существующих задач
+
+Добавлена минимальная конфигурация общей доски без смены ручного процесса Master.
+Сохранены MR-ID, исторические Done/Merged, исходные карточки и schema1 self.
+Настройка отображения не завершает всю MR-42 и не выпускает новый стандарт или
+скилл. Фактическая публикация доски и её проверка относятся к TT-263.
+
 ## 2026-11-04 — MR-87 verified artifact retention completion
 
 Document the supported process completion path for independently reviewed

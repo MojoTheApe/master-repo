@@ -12,3 +12,7 @@ When changing standards or process contracts, follow the
 [skill impact and distribution rule](docs/repository/SKILL-DISTRIBUTION.md).
 Update affected skill instructions in the same PR or record a concrete no-impact
 assessment. Edit this canonical source; AI Skills receives its verified mirror.
+
+[Tracker display configuration](tracker/config.json) preserves the existing manual
+Issue workflow described in [repository delivery](docs/repository/DELIVERY.md#shared-task-display).
+It does not select a client, execution policy or the unfinished self-adoption programme.
