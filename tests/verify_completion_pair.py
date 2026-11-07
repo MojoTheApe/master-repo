@@ -420,7 +420,10 @@ print('isolated portable assessment/import passed')
             result['native_portable_contexts'] = exercise_all(args.python39, args.tracker)
             if args.selection_delivery_contract:
                 selected = result['native_portable_contexts']['selection_delivery']
-                assert len(selected) == 8, 'Missing canonical selection package runtime cases'
+                from portable_contract_fixture import verified_artifacts, selection_cases
+                record, _, artifacts, _ = verified_artifacts()
+                expected = len(selection_cases(artifacts, record=record)) * len(record['layouts'])
+                assert len(selected) == expected, 'Missing canonical selection package runtime cases'
                 assert all(row['phases'] == ['pending-package', 'recorded-package', 'owned-adopted']
                            and not row['engine_imported'] and not row['consumer_writes']
                            for row in selected), 'Incomplete engine-free selection package replay'
