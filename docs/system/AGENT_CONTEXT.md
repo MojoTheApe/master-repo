@@ -24,6 +24,16 @@ Keep runtime tools dependency-free. This repository has no JavaScript applicatio
 database or runtime service to standardize. Generated project context is a seed;
 real system/runtime knowledge becomes project-owned and must survive upgrades.
 
+Reuse the existing validation findings and `ValueError`/CLI failure boundary in
+`scripts/standard.py`; failures report a nonzero exit rather than being swallowed.
+Local descriptor/template-baseline JSON records provenance and chosen settings.
+`scripts/project.py` checks exact clean Tracker source, validates exporter results,
+preflights file changes and refuses upgrade conflicts. Preserve those safeguards;
+write failure triggers attempted restoration, not a promise of filesystem atomicity.
+External onboarding uses the existing `gh api` wrapper and preview/apply flow in
+`scripts/onboard.py`; propagate failures and keep its authorization boundaries.
+There is no separate state database or runtime delivery-command executor to add.
+
 ## Examples to follow
 
 - [Link validation](../../scripts/check_links.py) checks local Markdown targets
@@ -41,6 +51,13 @@ These are examples of ownership and reuse, not instructions to copy every coding
 detail. No broad refactor or formatter migration is needed for an instruction edit.
 
 ## Actual verification
+
+Run local checks from this repository root with supported Python and Git available;
+tests need a writable temporary directory. Python3.9+ covers the standard/portable
+tools. Actual export/generation additionally needs Python3.11+ and a clean official
+Tracker checkout at the exact compatibility pin; follow [adoption](../adoption.md)
+for the existing procedure. The engine-free portable fixtures need no private
+engine or live requests. This task uses only isolated generation, not onboarding.
 
 Run `python3 -m unittest discover -s tests -v`,
 `python3 scripts/standard.py validate --root .` and
