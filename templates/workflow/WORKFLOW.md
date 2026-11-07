@@ -5,6 +5,10 @@ Read `delivery.json`, the [system description](../system/PROJECT.md),
 [selected Tracker guide](TRACKER.md). These files describe this project's adopted
 standard/engine, actual checks, target and completion.
 
+Apply the [common engineering rules](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/engineering-standards.md)
+with the local engineering context. Their scope/design questions belong in the
+existing independent review, not an additional approval stage.
+
 ## Ordinary work
 
 1. Read the complete original task, related decisions and dependencies. Establish

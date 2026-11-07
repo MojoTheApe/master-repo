@@ -1,5 +1,19 @@
 # Master Repo system
 
+## MR-93 — engineering standards
+
+The common [engineering standard](../engineering-standards.md) defines scoped,
+complete and proportionate solutions and review findings. Master instructions
+provide actual source boundaries, two existing-code examples and check commands.
+Templates prepare project-owned technology/ownership context; the canonical
+Project Workflow routes to adopted rules without imposing new rules on old pins.
+
+This is a Master-only instruction/template release candidate1.11.0. Executable
+generation, compatibility snapshots, Tracker3.28.0, CI/protection and workflow
+policies are unchanged. No new code-analysis tool is needed for this prose change.
+Consumer application is a separate future task; publication/distribution evidence
+is recorded in [MR-93](https://github.com/MojoTheApe/master-repo/issues/93).
+
 ## MR-91 — short selected workflow
 
 The common workflow and canonical navigation skill prioritize the selected daily

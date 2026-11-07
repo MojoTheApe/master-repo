@@ -1,5 +1,25 @@
 # Versioning and safe upgrades
 
+## Engineering standards 1.11.0
+
+[MR-93](https://github.com/MojoTheApe/master-repo/issues/93) adds the canonical
+[engineering rules](engineering-standards.md), Master-owned examples and template
+navigation for proportionate AI-authored work. The existing Project Workflow routes
+authors and reviewers to their adopted rules, preserving older-pin local guidance.
+No executable, schema, exported Tracker artifact, compatible engine pin or policy
+changes. Published Tracker3.28.0 remains the compatible source from1.10.0.
+
+Run the existing Master unit, descriptor, link, isolated generation/upgrade and
+portable fixture checks, validate the changed skill and independently assess the
+actual candidate and one bounded Master-context example. After the ordinary
+required PR/main checks, publish a new exact immutable tag/release and verify the
+complete skill mirror/catalog through the maintained distribution mechanism.
+Source version alone is not publication; MR-93 retains actual delivery evidence.
+
+Consumer pilots and local rule/tool adoption are separate future work. This release
+does not install skills, modify consumers, deploy a service or introduce a new
+enforcement system. Instructions alone require no technical Tracker pair migration.
+
 ## Short selected workflow 1.10.0
 
 MR-91 shortens shared/generated daily guidance and canonical Project Workflow

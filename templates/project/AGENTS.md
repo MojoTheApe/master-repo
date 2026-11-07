@@ -8,6 +8,8 @@ This project follows MojoTheApe/master-repo at the exact commit recorded in
 `delivery.json`. Use the project-workflow skill if available; otherwise read
 `standard.md` and the selected profile from that pinned repository revision.
 Do not substitute its latest branch or upgrade the standard during feature work.
+When that adopted revision provides `docs/engineering-standards.md`, read it with
+the local engineering context. Do not infer missing rules from a newer skill.
 
 Use the project's existing ticket tracker. Link tickets and PRs both ways. Merge
 does not complete deployment-dependent work: apply this project's completion

@@ -1,5 +1,15 @@
 # Repository process history
 
+## 2026-11-07 — MR-93: engineering standards
+
+Add one canonical scope/design standard, route Master and prepared templates to it,
+and extend local engineering context with existing examples and actual checks.
+The existing Project Workflow uses adopted rules and distinguishes required
+corrections from advisory improvements. Current review, checks and delivery remain.
+No executable/Tracker/CI/protection change or consumer application is included.
+Validate and publish1.11.0 plus the changed skill through existing procedures;
+the Issue records actual source review, bounded example and publication evidence.
+
 ## 2026-11-07 — MR-91: short selected workflow
 
 Shortened the common/generated daily path, retained detailed selected procedures,

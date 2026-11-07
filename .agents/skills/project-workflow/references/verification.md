@@ -41,6 +41,12 @@ platforms, installers, exact admission rules and runtime acceptance local.
 Use meaningful tests for actual risks. Do not add a test merely to mirror a
 reversible prose edit. Existing required repository checks still apply.
 
+For scope and design review, use the adopted Master's engineering standards when
+available and the actual local context. Give the non-implementing reviewer the
+original task, complete current diff and existing evidence, not only the author's
+summary. Keep its findings proportional to concrete requirements; optional
+improvements do not become a new task mandate. Older pins retain local rules.
+
 ## Submit to review in the supported order
 
 Keep unfinished work in a draft PR. Finish the candidate, its task references and

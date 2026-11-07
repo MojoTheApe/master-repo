@@ -25,6 +25,9 @@ from implemented behavior. Preserve original decisions and mark superseded mater
 as history. A changelog is a short explanation, not a copy of every commit or log.
 
 Keep one authoritative copy of a rule. The reading map and README link to it.
+The [common engineering standards](engineering-standards.md) govern scope and
+proportionate design. Local context records actual technology, ownership, useful
+examples and verification references; it does not duplicate those common rules.
 Use existing Issues/PRs for error and recovery history; no second incident register
 or per-save engineering ticket is required. Ordinary data/notes keep the project's
 already adopted capture procedure.

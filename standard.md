@@ -12,6 +12,10 @@ instructions. Use the selected standard revision and local Tracker guide. Establ
 what result is required and what completes it before changing code. Reuse existing
 work and authorization; ordinary feature work is not a standard migration.
 
+Apply the [engineering standards](docs/engineering-standards.md) with the local
+engineering context: bounded scope, proportionate design and meaningful review.
+They define common principles, not one language, formatter or architecture.
+
 ## Ticket lifecycle
 
 1. **Describe the result.** Use the original task: problem, scope and observable
