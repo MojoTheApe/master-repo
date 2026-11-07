@@ -68,7 +68,7 @@ def verified_artifacts():
     accounting = json.loads(artifacts['accounting.json'], object_pairs_hook=contract.unique)
     assert accounting['schema_version'] == 1 and accounting['synthetic'] is True
     direct_cases(artifacts)
-    selection_cases(artifacts)
+    selection_cases(artifacts, record=record)
     for layout in ('raw', 'separated'):
         root = base/layout
         contract.check_manifest(contract.safe_file(root, contract.MANIFEST).read_bytes(), raw)
@@ -79,17 +79,21 @@ def verified_artifacts():
     return record, provenance, artifacts, data
 
 
-def selection_cases(artifacts):
+def selection_cases(artifacts, *, record=None):
     """Require the complete canonical synthetic envelope, without proof rules."""
     data = json.loads(artifacts['selection.json'], object_pairs_hook=contract.unique)
     expected = ['context-v2', 'completion-v3', 'retry-v3', 'completion-retry-v2']
+    if record is None:
+        _, record, _ = contract.trusted()
+    if record.get('contracts', {}).get('selection_task_fragment') == [1]:
+        expected += ['context-fragment-v3', 'completion-fragment-v3', 'retry-fragment-v3']
     if (not isinstance(data, dict) or set(data) != {'schema_version', 'synthetic', 'cases'}
             or type(data['schema_version']) is not int or data['schema_version'] != 1
             or data['synthetic'] is not True or not isinstance(data['cases'], list)
             or len(data['cases']) != len(expected)
             or any(not isinstance(row, dict) for row in data['cases'])
             or [row.get('case') for row in data['cases']] != expected):
-        raise ValueError('Canonical selection fixtures need all four exact synthetic cases')
+        raise ValueError('Canonical selection fixtures need all canonical synthetic cases')
     return data['cases']
 
 

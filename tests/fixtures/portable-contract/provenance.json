@@ -1,7 +1,7 @@
 {
   "engine": {
     "repository": "MojoTheApe/task-tracker",
-    "revision": "e71c9829247e60d79031dbb1bb038896fcedf4cc"
+    "revision": "d60561ae55ea3aea979695e6761b378ce193b236"
   },
   "files": {
     "accounting.json": {
@@ -21,15 +21,15 @@
       "source": "tests/fixtures/portable_pause.json"
     },
     "process.json": {
-      "sha256": "b73c0b0cd20678d1f79c845550f59ec4121bfe011cb198e7e85265c37baddd82",
+      "sha256": "1f3826b26e4029ad5fa44bd6fa19e87f3670cea337f5e24ae90cf32315e04acf",
       "source": "tests/fixtures/portable_process_support.json"
     },
     "runner.py": {
-      "sha256": "37950582f406cb2aa937ad80f52baef6535f50718c3ed01baecdc5102c9f27fc",
+      "sha256": "483f58b158393fa2f78a1fa4dfae95fd1f29b09e0b5b420ea2d6c972ee3be567",
       "source": "tests/portable_fixture.py"
     },
     "selection.json": {
-      "sha256": "e315cf62bbf8fc1376c0fb21072f5ae258ce425a31d8620dc4f1b4f88d69a3dd",
+      "sha256": "e7b5745b79d972a7b4726b5f82062f9a69749411ecc53f0168db6f67dab3c319",
       "source": "tests/fixtures/portable_selection.json"
     }
   },
