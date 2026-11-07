@@ -8,6 +8,8 @@ Read these files before work; paths are relative to the repository root:
   [verification](docs/repository/VERIFICATION.md).
 - System meaning and implementation: [project](docs/system/PROJECT.md) and
   [context](docs/system/AGENT_CONTEXT.md).
+- Common engineering rules: [the adopted standard](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/engineering-standards.md),
+  applied with that local context during implementation and independent review.
 - Environment access and operational safeguards: [runtime](docs/runtime/DELIVERY.md).
 - Machine-readable project settings: `delivery.json` and `tracker/config.json`.
 

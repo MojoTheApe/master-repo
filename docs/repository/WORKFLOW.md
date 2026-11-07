@@ -16,6 +16,8 @@ consumer's existing tracker and operational safeguards.
   `python3 scripts/standard.py validate --root .` and
   `python3 scripts/check_links.py` for the completed candidate.
 - For engineering constraints, see `docs/system/AGENT_CONTEXT.md`.
+  Apply the [common engineering rules](../engineering-standards.md) during
+  implementation and the existing independent review.
 - Scaffold into isolated temporary directories when testing. Never deploy to a
   consumer, install global skills, or rewrite consumer files as a test.
 - Existing hotfix/update behavior, production admission and project-worker

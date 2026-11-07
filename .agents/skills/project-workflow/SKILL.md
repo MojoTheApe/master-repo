@@ -26,6 +26,13 @@ environments merely to test a change. Skill updates do not change consumer pins.
 Read only what the task needs. If a source is unavailable, use checked-in guidance
 for independent work and identify the missing dependency for dependent actions.
 
+When the project's adopted Master provides `docs/engineering-standards.md`, read
+it with the local engineering context for implementation and independent review.
+It owns the scope, reuse, design and review criteria; do not copy them into another
+checklist. Older pins without it keep their local rules; a newer skill is not an
+instruction to migrate. Read the applicable rules before dispatching a subagent
+and make them available with the actual task and source context.
+
 When the selected engine provides a short daily guide and generated selected
 details, use the daily path and consult those binding details for the operation.
 Older pins retain their existing local guide without a pin upgrade merely to
@@ -54,6 +61,8 @@ by line count or file extension.
    evidence. Self-review under another label is not independent review.
 5. Address findings on the task branch. Follow the local return/handoff procedure
    where one exists. Obtain current relevant review and checks for changed content.
+   Apply the adopted engineering review criteria: concrete requirement violations
+   and optional preferences are different; reviewer advice does not expand scope.
 6. Integrate and complete the project's authorized delivery with its existing
    tools. Record the actual result and remaining problems; do not close partial
    work or call source merge a deployment.
