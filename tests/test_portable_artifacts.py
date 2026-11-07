@@ -20,13 +20,15 @@ class PortableArtifacts(unittest.TestCase):
         modern = 'direct.json' in fixtures.fixture_sources(record)
         support = record.get('contracts', {}).get('process_support') == [1]
         pause = record.get('contracts', {}).get('task_pause') == [1]
-        raw_count = 11 + int(modern) + int(support) + int(pause)
+        archive = record.get('contracts', {}).get('state_archive') == [1]
+        raw_count = 11 + int(modern) + int(support) + int(pause) + int(archive)
         self.assertEqual(len(record['layouts']['raw']), raw_count)
         self.assertEqual(len(record['layouts']['separated']), raw_count * 2)
         self.assertEqual(provenance['engine'], record['engine'])
         self.assertIn(b'def exercise(', artifacts['runner.py'])
         self.assertIn('accounting.json', artifacts)
-        self.assertEqual(len(fixtures.selection_cases(artifacts)), 4)
+        fragments = record.get('contracts', {}).get('selection_task_fragment') == [1]
+        self.assertEqual(len(fixtures.selection_cases(artifacts)), 7 if fragments else 4)
         self.assertIn(b'def exercise_selection(', artifacts['runner.py'])
         self.assertEqual(len(fixtures.direct_cases(artifacts)), 4 if modern else 0)
         if modern:
@@ -94,7 +96,7 @@ class PortableArtifacts(unittest.TestCase):
                 if change == 'missing': bad['cases'].pop()
                 elif change == 'duplicate': bad['cases'][-1] = bad['cases'][0]
                 else: bad['synthetic'] = False
-                with self.assertRaisesRegex(ValueError, 'all four exact synthetic cases'):
+                with self.assertRaisesRegex(ValueError, 'all canonical synthetic cases'):
                     fixtures.selection_cases(dict(artifacts, **{'selection.json': json.dumps(bad).encode()}))
 
 

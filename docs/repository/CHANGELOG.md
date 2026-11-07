@@ -1,5 +1,13 @@
 # Repository process history
 
+## 2026-11-07 — MR-91: short selected workflow
+
+Shortened the common/generated daily path, retained detailed selected procedures,
+clarified bounded small changes and reuse of valid evidence, and updated canonical
+skill navigation. Current independent review/checks/local delivery remain in force.
+The owner removed additional admission infrastructure from this release; it is
+preserved only in an archive branch. Compatible publication is recorded in MR-91.
+
 ## 2026-11-06 — MR-89: отображение существующих задач
 
 Добавлена минимальная конфигурация общей доски без смены ручного процесса Master.

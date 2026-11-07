@@ -11,6 +11,68 @@ import sys
 import tempfile
 
 
+def exercise_archive(root, python, layout):
+    """Actual portable reader/writer replay, including an older CI snapshot."""
+    program = '''import base64,copy,json,sys,tempfile
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+import tracker_state_archive as archive,tracker_delivery_policy as rules,tracker_delivery_receipt as delivery,tracker_ci_gate as gate
+archive.CACHE=Path(sys.argv[2])/'archive-private-cache'
+original={'schema_version':1,'active':None,'run':None,'todo_order':[],'todo_added':{},
+ 'delivery_workflow':{'tasks':{'99':{'state':'verified','retained':'original closed record'},'98':{'state':'verified','retained':'other record'}}},
+ 'maintenance_history':[{'event':'retained','index':n} for n in range(40)]}
+source=archive.git_sha(archive.raw(original))
+activation={'schema_version':1,'id':'a'*32,'actor':'Maintainer-TEST','session':'portable_archive','claim':'b'*32,
+ 'at':'2026-11-05T00:00:00+00:00','main_sha':'c'*40,'source_state_sha':source,'report':'Synthetic actual portable proof only.'}
+selected=archive.plan(original,'owner/repo',source,activation=activation)
+wire=selected['wire'];encoded=archive.raw(wire);current_sha=archive.git_sha(encoded);snapshot='d'*40
+row=lambda data:{'sha':archive.git_sha(data),'size':len(data),'encoding':'base64','content':base64.b64encode(data).decode()}
+snapshot_row=row(encoded);writes=[]
+def request(path,method='GET',payload=None):
+ global wire,encoded,current_sha
+ if path=='repos/owner/repo/contents/.tracker-state.json?ref=tracker-state':return row(encoded)
+ if path=='repos/owner/repo/git/matching-refs/heads/tracker-state':return [{'ref':'refs/heads/tracker-state','object':{'type':'commit','sha':snapshot}}]
+ if path=='repos/owner/repo/contents/.tracker-state.json?ref='+snapshot:return copy.deepcopy(snapshot_row)
+ if path=='repos/owner/repo/git/blobs/'+selected['wire']['archive']['git_sha']:
+  return row(selected['archive_bytes'])
+ if path=='repos/owner/repo/contents/.tracker-state.json' and method=='PUT':
+  assert payload['sha']==current_sha and payload['branch']=='tracker-state'
+  encoded=base64.b64decode(payload['content']);wire=json.loads(encoded);current_sha=archive.git_sha(encoded);writes.append(current_sha)
+  return {'content':{'sha':current_sha}}
+ raise AssertionError((method,path))
+assert rules.read_full_state(request,'owner/repo')==original
+assert gate.read_state(request,'owner/repo')==original
+full,version,context=delivery.state(request,'owner/repo',with_context=True)
+full['delivery_workflow']['tasks']['99']['retained']='actual changed record'
+full['delivery_workflow']['tasks'].pop('98');full['maintenance_history'].append({'event':'new-owned-event'})
+archive.write(request,'owner/repo',full,version,context)
+assert len(writes)==1 and wire['schema_version']==9
+assert rules.read_full_state(request,'owner/repo')==full
+assert delivery.state(request,'owner/repo')[0]==full
+assert gate.read_state(request,'owner/repo')==original,'CI mixed immutable generations'
+negative=0
+for fault in ('cross-repository','unknown-overlay','duplicate-overlay','prefix-parent','old-reader'):
+ bad=copy.deepcopy(wire)
+ try:
+  if fault=='cross-repository':bad['repository']='other/project'
+  elif fault=='unknown-overlay':bad['overrides']=[['delivery_workflow','tasks','missing']]
+  elif fault=='duplicate-overlay':bad['deleted']*=2
+  elif fault=='prefix-parent':bad['state'].pop('maintenance_history')
+  else:rules.state_schema(bad);raise AssertionError('Old boundary accepted raw9')
+  archive.hydrate(bad,'owner/repo',current_sha,request)
+ except ValueError:negative+=1
+ else:raise AssertionError('Accepted malformed archive '+fault)
+assert negative==5 and not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
+print(json.dumps({'wire9':True,'readers':3,'writer':True,'historical_snapshot':True,'negative_cases':negative,'engine_imported':False}))
+'''
+    directory = Path(root) / ('.workflow/tools' if layout == 'separated' else 'scripts')
+    result = subprocess.run([str(python), '-B', '-I', '-c', program, str(directory), str(root)],
+                            capture_output=True, text=True)
+    if result.returncode:
+        raise AssertionError('Portable archive replay failed: ' + result.stdout + result.stderr)
+    return json.loads(result.stdout)
+
+
 def native_fixture(layout='raw', context='source'):
     # Author-side fixture generation only. The Python 3.9 client receives JSON,
     # never this module's engine/tests import paths.
@@ -433,6 +495,9 @@ SELECTION_CASES = {
     'completion-v3': ('completion_policy', ('task_context_policy',), 3),
     'retry-v3': ('ci_retry_policy', ('task_context_policy', 'completion_policy'), 3),
     'completion-retry-v2': ('completion_policy', ('task_context_policy', 'ci_retry_policy'), 2),
+    'context-fragment-v3': ('task_context_policy', (), 3),
+    'completion-fragment-v3': ('completion_policy', ('task_context_policy',), 3),
+    'retry-fragment-v3': ('ci_retry_policy', ('task_context_policy', 'completion_policy'), 3),
 }
 
 
@@ -465,7 +530,8 @@ def selection_fixture(case):
             if hasattr(module, 'now'):
                 patches.enter_context(mock.patch.object(module, 'now', lambda: clock))
         patches.enter_context(mock.patch.object(delivery_receipt, 'datetime', Clock))
-        fixture = SelectionRepository(Path(directory), selection=selection, prior=prior, version=version, standalone=True)
+        fixture = SelectionRepository(Path(directory), selection=selection, prior=prior, version=version,
+                                      standalone=True, fragment='-fragment-' in case)
         project = fixture.project
         project.api.state['fixture_secret'] = 'NEVER_PRINT_PRIVATE_SELECTION_STATE'
         phases = []
@@ -611,6 +677,79 @@ def exercise_selection(root, python, layout, row):
     return dict(case=row['case'], layout=layout, entrypoints=entries, phases=[p['name'] for p in row['phases']],
         negative_cases=negative_cases, native_fixture_gets=sum(method=='GET' for method,_ in calls),
         fixture_receipt_cas=len(entries), engine_imported=False, consumer_writes=False)
+
+
+def fold_fixture():
+    """Static content/graph outcomes, first checked through the real native predicate."""
+    from test_batch_changelog import Candidate, DIRECTORY, CHANGELOG, sha
+    cases = []
+    for name in ('exact-fold', 'unrelated', 'partial', 'extra', 'missing-source',
+                 'symlink', 'bad-heading', 'new-file', 'truncated', 'stacked'):
+        candidate = Candidate()
+        if name == 'unrelated': candidate.after['app.py'] = 'unapproved change'
+        elif name == 'partial': candidate.after[DIRECTORY + 'CO-2.md'] = candidate.before[DIRECTORY + 'CO-2.md']
+        elif name == 'symlink': candidate.after[CHANGELOG] = ('elsewhere', '120000')
+        elif name == 'bad-heading': candidate.before[DIRECTORY + 'CO-2.md'] = '## CO-20 — Mismatch — 2026-10-23'
+        elif name == 'new-file': candidate.after['extra.md'] = 'unrelated'
+        candidate.refresh()
+        if name == 'extra': candidate.commits[candidate.head]['message'] = 'Ordinary implementation'
+        elif name == 'missing-source': candidate.commits[candidate.parent]['parents'][1]['sha'] = candidate.first
+        elif name == 'truncated': candidate.trees[candidate.commits[candidate.parent]['tree']['sha']]['truncated'] = True
+        elif name == 'stacked':
+            extra = sha('ordinary-extra')
+            candidate.commits[extra] = dict(tree=candidate.commits[candidate.parent]['tree'], parents=[{'sha': candidate.parent}])
+            candidate.commits[candidate.head]['parents'] = [{'sha': extra}]
+        expected = name == 'exact-fold'
+        try:
+            candidate.check()
+        except ValueError:
+            assert not expected, name
+        else:
+            assert expected, name
+        cases.append(dict(name=name, accepted=expected, commits=candidate.commits,
+            trees=candidate.trees, blobs=candidate.blobs, head=candidate.head,
+            baseline=candidate.baseline, sources=[candidate.first, candidate.second]))
+    return dict(schema_version=1, synthetic=True, cases=cases)
+
+
+FOLD_BOOTSTRAP = r'''
+import copy,json,sys
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+import tracker_batch_policy as proof
+rows=json.loads(Path(sys.argv[2]).read_text())['cases']
+for row in rows:
+ def request(path):
+  prefix='repos/example/consumer/git/'
+  assert path.startswith(prefix), 'undeclared request'
+  kind,revision=path[len(prefix):].split('/',1)
+  assert kind in ('commits','trees','blobs'), 'not a read-only immutable object'
+  return copy.deepcopy(row[kind][revision.split('?')[0]])
+ try:
+  result=proof.composition(request,'repos/example/consumer',row['head'],row['baseline'],row['sources'],prefix='CO')
+ except ValueError:
+  assert not row['accepted'], row['name']
+ else:
+  assert row['accepted'] and result['head_sha']==row['head'], row['name']
+assert not any(n=='tracker' or n.startswith('tracker.') for n in sys.modules)
+print(json.dumps(dict(passed=True,cases=len(rows),negative_cases=sum(not r['accepted'] for r in rows),engine_imported=False,consumer_writes=False)))
+'''
+
+
+def exercise_fold(root, python, layout):
+    root = Path(root)
+    before = {path.relative_to(root).as_posix(): path.read_bytes() for path in root.rglob('*') if path.is_file()}
+    results = []
+    with tempfile.TemporaryDirectory(prefix='tracker-fold-portable-') as directory:
+        data = Path(directory) / 'fold.json'
+        data.write_text(json.dumps(fold_fixture()))
+        for location in ['scripts'] + (['.workflow/tools'] if layout == 'separated' else []):
+            run = subprocess.run([python, '-B', '-I', '-c', FOLD_BOOTSTRAP, str(root / location), str(data)],
+                                 cwd=directory, capture_output=True, text=True)
+            assert run.returncode == 0, run.stdout + run.stderr
+            results.append(dict(location=location, **json.loads(run.stdout)))
+    assert before == {path.relative_to(root).as_posix(): path.read_bytes() for path in root.rglob('*') if path.is_file()}
+    return dict(layout=layout, entries=results, engine_imported=False, consumer_writes=False)
 
 
 def support_fixture():

@@ -17,6 +17,7 @@ class PortableGate(unittest.TestCase):
                                   plan=mock.Mock(return_value={'missing':['Product']}), gate=mock.Mock(return_value={'missing':[]}))
         self.rules = SimpleNamespace(state_schema=mock.Mock(return_value=1),
             file_bytes=lambda request,root,row:base64.b64decode(row['content']),
+            archive_module=lambda: SimpleNamespace(hydrate=lambda value, *args: (value, None)),
             route=mock.Mock(return_value='source'), batch_mode=mock.Mock(return_value=False))
         modules={'tracker_ci_evidence':self.ci,'tracker_delivery_policy':self.rules,
                  'tracker_delivery_receipt':SimpleNamespace(github=mock.Mock())}

@@ -97,6 +97,12 @@ def selected_instructions(root, exported, config, inputs, tracker):
     guide = exported['docs/repository/TRACKER.md']
     expected = instructions.render_guide(config).replace('](../tracker/', '](../../tracker/')
     assert guide == expected, 'Master changed selected Tracker rules beyond layout navigation'
+    details = exported.get('docs/repository/TRACKER_WORKFLOW_DETAILS.md')
+    if details is not None:
+        assert details == instructions.render_details(config), 'Master changed selected detail contracts'
+        assert len(re.findall(r'^[1-8]\. ', guide, re.M)) == 8, 'Daily path must retain eight bounded steps'
+        assert 'TRACKER_WORKFLOW_DETAILS.md' in guide
+        guide += '\n' + details
     pr = exported['.github/pull_request_template.md']
     assert pr.startswith(instructions.render_pr_template(config))
     assert len(re.findall(r'^Tracker issues:', pr, re.M)) == 1
@@ -131,6 +137,7 @@ def selected_instructions(root, exported, config, inputs, tracker):
             assert resolved.is_file(), (name, raw, 'broken consumer navigation')
             links += 1
     return {'selected_guide_exact_except_navigation': True,
+            'selected_details_exact_when_emitted': details is not None,
             'tracker_pr_verbatim': True, 'shared_reference_bytes_exact': True,
             'relative_markdown_links_checked': links}
 
@@ -413,7 +420,10 @@ print('isolated portable assessment/import passed')
             result['native_portable_contexts'] = exercise_all(args.python39, args.tracker)
             if args.selection_delivery_contract:
                 selected = result['native_portable_contexts']['selection_delivery']
-                assert len(selected) == 8, 'Missing canonical selection package runtime cases'
+                from portable_contract_fixture import verified_artifacts, selection_cases
+                record, _, artifacts, _ = verified_artifacts()
+                expected = len(selection_cases(artifacts, record=record)) * len(record['layouts'])
+                assert len(selected) == expected, 'Missing canonical selection package runtime cases'
                 assert all(row['phases'] == ['pending-package', 'recorded-package', 'owned-adopted']
                            and not row['engine_imported'] and not row['consumer_writes']
                            for row in selected), 'Incomplete engine-free selection package replay'

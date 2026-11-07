@@ -1,5 +1,23 @@
 # Versioning and safe upgrades
 
+## Short selected workflow 1.10.0
+
+MR-91 shortens shared/generated daily guidance and canonical Project Workflow
+navigation. Published Tracker3.28.0 supplies the selected short guide and linked
+detailed reference. Pin its actual reviewed published merge using the maintained
+mechanical refresh; a candidate branch is not a published dependency.
+
+Verify the clean exact source pair against released Master1.9.0 and its actual
+Tracker3.10.0 pin, including Python3.9, selected instructions, direct/Stage/batch,
+policy selection, upgrades and negative contract cases. Existing project review,
+checks, ownership, settings and delivery stay in force; no additional control
+system or policy activation is included.
+
+After independent review, ordinary protected integration and actual-main checks,
+publish immutable1.10.0 and verify the normal complete skill mirror/catalog.
+[Consumer transfer](process-foundation-upgrade.md) is a later separately scoped
+project update; source/skill publication changes no consumer pins or runtime.
+
 ## Simple project foundation 1.9.0
 
 [MR-85](https://github.com/MojoTheApe/master-repo/issues/85) publishes the reviewed
