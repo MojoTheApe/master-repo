@@ -97,6 +97,12 @@ def selected_instructions(root, exported, config, inputs, tracker):
     guide = exported['docs/repository/TRACKER.md']
     expected = instructions.render_guide(config).replace('](../tracker/', '](../../tracker/')
     assert guide == expected, 'Master changed selected Tracker rules beyond layout navigation'
+    details = exported.get('docs/repository/TRACKER_WORKFLOW_DETAILS.md')
+    if details is not None:
+        assert details == instructions.render_details(config), 'Master changed selected detail contracts'
+        assert len(re.findall(r'^[1-8]\. ', guide, re.M)) == 8, 'Daily path must retain eight bounded steps'
+        assert 'TRACKER_WORKFLOW_DETAILS.md' in guide
+        guide += '\n' + details
     pr = exported['.github/pull_request_template.md']
     assert pr.startswith(instructions.render_pr_template(config))
     assert len(re.findall(r'^Tracker issues:', pr, re.M)) == 1
@@ -131,6 +137,7 @@ def selected_instructions(root, exported, config, inputs, tracker):
             assert resolved.is_file(), (name, raw, 'broken consumer navigation')
             links += 1
     return {'selected_guide_exact_except_navigation': True,
+            'selected_details_exact_when_emitted': details is not None,
             'tracker_pr_verbatim': True, 'shared_reference_bytes_exact': True,
             'relative_markdown_links_checked': links}
 

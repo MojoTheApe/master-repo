@@ -1,5 +1,13 @@
 # Repository process history
 
+## 2026-11-07 — MR-91: selected guidance and trusted source admission
+
+Shortened generated daily navigation and linked canonical selected details.
+Added the compatible canonical review/CI gate with accepted-code evaluation and
+an explicit own-source overlay. Original task/history semantics remain intact.
+Actual native protection, release/pin and mirror evidence belong to the task;
+Tracker's private-repository tariff dependency is not a completed guarantee.
+
 ## 2026-11-06 — MR-89: отображение существующих задач
 
 Добавлена минимальная конфигурация общей доски без смены ручного процесса Master.

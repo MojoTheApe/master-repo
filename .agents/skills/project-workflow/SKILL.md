@@ -26,6 +26,12 @@ environments merely to test a change. Skill updates do not change consumer pins.
 Read only what the task needs. If a source is unavailable, use checked-in guidance
 for independent work and identify the missing dependency for dependent actions.
 
+When the selected engine provides a short daily guide and generated selected
+details, use the daily path and consult those binding details for the operation.
+Older pins retain their existing local guide without a pin upgrade merely to
+obtain this layout. Small scope never grants a review, check or delivery exemption
+by line count or file extension.
+
 ## Carry a task through
 
 1. Read the complete Issue and prior decisions. Check whether the result already

@@ -1,28 +1,29 @@
 # Repository workflow
 
 Read `delivery.json`, the [system description](../system/PROJECT.md),
-[delivery rules](DELIVERY.md), [selected Tracker guide](TRACKER.md) and
-[verification](VERIFICATION.md) before work. These checked-in files describe this
-project's actual immutable standard/engine pair, selected route and local controls.
-Use `python scripts/task_tracker.py guide` for the same pinned command guidance.
+[local verification](VERIFICATION.md), [delivery](DELIVERY.md) and
+[selected Tracker guide](TRACKER.md). These files describe this project's adopted
+standard/engine, actual checks, target and completion.
 
-## Project summary and evolution
+## Ordinary work
 
-Briefly explain this project's selected process and link its actual settings,
-checks, delivery target and recovery. Do not copy the same machine values into a
-second settings register. Use the
-[common document map](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/project-documents.md).
+1. Read the complete original task, related decisions and dependencies. Establish
+   the accepted result and what proves completion; reuse existing work.
+2. Record the genuine implementer and short plan. Claim through the selected
+   ownership procedure and use an isolated task branch.
+3. Implement and update affected knowledge. Run meaningful checks and the full
+   applicable final plan; reuse still-valid evidence.
+4. Complete the selected handoff and verify real Review/ownership before dispatching
+   a separate non-implementing reviewer. Follow the selected readiness order.
+5. Review the current full scope, head/base/tree and evidence. Findings return to
+   the actual author through the owned procedure; fixes stay on the task branch.
+6. Verify current independent approval, required CI and the selected final admission
+   once, then integrate the authorized result through its actual route.
+7. Continue the accepted delivery and record its real outcome. A partial task,
+   failed delivery or unknown target remains unfinished. Verify the actual task
+   and relevant runtime result before claiming completion.
 
-Change the process for a concrete observed need: recommend one useful adjustment
-with its cost, use the authorized task, update instructions/settings together,
-check the changed behavior and record a short result in repository history.
-Follow [workflow evolution](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/workflow-evolution.md).
-Preserve actual owners and selected migration controls. Neither a prose edit nor
-an installed skill activates a policy. Generalize only reusable lessons to Master;
-product-specific commands stay here. No routine new approval is needed for work
-already covered by the owner's request.
-
-## Selected route
+## Selected integration
 
 __SELECTED_WORKFLOW__
 
@@ -30,103 +31,45 @@ __TASK_CONTEXT_GUIDANCE__
 
 __PROCESS_GUIDANCE__
 
-## Work and independent review
+## Source identity and independent review
 
 __SOURCE_GUIDANCE__
 
-The Coordinator checks dependencies, overlap and actual ownership, and delegates
-independent eligible work to Workers in isolated branches/worktrees through
-available subagents. Respect the selected capacity and any tighter commissioned
-work limit. Keep roles separate from GitHub assignees and use genuine opaque
-actor/session identities. Do not create new user-owned chats without an explicit
-request. If delegation is unavailable, record serial implementation; independent
-review still cannot be replaced by self-review.
+The Coordinator delegates eligible independent work from the authorized task set
+to actual Workers in isolated branches through available subagents, within the
+selected capacity. If delegation is unavailable, record serial implementation;
+final independent review remains required.
 
-__PR_REFERENCE_GUIDANCE__ Update
-current system knowledge and meaningful history in the same PR, or explain the
-specific no-impact result. Preserve original specifications and local safeguards.
+__PR_REFERENCE_GUIDANCE__ Link the task and PR both ways. Preserve original
+requirements and history. Update affected system knowledge or explain no impact.
 
-Follow the selected Tracker guide for the genuine handoff and review ownership.
-Arrange a separate non-implementing subagent to review the actual head/base, full
-requirements, changed files and checks. Delegated Workers hand off to their
-Coordinator, who starts the independent review. Keep fixes on the task branch;
-reclaim author ownership through the adopted return procedure before editing after
-handoff, including base updates or conflict resolution. Reviewers and coordinators
-must not edit an unclaimed branch. Changed code, base, scope or policy requires
-fresh appropriate proof. A missing independent reviewer is an explicit limitation,
-never self-approval.
+Use the [selected Tracker guide](TRACKER.md) for exact commands and supported
+evidence. A genuine reviewer who edits implementation cannot supply its final
+independent approval. Reclaim author ownership before corrections, base updates
+or conflict resolution. Keep the selected capacities, real actors/sessions/claims,
+frozen membership and actual combined review; never clear another owner by timeout.
 
-Use `check-pr` for early linkage feedback and the supported `check-merge` once for
-final admission; final admission already includes linkage. Verify actual branch
-protection and required checks rather than inferring them from a label or guide.
-Preserve exact reviewed content through admitted integration. Use the selected
-Tracker guide for evidence, return/takeover, recovery and optional Stage commands;
-no timeout or status-label edit clears a genuine owner.
+Use early linkage feedback as needed and the final admission once. Required
+review and checks remain mandatory for small changes. Unknown/mixed effects retain
+full applicable coverage. Actual GitHub protection must be verified separately.
 
-## Local knowledge and delivery
+## Local delivery and detailed procedures
 
-A selected integration/main-merge request includes the maintained delivery and
-verification required by this project's adopted target. Continue through
-[delivery continuation](DELIVERY_CONTINUATION.md) without a routine second approval;
-read [runtime procedures](../runtime/DELIVERY.md) for actual authorization, access,
-backup and compatible recovery. Instructions do not create a background producer.
-A partial ticket, pending/failed delivery or unknown accepted outcome stays
-unfinished. Merge, publication, installation and verified behavior are separate
-facts. Do not reduce a completion obligation to bypass missing proof.
+Follow [delivery continuation](DELIVERY_CONTINUATION.md) for the authorized
+integration outcome and [runtime controls](../runtime/DELIVERY.md) for real access,
+backup and recovery. Proven process-only work retains its own acceptance; actual
+product effects and explicit publication retain their delivery obligations.
+Merge, publication, installation and verified behavior are separate facts.
 
-Use the [ownership map](LAYOUT.md) for repository/system/runtime files. Shared
-upgrades preserve project-owned system/runtime knowledge, unique commands,
-installers, data and deployment controls. Ordinary feature work does not upgrade
-standard or engine pins. For process changes assess Master Repo / Task Tracker
-impact and link the matching fix or concrete no-impact result.
+Keep project-owned commands, system/runtime knowledge, installers and data during
+upgrades. Ordinary feature work uses the adopted pins. For process changes record
+the concrete need, authorized change, affected settings/docs and checked result
+once in repository history; assess Master/Tracker impact.
 
-The installed `project-workflow` skill is navigation. Its canonical Master source
-and verified AI Skills mirror do not activate this project's policies or replace
-its adopted local instructions. Record actual exceptions in `delivery.json`.
-
-## Read the task lifecycle
-
-Review contains unfinished review. Actual approved waiting work appears in Delivery
-as Ready for integration, preserving the native approved key and current admission
-rules. Queue size, occupied slots and confirmed activity are different facts.
-Waiting age uses the actual current approval timestamp; missing history stays
-unknown and never counts as active work. Paused ready work retains Delivery.
-Genuine owned author returns wait as Needs fixes in Backlog (native To Do); only
-actual implementation ownership shows Fixing in In Progress. Preserve genuine
-origin through supported stop/takeover/pause/resume, then require fresh independent
-Review. Old missing origin stays neutral; a claim never proves running activity.
-The active Coordinator continues corrections of the owner's already selected set
-within actual capacity/admission. New unselected work, explicit pause resumption
-and materially changed outcomes retain owner decisions. A free slot launches no
-agent. Source approval alone does not authorize integration; already authorized
-integration includes necessary verified delivery. Integration-only findings do not
-return every frozen source; publication-only failure remains Delivery.
-Integrating and required publication remain separate steps; Done follows the
-project's actual whole-scope delivery, without a consumer installer for process-only work.
-
-## Executor activity
-
-Follow the selected pinned Tracker guide for `activity report` and the foreground
-`activity run --exec` wrapper when supported. Only the current owner/session/claim
-reports running, waiting and stopped. Confirm once a minute while running; five
-minutes without a running/waiting report freezes work time and means Connection lost after prior confirmation; never-confirmed work stays Activity unconfirmed. A recorded stop remains while that owner is assigned. Neither
-condition releases ownership. No detached endless reporter or coordinator heartbeat
-for another executor. Existing runs without a producer remain unknown.
-
-Show time in the current stage separately: it includes waiting, resets on a
-genuine new stage, freezes on explicit pause and continues on supported resume.
-Backlog has no clock and missing entry facts remain unknown. A residence clock
-is not measured executor work. Compatible actual owned launches can seed their
-first observation; renewal still needs the real owner/foreground agent.
-
-## Explicit phase-preserving pause
-
-Follow the compatible selected Tracker guide for owned `pause stop/resume`.
-A confirmed stopped executor displays Paused inside its saved category and
-releases only its own slot. Preserve native phase, saved work, history, frozen
-integration/Stage and genuine blockers. Resume requires current scope/source
-checks, role independence, genuine capacity and fresh authority; otherwise remain
-paused with an explanation. A frozen Coordinator needs a genuinely new session
-before its combined Reviewer. Silence never invokes pause or releases ownership.
-Publish compatible readers/all writers before owned idle `pause activate`; source,
-exports, pin and skill updates never activate live state or publish a product.
+Use the [ownership map](LAYOUT.md) and selected Tracker references for executor
+activity and pause/recovery only when the operation is actually supported.
+Missing activity or a free slot never launches an agent or releases ownership.
+The installed skill navigates the adopted rules; installation activates no policy.
+The [common document map](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/project-documents.md)
+and [process evolution](https://github.com/MojoTheApe/master-repo/blob/__STANDARD_REVISION__/docs/workflow-evolution.md)
+keep reusable rules in Master and unique product procedures here.

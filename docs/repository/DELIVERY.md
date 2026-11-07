@@ -50,8 +50,11 @@ is retained in Archive by the existing shared reader. Do not bulk relabel histor
 For new maintenance work, record the actual stage and relevant module/type/priority;
 never infer running activity or publication from a status label.
 
-This is display-only registration, not a new native ownership or delivery policy.
-The schema1 standard self descriptor and required checks remain unchanged. Actual
+The separate repository-owned admission policy adds independent-review/CI admission using the
+compatible canonical Tracker records. Manual Issue status/closure stays local;
+no execution/ownership migration or consumer adoption is selected. Follow
+[trusted admission](TRUSTED_ADMISSION.md) for recording actual review and operating
+the accepted-code GitHub gate. The schema1 standard self descriptor is retained. Actual
 registry publication and fresh board verification are recorded in
 [TT-263](https://github.com/MojoTheApe/task-tracker/issues/263).
 [MR-89](https://github.com/MojoTheApe/master-repo/issues/89) owns this bounded result;

@@ -57,6 +57,16 @@ Technical rules, automation and product behavior use tracked engineering work.
 
 ## Independent review and merge
 
+A small change has bounded, independently verifiable effects. Direct integration
+uses one source without a synthetic batch when that route is selected. Size or a
+Markdown extension never waives review, applicable tests or actual delivery.
+Unknown/mixed effects retain full relevant coverage.
+
+Required source checks must actually succeed. Missing, pending, cancelled or
+unproven skipped work blocks admission. A configured GitHub admission gate uses
+accepted code/settings and current source/task/review evidence; the candidate
+cannot select its own weaker validator or wait for its own result.
+
 Use a genuine separate non-implementing agent for final review where available;
 if it changes implementation, arrange a different final reviewer. Report missing
 review honestly. A shared GitHub account does not make self-review independent.

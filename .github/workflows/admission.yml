@@ -1,0 +1,34 @@
+name: Trusted admission
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, edited, ready_for_review, converted_to_draft]
+  workflow_run:
+    workflows: [Standard checks, PR metadata checks]
+    types: [completed]
+  push:
+    branches: [main, tracker-state]
+  issues:
+    types: [edited, labeled, unlabeled, closed, reopened]
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  checks: read
+  actions: read
+  statuses: write
+concurrency:
+  group: trusted-admission
+  cancel-in-progress: true
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Evaluate current PRs using the accepted compatible Tracker snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/check_admission.py --config tracker/config.json --admission-policy tracker/admission-policy.json --trusted-revision "$(git rev-parse HEAD)"

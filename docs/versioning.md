@@ -1,5 +1,25 @@
 # Versioning and safe upgrades
 
+## Short selected process and trusted admission candidate1.10.0
+
+MR-91 pairs short shared/generated guidance and canonical Project Workflow
+navigation with Tracker3.28.0's source-admission adapter and selected details.
+Pin its actual reviewed published merge through the maintained mechanical refresh;
+a candidate branch or matching file hash is not a published dependency.
+
+Run the complete clean exact source-pair gate against released Master1.9.0 and
+its actual Tracker3.10.0 pin, including Python3.9 native proofs, selected guidance,
+direct/Stage/batch, policy selection, upgrades and negative contract cases.
+The own accepted-code native gate consumes that canonical portable snapshot.
+Its separate source policy preserves manual task/completion/history semantics.
+Verify effective Master protection after the bootstrap; private Tracker protection
+remains an explicit tariff dependency until actually enabled.
+
+After independent review, admitted integration and successful actual-main checks,
+publish the exact immutable1.10.0 source and verify the maintained complete skill
+mirror/catalog. Follow [consumer transfer](process-foundation-upgrade.md) for a later
+separately scoped project update. Source/skill publication activates no consumer.
+
 ## Simple project foundation 1.9.0
 
 [MR-85](https://github.com/MojoTheApe/master-repo/issues/85) publishes the reviewed

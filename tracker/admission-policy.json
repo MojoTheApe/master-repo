@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "staging": {
+    "enabled": false,
+    "branch": "stage",
+    "target": "source:MojoTheApe/master-repo/stage"
+  },
+  "completion": "reviewed-merge",
+  "required_checks": [
+    "validate",
+    "tracker-link",
+    "skill-impact",
+    "portable-runtime"
+  ],
+  "delivery_target": "source:MojoTheApe/master-repo/main"
+}

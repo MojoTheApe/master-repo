@@ -1,5 +1,14 @@
 # Master Repo system
 
+## MR-91 — short selected process and trusted admission
+
+The generated local workflow and canonical navigation skill prioritize the short
+selected daily path. The compatible Tracker emits selected details separately.
+Master consumes its exact canonical adapter through the already refreshed portable
+snapshot; a repository-owned source overlay preserves manual task/history semantics.
+Native GitHub protection and actual publication remain separately verified outcomes.
+No consumer is adopted and code-standard investigation remains a later task.
+
 ## MR-89 — existing Issue display
 
 The repository-owned `tracker/config.json` prepares the existing manual Issue
