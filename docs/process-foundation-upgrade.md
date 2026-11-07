@@ -12,7 +12,8 @@ Publication does not update existing projects automatically.
    local conflicts in that project's reviewed task.
 4. Review and integrate through its existing route and perform its actual accepted
    delivery. A pin update selects no new execution mode or policy and releases no
-   owner. Compatible readers precede use of the changed generated-details closure.
+   owner. Use a compatible reader when verifying an affected policy-selection
+   delivery receipt. Reading/exporting these instructions needs no service install.
 
 New projects still choose their role, completion, meaningful checks and real targets
 explicitly. Their language, hosting, build and delivery remain project-owned.

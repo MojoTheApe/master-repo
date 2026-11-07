@@ -1,6 +1,6 @@
 # Versioning and safe upgrades
 
-## Short selected workflow candidate1.10.0
+## Short selected workflow 1.10.0
 
 MR-91 shortens shared/generated daily guidance and canonical Project Workflow
 navigation. Published Tracker3.28.0 supplies the selected short guide and linked
