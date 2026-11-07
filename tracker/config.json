@@ -21,5 +21,6 @@
     {"id": "tooling", "name": "Templates & Validation", "description": "Project templates, compatibility and validation tools.", "examples": []},
     {"id": "operations", "name": "Publication & Adoption", "description": "Standard publication, project connection and maintained distribution.", "examples": []}
   ],
-  "release_mode": "single"
+  "release_mode": "single",
+  "source_admission_refresh": true
 }
