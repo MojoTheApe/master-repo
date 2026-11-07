@@ -5,8 +5,6 @@ tools. Read `standard.md` and `delivery.json` before implementation. Keep each
 consumer's existing tracker and operational safeguards.
 
 - Track implementation in a real local GitHub issue and use an issue branch.
-- Follow [trusted admission](TRUSTED_ADMISSION.md) for review records and the
-  single final accepted-code gate while preserving manual task ownership.
 - Include exactly one `Tracker issues: #NUMBER` line in the PR body; list multiple
   local issues with commas. Link the PR back from the issue.
 - Treat merge, publication, installation and verified business behavior as

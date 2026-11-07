@@ -1,13 +1,13 @@
 # Master Repo system
 
-## MR-91 — short selected process and trusted admission
+## MR-91 — short selected workflow
 
-The generated local workflow and canonical navigation skill prioritize the short
-selected daily path. The compatible Tracker emits selected details separately.
-Master consumes its exact canonical adapter through the already refreshed portable
-snapshot; a repository-owned source overlay preserves manual task/history semantics.
-Native GitHub protection and actual publication remain separately verified outcomes.
-No consumer is adopted and code-standard investigation remains a later task.
+The common workflow and canonical navigation skill prioritize the selected daily
+path. Compatible Tracker3.28.0 provides short instructions with detailed recovery
+separate. Small changes reuse existing routes and current valid evidence; review,
+checks, ownership and actual delivery remain mandatory. The additional admission
+infrastructure experiment is excluded by the owner's corrected scope. This update
+publishes no new gate, policy, credentials, environment or consumer activation.
 
 ## MR-89 — existing Issue display
 

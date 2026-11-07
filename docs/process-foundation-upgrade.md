@@ -1,44 +1,25 @@
-# Adopting the short process foundation
+# Adopting the short selected workflow
 
-Use exact published Master1.10.0 and its compatibility.json Tracker pin.
-The repository task retains actual tag/commit and native pair evidence; do not
-substitute an unreleased branch or independently select a newer engine.
+Use published Master1.10.0 and its exact compatibility.json Tracker pin.
+Publication does not update existing projects automatically.
 
-Existing projects adopt through their own reviewed task and supported upgrade:
+1. Read the project's actual standard/engine pins, configuration, original ancestry,
+   active owners, local checks, target and completion before its own upgrade task.
+2. Preview through the existing compatible upgrader. Preserve local knowledge,
+   settings, absent opt-ins, capacities, Stage, task identity, history and delivery.
+3. Check generated daily/detail guides and PR fields together; run relevant project
+   checks and the maintained old-source/portable compatibility proof. Resolve real
+   local conflicts in that project's reviewed task.
+4. Review and integrate through its existing route and perform its actual accepted
+   delivery. A pin update selects no new execution mode or policy and releases no
+   owner. Compatible readers precede use of the changed generated-details closure.
 
-1. Read actual standard/engine/provider pins, config, original template ancestry,
-   local checks/targets and completion. Inspect genuine owners, pending operations
-   and project-specific runtime knowledge before choosing an upgrade route.
-2. Preview with the existing compatible upgrader. Preserve local files/settings,
-   absent opt-ins, capacities, Stage, identities, source ownership, history and
-   actual product delivery. Resolve a genuine conflict in the project task.
-3. Verify the actual generated selected guide, detailed reference and PR fields
-   together with relevant project tests, portable closure and genuine old-source
-   upgrade evidence. Changed native producer bytes need their actual trusted pins;
-   rehashed metadata cannot authorize unreviewed code.
-4. Review/integrate through that project's existing route. Where adopting native
-   admission, run accepted trusted code/config, use its real review records and
-   required source checks, avoid self-dependency and verify effective protection.
-   The repository-only source overlay in Master/Tracker cannot waive an existing
-   project's product/Stage/execution policy.
-5. Perform only the selected explicit activation/reader/writer transition and
-   accepted delivery. Preserve pending work and use supported recovery; never
-   clear another owner or treat a published pin as live state migration.
+New projects still choose their role, completion, meaningful checks and real targets
+explicitly. Their language, hosting, build and delivery remain project-owned.
+A generated outline is draft until the existing setup/connection checks succeed.
 
-This document performs no fleet update. A direct/batch/Stage change is a separate
-project choice; upgrading instructions never selects it implicitly. Compatible
-readers precede consumer use of the new generated-details selection closure.
-Deploy the shared reader only when an actual selected capability needs it,
-through its existing guarded procedure.
-
-New projects choose role, completion, meaningful checks and real targets explicitly.
-Use the existing simple/direct default unless a concrete need justifies another
-route. A generated outline stays draft until local details and the actual Tracker
-connection are verified. Language, host, package/service/n8n release and operational
-safeguards stay project-owned.
-
-Bounded process instructions use the supported opted-in shorter path only after
-complete accepted-base classification and genuine independent review. Mixed,
-incomplete, code/build/runtime changes retain applicable coverage and delivery;
-explicit publication remains required. Code-standard/code-volume investigation
-is outside this upgrade.
+A bounded small task can use its already selected direct route without a synthetic
+batch. Mixed, unknown, code/build/runtime effects keep applicable checks and delivery.
+A file extension or line count grants no exception. Existing independent review,
+combined review for real batches and current valid evidence remain binding.
+This update adds no control system; code-standard investigation is a later task.

@@ -1,24 +1,22 @@
 # Versioning and safe upgrades
 
-## Short selected process and trusted admission candidate1.10.0
+## Short selected workflow candidate1.10.0
 
-MR-91 pairs short shared/generated guidance and canonical Project Workflow
-navigation with Tracker3.28.0's source-admission adapter and selected details.
-Pin its actual reviewed published merge through the maintained mechanical refresh;
-a candidate branch or matching file hash is not a published dependency.
+MR-91 shortens shared/generated daily guidance and canonical Project Workflow
+navigation. Published Tracker3.28.0 supplies the selected short guide and linked
+detailed reference. Pin its actual reviewed published merge using the maintained
+mechanical refresh; a candidate branch is not a published dependency.
 
-Run the complete clean exact source-pair gate against released Master1.9.0 and
-its actual Tracker3.10.0 pin, including Python3.9 native proofs, selected guidance,
-direct/Stage/batch, policy selection, upgrades and negative contract cases.
-The own accepted-code native gate consumes that canonical portable snapshot.
-Its separate source policy preserves manual task/completion/history semantics.
-Verify effective Master protection after the bootstrap; private Tracker protection
-remains an explicit tariff dependency until actually enabled.
+Verify the clean exact source pair against released Master1.9.0 and its actual
+Tracker3.10.0 pin, including Python3.9, selected instructions, direct/Stage/batch,
+policy selection, upgrades and negative contract cases. Existing project review,
+checks, ownership, settings and delivery stay in force; no additional control
+system or policy activation is included.
 
-After independent review, admitted integration and successful actual-main checks,
-publish the exact immutable1.10.0 source and verify the maintained complete skill
-mirror/catalog. Follow [consumer transfer](process-foundation-upgrade.md) for a later
-separately scoped project update. Source/skill publication activates no consumer.
+After independent review, ordinary protected integration and actual-main checks,
+publish immutable1.10.0 and verify the normal complete skill mirror/catalog.
+[Consumer transfer](process-foundation-upgrade.md) is a later separately scoped
+project update; source/skill publication changes no consumer pins or runtime.
 
 ## Simple project foundation 1.9.0
 

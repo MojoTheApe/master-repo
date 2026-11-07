@@ -63,9 +63,7 @@ Markdown extension never waives review, applicable tests or actual delivery.
 Unknown/mixed effects retain full relevant coverage.
 
 Required source checks must actually succeed. Missing, pending, cancelled or
-unproven skipped work blocks admission. A configured GitHub admission gate uses
-accepted code/settings and current source/task/review evidence; the candidate
-cannot select its own weaker validator or wait for its own result.
+unproven skipped work blocks admission under the existing project controls.
 
 Use a genuine separate non-implementing agent for final review where available;
 if it changes implementation, arrange a different final reviewer. Report missing
